@@ -14,50 +14,95 @@ namespace FisioKH
         private string connectionString;
         private string datos;
 
-        public SqlDatabase()
+        
+        public SqlConnection ConexionBD()
         {
-            // Retrieve the connection string from app.config
-            connectionString = ConfigurationManager.ConnectionStrings["SqlConnectionString"].ConnectionString;
-
+            SqlConnection conn = new SqlConnection();
+            try
+            {
+                connectionString = configSettings.ObtenConectionString();
+                conn = new SqlConnection(connectionString);
+                conn.Open();
+            }
+            catch(Exception ex)
+            { ex.ToString(); }
+            return conn;
         }
 
         // Method to retrieve data from SQL Server
-        public string GetData()
+        public bool AutenticarUsuario(string usuario, string pass)
         {
-           
+            SqlConnection conn = this.ConexionBD();
+            bool autenticado = false;
 
-            try
+            if (conn.State == ConnectionState.Open)
             {
-                
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                try
                 {
-                    
-                    // Open the connection to SQL Server
-                    conn.Open();
 
-                    // Define the SQL query
-                    string query = "SELECT * FROM usuarios";  // Replace with your actual query
-
-                    // Create SqlCommand object
-                    SqlCommand cmd = new SqlCommand(query, conn);
-
-                    // Execute the query and retrieve data
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    // Read the results and display them
-                    while (reader.Read())
+                    using (conn)
                     {
-                        // Assuming your table has a column named "ColumnName"
-                        datos = reader["nombre"].ToString();
+                         
+                        string sql = "SELECT * FROM usuarios WHERE (nombre ='"+ usuario + "' AND password='"+ pass + "') OR (nombre ='" + usuario + "' AND pin='" + pass + "')";  
+ 
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+ 
+                        SqlDataReader rd = cmd.ExecuteReader();
+                        if(rd.HasRows)
+                        { autenticado = true; }
+ 
+                        rd.Close();
                     }
-
-                    // Close the reader
-                    reader.Close();
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    datos = "Error: " + ex.Message;
                 }
             }
-            catch (Exception ex)
+            return autenticado;
+        }
+
+           public string GetData()
+        {
+            SqlConnection conn = this.ConexionBD();
+
+            if (conn.State == ConnectionState.Open)
             {
-                datos = "Error: " + ex.Message;
+                try
+                {
+
+                    using (conn)
+                    {
+
+                        // Open the connection to SQL Server
+                        
+
+                        // Define the SQL query
+                        string query = "SELECT * FROM usuarios";  // Replace with your actual query
+
+                        // Create SqlCommand object
+                        SqlCommand cmd = new SqlCommand(query, conn);
+
+                        // Execute the query and retrieve data
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        // Read the results and display them
+                        while (reader.Read())
+                        {
+                            // Assuming your table has a column named "ColumnName"
+                            datos = reader["nombre"].ToString();
+                        }
+
+                        // Close the reader
+                        reader.Close();
+                    }
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    datos = "Error: " + ex.Message;
+                }
             }
             return datos;
         }
