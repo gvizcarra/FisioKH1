@@ -44,22 +44,24 @@ namespace FisioKH
             this.txtPassPin = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbIngresos = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tbAdmin = new System.Windows.Forms.TabPage();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preciosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.boton4 = new FisioKH.Boton();
+            this.boton3 = new FisioKH.Boton();
+            this.boton2 = new FisioKH.Boton();
             this.tbReportes = new System.Windows.Forms.TabPage();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tbIngresos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tbAdmin.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.menuStrip1.SuspendLayout();
             this.tbReportes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,6 +71,7 @@ namespace FisioKH
             this.tabControl1.Controls.Add(this.tbIngresos);
             this.tabControl1.Controls.Add(this.tbAdmin);
             this.tabControl1.Controls.Add(this.tbReportes);
+            this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.tabControl1.Location = new System.Drawing.Point(4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.RightToLeftLayout = true;
@@ -82,9 +85,9 @@ namespace FisioKH
             this.tbInicio.Controls.Add(this.boton1);
             this.tbInicio.Controls.Add(this.groupBox1);
             this.tbInicio.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbInicio.Location = new System.Drawing.Point(4, 26);
+            this.tbInicio.Location = new System.Drawing.Point(4, 30);
             this.tbInicio.Name = "tbInicio";
-            this.tbInicio.Size = new System.Drawing.Size(1154, 579);
+            this.tbInicio.Size = new System.Drawing.Size(1154, 575);
             this.tbInicio.TabIndex = 3;
             this.tbInicio.Text = "Inicio - Login";
             this.tbInicio.UseVisualStyleBackColor = true;
@@ -115,7 +118,7 @@ namespace FisioKH
             this.groupBox1.Controls.Add(this.txtPassPin);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(267, 13);
+            this.groupBox1.Location = new System.Drawing.Point(236, 44);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(615, 563);
             this.groupBox1.TabIndex = 9;
@@ -126,8 +129,8 @@ namespace FisioKH
             // 
             this.txtUsuario.AcceptsReturn = true;
             this.txtUsuario.AcceptsTab = true;
-            this.txtUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.txtUsuario.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtUsuario.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.txtUsuario.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.txtUsuario.ForeColor = System.Drawing.Color.Black;
             this.txtUsuario.Location = new System.Drawing.Point(209, 25);
             this.txtUsuario.Name = "txtUsuario";
@@ -136,16 +139,17 @@ namespace FisioKH
             // 
             // btnLogin
             // 
+            this.btnLogin.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.btnLogin.FlatAppearance.BorderSize = 2;
-            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnLogin.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnLogin.Location = new System.Drawing.Point(386, 31);
+            this.btnLogin.Location = new System.Drawing.Point(363, 31);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(10);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(132, 46);
+            this.btnLogin.Size = new System.Drawing.Size(196, 64);
             this.btnLogin.TabIndex = 8;
-            this.btnLogin.Text = "Ingresar";
-            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Text = "&INGRESAR";
+            this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // label1
@@ -163,8 +167,8 @@ namespace FisioKH
             // 
             this.txtPassPin.AcceptsReturn = true;
             this.txtPassPin.AcceptsTab = true;
-            this.txtPassPin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.txtPassPin.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtPassPin.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.txtPassPin.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.txtPassPin.ForeColor = System.Drawing.Color.Black;
             this.txtPassPin.Location = new System.Drawing.Point(209, 66);
             this.txtPassPin.Name = "txtPassPin";
@@ -185,84 +189,94 @@ namespace FisioKH
             // 
             // tbIngresos
             // 
+            this.tbIngresos.Controls.Add(this.pictureBox1);
             this.tbIngresos.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbIngresos.Location = new System.Drawing.Point(4, 26);
+            this.tbIngresos.Location = new System.Drawing.Point(4, 30);
             this.tbIngresos.Name = "tbIngresos";
             this.tbIngresos.Padding = new System.Windows.Forms.Padding(3);
-            this.tbIngresos.Size = new System.Drawing.Size(1154, 579);
+            this.tbIngresos.Size = new System.Drawing.Size(1154, 575);
             this.tbIngresos.TabIndex = 0;
             this.tbIngresos.Text = "Ingresos";
             this.tbIngresos.UseVisualStyleBackColor = true;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Location = new System.Drawing.Point(226, 80);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(682, 491);
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // tbAdmin
             // 
+            this.tbAdmin.Controls.Add(this.boton4);
+            this.tbAdmin.Controls.Add(this.boton3);
+            this.tbAdmin.Controls.Add(this.boton2);
             this.tbAdmin.Controls.Add(this.pictureBox2);
-            this.tbAdmin.Controls.Add(this.menuStrip1);
             this.tbAdmin.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbAdmin.Location = new System.Drawing.Point(4, 26);
+            this.tbAdmin.Location = new System.Drawing.Point(4, 30);
             this.tbAdmin.Name = "tbAdmin";
             this.tbAdmin.Padding = new System.Windows.Forms.Padding(3);
-            this.tbAdmin.Size = new System.Drawing.Size(1154, 579);
+            this.tbAdmin.Size = new System.Drawing.Size(1154, 575);
             this.tbAdmin.TabIndex = 1;
             this.tbAdmin.Text = "Administración";
             this.tbAdmin.UseVisualStyleBackColor = true;
             // 
-            // pictureBox2
+            // boton4
             // 
-            this.pictureBox2.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Location = new System.Drawing.Point(3, 25);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(1054, 636);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.boton4.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.boton4.FlatAppearance.BorderSize = 2;
+            this.boton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.boton4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.boton4.Location = new System.Drawing.Point(695, 80);
+            this.boton4.Margin = new System.Windows.Forms.Padding(10);
+            this.boton4.Name = "boton4";
+            this.boton4.Size = new System.Drawing.Size(168, 58);
+            this.boton4.TabIndex = 4;
+            this.boton4.Text = "&TRATAMIENTOS";
+            this.boton4.UseVisualStyleBackColor = false;
             // 
-            // menuStrip1
+            // boton3
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clientesToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(3, 3);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1148, 24);
-            this.menuStrip1.TabIndex = 2;
-            this.menuStrip1.Text = "menuStrip1";
+            this.boton3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.boton3.FlatAppearance.BorderSize = 2;
+            this.boton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.boton3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.boton3.Location = new System.Drawing.Point(476, 80);
+            this.boton3.Margin = new System.Windows.Forms.Padding(10);
+            this.boton3.Name = "boton3";
+            this.boton3.Size = new System.Drawing.Size(168, 58);
+            this.boton3.TabIndex = 3;
+            this.boton3.Text = "P&ACIENTES";
+            this.boton3.UseVisualStyleBackColor = false;
             // 
-            // clientesToolStripMenuItem
+            // boton2
             // 
-            this.clientesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preciosToolStripMenuItem});
-            this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
-            this.clientesToolStripMenuItem.Text = "Men&u";
-            // 
-            // preciosToolStripMenuItem
-            // 
-            this.preciosToolStripMenuItem.Name = "preciosToolStripMenuItem";
-            this.preciosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.preciosToolStripMenuItem.Text = "Precios";
-            this.preciosToolStripMenuItem.Click += new System.EventHandler(this.preciosToolStripMenuItem_Click);
+            this.boton2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.boton2.FlatAppearance.BorderSize = 2;
+            this.boton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.boton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.boton2.Location = new System.Drawing.Point(264, 80);
+            this.boton2.Margin = new System.Windows.Forms.Padding(10);
+            this.boton2.Name = "boton2";
+            this.boton2.Size = new System.Drawing.Size(168, 58);
+            this.boton2.TabIndex = 2;
+            this.boton2.Text = "&PRECIOS";
+            this.boton2.UseVisualStyleBackColor = false;
             // 
             // tbReportes
             // 
             this.tbReportes.Controls.Add(this.pictureBox3);
             this.tbReportes.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tbReportes.Location = new System.Drawing.Point(4, 26);
+            this.tbReportes.Location = new System.Drawing.Point(4, 30);
             this.tbReportes.Name = "tbReportes";
             this.tbReportes.Padding = new System.Windows.Forms.Padding(3);
-            this.tbReportes.Size = new System.Drawing.Size(1154, 579);
+            this.tbReportes.Size = new System.Drawing.Size(1154, 575);
             this.tbReportes.TabIndex = 2;
             this.tbReportes.Text = "Reportes";
             this.tbReportes.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox3.Location = new System.Drawing.Point(3, 25);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(1054, 636);
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
             // 
             // lstBoxLogs
             // 
@@ -278,6 +292,26 @@ namespace FisioKH
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.Location = new System.Drawing.Point(226, 80);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(682, 491);
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox3.Location = new System.Drawing.Point(226, 80);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(682, 491);
+            this.pictureBox3.TabIndex = 3;
+            this.pictureBox3.TabStop = false;
             // 
             // FisioKHApp
             // 
@@ -296,12 +330,11 @@ namespace FisioKH
             this.tbInicio.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tbIngresos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tbAdmin.ResumeLayout(false);
-            this.tbAdmin.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.tbReportes.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
 
@@ -310,14 +343,8 @@ namespace FisioKH
         #endregion
 
         private TabControl tabControl1;
-        private TabPage tbIngresos;
         private TabPage tbAdmin;
         private TabPage tbReportes;
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem clientesToolStripMenuItem;
-        private ToolStripMenuItem preciosToolStripMenuItem;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
         private TabPage tbInicio;
         private Boton btnLogin;
         private TextBox txtPassPin;
@@ -328,6 +355,13 @@ namespace FisioKH
         public ListBox lstBoxLogs;
         private ContextMenuStrip contextMenuStrip1;
         private Boton boton1;
+        private TabPage tbIngresos;
+        private PictureBox pictureBox1;
+        private Boton boton4;
+        private Boton boton3;
+        private Boton boton2;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
     }
 }
 
