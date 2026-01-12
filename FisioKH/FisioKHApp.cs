@@ -24,7 +24,7 @@ namespace FisioKH
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
              
-            DesHabilitaTabs(ObtentabsSeguras());
+           // DesHabilitaTabs(ObtentabsSeguras());
         }
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
@@ -81,30 +81,30 @@ namespace FisioKH
             this.btnLogin.Enabled = false;
 
             FisioKH.SqlDatabase sqlDatabasex = new SqlDatabase();
-            Usuario usr = sqlDatabasex.AutenticarUsuario(usuario,passPin);
-            if (usr.ErrorLogin !="")
+            Program.UsuarioLogeado = sqlDatabasex.AutenticarUsuario(usuario,passPin);
+            if (Program.UsuarioLogeado.ErrorLogin !="")
             {
                 MessageBox.Show("Error, revisar log de errores!");
-                this.lstBoxLogs.Items.Add(usr.ErrorLogin);
+                this.lstBoxLogs.Items.Add(Program.UsuarioLogeado.ErrorLogin);
                 this.btnLogin.Text = "Ingresar";
                 this.btnLogin.Enabled = true;
-                usr.ErrorLogin = "";
+                Program.UsuarioLogeado.ErrorLogin = "";
                 this.lstBoxLogs.Focus();
                 return;
 
             }
 
-            if (usr.Autenticado && usr.Activo)
+            if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
             {
                 MessageBox.Show("Bienvenido!","Anuncio!",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-                this.Text = configSettings.ObtenNombreApp + " - Usuario: "+usr.Nombre;
+                this.Text = configSettings.ObtenNombreApp + " - Usuario: "+ Program.UsuarioLogeado.Nombre;
                 HabilitaTabs(ObtentabsSeguras());
                 this.btnLogin.Text = "Ingresar";
                 this.btnLogin.Enabled = true;
             }
             else
             {
-                if (!usr.Activo)
+                if (!Program.UsuarioLogeado.Activo)
                 {
                     MessageBox.Show("Usuario no Activo!");
                 }
@@ -144,6 +144,33 @@ namespace FisioKH
         private void preciosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("click usuarios");
+        }
+
+        private void btnTratamientos_Click(object sender, EventArgs e)
+        {
+            Tratamientos fm = new Tratamientos();
+            fm.ShowDialog();
+        }
+
+        private void btnPrecios_Click(object sender, EventArgs e)
+        {
+            Precios fm = new Precios();
+            fm.ShowDialog();
+
+        }
+
+        private void btnMetodosPago_Click(object sender, EventArgs e)
+        {
+            MetodosPago fm = new MetodosPago();
+            fm.ShowDialog();
+
+        }
+
+        private void btnPacientes_Click(object sender, EventArgs e)
+        {
+            Pacientes fm = new Pacientes();
+            fm.ShowDialog();
+
         }
     }
 }

@@ -60,12 +60,45 @@
     <Compile Include="FisioKHApp.Designer.cs">
       <DependentUpon>FisioKHApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="MetodosPago.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MetodosPago.Designer.cs">
+      <DependentUpon>MetodosPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pacientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pacientes.Designer.cs">
+      <DependentUpon>Pacientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Precios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Precios.Designer.cs">
+      <DependentUpon>Precios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerConn.cs" />
+    <Compile Include="Tratamientos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tratamientos.Designer.cs">
+      <DependentUpon>Tratamientos.cs</DependentUpon>
+    </Compile>
     <Compile Include="usuario.cs" />
     <EmbeddedResource Include="FisioKHApp.resx">
       <DependentUpon>FisioKHApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MetodosPago.resx">
+      <DependentUpon>MetodosPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pacientes.resx">
+      <DependentUpon>Pacientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Precios.resx">
+      <DependentUpon>Precios.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -77,6 +110,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Tratamientos.resx">
+      <DependentUpon>Tratamientos.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

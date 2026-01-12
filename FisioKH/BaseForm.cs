@@ -15,12 +15,14 @@ namespace FisioKH
         private void ApplyClinicStyle()
         {
             // Form settings
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FisioKHApp));
             this.BackColor = Color.White;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Font = new Font("Segoe UI", 10F);
             this.Padding = new Padding(10);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 
             // Set a default title color
             this.ForeColor = Color.FromArgb(46, 134, 193);  // Clinic Blue

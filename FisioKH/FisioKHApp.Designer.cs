@@ -46,22 +46,23 @@ namespace FisioKH
             this.tbIngresos = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tbAdmin = new System.Windows.Forms.TabPage();
-            this.boton4 = new FisioKH.Boton();
-            this.boton3 = new FisioKH.Boton();
-            this.boton2 = new FisioKH.Boton();
+            this.btnMetodosPago = new FisioKH.Boton();
+            this.btnTratamientos = new FisioKH.Boton();
+            this.btnPacientes = new FisioKH.Boton();
+            this.btnPrecios = new FisioKH.Boton();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tbReportes = new System.Windows.Forms.TabPage();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tbIngresos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tbAdmin.SuspendLayout();
-            this.tbReportes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.tbReportes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
@@ -211,9 +212,10 @@ namespace FisioKH
             // 
             // tbAdmin
             // 
-            this.tbAdmin.Controls.Add(this.boton4);
-            this.tbAdmin.Controls.Add(this.boton3);
-            this.tbAdmin.Controls.Add(this.boton2);
+            this.tbAdmin.Controls.Add(this.btnMetodosPago);
+            this.tbAdmin.Controls.Add(this.btnTratamientos);
+            this.tbAdmin.Controls.Add(this.btnPacientes);
+            this.tbAdmin.Controls.Add(this.btnPrecios);
             this.tbAdmin.Controls.Add(this.pictureBox2);
             this.tbAdmin.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbAdmin.Location = new System.Drawing.Point(4, 30);
@@ -224,47 +226,75 @@ namespace FisioKH
             this.tbAdmin.Text = "Administración";
             this.tbAdmin.UseVisualStyleBackColor = true;
             // 
-            // boton4
+            // btnMetodosPago
             // 
-            this.boton4.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.boton4.FlatAppearance.BorderSize = 2;
-            this.boton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.boton4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.boton4.Location = new System.Drawing.Point(695, 80);
-            this.boton4.Margin = new System.Windows.Forms.Padding(10);
-            this.boton4.Name = "boton4";
-            this.boton4.Size = new System.Drawing.Size(168, 58);
-            this.boton4.TabIndex = 4;
-            this.boton4.Text = "&TRATAMIENTOS";
-            this.boton4.UseVisualStyleBackColor = false;
+            this.btnMetodosPago.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMetodosPago.FlatAppearance.BorderSize = 2;
+            this.btnMetodosPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnMetodosPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnMetodosPago.Location = new System.Drawing.Point(374, 80);
+            this.btnMetodosPago.Margin = new System.Windows.Forms.Padding(10);
+            this.btnMetodosPago.Name = "btnMetodosPago";
+            this.btnMetodosPago.Size = new System.Drawing.Size(168, 58);
+            this.btnMetodosPago.TabIndex = 8;
+            this.btnMetodosPago.Text = "&METODOS PAGO";
+            this.btnMetodosPago.UseVisualStyleBackColor = false;
+            this.btnMetodosPago.Click += new System.EventHandler(this.btnMetodosPago_Click);
             // 
-            // boton3
+            // btnTratamientos
             // 
-            this.boton3.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.boton3.FlatAppearance.BorderSize = 2;
-            this.boton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.boton3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.boton3.Location = new System.Drawing.Point(476, 80);
-            this.boton3.Margin = new System.Windows.Forms.Padding(10);
-            this.boton3.Name = "boton3";
-            this.boton3.Size = new System.Drawing.Size(168, 58);
-            this.boton3.TabIndex = 3;
-            this.boton3.Text = "P&ACIENTES";
-            this.boton3.UseVisualStyleBackColor = false;
+            this.btnTratamientos.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnTratamientos.FlatAppearance.BorderSize = 2;
+            this.btnTratamientos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnTratamientos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnTratamientos.Location = new System.Drawing.Point(792, 80);
+            this.btnTratamientos.Margin = new System.Windows.Forms.Padding(10);
+            this.btnTratamientos.Name = "btnTratamientos";
+            this.btnTratamientos.Size = new System.Drawing.Size(168, 58);
+            this.btnTratamientos.TabIndex = 4;
+            this.btnTratamientos.Text = "&TRATAMIENTOS";
+            this.btnTratamientos.UseVisualStyleBackColor = false;
+            this.btnTratamientos.Click += new System.EventHandler(this.btnTratamientos_Click);
             // 
-            // boton2
+            // btnPacientes
             // 
-            this.boton2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.boton2.FlatAppearance.BorderSize = 2;
-            this.boton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.boton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.boton2.Location = new System.Drawing.Point(264, 80);
-            this.boton2.Margin = new System.Windows.Forms.Padding(10);
-            this.boton2.Name = "boton2";
-            this.boton2.Size = new System.Drawing.Size(168, 58);
-            this.boton2.TabIndex = 2;
-            this.boton2.Text = "&PRECIOS";
-            this.boton2.UseVisualStyleBackColor = false;
+            this.btnPacientes.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnPacientes.FlatAppearance.BorderSize = 2;
+            this.btnPacientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnPacientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnPacientes.Location = new System.Drawing.Point(167, 80);
+            this.btnPacientes.Margin = new System.Windows.Forms.Padding(10);
+            this.btnPacientes.Name = "btnPacientes";
+            this.btnPacientes.Size = new System.Drawing.Size(168, 58);
+            this.btnPacientes.TabIndex = 3;
+            this.btnPacientes.Text = "P&ACIENTES";
+            this.btnPacientes.UseVisualStyleBackColor = false;
+            this.btnPacientes.Click += new System.EventHandler(this.btnPacientes_Click);
+            // 
+            // btnPrecios
+            // 
+            this.btnPrecios.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnPrecios.FlatAppearance.BorderSize = 2;
+            this.btnPrecios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnPrecios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnPrecios.Location = new System.Drawing.Point(582, 80);
+            this.btnPrecios.Margin = new System.Windows.Forms.Padding(10);
+            this.btnPrecios.Name = "btnPrecios";
+            this.btnPrecios.Size = new System.Drawing.Size(168, 58);
+            this.btnPrecios.TabIndex = 2;
+            this.btnPrecios.Text = "&PRECIOS";
+            this.btnPrecios.UseVisualStyleBackColor = false;
+            this.btnPrecios.Click += new System.EventHandler(this.btnPrecios_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox2.Location = new System.Drawing.Point(226, 80);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(682, 491);
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
             // 
             // tbReportes
             // 
@@ -277,6 +307,16 @@ namespace FisioKH
             this.tbReportes.TabIndex = 2;
             this.tbReportes.Text = "Reportes";
             this.tbReportes.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
+            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox3.Location = new System.Drawing.Point(226, 80);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(682, 491);
+            this.pictureBox3.TabIndex = 3;
+            this.pictureBox3.TabStop = false;
             // 
             // lstBoxLogs
             // 
@@ -292,26 +332,6 @@ namespace FisioKH
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox2.Location = new System.Drawing.Point(226, 80);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(682, 491);
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox3.Location = new System.Drawing.Point(226, 80);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(682, 491);
-            this.pictureBox3.TabIndex = 3;
-            this.pictureBox3.TabStop = false;
             // 
             // FisioKHApp
             // 
@@ -333,8 +353,8 @@ namespace FisioKH
             this.tbIngresos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tbAdmin.ResumeLayout(false);
-            this.tbReportes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.tbReportes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
 
@@ -357,11 +377,12 @@ namespace FisioKH
         private Boton boton1;
         private TabPage tbIngresos;
         private PictureBox pictureBox1;
-        private Boton boton4;
-        private Boton boton3;
-        private Boton boton2;
+        private Boton btnTratamientos;
+        private Boton btnPacientes;
+        private Boton btnPrecios;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
+        private Boton btnMetodosPago;
     }
 }
 

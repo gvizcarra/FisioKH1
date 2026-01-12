@@ -15,7 +15,10 @@ namespace FisioKH
         private string datos;
         Usuario usr = new Usuario();
         
-
+/// <summary>
+/// se conecta a bd sql, obteniendo parametros del app.config
+/// </summary>
+/// <returns>regresa una conexion abierta</returns>
         public SqlConnection ConexionBD()
         {
             SqlConnection conn = new SqlConnection();
@@ -33,7 +36,12 @@ namespace FisioKH
             return conn;
         }
 
-        // Method to retrieve data from SQL Server
+     /// <summary>
+     /// metodo para iniciar session
+     /// </summary>
+     /// <param name="usuario">usuario</param>
+     /// <param name="pass">pass o pin</param>
+     /// <returns></returns>
         public Usuario AutenticarUsuario(string usuario, string pass)
         {
              SqlConnection conn = this.ConexionBD();
@@ -83,7 +91,13 @@ namespace FisioKH
             }
             return usr;
         }
-
+        /// <summary>
+        /// ejeuta un stored procedure pasandole el nombre y parametros,regresa dataset con el nombre de tabla que es el parametros dsname
+        /// </summary>
+        /// <param name="spName">nombre del stored procedure</param>
+        /// <param name="dsname">nombre del ds, tabla de bd para uso posterior en logica</param>
+        /// <param name="spPars">Dictionary con parametros, nombre parametro y valor de este Dictionary<string, object></param>
+        /// <returns></returns>
         public DataSet ObtenerDatos(string spName,string dsname, Dictionary<string, object> spPars)
         {
             SqlConnection conn = this.ConexionBD();
@@ -119,7 +133,15 @@ namespace FisioKH
                 }
             }
             return ds;
-        } public DataSet ObtenerDatos(string sql,string dsname)
+        }
+
+        /// <summary>
+        /// ejecuta una consulta previamente estructurada lista para ejecutar en bd, le pasamos el dsname que es nombre de tabla u objeto
+        /// </summary>
+        /// <param name="sql">Consulta estructurada para ejecucion</param>
+        /// <param name="dsname">nombre del ds, tabla de bd para uso posterior en logica</param>
+        /// <returns></returns>
+        public DataSet ObtenerDatos(string sql,string dsname)
         {
             SqlConnection conn = this.ConexionBD();
             DataSet ds = new DataSet();
@@ -148,8 +170,12 @@ namespace FisioKH
             return ds;
         }
 
-
-        public string EjecutaSql(String sql)
+        /// <summary>
+        /// recibe consulta sql para eejecutar,solo insert updatey delete, no regresa registros
+        /// </summary>
+        /// <param name="sql">sql como insert,update,delete</param>
+        /// <returns></returns>
+        public string EjecutaSqlNonQuery(String sql)
         {
             SqlConnection conn = this.ConexionBD();
 
@@ -172,6 +198,46 @@ namespace FisioKH
                 }
             }
             return datos;
+        }
+        /// <summary>
+        /// recibe consulta sql para eejecutar,solo insert updatey delete, no regresa registros
+        /// </summary>
+        /// <param name="sql">sql como insert,update,delete</param>
+        /// <returns></returns>
+        public int EjecutarNonQuery(string spName, Dictionary<string, object> spPars)
+        {
+            int rowsAffected = 0;
+
+            using (SqlConnection conn = this.ConexionBD())
+            {
+                using (SqlCommand cmd = new SqlCommand(spName, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    if (spPars != null)
+                    {
+                        foreach (var par in spPars)
+                        {
+                            cmd.Parameters.AddWithValue(par.Key, par.Value ?? DBNull.Value);
+                        }
+                    }
+
+                    SqlParameter outParam = new SqlParameter("@rowsAffected", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(outParam);
+
+                    cmd.ExecuteNonQuery();
+
+                    rowsAffected = (int)outParam.Value;
+
+                    
+
+                }
+            }
+
+            return rowsAffected;
         }
 
 

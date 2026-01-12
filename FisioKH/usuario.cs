@@ -8,7 +8,7 @@ namespace FisioKH
 {
     public class Usuario
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 1;
         public string Nombre { get; set; }
         public string Pin { get; set; }
         public int Nivel { get; set; }
