@@ -112,20 +112,20 @@ namespace FisioKH
                     { 
                         using (SqlDataAdapter adapter = new SqlDataAdapter(spName, conn))
                         {
-
+                            
                             adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                             foreach (var par in spPars)
                             {
-                                adapter.SelectCommand.Parameters.AddWithValue(par.Key, par.Value);
-
+                                if (par.Value.ToString() != "")
+                                { adapter.SelectCommand.Parameters.AddWithValue(par.Key, par.Value); }
                             }
                             
                             adapter.Fill(ds, dsname);  
                         }
  
                     }
-                    conn.Close();
+                    conn.Close(); 
                 }
                 catch (Exception ex)
                 {
