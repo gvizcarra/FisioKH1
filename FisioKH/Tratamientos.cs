@@ -12,6 +12,7 @@ namespace FisioKH
 {
     public partial class Tratamientos : BaseForm
     {
+        private DataTable dtTipoTratamiento;
         public Tratamientos()
         {
             InitializeComponent();
@@ -19,7 +20,81 @@ namespace FisioKH
 
         private void Tratamientos_Load(object sender, EventArgs e)
         {
+            ObtenTipoTratamiento(this.txtTipoTratamiento.Text);
+        }
 
+        private void ObtenTipoTratamiento(string nombre = null)
+        {
+            DataSet dsmp = new DataSet();
+            string dsname = "tipoTratamiento";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@nombre", nombre }
+            };
+
+            SqlDatabase sdb = new SqlDatabase();
+            dsmp = sdb.ObtenerDatos("usp_ObtenerTipoTratamiento", dsname, parameters);
+            dtTipoTratamiento = dsmp.Tables[dsname];
+
+            this.dgvTipoTratamiento.DataSource = dtTipoTratamiento;
+            this.dgvTipoTratamiento.Columns[0].ReadOnly = true;
+            this.dgvTipoTratamiento.Columns[3].ReadOnly = true;
+            this.dgvTipoTratamiento.Columns[4].ReadOnly = true;
+
+        }
+
+
+       
+
+        private void btnBuscarTT_Click(object sender, EventArgs e)
+        {
+            ObtenTipoTratamiento(this.txtTipoTratamiento.Text);
+
+        }
+
+        private void btnGuardarMP_Click(object sender, EventArgs e)
+        {
+            SqlDatabase sdb = new SqlDatabase();
+
+            var parameters = new Dictionary<string, object>
+            {
+
+                { "@nombre", null },
+                { "@idUsuario", Program.UsuarioLogeado.Id },
+                { "@descripcion", null },
+            };
+
+
+            DataTable changedRows = dtTipoTratamiento.GetChanges();
+            foreach (DataRow row in changedRows.Rows)
+            {
+                switch (row.RowState)
+                {
+                    case DataRowState.Added:
+                        parameters["@nombre"] = row[1];
+                        parameters["@descripcion"] = row[2];
+                        int qtyi = sdb.EjecutarNonQuery("usp_InsertTipoTratamiento", parameters);
+
+                        if (qtyi > 0)
+                        { MessageBox.Show("Registro Insertado"); }
+                        break;
+                    case DataRowState.Modified:
+                        parameters["@id"] = row[0];
+                        parameters["@nombre"] = row[1];
+                        parameters["@descripcion"] = row[2];
+                        int qtyu = sdb.EjecutarNonQuery("usp_UpdateTipoTratamiento", parameters);
+
+                        if (qtyu > 0)
+                        { MessageBox.Show("Registro Actualizado"); }
+
+                        break;
+                    case DataRowState.Deleted:
+                        MessageBox.Show("del");
+
+                        break;
+                }
+            }
         }
     }
 }

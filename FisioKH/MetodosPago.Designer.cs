@@ -31,15 +31,16 @@ namespace FisioKH
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MetodosPago));
             this.dgvMetodoPago = new System.Windows.Forms.DataGridView();
-            this.btnBuscarMP = new FisioKH.Boton();
             this.lblNombreMP = new System.Windows.Forms.Label();
             this.txtMetodoPago = new System.Windows.Forms.TextBox();
             this.btnGuardarMP = new FisioKH.Boton();
+            this.btnBuscarMP = new FisioKH.Boton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMetodoPago)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvMetodoPago
             // 
+            this.dgvMetodoPago.AllowUserToDeleteRows = false;
             this.dgvMetodoPago.AllowUserToOrderColumns = true;
             this.dgvMetodoPago.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvMetodoPago.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -47,20 +48,6 @@ namespace FisioKH
             this.dgvMetodoPago.Name = "dgvMetodoPago";
             this.dgvMetodoPago.Size = new System.Drawing.Size(468, 224);
             this.dgvMetodoPago.TabIndex = 0;
-            // 
-            // btnBuscarMP
-            // 
-            this.btnBuscarMP.FlatAppearance.BorderSize = 2;
-            this.btnBuscarMP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnBuscarMP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnBuscarMP.Location = new System.Drawing.Point(238, 14);
-            this.btnBuscarMP.Margin = new System.Windows.Forms.Padding(10);
-            this.btnBuscarMP.Name = "btnBuscarMP";
-            this.btnBuscarMP.Size = new System.Drawing.Size(95, 40);
-            this.btnBuscarMP.TabIndex = 1;
-            this.btnBuscarMP.Text = "Buscar";
-            this.btnBuscarMP.UseVisualStyleBackColor = true;
-            this.btnBuscarMP.Click += new System.EventHandler(this.btnBuscarMP_Click);
             // 
             // lblNombreMP
             // 
@@ -94,6 +81,20 @@ namespace FisioKH
             this.btnGuardarMP.Text = "Guardar Cambios";
             this.btnGuardarMP.UseVisualStyleBackColor = true;
             this.btnGuardarMP.Click += new System.EventHandler(this.btnGuardarMP_Click);
+            // 
+            // btnBuscarMP
+            // 
+            this.btnBuscarMP.FlatAppearance.BorderSize = 2;
+            this.btnBuscarMP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBuscarMP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnBuscarMP.Location = new System.Drawing.Point(238, 14);
+            this.btnBuscarMP.Margin = new System.Windows.Forms.Padding(10);
+            this.btnBuscarMP.Name = "btnBuscarMP";
+            this.btnBuscarMP.Size = new System.Drawing.Size(95, 40);
+            this.btnBuscarMP.TabIndex = 1;
+            this.btnBuscarMP.Text = "Buscar";
+            this.btnBuscarMP.UseVisualStyleBackColor = true;
+            this.btnBuscarMP.Click += new System.EventHandler(this.btnBuscarMP_Click);
             // 
             // MetodosPago
             // 

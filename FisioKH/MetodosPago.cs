@@ -44,9 +44,7 @@ namespace FisioKH
             this.dgvMetodoPago.Columns[0].ReadOnly = true;
             this.dgvMetodoPago.Columns[3].ReadOnly = true;
             this.dgvMetodoPago.Columns[4].ReadOnly = true;
-
-
-
+ 
         }
 
         private void btnBuscarMP_Click(object sender, EventArgs e)
