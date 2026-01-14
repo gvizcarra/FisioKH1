@@ -53,7 +53,21 @@
     <Compile Include="boton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="calendarioFkh.cs">
+      <SubType>UserControl</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="calendarioFkh.Designer.cs">
+      <DependentUpon>calendarioFkh.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="configSettings.cs" />
+    <Compile Include="EventDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EventDetailsForm.Designer.cs">
+      <DependentUpon>EventDetailsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FisioKHApp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +79,20 @@
     </Compile>
     <Compile Include="MetodosPago.Designer.cs">
       <DependentUpon>MetodosPago.cs</DependentUpon>
+    </Compile>
+    <Compile Include="micalendario.cs">
+      <SubType>Form</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="micalendario.Designer.cs">
+      <DependentUpon>micalendario.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="MyCalendarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MyCalendarForm.Designer.cs">
+      <DependentUpon>MyCalendarForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Pacientes.cs">
       <SubType>Form</SubType>
@@ -88,11 +116,26 @@
       <DependentUpon>Tratamientos.cs</DependentUpon>
     </Compile>
     <Compile Include="usuario.cs" />
+    <EmbeddedResource Include="calendarioFkh.resx">
+      <DependentUpon>calendarioFkh.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EventDetailsForm.resx">
+      <DependentUpon>EventDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FisioKHApp.resx">
       <DependentUpon>FisioKHApp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MetodosPago.resx">
       <DependentUpon>MetodosPago.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="micalendario.resx">
+      <DependentUpon>micalendario.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyCalendarForm.resx">
+      <DependentUpon>MyCalendarForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pacientes.resx">
       <DependentUpon>Pacientes.cs</DependentUpon>
