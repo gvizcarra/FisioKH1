@@ -19,7 +19,7 @@ namespace FisioKH
         private Panel panelWeek;
         private Panel panelDay;
 
-        private List<CalendarEventx> Events = new List<CalendarEventx>();
+        private new List<CalendarEventx> Events = new List<CalendarEventx>();
 
         enum CalendarView { Month, Week, Day }
         private CalendarView currentView = CalendarView.Month;
