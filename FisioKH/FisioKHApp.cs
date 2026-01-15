@@ -63,11 +63,19 @@ namespace FisioKH
         {
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
+            this.fisioKHCalendar1.EventClick += MyCalendar_EventClick;
 
             this.fisioKHCalendar1.DataSource = InitStaticDataSet();
             this.fisioKHCalendar1.RefreshCurrentView();
            // DesHabilitaTabs(ObtentabsSeguras());
         }
+
+        private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
+        {
+            // Handle the event when an event is clicked in the calendar
+            MessageBox.Show($"Cita: {e.Title}\nInicio: {e.StartTime}\nFin: {e.EndTime}\nIdCita: {e.IdCita}");
+        }
+
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {

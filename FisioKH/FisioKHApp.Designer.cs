@@ -37,6 +37,7 @@ namespace FisioKH
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tbInicio = new System.Windows.Forms.TabPage();
             this.boton1 = new FisioKH.Boton();
+            this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.btnLogin = new FisioKH.Boton();
@@ -53,7 +54,6 @@ namespace FisioKH
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tbReportes = new System.Windows.Forms.TabPage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
@@ -107,6 +107,16 @@ namespace FisioKH
             this.boton1.UseVisualStyleBackColor = true;
             this.boton1.Click += new System.EventHandler(this.boton1_Click);
             // 
+            // lstBoxLogs
+            // 
+            this.lstBoxLogs.FormattingEnabled = true;
+            this.lstBoxLogs.ItemHeight = 21;
+            this.lstBoxLogs.Location = new System.Drawing.Point(6, 581);
+            this.lstBoxLogs.Name = "lstBoxLogs";
+            this.lstBoxLogs.Size = new System.Drawing.Size(1152, 46);
+            this.lstBoxLogs.TabIndex = 1;
+            this.lstBoxLogs.Click += new System.EventHandler(this.lstBoxLogs_Click);
+            // 
             // groupBox1
             // 
             this.groupBox1.AutoSize = true;
@@ -119,9 +129,9 @@ namespace FisioKH
             this.groupBox1.Controls.Add(this.txtPassPin);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(236, 44);
+            this.groupBox1.Location = new System.Drawing.Point(236, 15);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(615, 446);
+            this.groupBox1.Size = new System.Drawing.Size(615, 560);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
@@ -222,7 +232,7 @@ namespace FisioKH
             this.tbAdmin.Location = new System.Drawing.Point(4, 30);
             this.tbAdmin.Name = "tbAdmin";
             this.tbAdmin.Padding = new System.Windows.Forms.Padding(3);
-            this.tbAdmin.Size = new System.Drawing.Size(1154, 575);
+            this.tbAdmin.Size = new System.Drawing.Size(1154, 630);
             this.tbAdmin.TabIndex = 1;
             this.tbAdmin.Text = "Administración";
             this.tbAdmin.UseVisualStyleBackColor = true;
@@ -304,7 +314,7 @@ namespace FisioKH
             this.tbReportes.Location = new System.Drawing.Point(4, 30);
             this.tbReportes.Name = "tbReportes";
             this.tbReportes.Padding = new System.Windows.Forms.Padding(3);
-            this.tbReportes.Size = new System.Drawing.Size(1154, 575);
+            this.tbReportes.Size = new System.Drawing.Size(1154, 630);
             this.tbReportes.TabIndex = 2;
             this.tbReportes.Text = "Reportes";
             this.tbReportes.UseVisualStyleBackColor = true;
@@ -318,16 +328,6 @@ namespace FisioKH
             this.pictureBox3.Size = new System.Drawing.Size(682, 491);
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
-            // 
-            // lstBoxLogs
-            // 
-            this.lstBoxLogs.FormattingEnabled = true;
-            this.lstBoxLogs.ItemHeight = 21;
-            this.lstBoxLogs.Location = new System.Drawing.Point(6, 581);
-            this.lstBoxLogs.Name = "lstBoxLogs";
-            this.lstBoxLogs.Size = new System.Drawing.Size(1152, 46);
-            this.lstBoxLogs.TabIndex = 1;
-            this.lstBoxLogs.Click += new System.EventHandler(this.lstBoxLogs_Click);
             // 
             // contextMenuStrip1
             // 

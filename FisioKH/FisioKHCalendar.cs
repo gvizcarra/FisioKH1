@@ -10,17 +10,18 @@ namespace FisioKH
 {
     public partial class FisioKHCalendar : UserControl
     {
-        private const int HourHeight = 38;
+        private const int HourHeight = 38;  // Reduced height for tighter view
         private const int HeaderHeight = 30;
-        private const int StartHour = 8;  // 7 AM
-        private const int EndHour = 21;   // 9 PM
+        private const int StartHour = 8;  // Start at 8 AM
+        private const int EndHour = 21;   // End at 9 PM
 
         private Panel panelMonth;
         private Panel panelWeek;
         private Panel panelDay;
 
-        private new List<CalendarEventKH> Events = new List<CalendarEventKH>();
+        private List<CalendarEventKH> Events = new List<CalendarEventKH>();
 
+        // Navigation controls
         private FlowLayoutPanel topBar;
         private Button btnMonth, btnWeek, btnDay, btnPrev, btnNext;
         private Label lblCurrentDay;
@@ -29,12 +30,24 @@ namespace FisioKH
         enum CalendarView { Month, Week, Day }
         private CalendarView currentView = CalendarView.Day;
 
+        // Property for external DataTable binding
         [Browsable(false)]
         public DataTable DataSource { get; set; }
 
         public DateTime CurrentDate { get; set; }
 
         // ================= CONSTRUCTOR =================
+
+        private Panel CreateCalendarPanel()
+{
+    return new Panel
+    {
+        Dock = DockStyle.Fill,
+        AutoScroll = true,
+        BackColor = Color.White,
+        Visible = false
+    };
+}
         public FisioKHCalendar()
         {
             InitializeComponent();
@@ -76,17 +89,14 @@ namespace FisioKH
             btnNext = new Button { Text = ">", Font = new Font("Segoe UI", 8), Width = 30 };
             lblCurrentDay = new Label { AutoSize = true, Text = "", TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(5, 5, 0, 0) };
 
-            // NEW: DateTimePicker for jumping to a date
+            // DateTimePicker for jumping to a date
             dtpJump = new DateTimePicker
             {
                 Format = DateTimePickerFormat.Short,
                 Width = 100,
-
+                Font = new Font("Segoe UI", 8),
+                Value = CurrentDate
             };
-            dtpJump.Font = new Font("Segoe UI", 8);  // Adjust the font size
-            dtpJump.Format = DateTimePickerFormat.Short;
-            dtpJump.Width = 100;  // Set the width of the DateTimePicker (adjust based on your layout)
-            dtpJump.DropDownAlign = LeftRightAlignment.Right;
             dtpJump.ValueChanged += (s, e) =>
             {
                 CurrentDate = dtpJump.Value.Date;
@@ -105,13 +115,8 @@ namespace FisioKH
             Controls.Add(topBar);
         }
 
-        private void NavigateDay(int delta)
-        {
-            CurrentDate = CurrentDate.AddDays(delta);
-            RefreshCurrentView();
-        }
-
-        private void ChangeDate(int delta)
+       
+    private void ChangeDate(int delta)
         {
             if (currentView == CalendarView.Month)
             {
@@ -127,18 +132,6 @@ namespace FisioKH
             }
 
             RefreshCurrentView();
-        }
-
-        // ================= PANELS =================
-        private Panel CreateCalendarPanel()
-        {
-            return new Panel
-            {
-                Dock = DockStyle.Fill,
-                AutoScroll = true,
-                BackColor = Color.White,
-                Visible = false
-            };
         }
 
         // ================= DATA =================
@@ -248,9 +241,7 @@ namespace FisioKH
                         int y = 22;
                         foreach (var ev in Events.Where(e => e.StartTime.Date == date))
                         {
-                            cell.Controls.Add(CreateEventPanel(ev,
-                                new Size(cell.Width - 6, 18),
-                                new Point(3, y)));
+                            cell.Controls.Add(CreateEventPanel(ev, new Size(cell.Width - 6, 18), new Point(3, y)));
                             y += 20;
                         }
                     }
@@ -376,19 +367,30 @@ namespace FisioKH
                 Size = size,
                 Location = loc,
                 BackColor = ev.Color,
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                Cursor = Cursors.Hand // Indicate clickable
             };
 
-            p.Controls.Add(new Label
+            Label lbl = new Label
             {
                 Text = ev.Title,
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                BackColor = Color.Transparent
-            });
+                BackColor = Color.Transparent,
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            p.Controls.Add(lbl);
+
+            // Click handler for the event
+            p.Click += (s, e) => EventClick?.Invoke(this, ev); // Event click fired
+            lbl.Click += (s, e) => EventClick?.Invoke(this, ev); // Also fire if label clicked
 
             return p;
         }
+
+        // ================= CLICKABLE EVENT =================
+        public event EventHandler<CalendarEventKH> EventClick;
 
         // ================= HELPER CLASSES =================
         public class CalendarEventKH
@@ -411,40 +413,20 @@ namespace FisioKH
         // ================= BUILD DAY LAYOUT =================
         private List<EventLayoutInfo> BuildDayLayout(DateTime day)
         {
-            // Filter events for the current day and sort by start time
-            var list = Events.Where(e => e.StartTime.Date == day.Date)
-                             .OrderBy(e => e.StartTime)
-                             .ToList();
-
+            var list = Events.Where(e => e.StartTime.Date == day.Date).OrderBy(e => e.StartTime).ToList();
             var result = new List<EventLayoutInfo>();
 
             foreach (var ev in list)
             {
                 int slot = 0;
-
-                // Find the first slot where this event does not overlap
-                while (result.Any(r =>
-                    r.SlotIndex == slot &&
-                    r.Event.EndTime > ev.StartTime &&
-                    r.Event.StartTime < ev.EndTime))
-                {
+                while (result.Any(r => r.SlotIndex == slot && r.Event.EndTime > ev.StartTime && r.Event.StartTime < ev.EndTime))
                     slot++;
-                }
 
-                result.Add(new EventLayoutInfo
-                {
-                    Event = ev,
-                    SlotIndex = slot
-                });
+                result.Add(new EventLayoutInfo { Event = ev, SlotIndex = slot });
             }
 
-            // Calculate slot count for each event (number of overlapping events)
             foreach (var r in result)
-            {
-                r.SlotCount = result.Count(x =>
-                    x.Event.EndTime > r.Event.StartTime &&
-                    x.Event.StartTime < r.Event.EndTime);
-            }
+                r.SlotCount = result.Count(x => x.Event.EndTime > r.Event.StartTime && x.Event.StartTime < r.Event.EndTime);
 
             return result;
         }
@@ -468,9 +450,9 @@ namespace FisioKH
             btnPrev.Enabled = btnNext.Enabled = currentView == CalendarView.Day || currentView == CalendarView.Month;
 
             // Sync DatePicker
-            dtpJump.ValueChanged -= DtpJump_ValueChanged; // temporarily remove handler
+            dtpJump.ValueChanged -= DtpJump_ValueChanged;
             dtpJump.Value = CurrentDate;
-            dtpJump.ValueChanged += DtpJump_ValueChanged; // re-attach
+            dtpJump.ValueChanged += DtpJump_ValueChanged;
         }
 
         private void DtpJump_ValueChanged(object sender, EventArgs e)
