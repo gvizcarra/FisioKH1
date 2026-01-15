@@ -44,6 +44,7 @@ namespace FisioKH
             this.txtPassPin = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbIngresos = new System.Windows.Forms.TabPage();
+            this.fisioKHCalendar1 = new FisioKH.FisioKHCalendar();
             this.tbAdmin = new System.Windows.Forms.TabPage();
             this.btnMetodosPago = new FisioKH.Boton();
             this.btnTratamientos = new FisioKH.Boton();
@@ -54,7 +55,6 @@ namespace FisioKH
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.fisioKHCalendar1 = new FisioKH.FisioKHCalendar();
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -76,18 +76,19 @@ namespace FisioKH
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.RightToLeftLayout = true;
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1162, 609);
+            this.tabControl1.Size = new System.Drawing.Size(1162, 664);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
             // 
             // tbInicio
             // 
             this.tbInicio.Controls.Add(this.boton1);
+            this.tbInicio.Controls.Add(this.lstBoxLogs);
             this.tbInicio.Controls.Add(this.groupBox1);
             this.tbInicio.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbInicio.Location = new System.Drawing.Point(4, 30);
             this.tbInicio.Name = "tbInicio";
-            this.tbInicio.Size = new System.Drawing.Size(1154, 575);
+            this.tbInicio.Size = new System.Drawing.Size(1154, 630);
             this.tbInicio.TabIndex = 3;
             this.tbInicio.Text = "Inicio - Login";
             this.tbInicio.UseVisualStyleBackColor = true;
@@ -97,7 +98,7 @@ namespace FisioKH
             this.boton1.FlatAppearance.BorderSize = 2;
             this.boton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.boton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.boton1.Location = new System.Drawing.Point(0, 549);
+            this.boton1.Location = new System.Drawing.Point(6, 550);
             this.boton1.Margin = new System.Windows.Forms.Padding(10);
             this.boton1.Name = "boton1";
             this.boton1.Size = new System.Drawing.Size(112, 27);
@@ -120,7 +121,7 @@ namespace FisioKH
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(236, 44);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(615, 563);
+            this.groupBox1.Size = new System.Drawing.Size(615, 446);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
@@ -194,10 +195,21 @@ namespace FisioKH
             this.tbIngresos.Location = new System.Drawing.Point(4, 30);
             this.tbIngresos.Name = "tbIngresos";
             this.tbIngresos.Padding = new System.Windows.Forms.Padding(3);
-            this.tbIngresos.Size = new System.Drawing.Size(1154, 575);
+            this.tbIngresos.Size = new System.Drawing.Size(1154, 630);
             this.tbIngresos.TabIndex = 0;
             this.tbIngresos.Text = "Ingresos";
             this.tbIngresos.UseVisualStyleBackColor = true;
+            // 
+            // fisioKHCalendar1
+            // 
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 1, 14, 0, 0, 0, 0);
+            this.fisioKHCalendar1.DataSource = null;
+            this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
+            this.fisioKHCalendar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.fisioKHCalendar1.Name = "fisioKHCalendar1";
+            this.fisioKHCalendar1.Size = new System.Drawing.Size(1148, 624);
+            this.fisioKHCalendar1.TabIndex = 0;
             // 
             // tbAdmin
             // 
@@ -310,10 +322,10 @@ namespace FisioKH
             // lstBoxLogs
             // 
             this.lstBoxLogs.FormattingEnabled = true;
-            this.lstBoxLogs.ItemHeight = 17;
-            this.lstBoxLogs.Location = new System.Drawing.Point(4, 613);
+            this.lstBoxLogs.ItemHeight = 21;
+            this.lstBoxLogs.Location = new System.Drawing.Point(6, 581);
             this.lstBoxLogs.Name = "lstBoxLogs";
-            this.lstBoxLogs.Size = new System.Drawing.Size(1152, 55);
+            this.lstBoxLogs.Size = new System.Drawing.Size(1152, 46);
             this.lstBoxLogs.TabIndex = 1;
             this.lstBoxLogs.Click += new System.EventHandler(this.lstBoxLogs_Click);
             // 
@@ -322,21 +334,11 @@ namespace FisioKH
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // fisioKHCalendar1
-            // 
-            this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
-            this.fisioKHCalendar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.fisioKHCalendar1.Name = "fisioKHCalendar1";
-            this.fisioKHCalendar1.Size = new System.Drawing.Size(1148, 569);
-            this.fisioKHCalendar1.TabIndex = 0;
-            // 
             // FisioKHApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1164, 681);
-            this.Controls.Add(this.lstBoxLogs);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

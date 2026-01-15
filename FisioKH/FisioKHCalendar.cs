@@ -10,9 +10,9 @@ namespace FisioKH
 {
     public partial class FisioKHCalendar : UserControl
     {
-        private const int HourHeight = 60;
+        private const int HourHeight = 38;
         private const int HeaderHeight = 30;
-        private const int StartHour = 7;  // 7 AM
+        private const int StartHour = 8;  // 7 AM
         private const int EndHour = 21;   // 9 PM
 
         private Panel panelMonth;
@@ -350,7 +350,7 @@ namespace FisioKH
             foreach (var l in layouts)
             {
                 int y = HeaderHeight + (int)((l.Event.StartTime.Hour + l.Event.StartTime.Minute / 60.0 - StartHour) * HourHeight);
-                int h = Math.Max(25, (int)((l.Event.EndTime - l.Event.StartTime).TotalMinutes / 60 * HourHeight));
+                int h = Math.Max(25, (int)((l.Event.EndTime - l.Event.StartTime).TotalMinutes / 30 * HourHeight));
                 int slotW = width / l.SlotCount;
                 int x = labelWidth + l.SlotIndex * slotW;
 
