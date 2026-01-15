@@ -6,7 +6,7 @@ namespace FisioKH
 {
     public partial class EventDetailsForm : Form
     {
-        public CalendarEventx Event { get; private set; }
+        public FisioKHCalendar Event { get; private set; }
         public bool Deleted { get; private set; }
 
         // REQUIRED for Designer
@@ -16,22 +16,22 @@ namespace FisioKH
         }
 
         // Runtime constructor
-        public EventDetailsForm(CalendarEventx ev) : this()
+        public EventDetailsForm(FisioKHCalendar ev) : this()
         {
             Event = ev;
 
-            txtTitle.Text = ev.Title;
+           /* txtTitle.Text = ev..Title;
             dtStart.Value = ev.StartTime;
             dtEnd.Value = ev.EndTime;
-            pnlColor.BackColor = ev.Color;
+            pnlColor.BackColor = ev.Color;*/
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Event.Title = txtTitle.Text;
+           /* Event.Title = txtTitle.Text;
             Event.StartTime = dtStart.Value;
             Event.EndTime = dtEnd.Value;
-            Event.Color = pnlColor.BackColor;
+            Event.Color = pnlColor.BackColor;*/
 
             DialogResult = DialogResult.OK;
         }

@@ -65,7 +65,7 @@ namespace FisioKH
             this.Text = configSettings.ObtenNombreApp;
 
             this.fisioKHCalendar1.DataSource = InitStaticDataSet();
-
+            this.fisioKHCalendar1.RefreshCurrentView();
            // DesHabilitaTabs(ObtentabsSeguras());
         }
 

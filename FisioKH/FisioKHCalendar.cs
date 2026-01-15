@@ -1,71 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.ComponentModel;
-
 
 namespace FisioKH
 {
     public partial class FisioKHCalendar : UserControl
     {
-        // ===== Constants for hours range =====
-        private const int StartHour = 7;  // 7 AM
-        private const int EndHour = 21;   // 9 PM
         private const int HourHeight = 60;
         private const int HeaderHeight = 30;
-        private const int LabelWidth = 60;
+        private const int StartHour = 7;  // 7 AM
+        private const int EndHour = 21;   // 9 PM
 
-        // ===== Fields =====
         private Panel panelMonth;
         private Panel panelWeek;
         private Panel panelDay;
 
-        private Button btnPrev;
-        private Button btnNext;
-        private Button btnToday;
-        private Button btnMonth;
-        private Button btnWeek;
-        private Button btnDay;
-        private Label lblCurrentDay;  // New label to show current day in Day view
-
         private new List<CalendarEventKH> Events = new List<CalendarEventKH>();
 
-        private CalendarView currentView = CalendarView.Month;
+        private FlowLayoutPanel topBar;
+        private Button btnMonth, btnWeek, btnDay, btnPrev, btnNext;
+        private Label lblCurrentDay;
+        private DateTimePicker dtpJump;  // DateTimePicker to jump to any date
 
-        // Current date shown in calendar
-        private DateTime currentDate = DateTime.Today;
+        enum CalendarView { Month, Week, Day }
+        private CalendarView currentView = CalendarView.Day;
+
         [Browsable(false)]
-        public DateTime CurrentDate
-        {
-            get => currentDate;
-            set
-            {
-                if (currentDate.Date != value.Date)
-                {
-                    currentDate = value.Date;
-                    RefreshCurrentView();
-                    UpdateCurrentDayLabel();
-                }
-            }
-        }
+        public DataTable DataSource { get; set; }
 
-        // External DataTable datasource for events
-        private DataTable dataSource;
-        public DataTable DataSource
-        {
-            get => dataSource;
-            set
-            {
-                dataSource = value;
-                LoadEventsFromDataSource();
-                RefreshCurrentView();
-            }
-        }
+        public DateTime CurrentDate { get; set; }
 
-        // Constructor
+        // ================= CONSTRUCTOR =================
         public FisioKHCalendar()
         {
             InitializeComponent();
@@ -73,71 +42,94 @@ namespace FisioKH
             Width = 1200;
             Height = 900;
 
+            CurrentDate = DateTime.Today;
+
             BuildTopBar();
 
-            // Create panels
             panelMonth = CreateCalendarPanel();
             panelWeek = CreateCalendarPanel();
             panelDay = CreateCalendarPanel();
 
-            Controls.Add(panelMonth); // bottom
-            Controls.Add(panelWeek);  // middle
-            Controls.Add(panelDay);   // top
+            Controls.Add(panelMonth);
+            Controls.Add(panelWeek);
+            Controls.Add(panelDay);
 
-            ShowMonth();
+            ShowDay(); // Default view
 
             Resize += (s, e) => RefreshCurrentView();
         }
 
+        // ================= TOP BAR =================
         private void BuildTopBar()
         {
-            Font topBarFont = new Font("Segoe UI", 9);
-
-            FlowLayoutPanel topBar = new FlowLayoutPanel
+            topBar = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
-                Height = 35,
-                Padding = new Padding(5, 5, 5, 5),
-                FlowDirection = FlowDirection.LeftToRight,
-                AutoSize = true
+                Height = 32
             };
 
-            btnPrev = new Button { Text = "<", Font = topBarFont, Height = 26, Width = 32 };
-            btnPrev.Click += (s, e) => ChangeDate(-1);
+            btnMonth = new Button { Text = "Mes", Font = new Font("Segoe UI", 8), Width = 60 };
+            btnWeek = new Button { Text = "Semana", Font = new Font("Segoe UI", 8), Width = 60 };
+            btnDay = new Button { Text = "Día", Font = new Font("Segoe UI", 8), Width = 60 };
 
-            btnToday = new Button { Text = "Hoy", Font = topBarFont, Height = 26, Width = 60 };
-            btnToday.Click += (s, e) => GoToToday();
+            btnPrev = new Button { Text = "<", Font = new Font("Segoe UI", 8), Width = 30 };
+            btnNext = new Button { Text = ">", Font = new Font("Segoe UI", 8), Width = 30 };
+            lblCurrentDay = new Label { AutoSize = true, Text = "", TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(5, 5, 0, 0) };
 
-            btnNext = new Button { Text = ">", Font = topBarFont, Height = 26, Width = 32 };
-            btnNext.Click += (s, e) => ChangeDate(1);
-
-            lblCurrentDay = new Label
+            // NEW: DateTimePicker for jumping to a date
+            dtpJump = new DateTimePicker
             {
-                AutoSize = true,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                ForeColor = Color.DarkBlue,
-                Visible = false, // initially hidden (only shown in Day view)
-                Padding = new Padding(8, 4, 8, 4),
-                TextAlign = ContentAlignment.MiddleCenter
+                Format = DateTimePickerFormat.Short,
+                Width = 100,
+
+            };
+            dtpJump.Font = new Font("Segoe UI", 8);  // Adjust the font size
+            dtpJump.Format = DateTimePickerFormat.Short;
+            dtpJump.Width = 100;  // Set the width of the DateTimePicker (adjust based on your layout)
+            dtpJump.DropDownAlign = LeftRightAlignment.Right;
+            dtpJump.ValueChanged += (s, e) =>
+            {
+                CurrentDate = dtpJump.Value.Date;
+                RefreshCurrentView();
             };
 
-            btnMonth = new Button { Text = "Mes", Font = topBarFont, Height = 26, Width = 60 };
             btnMonth.Click += (s, e) => ShowMonth();
-
-            btnWeek = new Button { Text = "Semana", Font = topBarFont, Height = 26, Width = 60 };
             btnWeek.Click += (s, e) => ShowWeek();
-
-            btnDay = new Button { Text = "Día", Font = topBarFont, Height = 26, Width = 60 };
             btnDay.Click += (s, e) => ShowDay();
 
-            topBar.Controls.AddRange(new Control[] {
-                btnPrev, btnToday, btnNext, lblCurrentDay,
-                btnMonth, btnWeek, btnDay
-            });
+            btnPrev.Click += (s, e) => ChangeDate(-1);  // Move back
+            btnNext.Click += (s, e) => ChangeDate(1);   // Move forward
+
+            topBar.Controls.AddRange(new Control[] { btnMonth, btnWeek, btnDay, btnPrev, lblCurrentDay, btnNext, dtpJump });
 
             Controls.Add(topBar);
         }
 
+        private void NavigateDay(int delta)
+        {
+            CurrentDate = CurrentDate.AddDays(delta);
+            RefreshCurrentView();
+        }
+
+        private void ChangeDate(int delta)
+        {
+            if (currentView == CalendarView.Month)
+            {
+                CurrentDate = CurrentDate.AddMonths(delta);  // Move by one month
+            }
+            else if (currentView == CalendarView.Week)
+            {
+                CurrentDate = CurrentDate.AddDays(delta * 7);  // Move by one week
+            }
+            else if (currentView == CalendarView.Day)
+            {
+                CurrentDate = CurrentDate.AddDays(delta);  // Move by one day
+            }
+
+            RefreshCurrentView();
+        }
+
+        // ================= PANELS =================
         private Panel CreateCalendarPanel()
         {
             return new Panel
@@ -149,24 +141,16 @@ namespace FisioKH
             };
         }
 
-        // ================== Data loading ==================
+        // ================= DATA =================
         private void LoadEventsFromDataSource()
         {
             Events.Clear();
+            DataTable table = DataSource;
 
-            if (dataSource == null) return;
+            if (table == null) return;
 
-            foreach (DataRow r in dataSource.Rows)
+            foreach (DataRow r in table.Rows)
             {
-                // Defensive checks
-                if (!r.Table.Columns.Contains("Id") ||
-                    !r.Table.Columns.Contains("Title") ||
-                    !r.Table.Columns.Contains("StartTime") ||
-                    !r.Table.Columns.Contains("EndTime") ||
-                    !r.Table.Columns.Contains("Color") ||
-                    !r.Table.Columns.Contains("IdCita"))
-                    continue;
-
                 Events.Add(new CalendarEventKH
                 {
                     Id = (Guid)r["Id"],
@@ -174,138 +158,67 @@ namespace FisioKH
                     StartTime = (DateTime)r["StartTime"],
                     EndTime = (DateTime)r["EndTime"],
                     Color = Color.FromName(r["Color"].ToString()),
-                    IdCita = Convert.ToInt32(r["IdCita"])
+                    IdCita = r.Table.Columns.Contains("IdCita") ? Convert.ToInt32(r["IdCita"]) : 0
                 });
             }
         }
 
-        // ================== Navigation ==================
-        private void ChangeDate(int delta)
-        {
-            switch (currentView)
-            {
-                case CalendarView.Month:
-                    CurrentDate = CurrentDate.AddMonths(delta);
-                    break;
-                case CalendarView.Week:
-                    CurrentDate = CurrentDate.AddDays(delta * 7);
-                    break;
-                case CalendarView.Day:
-                    CurrentDate = CurrentDate.AddDays(delta);
-                    break;
-            }
-        }
-
-        private void GoToToday()
-        {
-            CurrentDate = DateTime.Today;
-        }
-
-        // ================== View switching ==================
+        // ================= VIEW SWITCH =================
         private void ShowMonth()
         {
             currentView = CalendarView.Month;
-
             panelMonth.Visible = true;
             panelWeek.Visible = false;
             panelDay.Visible = false;
-
             panelMonth.BringToFront();
-
-            UpdateNavigationButtons();
-            UpdateCurrentDayLabel();
-
-            RenderMonth();
+            UpdateDayNavigation();
+            RenderMonthView();
         }
 
         private void ShowWeek()
         {
             currentView = CalendarView.Week;
-
             panelMonth.Visible = false;
             panelWeek.Visible = true;
             panelDay.Visible = false;
-
             panelWeek.BringToFront();
-
-            UpdateNavigationButtons();
-            UpdateCurrentDayLabel();
-
-            RenderWeek();
+            UpdateDayNavigation();
+            RenderWeekView();
         }
 
         private void ShowDay()
         {
             currentView = CalendarView.Day;
-
             panelMonth.Visible = false;
             panelWeek.Visible = false;
             panelDay.Visible = true;
-
             panelDay.BringToFront();
-
-            UpdateNavigationButtons();
-            UpdateCurrentDayLabel();
-
-            RenderDay();
-            CenterDayOnNow();
+            UpdateDayNavigation();
+            RenderDayView();
+            CenterDayViewOnNow();
         }
 
-        private void UpdateNavigationButtons()
-        {
-            // Navigation buttons enabled only in Day view
-            bool enableNav = currentView == CalendarView.Day;
-
-            btnPrev.Enabled = enableNav;
-            btnNext.Enabled = enableNav;
-            // btnToday can remain enabled always
-        }
-
-        private void UpdateCurrentDayLabel()
-        {
-            // Show the label only in Day view
-            lblCurrentDay.Visible = currentView == CalendarView.Day;
-
-            if (lblCurrentDay.Visible)
-            {
-                lblCurrentDay.Text = CurrentDate.ToString("dddd, dd MMMM yyyy");
-                // Capitalize first letter (optional)
-                lblCurrentDay.Text = char.ToUpper(lblCurrentDay.Text[0]) + lblCurrentDay.Text.Substring(1);
-            }
-        }
-
-        private void RefreshCurrentView()
+        public void RefreshCurrentView()
         {
             LoadEventsFromDataSource();
-
-            switch (currentView)
-            {
-                case CalendarView.Month:
-                    RenderMonth();
-                    break;
-                case CalendarView.Week:
-                    RenderWeek();
-                    break;
-                case CalendarView.Day:
-                    RenderDay();
-                    CenterDayOnNow();
-                    break;
-            }
-
-            UpdateCurrentDayLabel();
+            if (currentView == CalendarView.Month) RenderMonthView();
+            if (currentView == CalendarView.Week) RenderWeekView();
+            if (currentView == CalendarView.Day) RenderDayView();
+            UpdateDayNavigation();
         }
 
-        // ================== Month View ==================
-        private void RenderMonth()
+        // ================= MONTH =================
+        private void RenderMonthView()
         {
             panelMonth.Controls.Clear();
 
+            string[] diasSemana = { "Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb" };
             int cols = 7;
             int cellWidth = panelMonth.ClientSize.Width / cols;
             int cellHeight = 110;
 
             DateTime first = new DateTime(CurrentDate.Year, CurrentDate.Month, 1);
-            int offset = (int)first.DayOfWeek; // Sunday = 0
+            int offset = (int)first.DayOfWeek;
             int days = DateTime.DaysInMonth(first.Year, first.Month);
 
             int day = 1 - offset;
@@ -325,7 +238,6 @@ namespace FisioKH
                     if (day > 0 && day <= days)
                     {
                         DateTime date = new DateTime(first.Year, first.Month, day);
-
                         cell.Controls.Add(new Label
                         {
                             Text = day.ToString(),
@@ -350,24 +262,21 @@ namespace FisioKH
             }
         }
 
-        // ================== Week View ==================
-        private void RenderWeek()
+        // ================= WEEK =================
+        private void RenderWeekView()
         {
             panelWeek.Controls.Clear();
+            DateTime start = CurrentDate.AddDays(-(int)CurrentDate.DayOfWeek);
+            int labelWidth = 60;
+            int colWidth = (panelWeek.ClientSize.Width - labelWidth) / 7;
 
-            DateTime startOfWeek = CurrentDate.AddDays(-(int)CurrentDate.DayOfWeek);
-
-            int colWidth = (panelWeek.ClientSize.Width - LabelWidth) / 7;
-
-            string[] spanishWeekDays = new[] { "Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb" };
-
-            // Weekday headers
+            string[] diasSemana = { "Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb" };
             for (int d = 0; d < 7; d++)
             {
                 panelWeek.Controls.Add(new Label
                 {
-                    Text = spanishWeekDays[d] + " " + startOfWeek.AddDays(d).Day,
-                    Location = new Point(LabelWidth + d * colWidth, 0),
+                    Text = diasSemana[d] + " " + start.AddDays(d).Day,
+                    Location = new Point(labelWidth + d * colWidth, 0),
                     Size = new Size(colWidth, HeaderHeight),
                     TextAlign = ContentAlignment.MiddleCenter,
                     BorderStyle = BorderStyle.FixedSingle,
@@ -375,8 +284,7 @@ namespace FisioKH
                 });
             }
 
-            // Hours and grid lines from StartHour to EndHour
-            for (int h = StartHour; h < EndHour; h++)
+            for (int h = StartHour; h <= EndHour; h++)
             {
                 int y = HeaderHeight + (h - StartHour) * HourHeight;
 
@@ -384,7 +292,7 @@ namespace FisioKH
                 {
                     Text = $"{h:00}:00",
                     Location = new Point(0, y),
-                    Size = new Size(LabelWidth, HourHeight),
+                    Size = new Size(labelWidth, HourHeight),
                     TextAlign = ContentAlignment.TopRight
                 });
 
@@ -392,137 +300,97 @@ namespace FisioKH
                 {
                     panelWeek.Controls.Add(new Panel
                     {
-                        Location = new Point(LabelWidth + d * colWidth, y),
+                        Location = new Point(labelWidth + d * colWidth, y),
                         Size = new Size(colWidth, 1),
                         BackColor = Color.LightGray
                     });
                 }
             }
 
-            // Render events in week view
             foreach (var ev in Events)
             {
-                int dayIndex = (int)(ev.StartTime.Date - startOfWeek).TotalDays;
+                int dayIndex = (int)(ev.StartTime.Date - start).TotalDays;
                 if (dayIndex < 0 || dayIndex > 6) continue;
 
-                double startHourDecimal = ev.StartTime.Hour + ev.StartTime.Minute / 60.0;
-                double endHourDecimal = ev.EndTime.Hour + ev.EndTime.Minute / 60.0;
-
-                if (endHourDecimal < StartHour || startHourDecimal > EndHour)
-                    continue; // Event outside visible range
-
-                int y = HeaderHeight + (int)((startHourDecimal - StartHour) * HourHeight);
-
-                int height = Math.Max(25,
-                    (int)((ev.EndTime - ev.StartTime).TotalMinutes / 60 * HourHeight));
-
-                int eventWidth = colWidth - 4;
-                int eventX = LabelWidth + dayIndex * colWidth + 2;
-
-                panelWeek.Controls.Add(CreateEventPanel(ev,
-                    new Size(eventWidth, height),
-                    new Point(eventX, y)));
+                int y = HeaderHeight + (int)((ev.StartTime.Hour + ev.StartTime.Minute / 60.0 - StartHour) * HourHeight);
+                int h = Math.Max(25, (int)((ev.EndTime - ev.StartTime).TotalMinutes / 60 * HourHeight));
+                panelWeek.Controls.Add(CreateEventPanel(ev, new Size(colWidth - 4, h), new Point(labelWidth + dayIndex * colWidth + 2, y)));
             }
         }
 
-        // ================== Day View ==================
-        private void RenderDay()
+        // ================= DAY =================
+        private void RenderDayView()
         {
             panelDay.Controls.Clear();
+            int labelWidth = 60;
 
-            bool isToday = CurrentDate.Date == DateTime.Today;
-
-            // Hours + horizontal lines
-            for (int h = StartHour; h < EndHour; h++)
+            for (int h = StartHour; h <= EndHour; h++)
             {
                 int y = HeaderHeight + (h - StartHour) * HourHeight;
 
-                Label lblHour = new Label
+                panelDay.Controls.Add(new Label
                 {
                     Text = $"{h:00}:00",
                     Location = new Point(0, y),
-                    Size = new Size(LabelWidth, HourHeight),
+                    Size = new Size(labelWidth, HourHeight),
                     TextAlign = ContentAlignment.TopRight
-                };
-                panelDay.Controls.Add(lblHour);
+                });
 
-                Panel line = new Panel
+                panelDay.Controls.Add(new Panel
                 {
-                    Location = new Point(LabelWidth, y),
-                    Size = new Size(panelDay.ClientSize.Width - LabelWidth, 1),
-                    BackColor = isToday ? Color.LightYellow : Color.LightGray
-                };
-                panelDay.Controls.Add(line);
+                    Location = new Point(labelWidth, y),
+                    Size = new Size(panelDay.ClientSize.Width - labelWidth, 1),
+                    BackColor = Color.LightGray
+                });
             }
 
-            // Render events
-            var dayEvents = Events.Where(e => e.StartTime.Date == CurrentDate.Date)
-                                  .OrderBy(e => e.StartTime)
-                                  .ToList();
+            var layouts = BuildDayLayout(CurrentDate);
+            int width = panelDay.ClientSize.Width - labelWidth;
 
-            foreach (var ev in dayEvents)
+            foreach (var l in layouts)
             {
-                double startHourDecimal = ev.StartTime.Hour + ev.StartTime.Minute / 60.0;
-                double endHourDecimal = ev.EndTime.Hour + ev.EndTime.Minute / 60.0;
+                int y = HeaderHeight + (int)((l.Event.StartTime.Hour + l.Event.StartTime.Minute / 60.0 - StartHour) * HourHeight);
+                int h = Math.Max(25, (int)((l.Event.EndTime - l.Event.StartTime).TotalMinutes / 60 * HourHeight));
+                int slotW = width / l.SlotCount;
+                int x = labelWidth + l.SlotIndex * slotW;
 
-                // Clamp start and end within StartHour and EndHour for display purposes
-                startHourDecimal = Math.Max(startHourDecimal, StartHour);
-                endHourDecimal = Math.Min(endHourDecimal, EndHour);
-
-                int y = HeaderHeight + (int)((startHourDecimal - StartHour) * HourHeight);
-                int height = Math.Max(25,
-                    (int)((endHourDecimal - startHourDecimal) * HourHeight));
-
-                int eventWidth = panelDay.ClientSize.Width - LabelWidth - 6;
-                int eventX = LabelWidth + 3;
-
-                panelDay.Controls.Add(CreateEventPanel(ev,
-                    new Size(eventWidth, height),
-                    new Point(eventX, y)));
+                panelDay.Controls.Add(CreateEventPanel(l.Event, new Size(slotW - 4, h), new Point(x + 2, y)));
             }
         }
 
-        private void CenterDayOnNow()
+        private void CenterDayViewOnNow()
         {
-            if (CurrentDate.Date != DateTime.Today)
-                return;
+            if (CurrentDate.Date != DateTime.Today) return;
 
-            int y = HeaderHeight + (int)((DateTime.Now.TimeOfDay.TotalMinutes / 60) - StartHour) * HourHeight;
+            int y = HeaderHeight + (int)((DateTime.Now.Hour + DateTime.Now.Minute / 60.0 - StartHour) * HourHeight);
             if (y < HeaderHeight) y = HeaderHeight;
 
             panelDay.AutoScrollPosition = new Point(0, Math.Max(0, y - panelDay.Height / 2));
         }
 
-        // ================== Event panel creation ==================
-        private Panel CreateEventPanel(CalendarEventKH ev, Size size, Point location)
+        // ================= EVENT PANEL =================
+        private Panel CreateEventPanel(CalendarEventKH ev, Size size, Point loc)
         {
             Panel p = new Panel
             {
                 Size = size,
-                Location = location,
+                Location = loc,
                 BackColor = ev.Color,
-                BorderStyle = BorderStyle.FixedSingle,
-                Cursor = Cursors.Hand,
-                Tag = ev
+                BorderStyle = BorderStyle.FixedSingle
             };
 
-            Label lbl = new Label
+            p.Controls.Add(new Label
             {
                 Text = ev.Title,
                 Dock = DockStyle.Fill,
                 Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                BackColor = Color.Transparent,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(3, 0, 3, 0)
-            };
-            p.Controls.Add(lbl);
+                BackColor = Color.Transparent
+            });
 
             return p;
         }
 
-        // ================== Helper Enums and Classes ==================
-        enum CalendarView { Month, Week, Day }
-
+        // ================= HELPER CLASSES =================
         public class CalendarEventKH
         {
             public Guid Id { get; set; }
@@ -531,6 +399,84 @@ namespace FisioKH
             public DateTime EndTime { get; set; }
             public Color Color { get; set; }
             public int IdCita { get; set; }
+        }
+
+        public class EventLayoutInfo
+        {
+            public CalendarEventKH Event;
+            public int SlotIndex;
+            public int SlotCount;
+        }
+
+        // ================= BUILD DAY LAYOUT =================
+        private List<EventLayoutInfo> BuildDayLayout(DateTime day)
+        {
+            // Filter events for the current day and sort by start time
+            var list = Events.Where(e => e.StartTime.Date == day.Date)
+                             .OrderBy(e => e.StartTime)
+                             .ToList();
+
+            var result = new List<EventLayoutInfo>();
+
+            foreach (var ev in list)
+            {
+                int slot = 0;
+
+                // Find the first slot where this event does not overlap
+                while (result.Any(r =>
+                    r.SlotIndex == slot &&
+                    r.Event.EndTime > ev.StartTime &&
+                    r.Event.StartTime < ev.EndTime))
+                {
+                    slot++;
+                }
+
+                result.Add(new EventLayoutInfo
+                {
+                    Event = ev,
+                    SlotIndex = slot
+                });
+            }
+
+            // Calculate slot count for each event (number of overlapping events)
+            foreach (var r in result)
+            {
+                r.SlotCount = result.Count(x =>
+                    x.Event.EndTime > r.Event.StartTime &&
+                    x.Event.StartTime < r.Event.EndTime);
+            }
+
+            return result;
+        }
+
+        // ================= DAY NAVIGATION =================
+        private void UpdateDayNavigation()
+        {
+            if (currentView == CalendarView.Day)
+            {
+                lblCurrentDay.Text = CurrentDate.ToString("dddd, dd MMMM yyyy");
+            }
+            else if (currentView == CalendarView.Month)
+            {
+                lblCurrentDay.Text = CurrentDate.ToString("MMMM yyyy");
+            }
+            else if (currentView == CalendarView.Week)
+            {
+                lblCurrentDay.Text = $"Semana de {CurrentDate:dd MMM yyyy}";
+            }
+
+            btnPrev.Enabled = btnNext.Enabled = currentView == CalendarView.Day || currentView == CalendarView.Month;
+
+            // Sync DatePicker
+            dtpJump.ValueChanged -= DtpJump_ValueChanged; // temporarily remove handler
+            dtpJump.Value = CurrentDate;
+            dtpJump.ValueChanged += DtpJump_ValueChanged; // re-attach
+        }
+
+        private void DtpJump_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentDate = dtpJump.Value.Date;
+            RefreshCurrentView();
         }
     }
 }
