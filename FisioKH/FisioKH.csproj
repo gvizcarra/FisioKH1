@@ -74,6 +74,12 @@
     <Compile Include="FisioKHApp.Designer.cs">
       <DependentUpon>FisioKHApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="FisioKHCalendar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FisioKHCalendar.Designer.cs">
+      <DependentUpon>FisioKHCalendar.cs</DependentUpon>
+    </Compile>
     <Compile Include="MetodosPago.cs">
       <SubType>Form</SubType>
     </Compile>

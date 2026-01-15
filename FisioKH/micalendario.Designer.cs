@@ -31,7 +31,7 @@ namespace FisioKH
         {
             this.calendarControl1 = new FisioKH.CalendarControl();
             this.boton1 = new FisioKH.Boton();
-           
+            this.SuspendLayout();
             // 
             // calendarControl1
             // 
@@ -60,7 +60,9 @@ namespace FisioKH
             // 
             // micalendario
             // 
-        
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "micalendario";
+            this.ResumeLayout(false);
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Data;
 using System.Linq;
 using System.Configuration;
 
@@ -19,11 +20,52 @@ namespace FisioKH
             return tabsSeguras;
         }
 
+        private static DataTable InitStaticDataSet()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("Id", typeof(Guid));
+            table.Columns.Add("Title", typeof(string));
+            table.Columns.Add("StartTime", typeof(DateTime));
+            table.Columns.Add("EndTime", typeof(DateTime));
+            table.Columns.Add("Color", typeof(string));
+            table.Columns.Add("IdCita", typeof(int)); // custom property
+
+            Random rnd = new Random();
+            string[] titles = { "Consulta", "Terapia", "Masaje", "Evaluación", "Revisión" };
+            string[] colors = { "LightCoral", "LightGreen", "LightBlue", "Khaki", "Plum" };
+
+            DateTime today = DateTime.Today;
+            for (int i = 0; i < 25; i++)
+            {
+                int dayOffset = rnd.Next(0, 28);  // Random day in current month
+                int hourStart = rnd.Next(7, 19);  // Start between 7 AM and 7 PM
+                int duration = rnd.Next(1, 3);    // 1–2 hours
+
+                table.Rows.Add(
+                    Guid.NewGuid(),
+                    titles[rnd.Next(titles.Length)],
+                    today.AddDays(dayOffset).AddHours(hourStart),
+                    today.AddDays(dayOffset).AddHours(hourStart + duration),
+                    colors[rnd.Next(colors.Length)],
+                    i + 1 // IdCita
+                );
+            }
+
+
+
+
+            return table;
+
+        }
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
-             
+
+            this.fisioKHCalendar1.DataSource = InitStaticDataSet();
+
            // DesHabilitaTabs(ObtentabsSeguras());
         }
 

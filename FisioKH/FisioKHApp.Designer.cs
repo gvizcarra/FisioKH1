@@ -44,7 +44,6 @@ namespace FisioKH
             this.txtPassPin = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbIngresos = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tbAdmin = new System.Windows.Forms.TabPage();
             this.btnMetodosPago = new FisioKH.Boton();
             this.btnTratamientos = new FisioKH.Boton();
@@ -55,11 +54,11 @@ namespace FisioKH
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.fisioKHCalendar1 = new FisioKH.FisioKHCalendar();
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tbIngresos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tbAdmin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tbReportes.SuspendLayout();
@@ -190,7 +189,7 @@ namespace FisioKH
             // 
             // tbIngresos
             // 
-            this.tbIngresos.Controls.Add(this.pictureBox1);
+            this.tbIngresos.Controls.Add(this.fisioKHCalendar1);
             this.tbIngresos.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbIngresos.Location = new System.Drawing.Point(4, 30);
             this.tbIngresos.Name = "tbIngresos";
@@ -199,16 +198,6 @@ namespace FisioKH
             this.tbIngresos.TabIndex = 0;
             this.tbIngresos.Text = "Ingresos";
             this.tbIngresos.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Location = new System.Drawing.Point(226, 80);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(682, 491);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
             // 
             // tbAdmin
             // 
@@ -333,6 +322,15 @@ namespace FisioKH
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // fisioKHCalendar1
+            // 
+            this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
+            this.fisioKHCalendar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.fisioKHCalendar1.Name = "fisioKHCalendar1";
+            this.fisioKHCalendar1.Size = new System.Drawing.Size(1148, 569);
+            this.fisioKHCalendar1.TabIndex = 0;
+            // 
             // FisioKHApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -351,7 +349,6 @@ namespace FisioKH
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tbIngresos.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tbAdmin.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tbReportes.ResumeLayout(false);
@@ -376,13 +373,13 @@ namespace FisioKH
         private ContextMenuStrip contextMenuStrip1;
         private Boton boton1;
         private TabPage tbIngresos;
-        private PictureBox pictureBox1;
         private Boton btnTratamientos;
         private Boton btnPacientes;
         private Boton btnPrecios;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private Boton btnMetodosPago;
+        private FisioKHCalendar fisioKHCalendar1;
     }
 }
 
