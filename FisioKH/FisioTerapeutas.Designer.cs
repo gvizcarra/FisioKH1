@@ -29,7 +29,7 @@ namespace FisioKH
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnGuardarMP = new FisioKH.Boton();
+            this.btnGuardarFT = new FisioKH.Boton();
             this.txtFisioTerapeuta = new System.Windows.Forms.TextBox();
             this.lblNombreMP = new System.Windows.Forms.Label();
             this.btnBuscarFT = new FisioKH.Boton();
@@ -37,18 +37,19 @@ namespace FisioKH
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnGuardarMP
+            // btnGuardarFT
             // 
-            this.btnGuardarMP.FlatAppearance.BorderSize = 2;
-            this.btnGuardarMP.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnGuardarMP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarMP.Location = new System.Drawing.Point(4, 319);
-            this.btnGuardarMP.Margin = new System.Windows.Forms.Padding(10);
-            this.btnGuardarMP.Name = "btnGuardarMP";
-            this.btnGuardarMP.Size = new System.Drawing.Size(95, 34);
-            this.btnGuardarMP.TabIndex = 9;
-            this.btnGuardarMP.Text = "Guardar Cambios";
-            this.btnGuardarMP.UseVisualStyleBackColor = true;
+            this.btnGuardarFT.FlatAppearance.BorderSize = 2;
+            this.btnGuardarFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnGuardarFT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnGuardarFT.Location = new System.Drawing.Point(4, 319);
+            this.btnGuardarFT.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarFT.Name = "btnGuardarFT";
+            this.btnGuardarFT.Size = new System.Drawing.Size(95, 34);
+            this.btnGuardarFT.TabIndex = 9;
+            this.btnGuardarFT.Text = "Guardar Cambios";
+            this.btnGuardarFT.UseVisualStyleBackColor = true;
+            this.btnGuardarFT.Click += new System.EventHandler(this.btnGuardarFT_Click);
             // 
             // txtFisioTerapeuta
             // 
@@ -99,7 +100,7 @@ namespace FisioKH
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(708, 358);
-            this.Controls.Add(this.btnGuardarMP);
+            this.Controls.Add(this.btnGuardarFT);
             this.Controls.Add(this.txtFisioTerapeuta);
             this.Controls.Add(this.lblNombreMP);
             this.Controls.Add(this.btnBuscarFT);
@@ -117,7 +118,7 @@ namespace FisioKH
 
         #endregion
 
-        private Boton btnGuardarMP;
+        private Boton btnGuardarFT;
         private System.Windows.Forms.TextBox txtFisioTerapeuta;
         private System.Windows.Forms.Label lblNombreMP;
         private Boton btnBuscarFT;

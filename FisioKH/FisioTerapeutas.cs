@@ -48,5 +48,56 @@ namespace FisioKH
         {
             ObtenFisioTerapeutas(this.txtFisioTerapeuta.Text);
         }
+
+        private void btnGuardarFT_Click(object sender, EventArgs e)
+        {
+            SqlDatabase sdb = new SqlDatabase();
+
+            var parameters = new Dictionary<string, object>
+            {
+
+                { "@nombre", null },
+                { "@celular", null },
+                { "@nombreCorto", null },
+                { "@activo", null },
+                { "@idUsuario", Program.UsuarioLogeado.Id },
+                { "@haceValoracion", null },
+            };
+
+
+            DataTable changedRows = dt.GetChanges();
+            foreach (DataRow row in changedRows.Rows)
+            {
+                switch (row.RowState)
+                {
+                    case DataRowState.Added:
+                        parameters["@nombre"] = row[1];
+                        parameters["@celular"] = row[2];
+                        parameters["@nombreCorto"] = row[3];
+                        parameters["@activo"] = row[4];                        
+                        parameters["@haceValoracion"] = row[5];                        
+                        
+                        int qtyi = sdb.EjecutarNonQuery("usp_InsertMetodoPago", parameters);
+
+                        if (qtyi > 0)
+                        { MessageBox.Show("Registro Insertado"); }
+                        break;
+                    case DataRowState.Modified:
+                        parameters["@id"] = row[0];
+                        parameters["@nombre"] = row[1];
+                        parameters["@ocupaReferenciaPago"] = row[2];
+                        int qtyu = sdb.EjecutarNonQuery("usp_UpdateMetodoPago", parameters);
+
+                        if (qtyu > 0)
+                        { MessageBox.Show("Registro Actualizado"); }
+
+                        break;
+                    case DataRowState.Deleted:
+                        MessageBox.Show("del");
+
+                        break;
+                }
+            }
+        }
     }
 }
