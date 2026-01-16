@@ -18,8 +18,9 @@ namespace FisioKH
         private Panel panelMonth;
         private Panel panelWeek;
         private Panel panelDay;
+        
 
-        private List<CalendarEventKH> Events = new List<CalendarEventKH>();
+        private new List<CalendarEventKH> Events = new List<CalendarEventKH>();
 
         // Navigation controls
         private FlowLayoutPanel topBar;
@@ -28,7 +29,7 @@ namespace FisioKH
         private DateTimePicker dtpJump;  // DateTimePicker to jump to any date
 
         enum CalendarView { Month, Week, Day }
-        private CalendarView currentView = CalendarView.Day;
+        private CalendarView currentView ;
 
         // Property for external DataTable binding
         [Browsable(false)]
@@ -159,36 +160,48 @@ namespace FisioKH
         // ================= VIEW SWITCH =================
         private void ShowMonth()
         {
-            currentView = CalendarView.Month;
-            panelMonth.Visible = true;
-            panelWeek.Visible = false;
-            panelDay.Visible = false;
-            panelMonth.BringToFront();
-            UpdateDayNavigation();
-            RenderMonthView();
+             
+
+            
+            if (currentView != CalendarView.Month)
+            { 
+                currentView = CalendarView.Month;
+                panelMonth.Visible = true;
+                panelWeek.Visible = false;
+                panelDay.Visible = false;
+                panelMonth.BringToFront();
+                UpdateDayNavigation();
+                RenderMonthView();
+            }
         }
 
         private void ShowWeek()
         {
-            currentView = CalendarView.Week;
-            panelMonth.Visible = false;
-            panelWeek.Visible = true;
-            panelDay.Visible = false;
-            panelWeek.BringToFront();
-            UpdateDayNavigation();
-            RenderWeekView();
+            if (currentView != CalendarView.Week)
+            {
+                currentView = CalendarView.Week;
+                panelMonth.Visible = false;
+                panelWeek.Visible = true;
+                panelDay.Visible = false;
+                panelWeek.BringToFront();
+                UpdateDayNavigation();
+                RenderWeekView();
+            }
         }
 
         private void ShowDay()
         {
-            currentView = CalendarView.Day;
-            panelMonth.Visible = false;
-            panelWeek.Visible = false;
-            panelDay.Visible = true;
-            panelDay.BringToFront();
-            UpdateDayNavigation();
-            RenderDayView();
-            CenterDayViewOnNow();
+            if (currentView != CalendarView.Day)
+            {
+                currentView = CalendarView.Day;
+                panelMonth.Visible = false;
+                panelWeek.Visible = false;
+                panelDay.Visible = true;
+                panelDay.BringToFront();
+                UpdateDayNavigation();
+                RenderDayView();
+                CenterDayViewOnNow();
+            }
         }
 
         public void RefreshCurrentView()
@@ -203,6 +216,7 @@ namespace FisioKH
         // ================= MONTH =================
         private void RenderMonthView()
         {
+
             panelMonth.Controls.Clear();
 
             string[] diasSemana = { "Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb" };
@@ -219,14 +233,37 @@ namespace FisioKH
 
             while (day <= days)
             {
+
+              
+
+
                 for (int col = 0; col < 7; col++)
                 {
+
+                    bool isToday = (day > 0 && day <= days);
+                    if (day == DateTime.Today.Day)
+                    {
+                        isToday = true;
+                    }
+                    else
+                    {
+                        isToday = false;
+                    }
+
                     Panel cell = new Panel
                     {
                         Location = new Point(col * cellWidth, row * cellHeight),
                         Size = new Size(cellWidth - 1, cellHeight - 1),
-                        BorderStyle = BorderStyle.FixedSingle
+                        BorderStyle = BorderStyle.FixedSingle,
+                        BackColor = Color.White
+
+
                     };
+
+                    if (isToday)
+                    {
+                        cell.BackColor = Color.FromArgb(130, 225, 223);
+                    }
 
                     if (day > 0 && day <= days)
                     {
@@ -281,10 +318,11 @@ namespace FisioKH
 
                 panelWeek.Controls.Add(new Label
                 {
-                    Text = $"{h:00}:00",
+                    Text = DateTime.Today.AddHours(h).ToString("hh:mm tt"),
                     Location = new Point(0, y),
                     Size = new Size(labelWidth, HourHeight),
-                    TextAlign = ContentAlignment.TopRight
+                    TextAlign = ContentAlignment.TopRight,
+                    Font = new Font("Segoe UI", 8, FontStyle.Bold)
                 });
 
                 for (int d = 0; d < 7; d++)
@@ -321,10 +359,11 @@ namespace FisioKH
 
                 panelDay.Controls.Add(new Label
                 {
-                    Text = $"{h:00}:00",
+                    Text = DateTime.Today.AddHours(h).ToString("hh:mm tt"),
                     Location = new Point(0, y),
                     Size = new Size(labelWidth, HourHeight),
-                    TextAlign = ContentAlignment.TopRight
+                    TextAlign = ContentAlignment.TopRight,
+                    Font = new Font("Segoe UI", 8, FontStyle.Bold)
                 });
 
                 panelDay.Controls.Add(new Panel
@@ -341,7 +380,7 @@ namespace FisioKH
             foreach (var l in layouts)
             {
                 int y = HeaderHeight + (int)((l.Event.StartTime.Hour + l.Event.StartTime.Minute / 60.0 - StartHour) * HourHeight);
-                int h = Math.Max(25, (int)((l.Event.EndTime - l.Event.StartTime).TotalMinutes / 30 * HourHeight));
+                int h = Math.Max(25, (int)((l.Event.EndTime - l.Event.StartTime).TotalMinutes / 60 * HourHeight));
                 int slotW = width / l.SlotCount;
                 int x = labelWidth + l.SlotIndex * slotW;
 
@@ -375,7 +414,7 @@ namespace FisioKH
             {
                 Text = ev.Title,
                 Dock = DockStyle.Fill,
-                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Font = new Font("Segoe UI", 8, FontStyle.Bold),
                 BackColor = Color.Transparent,
                 TextAlign = ContentAlignment.MiddleCenter
             };

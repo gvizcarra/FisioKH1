@@ -61,6 +61,7 @@ namespace FisioKH
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
             this.fisioKHCalendar1.EventClick += MyCalendar_EventClick;
@@ -222,5 +223,7 @@ namespace FisioKH
             fm.ShowDialog();
 
         }
+
+       
     }
 }
