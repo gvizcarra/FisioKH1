@@ -54,6 +54,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="configSettings.cs" />
+    <Compile Include="etiquetasPaciente.cs" />
     <Compile Include="EventDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>

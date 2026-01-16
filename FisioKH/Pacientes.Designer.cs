@@ -31,9 +31,7 @@ namespace FisioKH
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pacientes));
             this.lblNombrePaciente = new System.Windows.Forms.Label();
-            this.btnGuardarPrecio = new FisioKH.Boton();
             this.txtPaciente = new System.Windows.Forms.TextBox();
-            this.btnBuscarPaciente = new FisioKH.Boton();
             this.dgvPacientes = new System.Windows.Forms.DataGridView();
             this.txtCelular = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,6 +43,9 @@ namespace FisioKH
             this.txtRfc = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtNombreFiscal = new System.Windows.Forms.TextBox();
+            this.cboEtiquetas = new System.Windows.Forms.ComboBox();
+            this.btnGuardarPrecio = new FisioKH.Boton();
+            this.btnBuscarPaciente = new FisioKH.Boton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,19 +59,6 @@ namespace FisioKH
             this.lblNombrePaciente.TabIndex = 14;
             this.lblNombrePaciente.Text = "Paciente";
             // 
-            // btnGuardarPrecio
-            // 
-            this.btnGuardarPrecio.FlatAppearance.BorderSize = 2;
-            this.btnGuardarPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnGuardarPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarPrecio.Location = new System.Drawing.Point(888, 5);
-            this.btnGuardarPrecio.Margin = new System.Windows.Forms.Padding(10);
-            this.btnGuardarPrecio.Name = "btnGuardarPrecio";
-            this.btnGuardarPrecio.Size = new System.Drawing.Size(112, 46);
-            this.btnGuardarPrecio.TabIndex = 13;
-            this.btnGuardarPrecio.Text = "Guardar Cambios";
-            this.btnGuardarPrecio.UseVisualStyleBackColor = true;
-            // 
             // txtPaciente
             // 
             this.txtPaciente.AcceptsReturn = true;
@@ -80,20 +68,6 @@ namespace FisioKH
             this.txtPaciente.Size = new System.Drawing.Size(146, 26);
             this.txtPaciente.TabIndex = 12;
             // 
-            // btnBuscarPaciente
-            // 
-            this.btnBuscarPaciente.FlatAppearance.BorderSize = 2;
-            this.btnBuscarPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnBuscarPaciente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnBuscarPaciente.Location = new System.Drawing.Point(759, 7);
-            this.btnBuscarPaciente.Margin = new System.Windows.Forms.Padding(10);
-            this.btnBuscarPaciente.Name = "btnBuscarPaciente";
-            this.btnBuscarPaciente.Size = new System.Drawing.Size(95, 44);
-            this.btnBuscarPaciente.TabIndex = 11;
-            this.btnBuscarPaciente.Text = "Buscar";
-            this.btnBuscarPaciente.UseVisualStyleBackColor = true;
-            this.btnBuscarPaciente.Click += new System.EventHandler(this.btnBuscarPaciente_Click);
-            // 
             // dgvPacientes
             // 
             this.dgvPacientes.AllowUserToDeleteRows = false;
@@ -102,7 +76,7 @@ namespace FisioKH
             this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPacientes.Location = new System.Drawing.Point(3, 57);
             this.dgvPacientes.Name = "dgvPacientes";
-            this.dgvPacientes.Size = new System.Drawing.Size(997, 439);
+            this.dgvPacientes.Size = new System.Drawing.Size(997, 332);
             this.dgvPacientes.TabIndex = 10;
             // 
             // txtCelular
@@ -202,11 +176,48 @@ namespace FisioKH
             this.txtNombreFiscal.TabIndex = 23;
             this.txtNombreFiscal.Visible = false;
             // 
+            // cboEtiquetas
+            // 
+            this.cboEtiquetas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboEtiquetas.FormattingEnabled = true;
+            this.cboEtiquetas.Location = new System.Drawing.Point(97, 420);
+            this.cboEtiquetas.Name = "cboEtiquetas";
+            this.cboEtiquetas.Size = new System.Drawing.Size(121, 21);
+            this.cboEtiquetas.TabIndex = 25;
+            // 
+            // btnGuardarPrecio
+            // 
+            this.btnGuardarPrecio.FlatAppearance.BorderSize = 2;
+            this.btnGuardarPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnGuardarPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnGuardarPrecio.Location = new System.Drawing.Point(888, 5);
+            this.btnGuardarPrecio.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarPrecio.Name = "btnGuardarPrecio";
+            this.btnGuardarPrecio.Size = new System.Drawing.Size(112, 46);
+            this.btnGuardarPrecio.TabIndex = 13;
+            this.btnGuardarPrecio.Text = "Guardar Cambios";
+            this.btnGuardarPrecio.UseVisualStyleBackColor = true;
+            // 
+            // btnBuscarPaciente
+            // 
+            this.btnBuscarPaciente.FlatAppearance.BorderSize = 2;
+            this.btnBuscarPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBuscarPaciente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnBuscarPaciente.Location = new System.Drawing.Point(759, 7);
+            this.btnBuscarPaciente.Margin = new System.Windows.Forms.Padding(10);
+            this.btnBuscarPaciente.Name = "btnBuscarPaciente";
+            this.btnBuscarPaciente.Size = new System.Drawing.Size(95, 44);
+            this.btnBuscarPaciente.TabIndex = 11;
+            this.btnBuscarPaciente.Text = "Buscar";
+            this.btnBuscarPaciente.UseVisualStyleBackColor = true;
+            this.btnBuscarPaciente.Click += new System.EventHandler(this.btnBuscarPaciente_Click);
+            // 
             // Pacientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1012, 508);
+            this.Controls.Add(this.cboEtiquetas);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtNombreFiscal);
             this.Controls.Add(this.label4);
@@ -249,5 +260,6 @@ namespace FisioKH
         private System.Windows.Forms.TextBox txtRfc;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtNombreFiscal;
+        private System.Windows.Forms.ComboBox cboEtiquetas;
     }
 }

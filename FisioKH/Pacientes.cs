@@ -20,7 +20,13 @@ namespace FisioKH
 
         private void Pacientes_Load(object sender, EventArgs e)
         {
-           ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtCiudad.Text,
+            this.cboEtiquetas.DataSource = EtiquetasPacienteHelper.GetBindableList();
+
+            this.cboEtiquetas.DisplayMember = "Text"; // what user sees
+            this.cboEtiquetas.ValueMember = "Key";
+            this.cboEtiquetas.SelectedValue = "pm";
+
+            ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtCiudad.Text,
                this.txtRfc.Text,  this.txtEmail.Text);
         }
 
@@ -53,8 +59,8 @@ namespace FisioKH
              
                 this.dgvPacientes.Columns[0].ReadOnly = true;
                 this.dgvPacientes.Columns[7].ReadOnly = true;
-                this.dgvPacientes.Columns[9].ReadOnly = true;
                 this.dgvPacientes.Columns[10].ReadOnly = true;
+                this.dgvPacientes.Columns[11].ReadOnly = true;
              
 
         }
