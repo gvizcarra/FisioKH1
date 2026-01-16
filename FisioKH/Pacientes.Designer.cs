@@ -190,6 +190,7 @@ namespace FisioKH
             this.label5.Size = new System.Drawing.Size(111, 17);
             this.label5.TabIndex = 24;
             this.label5.Text = "Nombre Fiscal";
+            this.label5.Visible = false;
             // 
             // txtNombreFiscal
             // 
@@ -199,6 +200,7 @@ namespace FisioKH
             this.txtNombreFiscal.Name = "txtNombreFiscal";
             this.txtNombreFiscal.Size = new System.Drawing.Size(115, 26);
             this.txtNombreFiscal.TabIndex = 23;
+            this.txtNombreFiscal.Visible = false;
             // 
             // Pacientes
             // 

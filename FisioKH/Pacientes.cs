@@ -21,14 +21,13 @@ namespace FisioKH
         private void Pacientes_Load(object sender, EventArgs e)
         {
            ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtCiudad.Text,
-               this.txtRfc.Text, this.txtNombreFiscal.Text, this.txtEmail.Text);
+               this.txtRfc.Text,  this.txtEmail.Text);
         }
 
         private void ObtenDatos(string nombre = null, 
                                  string celular = null, 
                                  string ciudad = null,
                                   string rfc = null, 
-                                 string nombreFiscal = null,
                                  string email = null)
         {
             DataSet dsmp = new DataSet();
@@ -40,8 +39,9 @@ namespace FisioKH
                 { "@celular", celular },
                 { "@ciudad", ciudad },
                 { "@rfc", rfc },
-                { "@nombreFiscal", nombreFiscal },
-                { "@email", email }
+                { "@email", email },
+                //{ "@fechaNacimiento", fechaNacimiento }
+                
             };
 
             SqlDatabase sdb = new SqlDatabase();
@@ -52,6 +52,7 @@ namespace FisioKH
             this.dgvPacientes.DataSource = dt;
              
                 this.dgvPacientes.Columns[0].ReadOnly = true;
+                this.dgvPacientes.Columns[7].ReadOnly = true;
                 this.dgvPacientes.Columns[9].ReadOnly = true;
                 this.dgvPacientes.Columns[10].ReadOnly = true;
              
@@ -61,7 +62,7 @@ namespace FisioKH
         private void btnBuscarPaciente_Click(object sender, EventArgs e)
         {
             ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtCiudad.Text,
-               this.txtRfc.Text, this.txtNombreFiscal.Text, this.txtEmail.Text);
+               this.txtRfc.Text, this.txtEmail.Text);
         }
     }
 }

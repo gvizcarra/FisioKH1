@@ -117,7 +117,7 @@ namespace FisioKH
 
                             foreach (var par in spPars)
                             {
-                                if (par.Value.ToString() != "")
+                                if (spPars.TryGetValue(par.Key, out var value) && value != null)
                                 { adapter.SelectCommand.Parameters.AddWithValue(par.Key, par.Value); }
                             }
                             

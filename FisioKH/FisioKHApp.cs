@@ -224,6 +224,11 @@ namespace FisioKH
 
         }
 
-       
+        private void btnFisios_Click(object sender, EventArgs e)
+        {
+            FisioTerapeutas fm = new FisioTerapeutas();
+            fm.ShowDialog();
+
+        }
     }
 }
