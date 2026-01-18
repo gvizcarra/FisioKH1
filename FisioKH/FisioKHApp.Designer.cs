@@ -260,7 +260,7 @@ namespace FisioKH
             this.btnMetodosPago.FlatAppearance.BorderSize = 2;
             this.btnMetodosPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnMetodosPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnMetodosPago.Location = new System.Drawing.Point(461, 80);
+            this.btnMetodosPago.Location = new System.Drawing.Point(459, 80);
             this.btnMetodosPago.Margin = new System.Windows.Forms.Padding(10);
             this.btnMetodosPago.Name = "btnMetodosPago";
             this.btnMetodosPago.Size = new System.Drawing.Size(168, 58);
@@ -305,7 +305,7 @@ namespace FisioKH
             this.btnPrecios.FlatAppearance.BorderSize = 2;
             this.btnPrecios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnPrecios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnPrecios.Location = new System.Drawing.Point(740, 80);
+            this.btnPrecios.Location = new System.Drawing.Point(816, 80);
             this.btnPrecios.Margin = new System.Windows.Forms.Padding(10);
             this.btnPrecios.Name = "btnPrecios";
             this.btnPrecios.Size = new System.Drawing.Size(168, 58);

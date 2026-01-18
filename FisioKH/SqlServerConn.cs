@@ -65,7 +65,7 @@ namespace FisioKH
                             while (rd.Read())
                             {
                                 usr.Id = Convert.ToInt32(rd["id"]);
-                                usr.Nombre = rd["id"].ToString();
+                                usr.Nombre = rd["nombre"].ToString();
                                 usr.Nivel = Convert.ToInt32(rd.GetOrdinal("nivel"));
                                 usr.Activo = Convert.ToBoolean(rd["activo"]);
                                 usr.FechaRegistro = rd["fechaRegistro"].ToString();
@@ -117,10 +117,19 @@ namespace FisioKH
 
                             foreach (var par in spPars)
                             {
-                                if (spPars.TryGetValue(par.Key, out var value) && value != null)
-                                { adapter.SelectCommand.Parameters.AddWithValue(par.Key, par.Value); }
+                                object value = par.Value;
+
+                                if (value == null || (value is string s && string.IsNullOrWhiteSpace(s)))
+                                {
+                                    adapter.SelectCommand.Parameters.AddWithValue(par.Key, DBNull.Value);
+                                }
+                                else
+                                {
+                                    adapter.SelectCommand.Parameters.AddWithValue(par.Key, value);
+                                }
                             }
-                            
+
+
                             adapter.Fill(ds, dsname);  
                         }
  
