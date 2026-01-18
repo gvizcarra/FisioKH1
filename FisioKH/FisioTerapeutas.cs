@@ -307,17 +307,16 @@ namespace FisioKH
 
         private byte[] ImageToByteArray(PictureBox picBox)
         {
-            if (picBox.Image == null) return null;
+            if (picBox.Image == null)
+                return null;
 
+            using (var bmp = new Bitmap(picBox.Image)) // clone to avoid locked file
             using (var ms = new System.IO.MemoryStream())
             {
-                // Save image to memory stream as JPEG (or PNG)
-                picBox.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                return ms.ToArray();
+                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                return ms.ToArray(); // return the byte[] safely
             }
-
-
-
         }
+
     }
 }
