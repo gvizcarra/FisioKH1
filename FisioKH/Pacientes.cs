@@ -50,7 +50,7 @@ namespace FisioKH
                 
             };
 
-            SqlDatabase sdb = new SqlDatabase();
+            DBHelper sdb = new DBHelper();
             dsmp = sdb.ObtenerDatos("usp_ObtenerPacientes", dsname, parameters);
              
                 dt = dsmp.Tables[dsname];

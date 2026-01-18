@@ -29,7 +29,6 @@ namespace FisioKH
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtFisioTerapeuta = new System.Windows.Forms.TextBox();
             this.lblNombreMP = new System.Windows.Forms.Label();
             this.dgvFisioTerapeutas = new System.Windows.Forms.DataGridView();
@@ -40,17 +39,17 @@ namespace FisioKH
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnZoomOut = new FisioKH.Boton();
+            this.btnZoomIn = new FisioKH.Boton();
+            this.btnGuardarFoto = new FisioKH.Boton();
             this.txtId = new System.Windows.Forms.TextBox();
+            this.btnAbrirCamara = new FisioKH.Boton();
             this.pbxFotoFisio = new System.Windows.Forms.PictureBox();
             this.chkValora = new System.Windows.Forms.CheckBox();
             this.chkActivo = new System.Windows.Forms.CheckBox();
             this.txtCelular = new System.Windows.Forms.MaskedTextBox();
             this.txtNombreCorto = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
-            this.btnZoomOut = new FisioKH.Boton();
-            this.btnZoomIn = new FisioKH.Boton();
-            this.btnGuardarFoto = new FisioKH.Boton();
-            this.btnAbrirCamara = new FisioKH.Boton();
             this.btnGuardarFT = new FisioKH.Boton();
             this.btnBuscarFT = new FisioKH.Boton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).BeginInit();
@@ -82,8 +81,6 @@ namespace FisioKH
             this.dgvFisioTerapeutas.AllowUserToAddRows = false;
             this.dgvFisioTerapeutas.AllowUserToDeleteRows = false;
             this.dgvFisioTerapeutas.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvFisioTerapeutas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvFisioTerapeutas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvFisioTerapeutas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFisioTerapeutas.Location = new System.Drawing.Point(4, 55);
@@ -93,6 +90,9 @@ namespace FisioKH
             this.dgvFisioTerapeutas.Size = new System.Drawing.Size(500, 430);
             this.dgvFisioTerapeutas.TabIndex = 5;
             this.dgvFisioTerapeutas.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvFisioTerapeutas_CellFormatting);
+            this.dgvFisioTerapeutas.CellContentClick += dgvFisioTerapeutas_CellContentClick;
+
+
             // 
             // label1
             // 
@@ -175,6 +175,49 @@ namespace FisioKH
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Generales";
             // 
+            // btnZoomOut
+            // 
+            this.btnZoomOut.FlatAppearance.BorderSize = 2;
+            this.btnZoomOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnZoomOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnZoomOut.Location = new System.Drawing.Point(14, 277);
+            this.btnZoomOut.Margin = new System.Windows.Forms.Padding(10);
+            this.btnZoomOut.Name = "btnZoomOut";
+            this.btnZoomOut.Size = new System.Drawing.Size(64, 30);
+            this.btnZoomOut.TabIndex = 26;
+            this.btnZoomOut.Text = "--";
+            this.btnZoomOut.UseVisualStyleBackColor = true;
+            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            // 
+            // btnZoomIn
+            // 
+            this.btnZoomIn.FlatAppearance.BorderSize = 2;
+            this.btnZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnZoomIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnZoomIn.Location = new System.Drawing.Point(13, 243);
+            this.btnZoomIn.Margin = new System.Windows.Forms.Padding(10);
+            this.btnZoomIn.Name = "btnZoomIn";
+            this.btnZoomIn.Size = new System.Drawing.Size(65, 30);
+            this.btnZoomIn.TabIndex = 25;
+            this.btnZoomIn.Text = "++";
+            this.btnZoomIn.UseVisualStyleBackColor = true;
+            this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
+            // 
+            // btnGuardarFoto
+            // 
+            this.btnGuardarFoto.Enabled = false;
+            this.btnGuardarFoto.FlatAppearance.BorderSize = 2;
+            this.btnGuardarFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(1)), true);
+            this.btnGuardarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnGuardarFoto.Location = new System.Drawing.Point(14, 327);
+            this.btnGuardarFoto.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarFoto.Name = "btnGuardarFoto";
+            this.btnGuardarFoto.Size = new System.Drawing.Size(65, 39);
+            this.btnGuardarFoto.TabIndex = 24;
+            this.btnGuardarFoto.Text = "C&aptura";
+            this.btnGuardarFoto.UseVisualStyleBackColor = true;
+            this.btnGuardarFoto.Click += new System.EventHandler(this.btnAGuardarFoto_Click);
+            // 
             // txtId
             // 
             this.txtId.Location = new System.Drawing.Point(232, 93);
@@ -182,6 +225,20 @@ namespace FisioKH
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(44, 25);
             this.txtId.TabIndex = 23;
+            // 
+            // btnAbrirCamara
+            // 
+            this.btnAbrirCamara.FlatAppearance.BorderSize = 2;
+            this.btnAbrirCamara.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.btnAbrirCamara.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnAbrirCamara.Location = new System.Drawing.Point(14, 195);
+            this.btnAbrirCamara.Margin = new System.Windows.Forms.Padding(10);
+            this.btnAbrirCamara.Name = "btnAbrirCamara";
+            this.btnAbrirCamara.Size = new System.Drawing.Size(65, 30);
+            this.btnAbrirCamara.TabIndex = 22;
+            this.btnAbrirCamara.Text = "&Cam";
+            this.btnAbrirCamara.UseVisualStyleBackColor = true;
+            this.btnAbrirCamara.Click += new System.EventHandler(this.btnAbrirCamara_Click);
             // 
             // pbxFotoFisio
             // 
@@ -242,62 +299,6 @@ namespace FisioKH
             this.txtNombre.Size = new System.Drawing.Size(200, 25);
             this.txtNombre.TabIndex = 16;
             // 
-            // btnZoomOut
-            // 
-            this.btnZoomOut.FlatAppearance.BorderSize = 2;
-            this.btnZoomOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnZoomOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnZoomOut.Location = new System.Drawing.Point(14, 277);
-            this.btnZoomOut.Margin = new System.Windows.Forms.Padding(10);
-            this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(64, 30);
-            this.btnZoomOut.TabIndex = 26;
-            this.btnZoomOut.Text = "--";
-            this.btnZoomOut.UseVisualStyleBackColor = true;
-            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
-            // 
-            // btnZoomIn
-            // 
-            this.btnZoomIn.FlatAppearance.BorderSize = 2;
-            this.btnZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnZoomIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnZoomIn.Location = new System.Drawing.Point(13, 243);
-            this.btnZoomIn.Margin = new System.Windows.Forms.Padding(10);
-            this.btnZoomIn.Name = "btnZoomIn";
-            this.btnZoomIn.Size = new System.Drawing.Size(65, 30);
-            this.btnZoomIn.TabIndex = 25;
-            this.btnZoomIn.Text = "++";
-            this.btnZoomIn.UseVisualStyleBackColor = true;
-            this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
-            // 
-            // btnGuardarFoto
-            // 
-            this.btnGuardarFoto.FlatAppearance.BorderSize = 2;
-            this.btnGuardarFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(1)), true);
-            this.btnGuardarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarFoto.Location = new System.Drawing.Point(14, 327);
-            this.btnGuardarFoto.Margin = new System.Windows.Forms.Padding(10);
-            this.btnGuardarFoto.Name = "btnGuardarFoto";
-            this.btnGuardarFoto.Size = new System.Drawing.Size(65, 39);
-            this.btnGuardarFoto.TabIndex = 24;
-            this.btnGuardarFoto.Text = "&Captura";
-            this.btnGuardarFoto.UseVisualStyleBackColor = true;
-            this.btnGuardarFoto.Click += new System.EventHandler(this.btnAGuardarFoto_Click);
-            // 
-            // btnAbrirCamara
-            // 
-            this.btnAbrirCamara.FlatAppearance.BorderSize = 2;
-            this.btnAbrirCamara.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
-            this.btnAbrirCamara.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnAbrirCamara.Location = new System.Drawing.Point(14, 195);
-            this.btnAbrirCamara.Margin = new System.Windows.Forms.Padding(10);
-            this.btnAbrirCamara.Name = "btnAbrirCamara";
-            this.btnAbrirCamara.Size = new System.Drawing.Size(65, 30);
-            this.btnAbrirCamara.TabIndex = 22;
-            this.btnAbrirCamara.Text = "&Cam";
-            this.btnAbrirCamara.UseVisualStyleBackColor = true;
-            this.btnAbrirCamara.Click += new System.EventHandler(this.btnAbrirCamara_Click);
-            // 
             // btnGuardarFT
             // 
             this.btnGuardarFT.FlatAppearance.BorderSize = 2;
@@ -340,13 +341,12 @@ namespace FisioKH
             this.Name = "FisioTerapeutas";
             this.Padding = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.Text = "FisioTerapeutas";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FisioTerapeutas_FormClosing);
             this.Load += new System.EventHandler(this.FisioTerapeutas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFotoFisio)).EndInit();
-            dgvFisioTerapeutas.CellContentClick += dgvFisioTerapeutas_CellContentClick;
-
             this.ResumeLayout(false);
             this.PerformLayout();
 

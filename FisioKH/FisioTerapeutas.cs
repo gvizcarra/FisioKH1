@@ -4,8 +4,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.IO;
-using Accord.Video;
-using Accord.Video.DirectShow;
 
 
 using System.Windows.Forms;
@@ -15,24 +13,17 @@ namespace FisioKH
     public partial class FisioTerapeutas : BaseForm
     {
         private DataTable dt;
-
-        private VideoCaptureDevice videoSource;
-        private FilterInfoCollection videoDevices;
-        private Bitmap currentFrame;
-
-        private float zoomFactor = 1.0f; // 1 = normal, >1 = zoom in, <1 = zoom out
-        private const float zoomStep = 0.1f; // step for each zoom click
-
-
+        private WebCamHelper wch;
 
         public FisioTerapeutas()
         {
             InitializeComponent();
-            //StartCamera();
+            
         }
 
         private void FisioTerapeutas_Load(object sender, EventArgs e)
         {
+            wch = new WebCamHelper(pbxFotoFisio);
             ObtenFisioTerapeutas(this.txtFisioTerapeuta.Text);
         }
 
@@ -46,7 +37,7 @@ namespace FisioKH
                 { "@nombre", nombre }
             };
 
-            SqlDatabase sdb = new SqlDatabase();
+            DBHelper sdb = new DBHelper();
             dsmp = sdb.ObtenerDatos("usp_ObtenerFisioTerapeutas", dsname, parameters);
 
             dgvFisioTerapeutas.AutoGenerateColumns = false;
@@ -132,7 +123,7 @@ namespace FisioKH
 
             int.TryParse(this.txtId.Text, out id);
 
-            SqlDatabase sdb = new SqlDatabase();
+            DBHelper sdb = new DBHelper();
 
             var parameters = new Dictionary<string, object>
             {
@@ -153,7 +144,7 @@ namespace FisioKH
             parameters["@nombreCorto"] = this.txtNombreCorto.Text;
             parameters["@activo"] = this.chkActivo.Checked;
             parameters["@haceValoracion"] = this.chkValora.Checked;
-            parameters["@foto"] = (object)ImageToByteArray(this.pbxFotoFisio) ?? DBNull.Value;
+            parameters["@foto"] = (object)wch.ImageToByteArray(this.pbxFotoFisio) ?? DBNull.Value;
 
             if (id > 0)
             { 
@@ -184,139 +175,64 @@ namespace FisioKH
                 this.chkActivo.Checked = (bool)row["activo"];
                 this.chkValora.Checked = (bool)row["haceValoracion"];
 
-                Bitmap foto = GetImageFromField(row, "Foto");
+                DBHelper db = new DBHelper();
+
+                Bitmap foto = db.GetImageFromField(row, "Foto");
+                db.Dispose();
+                
 
                 this.pbxFotoFisio.Image = foto ?? FisioKH.Properties.Resources.fisioTerapeuta;
-
-
-
-
-
+ 
 
             }
         }
 
 
-        private Bitmap GetImageFromField(DataRow row, string columnName)
-        {
-            if (row == null)
-                return null;
+       
 
-            // Use Field<byte?> to safely handle null/DBNull
-            byte[] fotoBytes = row.Field<byte[]>(columnName);
-
-            if (fotoBytes == null || fotoBytes.Length == 0)
-                return null;
-
-            try
-            {
-                using (MemoryStream ms = new MemoryStream(fotoBytes))
-                {
-                    return new Bitmap(ms);
-                }
-            }
-            catch
-            {
-                return null; // corrupted image
-            }
-        }
-
-        private void StartCamera()
-        {
-            videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-
-            if (videoDevices.Count == 0)
-            {
-                MessageBox.Show("No webcam detected!");
-                return;
-            }
-
-            videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
-
-            // Set a reasonable resolution (e.g., 640x480)
-            videoSource.VideoResolution = videoSource.VideoCapabilities
-                .FirstOrDefault(vc => vc.FrameSize.Width == 640 && vc.FrameSize.Height == 480)
-                ?? videoSource.VideoCapabilities[0];
-
-            videoSource.NewFrame += VideoSource_NewFrame;
-            videoSource.Start();
-        }
+       
 
 
-        private void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
-        {
-            currentFrame?.Dispose();
-            currentFrame = (Bitmap)eventArgs.Frame.Clone();
-
-            // Apply zoom before showing
-            Bitmap zoomedFrame = ApplyZoom(currentFrame, zoomFactor);
-
-            this.pbxFotoFisio.Image?.Dispose();
-            this.pbxFotoFisio.Image = zoomedFrame;
-        }
+        
 
         private void btnAbrirCamara_Click(object sender, EventArgs e)
         {
-            this.StartCamera();
+            
+            wch.StartCamera();
+            btnGuardarFoto.Enabled = true;
+
         }
 
         private void btnAGuardarFoto_Click(object sender, EventArgs e)
         {
-            if (videoSource != null && videoSource.IsRunning)
+            if (wch.videoSource != null && wch.videoSource.IsRunning)
             {
-                videoSource.SignalToStop();
-                videoSource.WaitForStop();
+                wch.videoSource.SignalToStop();
+                wch.videoSource.WaitForStop();
             }
 
-            currentFrame?.Dispose();
+            wch.currentFrame?.Dispose();
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            zoomFactor += zoomStep;
+            wch.ZoomIn();
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            zoomFactor = Math.Max(1.0f, zoomFactor - zoomStep);
+            wch.ZoomOut();
         }
 
 
-        private Bitmap ApplyZoom(Bitmap original, float zoom)
+       
+
+        
+
+        private void FisioTerapeutas_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (zoom == 1.0f) return (Bitmap)original.Clone();
 
-            int newWidth = (int)(original.Width / zoom);
-            int newHeight = (int)(original.Height / zoom);
-
-            int x = (original.Width - newWidth) / 2;
-            int y = (original.Height - newHeight) / 2;
-
-            Rectangle cropRect = new Rectangle(x, y, newWidth, newHeight);
-            Bitmap cropped = new Bitmap(newWidth, newHeight);
-            using (Graphics g = Graphics.FromImage(cropped))
-            {
-                g.DrawImage(original, new Rectangle(0, 0, newWidth, newHeight), cropRect, GraphicsUnit.Pixel);
-            }
-
-            // Resize back to original size to fit PictureBox
-            Bitmap resized = new Bitmap(cropped, original.Size);
-            cropped.Dispose();
-            return resized;
+            wch?.StopCamera();
         }
-
-        private byte[] ImageToByteArray(PictureBox picBox)
-        {
-            if (picBox.Image == null)
-                return null;
-
-            using (var bmp = new Bitmap(picBox.Image)) // clone to avoid locked file
-            using (var ms = new System.IO.MemoryStream())
-            {
-                bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-                return ms.ToArray(); // return the byte[] safely
-            }
-        }
-
     }
 }

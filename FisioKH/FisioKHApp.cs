@@ -104,13 +104,12 @@ namespace FisioKH
             }
             
         }
-        
 
-        private void btnLogin_Click(object sender, EventArgs e)
+
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
-            
-            string usuario = this.txtUsuario.Text;
-            string passPin = this.txtPassPin.Text;
+            string usuario = this.txtUsuario.Text.Trim();
+            string passPin = this.txtPassPin.Text.Trim();
 
             this.txtPassPin.Text = "";
 
@@ -128,47 +127,52 @@ namespace FisioKH
                 return;
             }
 
-            this.btnLogin.Text = "Conectando a BD!";
+            this.btnLogin.Text = "Conectando a BD...";
             this.btnLogin.Enabled = false;
 
-            FisioKH.SqlDatabase sqlDatabasex = new SqlDatabase();
-            Program.UsuarioLogeado = sqlDatabasex.AutenticarUsuario(usuario,passPin);
-            if (Program.UsuarioLogeado.ErrorLogin !="")
+            try
             {
-                MessageBox.Show("Error, revisar log de errores!");
-                this.lstBoxLogs.Items.Add(Program.UsuarioLogeado.ErrorLogin);
+
+                using (var db = new DBHelperAsync())  // <- constructor is called here
+                {
+                    Program.UsuarioLogeado = await db.AutenticarUsuarioAsync(usuario, passPin);
+                }                
+
+                if (!string.IsNullOrEmpty(Program.UsuarioLogeado.ErrorLogin))
+                {
+                    MessageBox.Show("Error, revisar log de errores!");
+                    this.lstBoxLogs.Items.Add(Program.UsuarioLogeado.ErrorLogin);
+                    this.lstBoxLogs.Focus();
+                    return;
+                }
+
+                if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
+                {
+                    MessageBox.Show("Bienvenido!", "Anuncio!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    this.Text = $"{configSettings.ObtenNombreApp} - Usuario: {Program.UsuarioLogeado.Nombre}";
+                    HabilitaTabs(ObtentabsSeguras());
+                }
+                else
+                {
+                    if (!Program.UsuarioLogeado.Activo)
+                        MessageBox.Show("Usuario no Activo!");
+                    else
+                        MessageBox.Show("Credenciales Invalidas");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error durante login: " + ex.Message);
+            }
+            finally
+            {
+                // Reset button in any case
                 this.btnLogin.Text = "Ingresar";
                 this.btnLogin.Enabled = true;
                 Program.UsuarioLogeado.ErrorLogin = "";
-                this.lstBoxLogs.Focus();
-                return;
-
             }
-
-            if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
-            {
-                MessageBox.Show("Bienvenido!","Anuncio!",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-                this.Text = configSettings.ObtenNombreApp + " - Usuario: "+ Program.UsuarioLogeado.Nombre.ToString();
-                HabilitaTabs(ObtentabsSeguras());
-                this.btnLogin.Text = "Ingresar";
-                this.btnLogin.Enabled = true;
-            }
-            else
-            {
-                if (!Program.UsuarioLogeado.Activo)
-                {
-                    MessageBox.Show("Usuario no Activo!");
-                }
-                else
-                    {
-                        MessageBox.Show("Credenciales Invalidas");
-                    }
-
-                this.btnLogin.Text = "Ingresar";
-                this.btnLogin.Enabled = true;
-            }
-            
         }
+
 
         private void eventLog1_EntryWritten(object sender, System.Diagnostics.EntryWrittenEventArgs e)
         {

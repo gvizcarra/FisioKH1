@@ -36,7 +36,7 @@ namespace FisioKH
                 { "@nombre", nombre }           
             };
 
-            SqlDatabase sdb = new SqlDatabase();
+            DBHelper sdb = new DBHelper();
             dsmp = sdb.ObtenerDatos("usp_ObtenerMetodoPago", dsname, parameters);
             dtMetodoPago = dsmp.Tables[dsname];
 
@@ -54,7 +54,7 @@ namespace FisioKH
 
         private void btnGuardarMP_Click(object sender, EventArgs e)
         {
-            SqlDatabase sdb = new SqlDatabase();
+            DBHelper sdb = new DBHelper();
 
             var parameters = new Dictionary<string, object>
             {
