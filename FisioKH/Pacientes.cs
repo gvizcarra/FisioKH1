@@ -26,14 +26,11 @@ namespace FisioKH
             this.cboEtiquetas.ValueMember = "Key";
             this.cboEtiquetas.SelectedValue = "pm";
 
-            ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtCiudad.Text,
-               this.txtRfc.Text,  this.txtEmail.Text);
+            ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
         }
 
         private void ObtenDatos(string nombre = null, 
                                  string celular = null, 
-                                 string ciudad = null,
-                                  string rfc = null, 
                                  string email = null)
         {
             DataSet dsmp = new DataSet();
@@ -43,8 +40,6 @@ namespace FisioKH
             { 
                 { "@nombreCompleto", nombre },
                 { "@celular", celular },
-                { "@ciudad", ciudad },
-                { "@rfc", rfc },
                 { "@email", email },
                 //{ "@fechaNacimiento", fechaNacimiento }
                 
@@ -67,8 +62,7 @@ namespace FisioKH
 
         private void btnBuscarPaciente_Click(object sender, EventArgs e)
         {
-            ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtCiudad.Text,
-               this.txtRfc.Text, this.txtEmail.Text);
+            ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
         }
     }
 }

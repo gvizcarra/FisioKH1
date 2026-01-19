@@ -87,12 +87,9 @@ namespace FisioKH
             this.dgvFisioTerapeutas.MultiSelect = false;
             this.dgvFisioTerapeutas.Name = "dgvFisioTerapeutas";
             this.dgvFisioTerapeutas.ReadOnly = true;
-            this.dgvFisioTerapeutas.Size = new System.Drawing.Size(500, 430);
+            this.dgvFisioTerapeutas.Size = new System.Drawing.Size(500, 439);
             this.dgvFisioTerapeutas.TabIndex = 5;
             this.dgvFisioTerapeutas.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvFisioTerapeutas_CellFormatting);
-            this.dgvFisioTerapeutas.CellContentClick += dgvFisioTerapeutas_CellContentClick;
-
-
             // 
             // label1
             // 
@@ -283,6 +280,7 @@ namespace FisioKH
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(110, 25);
             this.txtCelular.TabIndex = 18;
+            this.txtCelular.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // txtNombreCorto
             // 

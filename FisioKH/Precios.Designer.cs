@@ -83,7 +83,7 @@ namespace FisioKH
             this.dgvPrecio.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPrecio.Location = new System.Drawing.Point(11, 51);
             this.dgvPrecio.Name = "dgvPrecio";
-            this.dgvPrecio.Size = new System.Drawing.Size(479, 337);
+            this.dgvPrecio.Size = new System.Drawing.Size(610, 337);
             this.dgvPrecio.TabIndex = 5;
             // 
             // lblNombreMP
@@ -100,7 +100,7 @@ namespace FisioKH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 437);
+            this.ClientSize = new System.Drawing.Size(653, 437);
             this.Controls.Add(this.lblNombreMP);
             this.Controls.Add(this.btnGuardarPrecio);
             this.Controls.Add(this.txtPrecio);

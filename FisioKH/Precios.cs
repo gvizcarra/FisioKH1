@@ -40,8 +40,8 @@ namespace FisioKH
 
             this.dgvPrecio.DataSource = dt;
             this.dgvPrecio.Columns[0].ReadOnly = true;
-            this.dgvPrecio.Columns[4].ReadOnly = true;
-            this.dgvPrecio.Columns[5].ReadOnly = true;
+            this.dgvPrecio.Columns[6].ReadOnly = true;
+            this.dgvPrecio.Columns[7].ReadOnly = true;
 
         }
 
@@ -55,6 +55,8 @@ namespace FisioKH
                 { "@nombre", null },
                 { "@precio", null },
                 { "@activo", null },
+                { "@pacientePaga", null },
+                { "@citaCancelableMismoDia", null },
                 { "@idUsuario", Program.UsuarioLogeado.Id },
  
             };
@@ -63,22 +65,25 @@ namespace FisioKH
             DataTable changedRows = dt.GetChanges();
             foreach (DataRow row in changedRows.Rows)
             {
+                parameters["@nombre"] = row[1];
+                parameters["@precio"] = row[2];
+                parameters["@activo"] = row[3];
+                parameters["@pacientePaga"] = row[4];
+                parameters["@citaCancelableMismoDia"] = row[5];
+
                 switch (row.RowState)
                 {
                     case DataRowState.Added:
-                        parameters["@nombre"] = row[1];
-                        parameters["@precio"] = row[2];
-                        parameters["@activo"] = row[3];
+                        
                         int qtyi = sdb.EjecutarNonQuery("usp_InsertPrecios", parameters);
 
                         if (qtyi > 0)
                         { MessageBox.Show("Registro Insertado"); }
                         break;
+
                     case DataRowState.Modified:
                         parameters["@id"] = row[0];
-                        parameters["@nombre"] = row[1];
-                        parameters["@precio"] = row[2];
-                        parameters["@activo"] = row[3];
+                        
                         int qtyu = sdb.EjecutarNonQuery("usp_UpdatePrecios", parameters);
 
                         if (qtyu > 0)
