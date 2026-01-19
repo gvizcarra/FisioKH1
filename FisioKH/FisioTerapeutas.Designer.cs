@@ -130,7 +130,7 @@ namespace FisioKH
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(147, 128);
+            this.label5.Location = new System.Drawing.Point(167, 128);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(47, 19);
             this.label5.TabIndex = 14;
@@ -139,9 +139,10 @@ namespace FisioKH
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.label6.Location = new System.Drawing.Point(27, 166);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(37, 19);
+            this.label6.Size = new System.Drawing.Size(44, 21);
             this.label6.TabIndex = 15;
             this.label6.Text = "Foto";
             // 
@@ -167,7 +168,7 @@ namespace FisioKH
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Location = new System.Drawing.Point(535, 53);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(331, 432);
+            this.groupBox1.Size = new System.Drawing.Size(362, 432);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Generales";
@@ -217,10 +218,10 @@ namespace FisioKH
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(232, 93);
+            this.txtId.Location = new System.Drawing.Point(252, 93);
             this.txtId.MaxLength = 10;
             this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(44, 25);
+            this.txtId.Size = new System.Drawing.Size(54, 25);
             this.txtId.TabIndex = 23;
             // 
             // btnAbrirCamara
@@ -242,9 +243,9 @@ namespace FisioKH
             this.pbxFotoFisio.ErrorImage = null;
             this.pbxFotoFisio.Image = global::FisioKH.Properties.Resources.fisioTerapeuta;
             this.pbxFotoFisio.InitialImage = null;
-            this.pbxFotoFisio.Location = new System.Drawing.Point(92, 166);
+            this.pbxFotoFisio.Location = new System.Drawing.Point(112, 166);
             this.pbxFotoFisio.Name = "pbxFotoFisio";
-            this.pbxFotoFisio.Size = new System.Drawing.Size(189, 200);
+            this.pbxFotoFisio.Size = new System.Drawing.Size(199, 200);
             this.pbxFotoFisio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbxFotoFisio.TabIndex = 21;
             this.pbxFotoFisio.TabStop = false;
@@ -253,7 +254,7 @@ namespace FisioKH
             // 
             this.chkValora.AutoSize = true;
             this.chkValora.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkValora.Location = new System.Drawing.Point(221, 124);
+            this.chkValora.Location = new System.Drawing.Point(241, 124);
             this.chkValora.Name = "chkValora";
             this.chkValora.Size = new System.Drawing.Size(44, 24);
             this.chkValora.TabIndex = 20;
@@ -266,7 +267,7 @@ namespace FisioKH
             this.chkActivo.Checked = true;
             this.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkActivo.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.chkActivo.Location = new System.Drawing.Point(101, 126);
+            this.chkActivo.Location = new System.Drawing.Point(121, 126);
             this.chkActivo.Name = "chkActivo";
             this.chkActivo.Size = new System.Drawing.Size(44, 24);
             this.chkActivo.TabIndex = 19;
@@ -275,26 +276,26 @@ namespace FisioKH
             // 
             // txtCelular
             // 
-            this.txtCelular.Location = new System.Drawing.Point(92, 90);
+            this.txtCelular.Location = new System.Drawing.Point(112, 90);
             this.txtCelular.Mask = "(999) 000-00-00";
             this.txtCelular.Name = "txtCelular";
-            this.txtCelular.Size = new System.Drawing.Size(110, 25);
+            this.txtCelular.Size = new System.Drawing.Size(120, 25);
             this.txtCelular.TabIndex = 18;
             this.txtCelular.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // txtNombreCorto
             // 
-            this.txtNombreCorto.Location = new System.Drawing.Point(92, 58);
+            this.txtNombreCorto.Location = new System.Drawing.Point(112, 58);
             this.txtNombreCorto.MaxLength = 10;
             this.txtNombreCorto.Name = "txtNombreCorto";
-            this.txtNombreCorto.Size = new System.Drawing.Size(200, 25);
+            this.txtNombreCorto.Size = new System.Drawing.Size(210, 25);
             this.txtNombreCorto.TabIndex = 17;
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(92, 25);
+            this.txtNombre.Location = new System.Drawing.Point(112, 25);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(200, 25);
+            this.txtNombre.Size = new System.Drawing.Size(210, 25);
             this.txtNombre.TabIndex = 16;
             // 
             // btnGuardarFT
@@ -302,10 +303,10 @@ namespace FisioKH
             this.btnGuardarFT.FlatAppearance.BorderSize = 2;
             this.btnGuardarFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnGuardarFT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarFT.Location = new System.Drawing.Point(107, 385);
+            this.btnGuardarFT.Location = new System.Drawing.Point(127, 385);
             this.btnGuardarFT.Margin = new System.Windows.Forms.Padding(10);
             this.btnGuardarFT.Name = "btnGuardarFT";
-            this.btnGuardarFT.Size = new System.Drawing.Size(95, 34);
+            this.btnGuardarFT.Size = new System.Drawing.Size(105, 34);
             this.btnGuardarFT.TabIndex = 9;
             this.btnGuardarFT.Text = "&Guardar Cambios";
             this.btnGuardarFT.UseVisualStyleBackColor = true;
