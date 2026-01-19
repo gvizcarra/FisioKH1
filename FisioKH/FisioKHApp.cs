@@ -68,7 +68,7 @@ namespace FisioKH
 
             this.fisioKHCalendar1.DataSource = InitStaticDataSet();
             this.fisioKHCalendar1.RefreshCurrentView();
-           // DesHabilitaTabs(ObtentabsSeguras());
+            DesHabilitaTabs(ObtentabsSeguras());
         }
 
         private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)

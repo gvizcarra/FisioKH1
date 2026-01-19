@@ -13,6 +13,7 @@ namespace FisioKH
     public partial class Pacientes : Form
     {
         private DataTable dt;
+        private WebCamHelper wch;
         public Pacientes()
         {
             InitializeComponent();
@@ -20,12 +21,14 @@ namespace FisioKH
 
         private void Pacientes_Load(object sender, EventArgs e)
         {
-            this.cboEtiquetas.DataSource = EtiquetasPacienteHelper.GetBindableList();
 
-            this.cboEtiquetas.DisplayMember = "Text"; // what user sees
-            this.cboEtiquetas.ValueMember = "Key";
-            this.cboEtiquetas.SelectedValue = "pm";
+            this.cboEtiqueta.DataSource = EtiquetasPacienteHelper.GetBindableList();
 
+            this.cboEtiqueta.DisplayMember = "Text"; // what user sees
+            this.cboEtiqueta.ValueMember = "Key";
+            this.cboEtiqueta.SelectedValue = "pm";
+
+            wch = new WebCamHelper(pbxFotoPaciente);
             ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
         }
 
@@ -44,25 +47,178 @@ namespace FisioKH
                 //{ "@fechaNacimiento", fechaNacimiento }
                 
             };
-
             DBHelper sdb = new DBHelper();
             dsmp = sdb.ObtenerDatos("usp_ObtenerPacientes", dsname, parameters);
-             
-                dt = dsmp.Tables[dsname];
+
+            dgvPacientes.AutoGenerateColumns = false;
+            dgvPacientes.Columns.Clear();
+            dgvPacientes.AutoResizeColumns();
+
+
+            dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "id",
+                HeaderText = "Id",
+                Name = "Id"
+            });
+
+            dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Nombre",
+                HeaderText = "Nombre",
+                Name = "nombre"
+            });
+
+            dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Etiqueta",
+                HeaderText = "Etiqueta",
+                Name = "Etiqueta"
+            });
+
+            dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "FechaNacimiento",
+                HeaderText = "FechaNacimiento",
+                Name = "FechaNacimiento"
+            });
+
+              dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "MedicoTratante",
+                HeaderText = "MedicoTratante",
+                Name = "MedicoTratante"
+              });
+
+
+            dt = dsmp.Tables[dsname];
+
+            DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn();
+            btnEdit.Name = "btnEdit";
+            btnEdit.HeaderText = "";
+            btnEdit.Text = "Editar";
+            btnEdit.UseColumnTextForButtonValue = true;
+
+            dgvPacientes.Columns.Insert(0, btnEdit);
 
             this.dgvPacientes.DataSource = dt;
-             
-                this.dgvPacientes.Columns[0].ReadOnly = true;
-                this.dgvPacientes.Columns[7].ReadOnly = true;
-                this.dgvPacientes.Columns[10].ReadOnly = true;
-                this.dgvPacientes.Columns[11].ReadOnly = true;
-             
+
 
         }
 
         private void btnBuscarPaciente_Click(object sender, EventArgs e)
         {
             ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
+        }
+
+        private void dgvPacientes_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+
+            //if (e.RowIndex < 0) return;
+
+            //if (e.ColumnIndex == 0)
+            //    return;
+
+            //if (sender is DataGridView dgv && e.Value != null)
+            //{
+            //    // List of columns to format
+            //    string[] bitColumns = { "activo", "valora", "citaCancelableMismoDia" };
+
+            //    if (bitColumns.Contains(dgv.Columns[e.ColumnIndex].Name))
+            //    {
+            //        e.Value = Convert.ToBoolean(e.Value) ? "Sí" : "No";
+            //        e.FormattingApplied = true;
+            //    }
+            //}
+
+        }
+
+        private void dgvPacientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvPacientes.Columns[e.ColumnIndex].Name == "btnEdit")
+            {
+                DataRow row = dt.Rows[e.RowIndex];
+
+                //Id Nombre  Celular Ciudad  Sexo Edad    MedicoTratante Fisio   Etiqueta Email   Usuario FechaRegistro   Rfc DFiscal NFiscal FechaNacimiento observaciones
+
+                this.txtId.Text = row["Id"].ToString();
+                this.txtNombreCompleto.Text = row["Nombre"].ToString();
+                this.txtCelularAlta.Text = row["Celular"].ToString();
+                this.txtCiudad.Text = row["Ciudad"].ToString();
+                this.txtRfcFiscal.Text = row["Rfc"].ToString();
+                //this.txtId.Text = row["Sexo"].ToString();
+                this.txtEdad.Text = row["Edad"].ToString();
+                this.txtMedicoTratante.Text = row["MedicoTratante"].ToString();
+                this.cboEtiqueta.SelectedValue = row["Etiqueta"].ToString();
+                this.txtEmailAlta.Text = row["Email"].ToString();
+                this.txtDomicilioFiscal.Text = row["DFiscal"].ToString();
+                this.txtNombreFiscal.Text = row["NFiscal"].ToString();
+                this.dtpFechaNacimiento.Text = row["FechaNacimiento"].ToString();
+                this.txtObservaciones.Text = row["observaciones"].ToString();
+
+
+                DBHelper db = new DBHelper();
+
+                Bitmap foto = db.GetImageFromField(row, "Foto");
+                db.Dispose();
+
+
+                this.pbxFotoPaciente.Image = foto ?? FisioKH.Properties.Resources.patient;
+
+                //MessageBox.Show(row[1].ToString());
+
+            }
+        }
+
+        private void btnAbrirCamara_Click(object sender, EventArgs e)
+        {
+            wch.StartCamera();
+            btnGuardarFoto.Enabled = true;
+            btnZoomIn.Enabled = true;
+            btnZoomOut.Enabled = true;
+        }
+
+        private void btnZoomIn_Click(object sender, EventArgs e)
+        {
+            wch.ZoomIn();
+        }
+
+        private void btnZoomOut_Click(object sender, EventArgs e)
+        {
+            wch.ZoomOut();
+        }
+
+        private void btnGuardarFoto_Click(object sender, EventArgs e)
+        {
+            if (wch.videoSource != null && wch.videoSource.IsRunning)
+            {
+                wch.videoSource.SignalToStop();
+                wch.videoSource.WaitForStop();
+            }
+
+            wch.currentFrame?.Dispose();
+        }
+
+        private void btnGuardarFT_Click(object sender, EventArgs e)
+        {
+
+            this.txtId.Text = "";
+            this.txtNombreCompleto.Text = "";
+            this.txtCelularAlta.Text = "";
+            this.txtCiudad.Text = "";
+            this.txtRfcFiscal.Text = "";
+            //this.txtId.Text = row["Sexo"].ToString();
+            this.txtEdad.Text = "";
+            this.txtMedicoTratante.Text = "";
+            this.cboEtiqueta.ResetText();
+            this.txtEmailAlta.Text = "";
+            this.txtDomicilioFiscal.Text = "";
+            this.txtNombreFiscal.Text = "";
+            this.dtpFechaNacimiento.Text = "";
+            this.txtObservaciones.Text = "";
+
+            this.pbxFotoPaciente.Image =  FisioKH.Properties.Resources.patient;
+
         }
     }
 }

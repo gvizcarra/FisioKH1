@@ -158,6 +158,13 @@ namespace FisioKH
             if (qtyi > 0)
             { MessageBox.Show("Registro Insertado"); }
 
+            this.txtId.Text = "";
+            this.txtNombre.Text = "";
+            this.txtNombreCorto.Text = "";
+            this.txtCelular.Text = "";
+            this.txtFisioTerapeuta.Text = "";
+            this.chkValora.Checked = false;
+
          
         }
 
@@ -233,6 +240,34 @@ namespace FisioKH
         {
 
             wch?.StopCamera();
+        }
+
+        private void dgvFisioTerapeutas_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvFisioTerapeutas.Columns[e.ColumnIndex].Name == "btnEdit")
+            {
+                DataRow row = dt.Rows[e.RowIndex];
+
+                this.txtId.Text = row["Id"].ToString();
+                this.txtNombre.Text = row["nombre"].ToString();
+                this.txtNombreCorto.Text = row["nombreCorto"].ToString();
+                this.txtCelular.Text = row["celular"].ToString();
+                this.chkActivo.Checked = (bool)row["activo"];
+                this.chkValora.Checked = (bool)row["haceValoracion"];
+
+                DBHelper db = new DBHelper();
+
+                Bitmap foto = db.GetImageFromField(row, "Foto");
+                db.Dispose();
+
+                this.pbxFotoFisio.Image = foto ?? FisioKH.Properties.Resources.fisioTerapeuta;
+
+
+
+
+
+
+            }
         }
     }
 }

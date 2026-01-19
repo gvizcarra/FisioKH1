@@ -20,7 +20,7 @@ namespace FisioKH
         {   
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Pacientes());
+            Application.Run(new FisioKHApp());
         }
     }
 }

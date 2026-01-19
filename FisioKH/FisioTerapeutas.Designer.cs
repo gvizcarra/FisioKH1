@@ -89,6 +89,7 @@ namespace FisioKH
             this.dgvFisioTerapeutas.ReadOnly = true;
             this.dgvFisioTerapeutas.Size = new System.Drawing.Size(500, 439);
             this.dgvFisioTerapeutas.TabIndex = 5;
+            this.dgvFisioTerapeutas.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFisioTerapeutas_CellContentClick_1);
             this.dgvFisioTerapeutas.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvFisioTerapeutas_CellFormatting);
             // 
             // label1
@@ -223,6 +224,7 @@ namespace FisioKH
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(54, 25);
             this.txtId.TabIndex = 23;
+            this.txtId.Visible = false;
             // 
             // btnAbrirCamara
             // 
