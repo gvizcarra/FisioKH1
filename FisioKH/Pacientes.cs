@@ -21,7 +21,8 @@ namespace FisioKH
 
         private void Pacientes_Load(object sender, EventArgs e)
         {
-
+            DBHelper db = new DBHelper();
+            DataSet ds = db.ObtenerDatos("SELECT id,nombreCorto  FROM fisioTerapeutas","Fisios");
             this.cboEtiqueta.DataSource = EtiquetasPacienteHelper.GetBindableList();
 
             this.cboEtiqueta.DisplayMember = "Text"; // what user sees
@@ -30,6 +31,13 @@ namespace FisioKH
 
             wch = new WebCamHelper(pbxFotoPaciente);
             ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
+
+
+            this.cboFisioTerapeuta.DataSource = ds.Tables["Fisios"];
+            this.cboFisioTerapeuta.ValueMember = "id";
+            this.cboFisioTerapeuta.DisplayMember = "nombreCorto";
+            
+
         }
 
         private void ObtenDatos(string nombre = null, 
@@ -156,6 +164,11 @@ namespace FisioKH
                 this.dtpFechaNacimiento.Text = row["FechaNacimiento"].ToString();
                 this.txtObservaciones.Text = row["observaciones"].ToString();
 
+                foreach (RadioButton rb in gbSexo.Controls.OfType<RadioButton>())
+                {
+                    rb.Checked = (rb.Text == row["Sexo"].ToString());                    
+                }
+
 
                 DBHelper db = new DBHelper();
 
@@ -201,13 +214,77 @@ namespace FisioKH
 
         private void btnGuardarFT_Click(object sender, EventArgs e)
         {
+            int id = 0, qtyi = 0;
 
+            int.TryParse(this.txtId.Text, out id);
+
+            DBHelper sdb = new DBHelper();
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@nombreCompleto", null },
+                { "@celular", null },
+                { "@ciudad", null },
+                { "@sexo", null },
+                { "@fechaNacimiento", null },
+                { "@email", null },
+                { "@idUsuario", Program.UsuarioLogeado.Id },
+                { "@rfc", null },
+                { "@domicilioFiscal", null },
+                { "@nombreFiscal", null },
+                { "@medicoTratante", null },
+                { "@idFisioTerapeuta", null },
+                { "@claveEtiqueta", null },
+                { "@observaciones", null },
+                { "@foto", null }
+            };
+
+             
+
+
+
+
+            parameters["@nombreCompleto"] = this.txtNombreCompleto.Text;
+            parameters["@celular"] = this.txtCelularAlta.Text;
+            parameters["@ciudad"] = this.txtCiudad.Text;
+            parameters["@sexo"] = this.gbSexo.Controls.OfType<RadioButton>().First(r => r.Checked).Text.ToString();
+            parameters["@fechaNacimiento"] = this.dtpFechaNacimiento.Text.ToString();
+            parameters["@email"] = this.txtEmailAlta.Text;
+            parameters["@rfc"] = this.txtRfcFiscal.Text;
+            parameters["@domicilioFiscal"] = this.txtDomicilioFiscal.Text;
+            parameters["@nombreFiscal"] = this.txtNombreFiscal.Text;
+            parameters["@medicoTratante"] = this.txtMedicoTratante.Text;
+            parameters["@idFisioTerapeuta"] = Convert.ToInt64(cboFisioTerapeuta.SelectedValue);
+            parameters["@claveEtiqueta"] = this.cboEtiqueta.SelectedValue;
+            parameters["@observaciones"] = this.txtObservaciones.Text;
+          
+            parameters["@foto"] = (object)wch.ImageToByteArray(this.pbxFotoPaciente) ?? DBNull.Value;
+
+            if (id > 0)
+            {
+                parameters.Add("@id", id);
+                qtyi = sdb.EjecutarNonQuery("usp_UpdatePaciente", parameters);
+            }
+            else
+            { qtyi = sdb.EjecutarNonQuery("usp_InsertPaciente", parameters); }
+
+            if (qtyi > 0)
+            { MessageBox.Show("Registro Insertado"); }
+
+
+            limpiarFormulario();
+
+            ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
+
+        }
+
+        private void limpiarFormulario()
+        {
             this.txtId.Text = "";
             this.txtNombreCompleto.Text = "";
             this.txtCelularAlta.Text = "";
             this.txtCiudad.Text = "";
             this.txtRfcFiscal.Text = "";
-            //this.txtId.Text = row["Sexo"].ToString();
             this.txtEdad.Text = "";
             this.txtMedicoTratante.Text = "";
             this.cboEtiqueta.ResetText();
@@ -217,7 +294,8 @@ namespace FisioKH
             this.dtpFechaNacimiento.Text = "";
             this.txtObservaciones.Text = "";
 
-            this.pbxFotoPaciente.Image =  FisioKH.Properties.Resources.patient;
+            this.pbxFotoPaciente.Image = FisioKH.Properties.Resources.patient;
+
 
         }
     }

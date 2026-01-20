@@ -148,6 +148,7 @@ namespace FisioKH
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
             this.txtUsuario.TabIndex = 6;
+            this.txtUsuario.Text = "gabriel";
             // 
             // btnLogin
             // 
@@ -187,6 +188,7 @@ namespace FisioKH
             this.txtPassPin.PasswordChar = '*';
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.TabIndex = 7;
+            this.txtPassPin.Text = "nada";
             // 
             // label2
             // 

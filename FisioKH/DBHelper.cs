@@ -143,14 +143,18 @@ namespace FisioKH
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     if (spPars != null)
-                        foreach (var par in spPars)
-                            cmd.Parameters.AddWithValue(par.Key, par.Value ?? DBNull.Value);
+                        foreach (var p in spPars)
+                        {
+                            cmd.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
+                        }
 
                     // optional output param
                     SqlParameter outParam = new SqlParameter("@rowsAffected", SqlDbType.Int)
                     {
                         Direction = ParameterDirection.Output
                     };
+
+
                     cmd.Parameters.Add(outParam);
 
                     cmd.ExecuteNonQuery();

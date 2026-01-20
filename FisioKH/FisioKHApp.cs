@@ -148,7 +148,7 @@ namespace FisioKH
 
                 if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
                 {
-                    MessageBox.Show("Bienvenido!", "Anuncio!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                   // MessageBox.Show("Bienvenido!", "Anuncio!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     this.Text = $"{configSettings.ObtenNombreApp} - Usuario: {Program.UsuarioLogeado.Nombre}";
                     HabilitaTabs(ObtentabsSeguras());
                 }
