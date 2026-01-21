@@ -108,6 +108,19 @@ namespace FisioKH
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+
+            if (!ValidateChildren())
+            {
+                // Focus first invalid field
+                var failedControl = GetFirstInvalidControl(this);
+                if (failedControl != null)
+                    failedControl.Focus();
+
+                MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
             string usuario = this.txtUsuario.Text.Trim();
             string passPin = this.txtPassPin.Text.Trim();
 

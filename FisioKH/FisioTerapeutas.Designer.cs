@@ -29,7 +29,7 @@ namespace FisioKH
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtFisioTerapeuta = new FisioKH.ValidatedNumericTextBox();
+            this.txtFisioTerapeuta = new System.Windows.Forms.TextBox();
             this.lblNombreMP = new System.Windows.Forms.Label();
             this.dgvFisioTerapeutas = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,16 +42,17 @@ namespace FisioKH
             this.btnZoomOut = new FisioKH.Boton();
             this.btnZoomIn = new FisioKH.Boton();
             this.btnGuardarFoto = new FisioKH.Boton();
-            this.txtId = new FisioKH.ValidatedNumericTextBox();
+            this.txtId = new System.Windows.Forms.TextBox();
             this.btnAbrirCamara = new FisioKH.Boton();
             this.pbxFotoFisio = new System.Windows.Forms.PictureBox();
             this.chkValora = new System.Windows.Forms.CheckBox();
             this.chkActivo = new System.Windows.Forms.CheckBox();
             this.txtCelular = new System.Windows.Forms.MaskedTextBox();
-            this.txtNombreCorto = new FisioKH.ValidatedNumericTextBox();
-            this.txtNombre = new FisioKH.ValidatedNumericTextBox();
+            this.txtNombreCorto = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.btnGuardarFT = new FisioKH.Boton();
             this.btnBuscarFT = new FisioKH.Boton();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFotoFisio)).BeginInit();
@@ -344,6 +345,7 @@ namespace FisioKH
             this.Text = "FisioTerapeutas";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FisioTerapeutas_FormClosing);
             this.Load += new System.EventHandler(this.FisioTerapeutas_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -356,7 +358,7 @@ namespace FisioKH
         #endregion
 
         private Boton btnGuardarFT;
-        private FisioKH.ValidatedNumericTextBox txtFisioTerapeuta;
+        private System.Windows.Forms.TextBox txtFisioTerapeuta;
         private System.Windows.Forms.Label lblNombreMP;
         private Boton btnBuscarFT;
         private System.Windows.Forms.DataGridView dgvFisioTerapeutas;
@@ -370,11 +372,11 @@ namespace FisioKH
         private System.Windows.Forms.CheckBox chkValora;
         private System.Windows.Forms.CheckBox chkActivo;
         private System.Windows.Forms.MaskedTextBox txtCelular;
-        private FisioKH.ValidatedNumericTextBox txtNombreCorto;
-        private FisioKH.ValidatedNumericTextBox txtNombre;
+        private System.Windows.Forms.TextBox txtNombreCorto;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.PictureBox pbxFotoFisio;
         private Boton btnAbrirCamara;
-        private FisioKH.ValidatedNumericTextBox txtId;
+        private System.Windows.Forms.TextBox txtId;
         private Boton btnGuardarFoto;
         private Boton btnZoomOut;
         private Boton btnZoomIn;

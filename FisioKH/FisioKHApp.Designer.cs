@@ -39,10 +39,10 @@ namespace FisioKH
             this.boton1 = new FisioKH.Boton();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtUsuario = new FisioKH.ValidatedNumericTextBox();
             this.btnLogin = new FisioKH.Boton();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtPassPin = new System.Windows.Forms.TextBox();
+            this.txtPassPin = new FisioKH.ValidatedNumericTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbIngresos = new System.Windows.Forms.TabPage();
             this.fisioKHCalendar1 = new FisioKH.FisioKHCalendar();
@@ -56,6 +56,7 @@ namespace FisioKH
             this.tbReportes = new System.Windows.Forms.TabPage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -142,10 +143,16 @@ namespace FisioKH
             this.txtUsuario.AcceptsReturn = true;
             this.txtUsuario.AcceptsTab = true;
             this.txtUsuario.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.txtUsuario.ErrorMessage = "Valor no Valido";
+            this.txtUsuario.ErrorProvider = null;
             this.txtUsuario.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.txtUsuario.ForeColor = System.Drawing.Color.Black;
+            this.txtUsuario.IsRequired = true;
             this.txtUsuario.Location = new System.Drawing.Point(209, 25);
+            this.txtUsuario.MaxValue = null;
+            this.txtUsuario.MinValue = null;
             this.txtUsuario.Name = "txtUsuario";
+            this.txtUsuario.NumericOnly = false;
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
             this.txtUsuario.TabIndex = 6;
             this.txtUsuario.Text = "gabriel";
@@ -181,14 +188,21 @@ namespace FisioKH
             this.txtPassPin.AcceptsReturn = true;
             this.txtPassPin.AcceptsTab = true;
             this.txtPassPin.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.txtPassPin.ErrorMessage = "Valor no Valido";
+            this.txtPassPin.ErrorProvider = null;
             this.txtPassPin.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.txtPassPin.ForeColor = System.Drawing.Color.Black;
+            this.txtPassPin.IsRequired = true;
             this.txtPassPin.Location = new System.Drawing.Point(209, 66);
+            this.txtPassPin.MaxValue = null;
+            this.txtPassPin.MinValue = null;
             this.txtPassPin.Name = "txtPassPin";
+            this.txtPassPin.NumericOnly = false;
             this.txtPassPin.PasswordChar = '*';
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.TabIndex = 7;
             this.txtPassPin.Text = "nada";
+            this.txtPassPin.UseSystemPasswordChar = true;
             // 
             // label2
             // 
@@ -364,6 +378,7 @@ namespace FisioKH
             this.MaximizeBox = true;
             this.Name = "FisioKHApp";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tbInicio.ResumeLayout(false);
             this.tbInicio.PerformLayout();
@@ -385,8 +400,6 @@ namespace FisioKH
         private TabPage tbReportes;
         private TabPage tbInicio;
         private Boton btnLogin;
-        private TextBox txtPassPin;
-        private TextBox txtUsuario;
         private Label label2;
         private Label label1;
         private GroupBox groupBox1;
@@ -402,6 +415,8 @@ namespace FisioKH
         private Boton btnMetodosPago;
         private FisioKHCalendar fisioKHCalendar1;
         private Boton btnFisios;
+        private ValidatedNumericTextBox txtPassPin;
+        private ValidatedNumericTextBox txtUsuario;
     }
 }
 
