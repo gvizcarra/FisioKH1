@@ -165,7 +165,18 @@ namespace FisioKH
             this.txtFisioTerapeuta.Text = "";
             this.chkValora.Checked = false;
 
-         
+            limpiarFormulario();
+            ObtenFisioTerapeutas(this.txtFisioTerapeuta.Text);
+        }
+
+        private void limpiarFormulario()
+        {
+            this.txtId.Text = "";
+            this.txtNombre.Text = "";
+            this.txtNombreCorto.Text = "";
+            this.txtCelular.Text = "";
+            this.txtFisioTerapeuta.Text = "";
+            this.chkValora.Checked = false;
         }
 
         private void dgvFisioTerapeutas_CellContentClick(object sender, DataGridViewCellEventArgs e)
