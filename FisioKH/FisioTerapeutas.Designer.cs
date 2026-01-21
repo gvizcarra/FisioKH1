@@ -29,7 +29,7 @@ namespace FisioKH
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtFisioTerapeuta = new System.Windows.Forms.TextBox();
+            this.txtFisioTerapeuta = new FisioKH.ValidatedNumericTextBox();
             this.lblNombreMP = new System.Windows.Forms.Label();
             this.dgvFisioTerapeutas = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,14 +42,14 @@ namespace FisioKH
             this.btnZoomOut = new FisioKH.Boton();
             this.btnZoomIn = new FisioKH.Boton();
             this.btnGuardarFoto = new FisioKH.Boton();
-            this.txtId = new System.Windows.Forms.TextBox();
+            this.txtId = new FisioKH.ValidatedNumericTextBox();
             this.btnAbrirCamara = new FisioKH.Boton();
             this.pbxFotoFisio = new System.Windows.Forms.PictureBox();
             this.chkValora = new System.Windows.Forms.CheckBox();
             this.chkActivo = new System.Windows.Forms.CheckBox();
             this.txtCelular = new System.Windows.Forms.MaskedTextBox();
-            this.txtNombreCorto = new System.Windows.Forms.TextBox();
-            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.txtNombreCorto = new FisioKH.ValidatedNumericTextBox();
+            this.txtNombre = new FisioKH.ValidatedNumericTextBox();
             this.btnGuardarFT = new FisioKH.Boton();
             this.btnBuscarFT = new FisioKH.Boton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).BeginInit();
@@ -356,7 +356,7 @@ namespace FisioKH
         #endregion
 
         private Boton btnGuardarFT;
-        private System.Windows.Forms.TextBox txtFisioTerapeuta;
+        private FisioKH.ValidatedNumericTextBox txtFisioTerapeuta;
         private System.Windows.Forms.Label lblNombreMP;
         private Boton btnBuscarFT;
         private System.Windows.Forms.DataGridView dgvFisioTerapeutas;
@@ -370,11 +370,11 @@ namespace FisioKH
         private System.Windows.Forms.CheckBox chkValora;
         private System.Windows.Forms.CheckBox chkActivo;
         private System.Windows.Forms.MaskedTextBox txtCelular;
-        private System.Windows.Forms.TextBox txtNombreCorto;
-        private System.Windows.Forms.TextBox txtNombre;
+        private FisioKH.ValidatedNumericTextBox txtNombreCorto;
+        private FisioKH.ValidatedNumericTextBox txtNombre;
         private System.Windows.Forms.PictureBox pbxFotoFisio;
         private Boton btnAbrirCamara;
-        private System.Windows.Forms.TextBox txtId;
+        private FisioKH.ValidatedNumericTextBox txtId;
         private Boton btnGuardarFoto;
         private Boton btnZoomOut;
         private Boton btnZoomIn;

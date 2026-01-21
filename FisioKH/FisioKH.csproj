@@ -138,6 +138,9 @@
     <Compile Include="FisioTerapeutas.Designer.cs">
       <DependentUpon>FisioTerapeutas.cs</DependentUpon>
     </Compile>
+    <Compile Include="ValidatedTextbox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebCamHelper.cs" />
     <Compile Include="MetodosPago.cs">
       <SubType>Form</SubType>

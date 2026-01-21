@@ -31,7 +31,7 @@ namespace FisioKH
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pacientes));
             this.lblNombrePaciente = new System.Windows.Forms.Label();
-            this.txtPaciente = new System.Windows.Forms.TextBox();
+            this.txtPaciente = new FisioKH.ValidatedNumericTextBox();
             this.dgvPacientes = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,45 +40,47 @@ namespace FisioKH
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtNombreCompleto = new System.Windows.Forms.TextBox();
-            this.txtCiudad = new System.Windows.Forms.TextBox();
+            this.txtNombreCompleto = new FisioKH.ValidatedNumericTextBox();
+            this.txtCiudad = new FisioKH.ValidatedNumericTextBox();
             this.txtCelularAlta = new System.Windows.Forms.MaskedTextBox();
             this.pbxFotoPaciente = new System.Windows.Forms.PictureBox();
-            this.txtId = new System.Windows.Forms.TextBox();
+            this.txtId = new FisioKH.ValidatedNumericTextBox();
             this.cboEtiqueta = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnNuevoPaciente = new FisioKH.Boton();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cboFisioTerapeuta = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnZoomIn = new FisioKH.Boton();
+            this.btnZoomOut = new FisioKH.Boton();
+            this.btnAbrirCamara = new FisioKH.Boton();
+            this.btnGuardarFoto = new FisioKH.Boton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtObservaciones = new System.Windows.Forms.TextBox();
+            this.txtObservaciones = new FisioKH.ValidatedNumericTextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtMedicoTratante = new System.Windows.Forms.TextBox();
+            this.txtMedicoTratante = new FisioKH.ValidatedNumericTextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dtpFechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtNombreFiscal = new System.Windows.Forms.TextBox();
+            this.txtNombreFiscal = new FisioKH.ValidatedNumericTextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.txtDomicilioFiscal = new System.Windows.Forms.TextBox();
+            this.txtDomicilioFiscal = new FisioKH.ValidatedNumericTextBox();
             this.txtRfc = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtRfcFiscal = new System.Windows.Forms.TextBox();
-            this.txtEdad = new System.Windows.Forms.TextBox();
+            this.txtRfcFiscal = new FisioKH.ValidatedNumericTextBox();
+            this.txtEdad = new FisioKH.ValidatedNumericTextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtEmailAlta = new System.Windows.Forms.TextBox();
+            this.txtEmailAlta = new FisioKH.ValidatedNumericTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.gbSexo = new System.Windows.Forms.GroupBox();
             this.rbOtro = new System.Windows.Forms.RadioButton();
             this.rbMujer = new System.Windows.Forms.RadioButton();
             this.rbHombre = new System.Windows.Forms.RadioButton();
-            this.cboFisioTerapeuta = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnZoomIn = new FisioKH.Boton();
-            this.btnZoomOut = new FisioKH.Boton();
-            this.btnAbrirCamara = new FisioKH.Boton();
-            this.btnGuardarFoto = new FisioKH.Boton();
             this.btnGuardarFT = new FisioKH.Boton();
             this.btnBuscarPaciente = new FisioKH.Boton();
+            ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFotoPaciente)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -93,7 +95,7 @@ namespace FisioKH
             // 
             this.lblNombrePaciente.AutoSize = true;
             this.lblNombrePaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombrePaciente.Location = new System.Drawing.Point(0, 5);
+            this.lblNombrePaciente.Location = new System.Drawing.Point(0, 7);
             this.lblNombrePaciente.Name = "lblNombrePaciente";
             this.lblNombrePaciente.Size = new System.Drawing.Size(71, 17);
             this.lblNombrePaciente.TabIndex = 14;
@@ -102,10 +104,17 @@ namespace FisioKH
             // txtPaciente
             // 
             this.txtPaciente.AcceptsReturn = true;
+            this.txtPaciente.ErrorMessage = "Valor no Valido";
+            this.txtPaciente.ErrorProvider = null;
             this.txtPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPaciente.Location = new System.Drawing.Point(3, 25);
+            this.txtPaciente.IsRequired = false;
+            this.txtPaciente.Location = new System.Drawing.Point(3, 33);
+            this.txtPaciente.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtPaciente.MaxValue = null;
+            this.txtPaciente.MinValue = null;
             this.txtPaciente.Name = "txtPaciente";
-            this.txtPaciente.Size = new System.Drawing.Size(115, 26);
+            this.txtPaciente.NumericOnly = false;
+            this.txtPaciente.Size = new System.Drawing.Size(133, 26);
             this.txtPaciente.TabIndex = 12;
             // 
             // dgvPacientes
@@ -116,10 +125,11 @@ namespace FisioKH
             this.dgvPacientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvPacientes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPacientes.Location = new System.Drawing.Point(3, 57);
+            this.dgvPacientes.Location = new System.Drawing.Point(3, 75);
+            this.dgvPacientes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dgvPacientes.Name = "dgvPacientes";
             this.dgvPacientes.ReadOnly = true;
-            this.dgvPacientes.Size = new System.Drawing.Size(500, 439);
+            this.dgvPacientes.Size = new System.Drawing.Size(583, 574);
             this.dgvPacientes.TabIndex = 10;
             this.dgvPacientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPacientes_CellContentClick);
             this.dgvPacientes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvPacientes_CellFormatting);
@@ -128,7 +138,7 @@ namespace FisioKH
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(121, 4);
+            this.label1.Location = new System.Drawing.Point(141, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 17);
             this.label1.TabIndex = 16;
@@ -138,7 +148,7 @@ namespace FisioKH
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(239, 5);
+            this.label3.Location = new System.Drawing.Point(279, 7);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 17);
             this.label3.TabIndex = 20;
@@ -148,69 +158,86 @@ namespace FisioKH
             // 
             this.txtEmail.AcceptsReturn = true;
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(242, 25);
+            this.txtEmail.Location = new System.Drawing.Point(282, 33);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(143, 26);
+            this.txtEmail.Size = new System.Drawing.Size(166, 26);
             this.txtEmail.TabIndex = 19;
             // 
             // txtCelular
             // 
-            this.txtCelular.Location = new System.Drawing.Point(124, 30);
+            this.txtCelular.Location = new System.Drawing.Point(145, 39);
+            this.txtCelular.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCelular.Mask = "(999) 000-00-00";
             this.txtCelular.Name = "txtCelular";
-            this.txtCelular.Size = new System.Drawing.Size(102, 20);
+            this.txtCelular.Size = new System.Drawing.Size(118, 25);
             this.txtCelular.TabIndex = 26;
             this.txtCelular.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(183, 32);
+            this.label8.Location = new System.Drawing.Point(213, 42);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(40, 13);
+            this.label8.Size = new System.Drawing.Size(52, 19);
             this.label8.TabIndex = 12;
             this.label8.Text = "Ciudad";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(323, 32);
+            this.label4.Location = new System.Drawing.Point(377, 42);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.Size = new System.Drawing.Size(51, 19);
             this.label4.TabIndex = 11;
             this.label4.Text = "Celular";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 32);
+            this.label2.Location = new System.Drawing.Point(13, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(59, 19);
             this.label2.TabIndex = 10;
             this.label2.Text = "Nombre";
             // 
             // txtNombreCompleto
             // 
-            this.txtNombreCompleto.Location = new System.Drawing.Point(61, 25);
+            this.txtNombreCompleto.ErrorMessage = "Valor no Valido";
+            this.txtNombreCompleto.ErrorProvider = null;
+            this.txtNombreCompleto.IsRequired = true;
+            this.txtNombreCompleto.Location = new System.Drawing.Point(71, 33);
+            this.txtNombreCompleto.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtNombreCompleto.MaxLength = 100;
+            this.txtNombreCompleto.MaxValue = null;
+            this.txtNombreCompleto.MinValue = null;
             this.txtNombreCompleto.Name = "txtNombreCompleto";
-            this.txtNombreCompleto.Size = new System.Drawing.Size(112, 20);
+            this.txtNombreCompleto.NumericOnly = false;
+            this.txtNombreCompleto.Size = new System.Drawing.Size(130, 25);
             this.txtNombreCompleto.TabIndex = 16;
             // 
             // txtCiudad
             // 
-            this.txtCiudad.Location = new System.Drawing.Point(234, 25);
+            this.txtCiudad.ErrorMessage = "Valor no Valido";
+            this.txtCiudad.ErrorProvider = null;
+            this.txtCiudad.IsRequired = true;
+            this.txtCiudad.Location = new System.Drawing.Point(273, 33);
+            this.txtCiudad.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCiudad.MaxLength = 10;
+            this.txtCiudad.MaxValue = null;
+            this.txtCiudad.MinValue = null;
             this.txtCiudad.Name = "txtCiudad";
-            this.txtCiudad.Size = new System.Drawing.Size(73, 20);
+            this.txtCiudad.NumericOnly = false;
+            this.txtCiudad.Size = new System.Drawing.Size(84, 25);
             this.txtCiudad.TabIndex = 17;
             // 
             // txtCelularAlta
             // 
-            this.txtCelularAlta.Location = new System.Drawing.Point(368, 25);
+            this.txtCelularAlta.Location = new System.Drawing.Point(429, 33);
+            this.txtCelularAlta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCelularAlta.Mask = "(999) 000-00-00";
             this.txtCelularAlta.Name = "txtCelularAlta";
-            this.txtCelularAlta.Size = new System.Drawing.Size(87, 20);
+            this.txtCelularAlta.Size = new System.Drawing.Size(101, 25);
             this.txtCelularAlta.TabIndex = 18;
             this.txtCelularAlta.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
@@ -219,33 +246,45 @@ namespace FisioKH
             this.pbxFotoPaciente.ErrorImage = null;
             this.pbxFotoPaciente.Image = global::FisioKH.Properties.Resources.patient;
             this.pbxFotoPaciente.InitialImage = null;
-            this.pbxFotoPaciente.Location = new System.Drawing.Point(94, 12);
+            this.pbxFotoPaciente.Location = new System.Drawing.Point(110, 16);
+            this.pbxFotoPaciente.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pbxFotoPaciente.Name = "pbxFotoPaciente";
-            this.pbxFotoPaciente.Size = new System.Drawing.Size(199, 200);
+            this.pbxFotoPaciente.Size = new System.Drawing.Size(232, 262);
             this.pbxFotoPaciente.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbxFotoPaciente.TabIndex = 21;
             this.pbxFotoPaciente.TabStop = false;
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(317, 9);
+            this.txtId.ErrorMessage = "Valor no Valido";
+            this.txtId.ErrorProvider = null;
+            this.txtId.IsRequired = true;
+            this.txtId.Location = new System.Drawing.Point(370, 12);
+            this.txtId.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtId.MaxLength = 10;
+            this.txtId.MaxValue = null;
+            this.txtId.MinValue = null;
             this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(54, 20);
+            this.txtId.NumericOnly = false;
+            this.txtId.Size = new System.Drawing.Size(62, 25);
             this.txtId.TabIndex = 23;
             this.txtId.Visible = false;
             // 
             // cboEtiqueta
             // 
+            this.cboEtiqueta.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cboEtiqueta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboEtiqueta.FormattingEnabled = true;
-            this.cboEtiqueta.Location = new System.Drawing.Point(326, 161);
+            this.cboEtiqueta.Location = new System.Drawing.Point(380, 211);
+            this.cboEtiqueta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboEtiqueta.Name = "cboEtiqueta";
-            this.cboEtiqueta.Size = new System.Drawing.Size(121, 21);
+            this.cboEtiqueta.Size = new System.Drawing.Size(140, 26);
             this.cboEtiqueta.TabIndex = 25;
+            this.cboEtiqueta.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cboEtiqueta_DrawItem);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnNuevoPaciente);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.cboFisioTerapeuta);
             this.groupBox1.Controls.Add(this.groupBox4);
@@ -270,12 +309,48 @@ namespace FisioKH
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Location = new System.Drawing.Point(521, 12);
+            this.groupBox1.Location = new System.Drawing.Point(608, 16);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(479, 484);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Size = new System.Drawing.Size(559, 633);
             this.groupBox1.TabIndex = 27;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Generales";
+            // 
+            // btnNuevoPaciente
+            // 
+            this.btnNuevoPaciente.BackColor = System.Drawing.Color.LightGray;
+            this.btnNuevoPaciente.FlatAppearance.BorderSize = 2;
+            this.btnNuevoPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnNuevoPaciente.ForeColor = System.Drawing.Color.Black;
+            this.btnNuevoPaciente.Location = new System.Drawing.Point(426, 565);
+            this.btnNuevoPaciente.Margin = new System.Windows.Forms.Padding(12, 13, 12, 13);
+            this.btnNuevoPaciente.Name = "btnNuevoPaciente";
+            this.btnNuevoPaciente.Size = new System.Drawing.Size(105, 51);
+            this.btnNuevoPaciente.TabIndex = 47;
+            this.btnNuevoPaciente.Text = "&Nuevo";
+            this.btnNuevoPaciente.UseVisualStyleBackColor = false;
+            this.btnNuevoPaciente.Click += new System.EventHandler(this.btnNuevoPaciente_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(402, 364);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(96, 19);
+            this.label6.TabIndex = 46;
+            this.label6.Text = "FisioTerapeuta";
+            // 
+            // cboFisioTerapeuta
+            // 
+            this.cboFisioTerapeuta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFisioTerapeuta.FormattingEnabled = true;
+            this.cboFisioTerapeuta.Location = new System.Drawing.Point(404, 391);
+            this.cboFisioTerapeuta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboFisioTerapeuta.Name = "cboFisioTerapeuta";
+            this.cboFisioTerapeuta.Size = new System.Drawing.Size(140, 25);
+            this.cboFisioTerapeuta.TabIndex = 45;
             // 
             // groupBox4
             // 
@@ -284,9 +359,11 @@ namespace FisioKH
             this.groupBox4.Controls.Add(this.btnGuardarFoto);
             this.groupBox4.Controls.Add(this.pbxFotoPaciente);
             this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(14, 266);
+            this.groupBox4.Location = new System.Drawing.Point(16, 348);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(317, 218);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox4.Size = new System.Drawing.Size(370, 285);
             this.groupBox4.TabIndex = 44;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Foto";
@@ -296,238 +373,14 @@ namespace FisioKH
             this.groupBox5.Controls.Add(this.btnZoomIn);
             this.groupBox5.Controls.Add(this.btnZoomOut);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(12, 65);
+            this.groupBox5.Location = new System.Drawing.Point(14, 85);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(76, 100);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox5.Size = new System.Drawing.Size(89, 131);
             this.groupBox5.TabIndex = 25;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Zoom";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.txtObservaciones);
-            this.groupBox3.Location = new System.Drawing.Point(14, 183);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(459, 87);
-            this.groupBox3.TabIndex = 43;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Observaciones";
-            // 
-            // txtObservaciones
-            // 
-            this.txtObservaciones.Location = new System.Drawing.Point(7, 19);
-            this.txtObservaciones.MaxLength = 100;
-            this.txtObservaciones.Multiline = true;
-            this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.Size = new System.Drawing.Size(446, 58);
-            this.txtObservaciones.TabIndex = 40;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(323, 145);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 13);
-            this.label13.TabIndex = 42;
-            this.label13.Text = "TAG";
-            // 
-            // txtMedicoTratante
-            // 
-            this.txtMedicoTratante.Location = new System.Drawing.Point(132, 161);
-            this.txtMedicoTratante.MaxLength = 150;
-            this.txtMedicoTratante.Name = "txtMedicoTratante";
-            this.txtMedicoTratante.Size = new System.Drawing.Size(188, 20);
-            this.txtMedicoTratante.TabIndex = 41;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(129, 145);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(85, 13);
-            this.label12.TabIndex = 40;
-            this.label12.Text = "Medico Tratante";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(11, 145);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(93, 13);
-            this.label11.TabIndex = 40;
-            this.label11.Text = "Fecha Nacimiento";
-            // 
-            // dtpFechaNacimiento
-            // 
-            this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaNacimiento.Location = new System.Drawing.Point(14, 161);
-            this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
-            this.dtpFechaNacimiento.Size = new System.Drawing.Size(104, 20);
-            this.dtpFechaNacimiento.TabIndex = 39;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.txtNombreFiscal);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.txtDomicilioFiscal);
-            this.groupBox2.Controls.Add(this.txtRfc);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.txtRfcFiscal);
-            this.groupBox2.Location = new System.Drawing.Point(14, 92);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(459, 50);
-            this.groupBox2.TabIndex = 38;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Datos Fiscales";
-            // 
-            // txtNombreFiscal
-            // 
-            this.txtNombreFiscal.Location = new System.Drawing.Point(334, 19);
-            this.txtNombreFiscal.MaxLength = 150;
-            this.txtNombreFiscal.Name = "txtNombreFiscal";
-            this.txtNombreFiscal.Size = new System.Drawing.Size(119, 20);
-            this.txtNombreFiscal.TabIndex = 39;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(288, 23);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(44, 13);
-            this.label10.TabIndex = 38;
-            this.label10.Text = "Nombre";
-            // 
-            // txtDomicilioFiscal
-            // 
-            this.txtDomicilioFiscal.Location = new System.Drawing.Point(158, 19);
-            this.txtDomicilioFiscal.MaxLength = 150;
-            this.txtDomicilioFiscal.Name = "txtDomicilioFiscal";
-            this.txtDomicilioFiscal.Size = new System.Drawing.Size(130, 20);
-            this.txtDomicilioFiscal.TabIndex = 37;
-            // 
-            // txtRfc
-            // 
-            this.txtRfc.AutoSize = true;
-            this.txtRfc.Location = new System.Drawing.Point(4, 26);
-            this.txtRfc.Name = "txtRfc";
-            this.txtRfc.Size = new System.Drawing.Size(28, 13);
-            this.txtRfc.TabIndex = 34;
-            this.txtRfc.Text = "RFC";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(128, 26);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 13);
-            this.label9.TabIndex = 36;
-            this.label9.Text = "Dom";
-            // 
-            // txtRfcFiscal
-            // 
-            this.txtRfcFiscal.Location = new System.Drawing.Point(33, 20);
-            this.txtRfcFiscal.MaxLength = 100;
-            this.txtRfcFiscal.Name = "txtRfcFiscal";
-            this.txtRfcFiscal.Size = new System.Drawing.Size(92, 20);
-            this.txtRfcFiscal.TabIndex = 35;
-            // 
-            // txtEdad
-            // 
-            this.txtEdad.Location = new System.Drawing.Point(419, 66);
-            this.txtEdad.MaxLength = 100;
-            this.txtEdad.Name = "txtEdad";
-            this.txtEdad.ReadOnly = true;
-            this.txtEdad.Size = new System.Drawing.Size(36, 20);
-            this.txtEdad.TabIndex = 33;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(379, 73);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(32, 13);
-            this.label7.TabIndex = 32;
-            this.label7.Text = "Edad";
-            // 
-            // txtEmailAlta
-            // 
-            this.txtEmailAlta.Location = new System.Drawing.Point(259, 66);
-            this.txtEmailAlta.MaxLength = 100;
-            this.txtEmailAlta.Name = "txtEmailAlta";
-            this.txtEmailAlta.Size = new System.Drawing.Size(112, 20);
-            this.txtEmailAlta.TabIndex = 31;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(219, 73);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(32, 13);
-            this.label5.TabIndex = 30;
-            this.label5.Text = "Email";
-            // 
-            // gbSexo
-            // 
-            this.gbSexo.Controls.Add(this.rbOtro);
-            this.gbSexo.Controls.Add(this.rbMujer);
-            this.gbSexo.Controls.Add(this.rbHombre);
-            this.gbSexo.Location = new System.Drawing.Point(14, 51);
-            this.gbSexo.Name = "gbSexo";
-            this.gbSexo.Size = new System.Drawing.Size(191, 39);
-            this.gbSexo.TabIndex = 29;
-            this.gbSexo.TabStop = false;
-            this.gbSexo.Text = "Sexo";
-            // 
-            // rbOtro
-            // 
-            this.rbOtro.AutoSize = true;
-            this.rbOtro.Location = new System.Drawing.Point(138, 16);
-            this.rbOtro.Name = "rbOtro";
-            this.rbOtro.Size = new System.Drawing.Size(45, 17);
-            this.rbOtro.TabIndex = 30;
-            this.rbOtro.TabStop = true;
-            this.rbOtro.Text = "Otro";
-            this.rbOtro.UseVisualStyleBackColor = true;
-            // 
-            // rbMujer
-            // 
-            this.rbMujer.AutoSize = true;
-            this.rbMujer.Location = new System.Drawing.Point(81, 16);
-            this.rbMujer.Name = "rbMujer";
-            this.rbMujer.Size = new System.Drawing.Size(51, 17);
-            this.rbMujer.TabIndex = 29;
-            this.rbMujer.TabStop = true;
-            this.rbMujer.Text = "Mujer";
-            this.rbMujer.UseVisualStyleBackColor = true;
-            // 
-            // rbHombre
-            // 
-            this.rbHombre.AutoSize = true;
-            this.rbHombre.Location = new System.Drawing.Point(13, 16);
-            this.rbHombre.Name = "rbHombre";
-            this.rbHombre.Size = new System.Drawing.Size(62, 17);
-            this.rbHombre.TabIndex = 28;
-            this.rbHombre.TabStop = true;
-            this.rbHombre.Text = "Hombre";
-            this.rbHombre.UseVisualStyleBackColor = true;
-            // 
-            // cboFisioTerapeuta
-            // 
-            this.cboFisioTerapeuta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFisioTerapeuta.FormattingEnabled = true;
-            this.cboFisioTerapeuta.Location = new System.Drawing.Point(346, 299);
-            this.cboFisioTerapeuta.Name = "cboFisioTerapeuta";
-            this.cboFisioTerapeuta.Size = new System.Drawing.Size(121, 21);
-            this.cboFisioTerapeuta.TabIndex = 45;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(345, 278);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 13);
-            this.label6.TabIndex = 46;
-            this.label6.Text = "FisioTerapeuta";
             // 
             // btnZoomIn
             // 
@@ -535,10 +388,10 @@ namespace FisioKH
             this.btnZoomIn.FlatAppearance.BorderSize = 2;
             this.btnZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnZoomIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnZoomIn.Location = new System.Drawing.Point(5, 20);
-            this.btnZoomIn.Margin = new System.Windows.Forms.Padding(10);
+            this.btnZoomIn.Location = new System.Drawing.Point(6, 26);
+            this.btnZoomIn.Margin = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.btnZoomIn.Name = "btnZoomIn";
-            this.btnZoomIn.Size = new System.Drawing.Size(65, 30);
+            this.btnZoomIn.Size = new System.Drawing.Size(76, 39);
             this.btnZoomIn.TabIndex = 25;
             this.btnZoomIn.Text = "++";
             this.btnZoomIn.UseVisualStyleBackColor = true;
@@ -550,10 +403,10 @@ namespace FisioKH
             this.btnZoomOut.FlatAppearance.BorderSize = 2;
             this.btnZoomOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnZoomOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnZoomOut.Location = new System.Drawing.Point(5, 57);
-            this.btnZoomOut.Margin = new System.Windows.Forms.Padding(10);
+            this.btnZoomOut.Location = new System.Drawing.Point(6, 75);
+            this.btnZoomOut.Margin = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(65, 30);
+            this.btnZoomOut.Size = new System.Drawing.Size(76, 39);
             this.btnZoomOut.TabIndex = 26;
             this.btnZoomOut.Text = "--";
             this.btnZoomOut.UseVisualStyleBackColor = true;
@@ -564,10 +417,10 @@ namespace FisioKH
             this.btnAbrirCamara.FlatAppearance.BorderSize = 2;
             this.btnAbrirCamara.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnAbrirCamara.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnAbrirCamara.Location = new System.Drawing.Point(12, 19);
-            this.btnAbrirCamara.Margin = new System.Windows.Forms.Padding(10);
+            this.btnAbrirCamara.Location = new System.Drawing.Point(14, 25);
+            this.btnAbrirCamara.Margin = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.btnAbrirCamara.Name = "btnAbrirCamara";
-            this.btnAbrirCamara.Size = new System.Drawing.Size(70, 46);
+            this.btnAbrirCamara.Size = new System.Drawing.Size(82, 60);
             this.btnAbrirCamara.TabIndex = 22;
             this.btnAbrirCamara.Text = "&Abrir Camara";
             this.btnAbrirCamara.UseVisualStyleBackColor = true;
@@ -579,24 +432,290 @@ namespace FisioKH
             this.btnGuardarFoto.FlatAppearance.BorderSize = 2;
             this.btnGuardarFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(1)), true);
             this.btnGuardarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarFoto.Location = new System.Drawing.Point(12, 166);
-            this.btnGuardarFoto.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarFoto.Location = new System.Drawing.Point(14, 217);
+            this.btnGuardarFoto.Margin = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.btnGuardarFoto.Name = "btnGuardarFoto";
-            this.btnGuardarFoto.Size = new System.Drawing.Size(70, 46);
+            this.btnGuardarFoto.Size = new System.Drawing.Size(82, 60);
             this.btnGuardarFoto.TabIndex = 24;
             this.btnGuardarFoto.Text = "&Captura Foto";
             this.btnGuardarFoto.UseVisualStyleBackColor = true;
             this.btnGuardarFoto.Click += new System.EventHandler(this.btnGuardarFoto_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.txtObservaciones);
+            this.groupBox3.Location = new System.Drawing.Point(16, 239);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox3.Size = new System.Drawing.Size(535, 114);
+            this.groupBox3.TabIndex = 43;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Observaciones";
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.ErrorMessage = "Valor no Valido";
+            this.txtObservaciones.ErrorProvider = null;
+            this.txtObservaciones.IsRequired = true;
+            this.txtObservaciones.Location = new System.Drawing.Point(8, 25);
+            this.txtObservaciones.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtObservaciones.MaxLength = 100;
+            this.txtObservaciones.MaxValue = null;
+            this.txtObservaciones.MinValue = null;
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.NumericOnly = false;
+            this.txtObservaciones.Size = new System.Drawing.Size(520, 75);
+            this.txtObservaciones.TabIndex = 40;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(377, 190);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(34, 19);
+            this.label13.TabIndex = 42;
+            this.label13.Text = "TAG";
+            // 
+            // txtMedicoTratante
+            // 
+            this.txtMedicoTratante.ErrorMessage = "Valor no Valido";
+            this.txtMedicoTratante.ErrorProvider = null;
+            this.txtMedicoTratante.IsRequired = true;
+            this.txtMedicoTratante.Location = new System.Drawing.Point(154, 211);
+            this.txtMedicoTratante.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtMedicoTratante.MaxLength = 150;
+            this.txtMedicoTratante.MaxValue = null;
+            this.txtMedicoTratante.MinValue = null;
+            this.txtMedicoTratante.Name = "txtMedicoTratante";
+            this.txtMedicoTratante.NumericOnly = false;
+            this.txtMedicoTratante.Size = new System.Drawing.Size(219, 25);
+            this.txtMedicoTratante.TabIndex = 41;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(150, 190);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(108, 19);
+            this.label12.TabIndex = 40;
+            this.label12.Text = "Medico Tratante";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(13, 190);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(117, 19);
+            this.label11.TabIndex = 40;
+            this.label11.Text = "Fecha Nacimiento";
+            // 
+            // dtpFechaNacimiento
+            // 
+            this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaNacimiento.Location = new System.Drawing.Point(16, 211);
+            this.dtpFechaNacimiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
+            this.dtpFechaNacimiento.Size = new System.Drawing.Size(121, 25);
+            this.dtpFechaNacimiento.TabIndex = 39;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txtNombreFiscal);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.txtDomicilioFiscal);
+            this.groupBox2.Controls.Add(this.txtRfc);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.txtRfcFiscal);
+            this.groupBox2.Location = new System.Drawing.Point(16, 120);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox2.Size = new System.Drawing.Size(535, 65);
+            this.groupBox2.TabIndex = 38;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Datos Fiscales";
+            // 
+            // txtNombreFiscal
+            // 
+            this.txtNombreFiscal.ErrorMessage = "Valor no Valido";
+            this.txtNombreFiscal.ErrorProvider = null;
+            this.txtNombreFiscal.IsRequired = false;
+            this.txtNombreFiscal.Location = new System.Drawing.Point(390, 25);
+            this.txtNombreFiscal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtNombreFiscal.MaxLength = 150;
+            this.txtNombreFiscal.MaxValue = null;
+            this.txtNombreFiscal.MinValue = null;
+            this.txtNombreFiscal.Name = "txtNombreFiscal";
+            this.txtNombreFiscal.NumericOnly = false;
+            this.txtNombreFiscal.Size = new System.Drawing.Size(138, 25);
+            this.txtNombreFiscal.TabIndex = 39;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(336, 30);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(59, 19);
+            this.label10.TabIndex = 38;
+            this.label10.Text = "Nombre";
+            // 
+            // txtDomicilioFiscal
+            // 
+            this.txtDomicilioFiscal.ErrorMessage = "Valor no Valido";
+            this.txtDomicilioFiscal.ErrorProvider = null;
+            this.txtDomicilioFiscal.IsRequired = false;
+            this.txtDomicilioFiscal.Location = new System.Drawing.Point(184, 25);
+            this.txtDomicilioFiscal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtDomicilioFiscal.MaxLength = 150;
+            this.txtDomicilioFiscal.MaxValue = null;
+            this.txtDomicilioFiscal.MinValue = null;
+            this.txtDomicilioFiscal.Name = "txtDomicilioFiscal";
+            this.txtDomicilioFiscal.NumericOnly = false;
+            this.txtDomicilioFiscal.Size = new System.Drawing.Size(151, 25);
+            this.txtDomicilioFiscal.TabIndex = 37;
+            // 
+            // txtRfc
+            // 
+            this.txtRfc.AutoSize = true;
+            this.txtRfc.Location = new System.Drawing.Point(5, 34);
+            this.txtRfc.Name = "txtRfc";
+            this.txtRfc.Size = new System.Drawing.Size(33, 19);
+            this.txtRfc.TabIndex = 34;
+            this.txtRfc.Text = "RFC";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(149, 34);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(39, 19);
+            this.label9.TabIndex = 36;
+            this.label9.Text = "Dom";
+            // 
+            // txtRfcFiscal
+            // 
+            this.txtRfcFiscal.ErrorMessage = "Valor no Valido";
+            this.txtRfcFiscal.ErrorProvider = null;
+            this.txtRfcFiscal.IsRequired = false;
+            this.txtRfcFiscal.Location = new System.Drawing.Point(38, 26);
+            this.txtRfcFiscal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtRfcFiscal.MaxLength = 100;
+            this.txtRfcFiscal.MaxValue = null;
+            this.txtRfcFiscal.MinValue = null;
+            this.txtRfcFiscal.Name = "txtRfcFiscal";
+            this.txtRfcFiscal.NumericOnly = false;
+            this.txtRfcFiscal.Size = new System.Drawing.Size(107, 25);
+            this.txtRfcFiscal.TabIndex = 35;
+            // 
+            // txtEdad
+            // 
+            this.txtEdad.ErrorMessage = "Valor no Valido";
+            this.txtEdad.ErrorProvider = null;
+            this.txtEdad.IsRequired = false;
+            this.txtEdad.Location = new System.Drawing.Point(489, 86);
+            this.txtEdad.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtEdad.MaxLength = 100;
+            this.txtEdad.MaxValue = null;
+            this.txtEdad.MinValue = null;
+            this.txtEdad.Name = "txtEdad";
+            this.txtEdad.NumericOnly = false;
+            this.txtEdad.ReadOnly = true;
+            this.txtEdad.Size = new System.Drawing.Size(41, 25);
+            this.txtEdad.TabIndex = 33;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(442, 95);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 19);
+            this.label7.TabIndex = 32;
+            this.label7.Text = "Edad";
+            // 
+            // txtEmailAlta
+            // 
+            this.txtEmailAlta.ErrorMessage = "Valor no Valido";
+            this.txtEmailAlta.ErrorProvider = null;
+            this.txtEmailAlta.IsRequired = false;
+            this.txtEmailAlta.Location = new System.Drawing.Point(302, 86);
+            this.txtEmailAlta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtEmailAlta.MaxLength = 100;
+            this.txtEmailAlta.MaxValue = null;
+            this.txtEmailAlta.MinValue = null;
+            this.txtEmailAlta.Name = "txtEmailAlta";
+            this.txtEmailAlta.NumericOnly = false;
+            this.txtEmailAlta.Size = new System.Drawing.Size(130, 25);
+            this.txtEmailAlta.TabIndex = 31;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(255, 95);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 19);
+            this.label5.TabIndex = 30;
+            this.label5.Text = "Email";
+            // 
+            // gbSexo
+            // 
+            this.gbSexo.Controls.Add(this.rbOtro);
+            this.gbSexo.Controls.Add(this.rbMujer);
+            this.gbSexo.Controls.Add(this.rbHombre);
+            this.gbSexo.Location = new System.Drawing.Point(16, 67);
+            this.gbSexo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbSexo.Name = "gbSexo";
+            this.gbSexo.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.gbSexo.Size = new System.Drawing.Size(223, 51);
+            this.gbSexo.TabIndex = 29;
+            this.gbSexo.TabStop = false;
+            this.gbSexo.Text = "Sexo";
+            // 
+            // rbOtro
+            // 
+            this.rbOtro.AutoSize = true;
+            this.rbOtro.Location = new System.Drawing.Point(161, 21);
+            this.rbOtro.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.rbOtro.Name = "rbOtro";
+            this.rbOtro.Size = new System.Drawing.Size(56, 23);
+            this.rbOtro.TabIndex = 30;
+            this.rbOtro.Text = "Otro";
+            this.rbOtro.UseVisualStyleBackColor = true;
+            // 
+            // rbMujer
+            // 
+            this.rbMujer.AutoSize = true;
+            this.rbMujer.Location = new System.Drawing.Point(94, 21);
+            this.rbMujer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.rbMujer.Name = "rbMujer";
+            this.rbMujer.Size = new System.Drawing.Size(63, 23);
+            this.rbMujer.TabIndex = 29;
+            this.rbMujer.Text = "Mujer";
+            this.rbMujer.UseVisualStyleBackColor = true;
+            // 
+            // rbHombre
+            // 
+            this.rbHombre.AutoSize = true;
+            this.rbHombre.Checked = true;
+            this.rbHombre.Location = new System.Drawing.Point(15, 21);
+            this.rbHombre.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.rbHombre.Name = "rbHombre";
+            this.rbHombre.Size = new System.Drawing.Size(77, 23);
+            this.rbHombre.TabIndex = 28;
+            this.rbHombre.TabStop = true;
+            this.rbHombre.Text = "Hombre";
+            this.rbHombre.UseVisualStyleBackColor = true;
             // 
             // btnGuardarFT
             // 
             this.btnGuardarFT.FlatAppearance.BorderSize = 2;
             this.btnGuardarFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnGuardarFT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarFT.Location = new System.Drawing.Point(365, 341);
-            this.btnGuardarFT.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarFT.Location = new System.Drawing.Point(426, 446);
+            this.btnGuardarFT.Margin = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.btnGuardarFT.Name = "btnGuardarFT";
-            this.btnGuardarFT.Size = new System.Drawing.Size(90, 130);
+            this.btnGuardarFT.Size = new System.Drawing.Size(105, 101);
             this.btnGuardarFT.TabIndex = 9;
             this.btnGuardarFT.Text = "&Guardar Cambios";
             this.btnGuardarFT.UseVisualStyleBackColor = true;
@@ -607,10 +726,10 @@ namespace FisioKH
             this.btnBuscarPaciente.FlatAppearance.BorderSize = 2;
             this.btnBuscarPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnBuscarPaciente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnBuscarPaciente.Location = new System.Drawing.Point(408, 19);
-            this.btnBuscarPaciente.Margin = new System.Windows.Forms.Padding(10);
+            this.btnBuscarPaciente.Location = new System.Drawing.Point(476, 25);
+            this.btnBuscarPaciente.Margin = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.btnBuscarPaciente.Name = "btnBuscarPaciente";
-            this.btnBuscarPaciente.Size = new System.Drawing.Size(95, 31);
+            this.btnBuscarPaciente.Size = new System.Drawing.Size(111, 41);
             this.btnBuscarPaciente.TabIndex = 11;
             this.btnBuscarPaciente.Text = "Buscar";
             this.btnBuscarPaciente.UseVisualStyleBackColor = true;
@@ -618,9 +737,9 @@ namespace FisioKH
             // 
             // Pacientes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1012, 508);
+            this.ClientSize = new System.Drawing.Size(1181, 664);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.txtCelular);
             this.Controls.Add(this.label3);
@@ -631,9 +750,12 @@ namespace FisioKH
             this.Controls.Add(this.btnBuscarPaciente);
             this.Controls.Add(this.dgvPacientes);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Pacientes";
+            this.Padding = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.Text = "Pacientes";
             this.Load += new System.EventHandler(this.Pacientes_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFotoPaciente)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -654,7 +776,7 @@ namespace FisioKH
         #endregion
 
         private System.Windows.Forms.Label lblNombrePaciente;
-        private System.Windows.Forms.TextBox txtPaciente;
+        private FisioKH.ValidatedNumericTextBox txtPaciente;
         private Boton btnBuscarPaciente;
         private System.Windows.Forms.DataGridView dgvPacientes;
         private System.Windows.Forms.Label label1;
@@ -665,12 +787,12 @@ namespace FisioKH
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private Boton btnGuardarFT;
-        private System.Windows.Forms.TextBox txtNombreCompleto;
-        private System.Windows.Forms.TextBox txtCiudad;
+        private FisioKH.ValidatedNumericTextBox txtNombreCompleto;
+        private FisioKH.ValidatedNumericTextBox txtCiudad;
         private System.Windows.Forms.MaskedTextBox txtCelularAlta;
         private System.Windows.Forms.PictureBox pbxFotoPaciente;
         private Boton btnAbrirCamara;
-        private System.Windows.Forms.TextBox txtId;
+        private FisioKH.ValidatedNumericTextBox txtId;
         private Boton btnGuardarFoto;
         private System.Windows.Forms.ComboBox cboEtiqueta;
         private Boton btnZoomIn;
@@ -681,26 +803,27 @@ namespace FisioKH
         private System.Windows.Forms.RadioButton rbMujer;
         private System.Windows.Forms.RadioButton rbHombre;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox txtNombreFiscal;
+        private FisioKH.ValidatedNumericTextBox txtNombreFiscal;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtDomicilioFiscal;
+        private FisioKH.ValidatedNumericTextBox txtDomicilioFiscal;
         private System.Windows.Forms.Label txtRfc;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtRfcFiscal;
-        private System.Windows.Forms.TextBox txtEdad;
+        private FisioKH.ValidatedNumericTextBox txtRfcFiscal;
+        private FisioKH.ValidatedNumericTextBox txtEdad;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtEmailAlta;
+        private FisioKH.ValidatedNumericTextBox txtEmailAlta;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtMedicoTratante;
+        private FisioKH.ValidatedNumericTextBox txtMedicoTratante;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DateTimePicker dtpFechaNacimiento;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox txtObservaciones;
+        private FisioKH.ValidatedNumericTextBox txtObservaciones;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboFisioTerapeuta;
+        private Boton btnNuevoPaciente;
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FisioKH
 {
-    public partial class Pacientes : Form
+    public partial class Pacientes : BaseForm
     {
         private DataTable dt;
         private WebCamHelper wch;
@@ -21,6 +21,9 @@ namespace FisioKH
 
         private void Pacientes_Load(object sender, EventArgs e)
         {
+       
+  
+
             DBHelper db = new DBHelper();
             DataSet ds = db.ObtenerDatos("SELECT id,nombreCorto  FROM fisioTerapeutas","Fisios");
             this.cboEtiqueta.DataSource = EtiquetasPacienteHelper.GetBindableList();
@@ -214,6 +217,19 @@ namespace FisioKH
 
         private void btnGuardarFT_Click(object sender, EventArgs e)
         {
+
+            if (!ValidateChildren())
+            {
+                // Focus first invalid field
+                var failedControl = GetFirstInvalidControl(this);
+                if (failedControl != null)
+                    failedControl.Focus();
+
+                MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
+
+
             int id = 0, qtyi = 0;
 
             int.TryParse(this.txtId.Text, out id);
@@ -297,6 +313,54 @@ namespace FisioKH
             this.pbxFotoPaciente.Image = FisioKH.Properties.Resources.patient;
 
 
+        }
+
+        private void btnNuevoPaciente_Click(object sender, EventArgs e)
+        {
+            limpiarFormulario();
+        }
+
+        private void cboEtiqueta_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            if (e.Index < 0)
+                return;
+
+            var combo = (ComboBox)sender;
+            var item = (EtiquetaPaciente)combo.Items[e.Index];
+
+            // Convert string → Color
+            Color bgColor;
+            try
+            {
+                bgColor = ColorTranslator.FromHtml(item.Color);
+            }
+            catch
+            {
+                bgColor = Color.FromName(item.Color);
+                if (!bgColor.IsKnownColor)
+                    bgColor = Color.Black;
+            }
+
+            // Selection background
+            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+                bgColor = ControlPaint.Light(bgColor);
+
+            using (var brush = new SolidBrush(bgColor))
+                e.Graphics.FillRectangle(brush, e.Bounds);
+
+            // Text color (auto contrast)
+            Color textColor = bgColor.GetBrightness() < 0.5f ? Color.White : Color.Black;
+
+            TextRenderer.DrawText(
+                e.Graphics,
+                item.Text,
+                e.Font,
+                e.Bounds,
+                textColor,
+                TextFormatFlags.Left | TextFormatFlags.VerticalCenter
+            );
+
+            e.DrawFocusRectangle();
         }
     }
 }

@@ -6,32 +6,35 @@ namespace FisioKH
 {
     public class BaseForm : Form
     {
+        // Single ErrorProvider for all validated controls
+        protected ErrorProvider BaseErrorProvider;
+
         public BaseForm()
         {
+            // Initialize ErrorProvider
+            BaseErrorProvider = new ErrorProvider();
+            BaseErrorProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+
             ApplyClinicStyle();
         }
 
-        // Method to apply the clinic-like style to all forms
+        // Apply your clinic-like style to controls
         private void ApplyClinicStyle()
         {
-            // Form settings
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FisioKHApp));
+            System.ComponentModel.ComponentResourceManager resources =
+                new System.ComponentModel.ComponentResourceManager(typeof(FisioKHApp));
+
             this.BackColor = Color.White;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Font = new Font("Segoe UI", 10F);
             this.Padding = new Padding(10);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            this.ForeColor = Color.FromArgb(46, 134, 193); // Clinic Blue
 
-            // Set a default title color
-            this.ForeColor = Color.FromArgb(46, 134, 193);  // Clinic Blue
-
-            // Set all buttons to modern clinic style
             foreach (Control ctrl in this.Controls)
             {
-                 
-                // Additional control styling (TextBox, ComboBox, Label) remains unchanged
                 if (ctrl is TextBox textbox)
                 {
                     textbox.BorderStyle = BorderStyle.FixedSingle;
@@ -41,14 +44,14 @@ namespace FisioKH
                     textbox.Padding = new Padding(10);
                     textbox.Height = 35;
                 }
-                if (ctrl is ComboBox comboBox)
+                else if (ctrl is ComboBox comboBox)
                 {
                     comboBox.BackColor = Color.White;
                     comboBox.ForeColor = Color.FromArgb(46, 134, 193);
                     comboBox.Font = new Font("Segoe UI", 10F);
                     comboBox.Height = 35;
                 }
-                if (ctrl is Label label)
+                else if (ctrl is Label label)
                 {
                     label.ForeColor = Color.FromArgb(46, 134, 193);
                     label.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
@@ -56,6 +59,42 @@ namespace FisioKH
             }
         }
 
-       
+        // Inject ErrorProvider into all ValidatedNumericTextBox controls
+        protected void AssignErrorProvider(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                if (ctrl is ValidatedNumericTextBox v)
+                    v.ErrorProvider = BaseErrorProvider;
+
+                if (ctrl.HasChildren)
+                    AssignErrorProvider(ctrl);
+            }
+        }
+
+        // Find first invalid ValidatedNumericTextBox
+        protected Control GetFirstInvalidControl(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                if (ctrl is ValidatedNumericTextBox v && !v.IsValid)
+                    return v;
+
+                if (ctrl.HasChildren)
+                {
+                    var child = GetFirstInvalidControl(ctrl);
+                    if (child != null)
+                        return child;
+                }
+            }
+            return null;
+        }
+
+        // BaseForm OnLoad: assign ErrorProvider automatically
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            AssignErrorProvider(this);
+        }
     }
 }
