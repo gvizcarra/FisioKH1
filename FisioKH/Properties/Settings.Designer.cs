@@ -26,7 +26,8 @@ namespace FisioKH.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=FisioKH;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=FisioKH;Integrated Security=True;Connect Ti" +
+            "meout=5;")]
         public string FisioKHConnectionString {
             get {
                 return ((string)(this["FisioKHConnectionString"]));
