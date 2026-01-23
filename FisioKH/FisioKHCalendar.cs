@@ -167,12 +167,10 @@ namespace FisioKH
             {
                 Events.Add(new CalendarEventKH
                 {
-                    //Id = (Guid)r["Id"],
                     Title = r["Title"].ToString(),
                     Start = (DateTime)r["Start"],
                     End = (DateTime)r["End"], 
                     Color = GoogleColorToSystem(r["ColorId"].ToString())
-                    //IdCita = r.Table.Columns.Contains("id") ? Convert.ToInt32(r["id"]) : 0
                 });
             }
         }
