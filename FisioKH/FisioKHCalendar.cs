@@ -147,12 +147,12 @@ namespace FisioKH
             {
                 Events.Add(new CalendarEventKH
                 {
-                    Id = (Guid)r["Id"],
+                    //Id = (Guid)r["Id"],
                     Title = r["Title"].ToString(),
-                    StartTime = (DateTime)r["StartTime"],
-                    EndTime = (DateTime)r["EndTime"],
-                    Color = Color.FromName(r["Color"].ToString()),
-                    IdCita = r.Table.Columns.Contains("IdCita") ? Convert.ToInt32(r["IdCita"]) : 0
+                    Start = (DateTime)r["Start"],
+                    End = (DateTime)r["End"],
+                    //Color = Color.FromName(r["Color"].ToString()),
+                    //IdCita = r.Table.Columns.Contains("id") ? Convert.ToInt32(r["id"]) : 0
                 });
             }
         }
@@ -276,7 +276,7 @@ namespace FisioKH
                         });
 
                         int y = 22;
-                        foreach (var ev in Events.Where(e => e.StartTime.Date == date))
+                        foreach (var ev in Events.Where(e => e.Start.Date == date))
                         {
                             cell.Controls.Add(CreateEventPanel(ev, new Size(cell.Width - 6, 18), new Point(3, y)));
                             y += 20;
@@ -338,11 +338,11 @@ namespace FisioKH
 
             foreach (var ev in Events)
             {
-                int dayIndex = (int)(ev.StartTime.Date - start).TotalDays;
+                int dayIndex = (int)(ev.Start.Date - start).TotalDays;
                 if (dayIndex < 0 || dayIndex > 6) continue;
 
-                int y = HeaderHeight + (int)((ev.StartTime.Hour + ev.StartTime.Minute / 60.0 - StartHour) * HourHeight);
-                int h = Math.Max(25, (int)((ev.EndTime - ev.StartTime).TotalMinutes / 60 * HourHeight));
+                int y = HeaderHeight + (int)((ev.Start.Hour + ev.Start.Minute / 60.0 - StartHour) * HourHeight);
+                int h = Math.Max(25, (int)((ev.End - ev.Start).TotalMinutes / 60 * HourHeight));
                 panelWeek.Controls.Add(CreateEventPanel(ev, new Size(colWidth - 4, h), new Point(labelWidth + dayIndex * colWidth + 2, y)));
             }
         }
@@ -379,8 +379,8 @@ namespace FisioKH
 
             foreach (var l in layouts)
             {
-                int y = HeaderHeight + (int)((l.Event.StartTime.Hour + l.Event.StartTime.Minute / 60.0 - StartHour) * HourHeight);
-                int h = Math.Max(25, (int)((l.Event.EndTime - l.Event.StartTime).TotalMinutes / 60 * HourHeight));
+                int y = HeaderHeight + (int)((l.Event.Start.Hour + l.Event.Start.Minute / 60.0 - StartHour) * HourHeight);
+                int h = Math.Max(25, (int)((l.Event.End - l.Event.Start).TotalMinutes / 60 * HourHeight));
                 int slotW = width / l.SlotCount;
                 int x = labelWidth + l.SlotIndex * slotW;
 
@@ -405,7 +405,7 @@ namespace FisioKH
             {
                 Size = size,
                 Location = loc,
-                BackColor = ev.Color,
+                //BackColor = ev.,
                 BorderStyle = BorderStyle.FixedSingle,
                 Cursor = Cursors.Hand // Indicate clickable
             };
@@ -434,12 +434,14 @@ namespace FisioKH
         // ================= HELPER CLASSES =================
         public class CalendarEventKH
         {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
+            public Int64 CitaID { get; set; }
             public string Title { get; set; }
-            public DateTime StartTime { get; set; }
-            public DateTime EndTime { get; set; }
-            public Color Color { get; set; }
-            public int IdCita { get; set; }
+            public DateTime Start { get; set; }
+            public DateTime End{ get; set; }
+            //public Color Color { get; set; }
+            public int ColorId { get; set; }
+            //public int IdCita { get; set; } = 0;
         }
 
         public class EventLayoutInfo
@@ -452,20 +454,20 @@ namespace FisioKH
         // ================= BUILD DAY LAYOUT =================
         private List<EventLayoutInfo> BuildDayLayout(DateTime day)
         {
-            var list = Events.Where(e => e.StartTime.Date == day.Date).OrderBy(e => e.StartTime).ToList();
+            var list = Events.Where(e => e.Start.Date == day.Date).OrderBy(e => e.Start).ToList();
             var result = new List<EventLayoutInfo>();
 
             foreach (var ev in list)
             {
                 int slot = 0;
-                while (result.Any(r => r.SlotIndex == slot && r.Event.EndTime > ev.StartTime && r.Event.StartTime < ev.EndTime))
+                while (result.Any(r => r.SlotIndex == slot && r.Event.End > ev.Start && r.Event.Start < ev.End))
                     slot++;
 
                 result.Add(new EventLayoutInfo { Event = ev, SlotIndex = slot });
             }
 
             foreach (var r in result)
-                r.SlotCount = result.Count(x => x.Event.EndTime > r.Event.StartTime && x.Event.StartTime < r.Event.EndTime);
+                r.SlotCount = result.Count(x => x.Event.End > r.Event.Start && x.Event.Start < r.Event.End);
 
             return result;
         }

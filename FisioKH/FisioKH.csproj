@@ -185,6 +185,7 @@
     <Compile Include="FisioTerapeutas.Designer.cs">
       <DependentUpon>FisioTerapeutas.cs</DependentUpon>
     </Compile>
+    <Compile Include="GoogleCalendarService.cs" />
     <Compile Include="ValidatedTextbox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -264,13 +265,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\fisiokh.png" />
+    <None Include="assets\fisiokh.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\fisioTerapeuta.jpeg" />
+    <None Include="assets\fisioTerapeuta.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\patient.jpg" />
+    <None Include="assets\patient.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fisiokh.ico" />

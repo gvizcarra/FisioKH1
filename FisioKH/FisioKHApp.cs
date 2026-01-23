@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Data;
-using System.Linq;
-using System.Configuration;
+using System.Drawing;
 
 namespace FisioKH
 {
     public partial class FisioKHApp : BaseForm
     {
-        
+        GoogleCalendarService calendar = new GoogleCalendarService();
+
         public FisioKHApp()
         {
             InitializeComponent();
@@ -20,35 +20,29 @@ namespace FisioKH
             return tabsSeguras;
         }
 
-        private static DataTable InitStaticDataSet()
+        private static DataTable InitStaticDataSet(DataTable dt)
         {
             DataTable table = new DataTable();
-            table.Columns.Add("Id", typeof(Guid));
+           // table.Columns.Add("Id", typeof(Guid));
             table.Columns.Add("Title", typeof(string));
-            table.Columns.Add("StartTime", typeof(DateTime));
-            table.Columns.Add("EndTime", typeof(DateTime));
-            table.Columns.Add("Color", typeof(string));
-            table.Columns.Add("IdCita", typeof(int)); // custom property
+            table.Columns.Add("Start", typeof(DateTime));
+            table.Columns.Add("End", typeof(DateTime));
+            //table.Columns.Add("Color", typeof(string));
+            //table.Columns.Add("IdCita", typeof(int)); // custom property
 
             Random rnd = new Random();
             string[] titles = { "Consulta", "Terapia", "Masaje", "Evaluación", "Revisión" };
             string[] colors = { "LightCoral", "LightGreen", "LightBlue", "Khaki", "Plum" };
 
-            DateTime today = DateTime.Today;
-            for (int i = 0; i < 25; i++)
+            //foreach (DataGridViewRow row in dgv.Rows)
+            foreach (DataRow row in dt.Rows)
             {
-                int dayOffset = rnd.Next(0, 28);  // Random day in current month
-                int hourStart = rnd.Next(7, 19);  // Start between 7 AM and 7 PM
-                int duration = rnd.Next(1, 3);    // 1–2 hours
-
                 table.Rows.Add(
-                    Guid.NewGuid(),
-                    titles[rnd.Next(titles.Length)],
-                    today.AddDays(dayOffset).AddHours(hourStart),
-                    today.AddDays(dayOffset).AddHours(hourStart + duration),
-                    colors[rnd.Next(colors.Length)],
-                    i + 1 // IdCita
-                );
+                //                row["id"].ToString(),
+                                row["Title"].ToString(),
+                            row["Start"].ToString(),
+                            row["End"].ToString()
+                    ); 
             }
 
 
@@ -65,26 +59,80 @@ namespace FisioKH
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
             this.fisioKHCalendar1.EventClick += MyCalendar_EventClick;
-
-            this.fisioKHCalendar1.DataSource = InitStaticDataSet();
-            this.fisioKHCalendar1.RefreshCurrentView();
+ 
             DesHabilitaTabs(ObtentabsSeguras());
         }
 
         private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
         {
-            // Handle the event when an event is clicked in the calendar
-            MessageBox.Show($"Cita: {e.Title}\nInicio: {e.StartTime}\nFin: {e.EndTime}\nIdCita: {e.IdCita}");
+       
+            MessageBox.Show($"Cita: {e.Title}\nInicio: {e.Start}\nFin: {e.End}\nIdCita: {e.Id}");
         }
 
 
         private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
             int tabid = e.TabPageIndex;
-           
-                    //MessageBox.Show("Elemento: " + e.TabPage.Name.ToString());
-                   
 
+            if(e.TabPage.Name.ToString()== "tbIngresos")
+            {
+                if (calendar.Authenticate())
+                { MostrarCalendario(); }                
+                else
+
+                { MessageBox.Show("No Se Puede Conectar a Google Calendar!"); }
+            }
+       }
+
+
+        private void MostrarCalendario()
+        {
+            if (EnsureCalendar())
+            {
+                var table = calendar.GetEventsTable(
+                DateTime.Today,
+                DateTime.Today.AddDays(7));
+
+                fisioKHCalendar1.DataSource = InitStaticDataSet(table);
+                this.fisioKHCalendar1.RefreshCurrentView();
+   
+
+            }
+        }
+
+        private bool EnsureCalendar()
+        {
+            if (calendar == null || !calendar.IsConnected())
+            {
+                MessageBox.Show("No Esta Conectado a Google Calendar.");
+                return false;
+            }
+            return true;
+        }
+
+        private void ColorRows(DataGridView dgv)
+        {
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                if (row.Cells["ColorId"].Value == null) continue;
+
+                string color = row.Cells["ColorId"].Value.ToString();
+
+                switch (color)
+                {
+                    case "1": row.DefaultCellStyle.BackColor = Color.Lavender; break;
+                    case "2": row.DefaultCellStyle.BackColor = Color.LightGreen; break;
+                    case "3": row.DefaultCellStyle.BackColor = Color.MediumPurple; break;
+                    case "4": row.DefaultCellStyle.BackColor = Color.LightPink; break;
+                    case "5": row.DefaultCellStyle.BackColor = Color.LightYellow; break;
+                    case "6": row.DefaultCellStyle.BackColor = Color.Orange; break;
+                    case "7": row.DefaultCellStyle.BackColor = Color.LightBlue; break;
+                    case "8": row.DefaultCellStyle.BackColor = Color.LightGray; break;
+                    case "9": row.DefaultCellStyle.BackColor = Color.CornflowerBlue; break;
+                    case "10": row.DefaultCellStyle.BackColor = Color.LightGreen; break;
+                    case "11": row.DefaultCellStyle.BackColor = Color.LightCoral; break;
+                }
+            }
         }
 
 
