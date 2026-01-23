@@ -37,10 +37,11 @@ namespace FisioKH
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnZoomOut = new FisioKH.Boton();
-            this.btnZoomIn = new FisioKH.Boton();
+            this.btnDetenerCamara = new FisioKH.Boton();
+            this.trkZoomFT = new System.Windows.Forms.TrackBar();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cboCamaras = new System.Windows.Forms.ComboBox();
             this.btnGuardarFoto = new FisioKH.Boton();
             this.txtId = new System.Windows.Forms.TextBox();
             this.btnAbrirCamara = new FisioKH.Boton();
@@ -55,6 +56,7 @@ namespace FisioKH
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkZoomFT)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFotoFisio)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,20 +140,12 @@ namespace FisioKH
             this.label5.TabIndex = 14;
             this.label5.Text = "Valora";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(27, 166);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(44, 21);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Foto";
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnZoomOut);
-            this.groupBox1.Controls.Add(this.btnZoomIn);
+            this.groupBox1.Controls.Add(this.btnDetenerCamara);
+            this.groupBox1.Controls.Add(this.trkZoomFT);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.cboCamaras);
             this.groupBox1.Controls.Add(this.btnGuardarFoto);
             this.groupBox1.Controls.Add(this.txtId);
             this.groupBox1.Controls.Add(this.btnAbrirCamara);
@@ -162,57 +156,72 @@ namespace FisioKH
             this.groupBox1.Controls.Add(this.txtNombreCorto);
             this.groupBox1.Controls.Add(this.txtNombre);
             this.groupBox1.Controls.Add(this.btnGuardarFT);
-            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Location = new System.Drawing.Point(535, 53);
+            this.groupBox1.Location = new System.Drawing.Point(535, 9);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(362, 432);
+            this.groupBox1.Size = new System.Drawing.Size(362, 469);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos Generales";
             // 
-            // btnZoomOut
+            // btnDetenerCamara
             // 
-            this.btnZoomOut.FlatAppearance.BorderSize = 2;
-            this.btnZoomOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnZoomOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnZoomOut.Location = new System.Drawing.Point(14, 277);
-            this.btnZoomOut.Margin = new System.Windows.Forms.Padding(10);
-            this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(64, 30);
-            this.btnZoomOut.TabIndex = 26;
-            this.btnZoomOut.Text = "--";
-            this.btnZoomOut.UseVisualStyleBackColor = true;
-            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            this.btnDetenerCamara.Enabled = false;
+            this.btnDetenerCamara.FlatAppearance.BorderSize = 2;
+            this.btnDetenerCamara.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
+            this.btnDetenerCamara.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnDetenerCamara.Location = new System.Drawing.Point(288, 161);
+            this.btnDetenerCamara.Margin = new System.Windows.Forms.Padding(10);
+            this.btnDetenerCamara.Name = "btnDetenerCamara";
+            this.btnDetenerCamara.Size = new System.Drawing.Size(68, 30);
+            this.btnDetenerCamara.TabIndex = 32;
+            this.btnDetenerCamara.Text = "&Detener";
+            this.btnDetenerCamara.UseVisualStyleBackColor = true;
+            this.btnDetenerCamara.Click += new System.EventHandler(this.btnDetenerCamara_Click);
             // 
-            // btnZoomIn
+            // trkZoomFT
             // 
-            this.btnZoomIn.FlatAppearance.BorderSize = 2;
-            this.btnZoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnZoomIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnZoomIn.Location = new System.Drawing.Point(13, 243);
-            this.btnZoomIn.Margin = new System.Windows.Forms.Padding(10);
-            this.btnZoomIn.Name = "btnZoomIn";
-            this.btnZoomIn.Size = new System.Drawing.Size(65, 30);
-            this.btnZoomIn.TabIndex = 25;
-            this.btnZoomIn.Text = "++";
-            this.btnZoomIn.UseVisualStyleBackColor = true;
-            this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
+            this.trkZoomFT.Location = new System.Drawing.Point(101, 195);
+            this.trkZoomFT.Maximum = 50;
+            this.trkZoomFT.Name = "trkZoomFT";
+            this.trkZoomFT.Size = new System.Drawing.Size(255, 45);
+            this.trkZoomFT.TabIndex = 31;
+            this.trkZoomFT.Scroll += new System.EventHandler(this.trkZoomFT_Scroll);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.label7.Location = new System.Drawing.Point(19, 208);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 21);
+            this.label7.TabIndex = 29;
+            this.label7.Text = "Zoom";
+            // 
+            // cboCamaras
+            // 
+            this.cboCamaras.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCamaras.FormattingEnabled = true;
+            this.cboCamaras.Location = new System.Drawing.Point(112, 164);
+            this.cboCamaras.Name = "cboCamaras";
+            this.cboCamaras.Size = new System.Drawing.Size(173, 25);
+            this.cboCamaras.TabIndex = 27;
+            this.cboCamaras.SelectedIndexChanged += new System.EventHandler(this.cboCamaras_SelectedIndexChanged);
             // 
             // btnGuardarFoto
             // 
             this.btnGuardarFoto.Enabled = false;
             this.btnGuardarFoto.FlatAppearance.BorderSize = 2;
-            this.btnGuardarFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(1)), true);
+            this.btnGuardarFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(1)), true);
             this.btnGuardarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarFoto.Location = new System.Drawing.Point(14, 327);
+            this.btnGuardarFoto.Location = new System.Drawing.Point(2, 246);
             this.btnGuardarFoto.Margin = new System.Windows.Forms.Padding(10);
             this.btnGuardarFoto.Name = "btnGuardarFoto";
-            this.btnGuardarFoto.Size = new System.Drawing.Size(65, 39);
+            this.btnGuardarFoto.Size = new System.Drawing.Size(86, 71);
             this.btnGuardarFoto.TabIndex = 24;
             this.btnGuardarFoto.Text = "C&aptura";
             this.btnGuardarFoto.UseVisualStyleBackColor = true;
@@ -229,15 +238,16 @@ namespace FisioKH
             // 
             // btnAbrirCamara
             // 
+            this.btnAbrirCamara.Enabled = false;
             this.btnAbrirCamara.FlatAppearance.BorderSize = 2;
             this.btnAbrirCamara.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnAbrirCamara.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnAbrirCamara.Location = new System.Drawing.Point(14, 195);
+            this.btnAbrirCamara.Location = new System.Drawing.Point(2, 161);
             this.btnAbrirCamara.Margin = new System.Windows.Forms.Padding(10);
             this.btnAbrirCamara.Name = "btnAbrirCamara";
-            this.btnAbrirCamara.Size = new System.Drawing.Size(65, 30);
+            this.btnAbrirCamara.Size = new System.Drawing.Size(94, 30);
             this.btnAbrirCamara.TabIndex = 22;
-            this.btnAbrirCamara.Text = "&Cam";
+            this.btnAbrirCamara.Text = "&Abrir Camara";
             this.btnAbrirCamara.UseVisualStyleBackColor = true;
             this.btnAbrirCamara.Click += new System.EventHandler(this.btnAbrirCamara_Click);
             // 
@@ -246,9 +256,9 @@ namespace FisioKH
             this.pbxFotoFisio.ErrorImage = null;
             this.pbxFotoFisio.Image = global::FisioKH.Properties.Resources.fisioTerapeuta;
             this.pbxFotoFisio.InitialImage = null;
-            this.pbxFotoFisio.Location = new System.Drawing.Point(112, 166);
+            this.pbxFotoFisio.Location = new System.Drawing.Point(101, 246);
             this.pbxFotoFisio.Name = "pbxFotoFisio";
-            this.pbxFotoFisio.Size = new System.Drawing.Size(199, 200);
+            this.pbxFotoFisio.Size = new System.Drawing.Size(255, 217);
             this.pbxFotoFisio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbxFotoFisio.TabIndex = 21;
             this.pbxFotoFisio.TabStop = false;
@@ -306,10 +316,10 @@ namespace FisioKH
             this.btnGuardarFT.FlatAppearance.BorderSize = 2;
             this.btnGuardarFT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnGuardarFT.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarFT.Location = new System.Drawing.Point(127, 385);
+            this.btnGuardarFT.Location = new System.Drawing.Point(2, 392);
             this.btnGuardarFT.Margin = new System.Windows.Forms.Padding(10);
             this.btnGuardarFT.Name = "btnGuardarFT";
-            this.btnGuardarFT.Size = new System.Drawing.Size(105, 34);
+            this.btnGuardarFT.Size = new System.Drawing.Size(86, 71);
             this.btnGuardarFT.TabIndex = 9;
             this.btnGuardarFT.Text = "&Guardar Cambios";
             this.btnGuardarFT.UseVisualStyleBackColor = true;
@@ -349,6 +359,7 @@ namespace FisioKH
             ((System.ComponentModel.ISupportInitialize)(this.dgvFisioTerapeutas)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkZoomFT)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFotoFisio)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -367,7 +378,6 @@ namespace FisioKH
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox chkValora;
         private System.Windows.Forms.CheckBox chkActivo;
@@ -378,7 +388,9 @@ namespace FisioKH
         private Boton btnAbrirCamara;
         private System.Windows.Forms.TextBox txtId;
         private Boton btnGuardarFoto;
-        private Boton btnZoomOut;
-        private Boton btnZoomIn;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cboCamaras;
+        private System.Windows.Forms.TrackBar trkZoomFT;
+        private Boton btnDetenerCamara;
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Accord.Video.DirectShow;
 
 namespace FisioKH
 {
@@ -21,8 +22,8 @@ namespace FisioKH
 
         private void Pacientes_Load(object sender, EventArgs e)
         {
-       
-  
+            LoadCamaras();
+
 
             DBHelper db = new DBHelper();
             DataSet ds = db.ObtenerDatos("SELECT id,nombreCorto  FROM fisioTerapeutas","Fisios");
@@ -144,6 +145,29 @@ namespace FisioKH
 
         }
 
+        private void LoadCamaras()
+        {
+            FilterInfoCollection videoDevices;
+
+
+            videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+            cboCamaras.Items.Clear();
+
+            foreach (FilterInfo device in videoDevices)
+            {
+                cboCamaras.Items.Add(device.Name);
+            }
+
+            if (cboCamaras.Items.Count > 0)
+            {
+                // cboCamaras.SelectedIndex = 0;
+                btnAbrirCamara.Enabled = true;
+                btnDetenerCamara.Enabled = true;
+            }
+
+        }
+
         private void dgvPacientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvPacientes.Columns[e.ColumnIndex].Name == "btnEdit")
@@ -188,10 +212,10 @@ namespace FisioKH
 
         private void btnAbrirCamara_Click(object sender, EventArgs e)
         {
-            wch.StartCamera();
-            btnGuardarFoto.Enabled = true;
-            btnZoomIn.Enabled = true;
-            btnZoomOut.Enabled = true;
+            //wch.StartCamera();
+            //btnGuardarFoto.Enabled = true;
+            //btnZoomIn.Enabled = true;
+            //btnZoomOut.Enabled = true;
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)
@@ -309,6 +333,9 @@ namespace FisioKH
             this.txtNombreFiscal.Text = "";
             this.dtpFechaNacimiento.Text = "";
             this.txtObservaciones.Text = "";
+            this.txtApellidoPaterno.Text = "";
+            this.txtApellidoMaterno.Text = "";
+
 
             this.pbxFotoPaciente.Image = FisioKH.Properties.Resources.patient;
 
@@ -361,6 +388,47 @@ namespace FisioKH
             );
 
             e.DrawFocusRectangle();
+        }
+
+        private void txtCiudad_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAbrirCamara_Click_1(object sender, EventArgs e)
+        {
+            ActivarCamara();
+        }
+
+        private void btnDetenerCamara_Click(object sender, EventArgs e)
+        {
+            wch?.StopCamera();
+            btnAbrirCamara.Enabled = true;
+        }
+
+        private void trkZoomFT_Scroll(object sender, EventArgs e)
+        {
+            wch.SetZoomFromTrackBar(trkZoomFT.Value);
+        }
+
+
+        private void ActivarCamara()
+        {
+            btnAbrirCamara.Enabled = false;
+            wch?.StopCamera();
+
+            int numCarama = cboCamaras.SelectedIndex;
+            if (numCarama < 0)
+            { return; }
+
+            wch.StartCamera(numCarama);
+            btnGuardarFoto.Enabled = true;
+
+        }
+
+        private void cboCamaras_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ActivarCamara();
         }
     }
 }

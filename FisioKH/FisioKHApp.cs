@@ -161,8 +161,13 @@ namespace FisioKH
 
                 if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
                 {
-                   // MessageBox.Show("Bienvenido!", "Anuncio!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    // MessageBox.Show("Bienvenido!", "Anuncio!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    this.lstBoxLogs.Items.Add(DateTime.Now.ToString()+ " - Bienvenido : "+ Program.UsuarioLogeado.Nombre);                    
                     this.Text = $"{configSettings.ObtenNombreApp} - Usuario: {Program.UsuarioLogeado.Nombre}";
+                    this.txtUsuario.Enabled = false;
+                    this.txtPassPin.Enabled = false;
+                    this.btnLogin.Enabled = false;                    
+                    this.btnCerrarSesion.Enabled = true;
                     HabilitaTabs(ObtentabsSeguras());
                 }
                 else
@@ -181,16 +186,12 @@ namespace FisioKH
             {
                 // Reset button in any case
                 this.btnLogin.Text = "Ingresar";
-                this.btnLogin.Enabled = true;
+               // this.btnLogin.Enabled = true;
                 Program.UsuarioLogeado.ErrorLogin = "";
             }
         }
 
 
-        private void eventLog1_EntryWritten(object sender, System.Diagnostics.EntryWrittenEventArgs e)
-        {
-
-        }
 
         private void lstBoxLogs_Click(object sender, EventArgs e)
         {
@@ -245,6 +246,24 @@ namespace FisioKH
         {
             FisioTerapeutas fm = new FisioTerapeutas();
             fm.ShowDialog();
+
+        }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show("Desea Salir del Sistema?", "Pregunta: ", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                DesHabilitaTabs(ObtentabsSeguras());
+                this.lstBoxLogs.Items.Clear();
+                this.txtUsuario.Enabled = true;
+                this.txtPassPin.Enabled = true;
+                this.btnLogin.Enabled = true;
+                this.Text = $"{configSettings.ObtenNombreApp}";
+                this.btnCerrarSesion.Enabled = false;
+
+                Program.UsuarioLogeado = null;
+            }
+           
 
         }
     }

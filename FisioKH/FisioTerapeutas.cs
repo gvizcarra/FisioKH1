@@ -7,6 +7,7 @@ using System.IO;
 
 
 using System.Windows.Forms;
+using Accord.Video.DirectShow;
 
 namespace FisioKH
 {
@@ -23,8 +24,35 @@ namespace FisioKH
 
         private void FisioTerapeutas_Load(object sender, EventArgs e)
         {
+
+            LoadCamaras();
             wch = new WebCamHelper(pbxFotoFisio);
+
             ObtenFisioTerapeutas(this.txtFisioTerapeuta.Text);
+        }
+
+
+        private void LoadCamaras()
+        {
+            FilterInfoCollection videoDevices;
+
+             
+                videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+                
+            cboCamaras.Items.Clear();
+
+            foreach (FilterInfo device in videoDevices)
+            {
+                cboCamaras.Items.Add(device.Name); 
+            }
+
+            if (cboCamaras.Items.Count > 0)
+            {
+               // cboCamaras.SelectedIndex = 0;
+                btnAbrirCamara.Enabled = true;
+                btnDetenerCamara.Enabled = true;
+            }
+            
         }
 
         private void ObtenFisioTerapeutas(string nombre = null)
@@ -215,10 +243,7 @@ namespace FisioKH
 
         private void btnAbrirCamara_Click(object sender, EventArgs e)
         {
-            
-            wch.StartCamera();
-            btnGuardarFoto.Enabled = true;
-
+            ActivarCamara();
         }
 
         private void btnAGuardarFoto_Click(object sender, EventArgs e)
@@ -279,6 +304,37 @@ namespace FisioKH
 
 
             }
+        }
+
+        private void cboCamaras_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ActivarCamara();
+        }
+
+        private void btnDetenerCamara_Click(object sender, EventArgs e)
+        {
+            wch?.StopCamera();
+            btnAbrirCamara.Enabled = true;
+        }
+
+
+        private void ActivarCamara()
+        {
+            btnAbrirCamara.Enabled = false;
+            wch?.StopCamera();
+
+            int numCarama = cboCamaras.SelectedIndex;
+            if (numCarama < 0)
+            { return; }
+
+            wch.StartCamera(numCarama);
+            btnGuardarFoto.Enabled = true;
+
+        }
+
+        private void trkZoomFT_Scroll(object sender, EventArgs e)
+        {
+            wch.SetZoomFromTrackBar(trkZoomFT.Value);
         }
     }
 }

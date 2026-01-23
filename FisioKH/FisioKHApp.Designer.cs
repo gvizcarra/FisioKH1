@@ -56,6 +56,7 @@ namespace FisioKH
             this.tbReportes = new System.Windows.Forms.TabPage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnCerrarSesion = new FisioKH.Boton();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
@@ -125,6 +126,7 @@ namespace FisioKH
             this.groupBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.groupBox1.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
             this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.groupBox1.Controls.Add(this.btnCerrarSesion);
             this.groupBox1.Controls.Add(this.txtUsuario);
             this.groupBox1.Controls.Add(this.btnLogin);
             this.groupBox1.Controls.Add(this.label1);
@@ -133,7 +135,7 @@ namespace FisioKH
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(236, 15);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(615, 560);
+            this.groupBox1.Size = new System.Drawing.Size(615, 597);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
@@ -367,6 +369,21 @@ namespace FisioKH
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // btnCerrarSesion
+            // 
+            this.btnCerrarSesion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnCerrarSesion.FlatAppearance.BorderSize = 2;
+            this.btnCerrarSesion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCerrarSesion.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnCerrarSesion.Location = new System.Drawing.Point(0, 528);
+            this.btnCerrarSesion.Margin = new System.Windows.Forms.Padding(10);
+            this.btnCerrarSesion.Name = "btnCerrarSesion";
+            this.btnCerrarSesion.Size = new System.Drawing.Size(140, 34);
+            this.btnCerrarSesion.TabIndex = 9;
+            this.btnCerrarSesion.Text = "&Cerrar Sesion";
+            this.btnCerrarSesion.UseVisualStyleBackColor = false;
+            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
+            // 
             // FisioKHApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -417,6 +434,7 @@ namespace FisioKH
         private Boton btnFisios;
         private ValidatedNumericTextBox txtPassPin;
         private ValidatedNumericTextBox txtUsuario;
+        private Boton btnCerrarSesion;
     }
 }
 

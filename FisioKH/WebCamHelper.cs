@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using Accord.Video;
 using Accord.Video.DirectShow;
+ 
 
 namespace FisioKH
 {
@@ -61,7 +62,7 @@ namespace FisioKH
             return resized;
         }
 
-        public void StartCamera()
+        public void StartCamera(int numCamara)
         {
             videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 
@@ -71,11 +72,11 @@ namespace FisioKH
                 return;
             }
 
-            videoSource = new VideoCaptureDevice(videoDevices[0].MonikerString);
+            videoSource = new VideoCaptureDevice(videoDevices[numCamara].MonikerString);
 
             videoSource.VideoResolution = videoSource.VideoCapabilities
-                .FirstOrDefault(vc => vc.FrameSize.Width == 640 && vc.FrameSize.Height == 480)
-                ?? videoSource.VideoCapabilities[0];
+                .FirstOrDefault(vc => vc.FrameSize.Width == 800 && vc.FrameSize.Height == 600)
+                ?? videoSource.VideoCapabilities[numCamara];
 
             videoSource.NewFrame += VideoSource_NewFrame;
             videoSource.Start();
@@ -130,5 +131,14 @@ namespace FisioKH
         {
             zoomFactor = Math.Max(zoomStep, zoomFactor - zoomStep);
         }
+
+        public void SetZoomFromTrackBar(int trackValue)
+        {
+            zoomFactor = trackValue / 10.0f;
+
+            if (zoomFactor < 1.0f)
+                zoomFactor = 1.0f;
+        }
+
     }
 }
