@@ -135,6 +135,26 @@ namespace FisioKH
             RefreshCurrentView();
         }
 
+        public static Color GoogleColorToSystem(string colorId)
+        {
+            switch (colorId)
+            {
+                case "1": return Color.FromArgb(121, 134, 203); // Lavender
+                case "2": return Color.FromArgb(51, 182, 121);  // Sage
+                case "3": return Color.FromArgb(142, 36, 170);  // Grape
+                case "4": return Color.FromArgb(230, 124, 115); // Flamingo
+                case "5": return Color.FromArgb(246, 191, 38);  // Banana
+                case "6": return Color.FromArgb(244, 81, 30);   // Tangerine
+                case "7": return Color.FromArgb(3, 155, 229);  // Peacock
+                case "8": return Color.FromArgb(97, 97, 97);   // Graphite
+                case "9": return Color.FromArgb(63, 81, 181);  // Blueberry
+                case "10": return Color.FromArgb(11, 128, 67);  // Basil
+                case "11": return Color.FromArgb(213, 0, 0);    // Tomato
+                default: return Color.LightGray;
+            }
+        }
+
+
         // ================= DATA =================
         private void LoadEventsFromDataSource()
         {
@@ -150,8 +170,8 @@ namespace FisioKH
                     //Id = (Guid)r["Id"],
                     Title = r["Title"].ToString(),
                     Start = (DateTime)r["Start"],
-                    End = (DateTime)r["End"],
-                    //Color = Color.FromName(r["Color"].ToString()),
+                    End = (DateTime)r["End"], 
+                    Color = GoogleColorToSystem(r["ColorId"].ToString())
                     //IdCita = r.Table.Columns.Contains("id") ? Convert.ToInt32(r["id"]) : 0
                 });
             }
@@ -159,10 +179,7 @@ namespace FisioKH
 
         // ================= VIEW SWITCH =================
         private void ShowMonth()
-        {
-             
-
-            
+        { 
             if (currentView != CalendarView.Month)
             { 
                 currentView = CalendarView.Month;
@@ -405,7 +422,7 @@ namespace FisioKH
             {
                 Size = size,
                 Location = loc,
-                //BackColor = ev.,
+                BackColor = ev.Color,
                 BorderStyle = BorderStyle.FixedSingle,
                 Cursor = Cursors.Hand // Indicate clickable
             };
@@ -439,8 +456,8 @@ namespace FisioKH
             public string Title { get; set; }
             public DateTime Start { get; set; }
             public DateTime End{ get; set; }
-            //public Color Color { get; set; }
-            public int ColorId { get; set; }
+            public Color Color { get; set; }
+            public string ColorId { get; set; }
             //public int IdCita { get; set; } = 0;
         }
 

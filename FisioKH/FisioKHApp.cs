@@ -20,35 +20,28 @@ namespace FisioKH
             return tabsSeguras;
         }
 
+     
+ 
         private static DataTable InitStaticDataSet(DataTable dt)
         {
+            
             DataTable table = new DataTable();
-           // table.Columns.Add("Id", typeof(Guid));
             table.Columns.Add("Title", typeof(string));
             table.Columns.Add("Start", typeof(DateTime));
             table.Columns.Add("End", typeof(DateTime));
-            //table.Columns.Add("Color", typeof(string));
-            //table.Columns.Add("IdCita", typeof(int)); // custom property
-
-            Random rnd = new Random();
-            string[] titles = { "Consulta", "Terapia", "Masaje", "Evaluación", "Revisión" };
-            string[] colors = { "LightCoral", "LightGreen", "LightBlue", "Khaki", "Plum" };
-
-            //foreach (DataGridViewRow row in dgv.Rows)
+            table.Columns.Add("ColorId", typeof(string));
+            
             foreach (DataRow row in dt.Rows)
             {
                 table.Rows.Add(
-                //                row["id"].ToString(),
-                                row["Title"].ToString(),
-                            row["Start"].ToString(),
-                            row["End"].ToString()
+                             row["Title"].ToString()
+                            ,row["Start"].ToString()
+                            ,row["End"].ToString()
+                            ,row["ColorId"].ToString()
                     ); 
             }
 
-
-
-
-            return table;
+             return table;
 
         }
 
@@ -314,5 +307,8 @@ namespace FisioKH
            
 
         }
+
+
+        
     }
 }
