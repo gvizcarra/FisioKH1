@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Reflection;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
-using System.Reflection;
 
 namespace FisioKH
 {
     public partial class FisioKHCalendar : UserControl
     {
         private Panel loadingOverlay;
-        private ProgressBar loadingBar;
+        private Panel loadingBar;
+        private Timer loadingTimer;
+        private int loadingX = 0;
+
+
 
         private const int HourHeight = 38;
         private const int HeaderHeight = 30;
         private const int StartHour = 8;
         private const int EndHour = 21;
-
-        // overlap / spacing tuning
-        private const int OverlapGap = 4;
-        private const int OuterPad = 2;
-        private const int MinEventWidth = 80;
 
         private Panel panelMonth;
         private Panel panelWeek;
@@ -33,14 +31,16 @@ namespace FisioKH
         public event Func<DateTime, DateTime, Task<DataTable>> RequestDataAsync;
         public event EventHandler<CalendarEventKH> EventClick;
 
-        private List<CalendarEventKH> Events = new List<CalendarEventKH>();
+        private readonly List<CalendarEventKH> Events = new List<CalendarEventKH>();
 
         private FlowLayoutPanel topBar;
         private Button btnMonth, btnWeek, btnDay, btnPrev, btnNext;
         private Label lblCurrentDay;
         private DateTimePicker dtpJump;
 
-        enum CalendarView { Month, Week, Day }
+         
+
+        private enum CalendarView { Month, Week, Day }
         private CalendarView currentView = CalendarView.Day;
 
         [Browsable(false)]
@@ -67,9 +67,10 @@ namespace FisioKH
             Controls.Add(panelWeek);
             Controls.Add(panelDay);
 
-            Resize += (s, e) => RefreshCurrentView();
+            InitRenderCache();
 
-            this.Load += FisioKHCalendar_Load;
+            //Resize += (s, e) => RefreshCurrentView();
+            Load += FisioKHCalendar_Load;
         }
 
         private async void FisioKHCalendar_Load(object sender, EventArgs e)
@@ -93,8 +94,6 @@ namespace FisioKH
                 BackColor = Color.White,
                 Visible = false
             };
-
-            // reduce flicker when repainting lots of controls
             SetDoubleBuffered(p, true);
             return p;
         }
@@ -111,34 +110,41 @@ namespace FisioKH
 
         // ================= TOP BAR =================
 
+
         private void BuildLoadingOverlay()
         {
             loadingOverlay = new Panel
             {
-                Dock = DockStyle.Fill,
-                BackColor = Color.FromArgb(120, Color.White),
+                Dock = DockStyle.Top,
+                Height = 8,                 // thicker => more visible
+                BackColor = Color.FromArgb(230, 230, 230),
                 Visible = false
             };
 
-            loadingBar = new ProgressBar
+            loadingBar = new Panel
             {
-                Style = ProgressBarStyle.Marquee,
-                MarqueeAnimationSpeed = 30,
-                Width = 200,
-                Height = 25
+                Height = 8,
+                Width = 260,                // longer segment => eye-catching
+                BackColor = Color.FromArgb(26, 115, 232) // nice blue
             };
 
             loadingOverlay.Controls.Add(loadingBar);
             Controls.Add(loadingOverlay);
-
             loadingOverlay.BringToFront();
 
-            loadingOverlay.Resize += (s, e) =>
+            loadingTimer = new Timer { Interval = 15 };
+            loadingTimer.Tick += (s, e) =>
             {
-                loadingBar.Left = (loadingOverlay.Width - loadingBar.Width) / 2;
-                loadingBar.Top = (loadingOverlay.Height - loadingBar.Height) / 2;
+                loadingX += 12;
+                if (loadingX > loadingOverlay.Width)
+                    loadingX = -loadingBar.Width;
+
+                loadingBar.Left = loadingX;
+                loadingBar.Top = 0;
             };
         }
+
+
 
         private void BuildTopBar()
         {
@@ -167,7 +173,6 @@ namespace FisioKH
                 Format = DateTimePickerFormat.Short,
                 Width = 150
             };
-
             dtpJump.ValueChanged += DtpJump_ValueChanged;
 
             btnMonth.Click += async (s, e) => await ShowMonthAsync();
@@ -240,12 +245,13 @@ namespace FisioKH
                     ColorId = r["ColorId"].ToString()
                 });
             }
+
+            _eventsVersion++;      
+            ClearRenderCache();    
         }
 
-        public async Task ReloadDataFromFormAsync()
-        {
-            await ReloadDataAsync();
-        }
+
+        public async Task ReloadDataFromFormAsync() => await ReloadDataAsync();
 
         private async Task ReloadDataAsync()
         {
@@ -277,7 +283,6 @@ namespace FisioKH
                 }
 
                 var table = await RequestDataAsync(from, to);
-
                 if (table != null)
                 {
                     DataSource = table;
@@ -294,13 +299,18 @@ namespace FisioKH
         private void ShowLoading(bool show)
         {
             loadingOverlay.Visible = show;
-            loadingOverlay.BringToFront();
 
-            topBar.Enabled = !show;
-            panelMonth.Enabled = !show;
-            panelWeek.Enabled = !show;
-            panelDay.Enabled = !show;
+            if (show)
+            {
+                loadingX = -loadingBar.Width;
+                loadingTimer.Start();
+            }
+            else
+            {
+                loadingTimer.Stop();
+            }
         }
+
 
         // ================= VIEW SWITCH =================
 
@@ -338,19 +348,25 @@ namespace FisioKH
             CenterDayViewOnNow();
         }
 
-        public void RefreshCurrentView()
-        {
-            LoadEventsFromDataSource();
+        public void RefreshCurrentView(bool useCache = true)
+{
+    LoadEventsFromDataSource();
 
-            if (currentView == CalendarView.Month) RenderMonthView();
-            if (currentView == CalendarView.Week) RenderWeekView();
-            if (currentView == CalendarView.Day) RenderDayView();
+    if (currentView == CalendarView.Month)
+        RenderCached(panelMonth, CacheKey_Month(), RenderMonthView, useCache);
 
-            UpdateDayNavigation();
-        }
+    if (currentView == CalendarView.Week)
+        RenderCached(panelWeek, CacheKey_Week(), RenderWeekView, useCache);
+
+    if (currentView == CalendarView.Day)
+        RenderCached(panelDay, CacheKey_Day(), RenderDayView, useCache);
+
+    UpdateDayNavigation();
+}
+
 
         // ================= MONTH VIEW =================
-
+        // Month = list-like (Google behavior): show a few events + “+N más”
         private void RenderMonthView()
         {
             panelMonth.Controls.Clear();
@@ -393,26 +409,28 @@ namespace FisioKH
                             Font = new Font("Segoe UI", 9, FontStyle.Bold)
                         });
 
-                        // Show events as compact "cards" (Google-like look)
-                        // Month cells are list-like, but still benefit from hover + shadow.
                         int y = 22;
-                        int maxLines = Math.Max(1, (cell.Height - y - 4) / 20);
+                        int maxLines = Math.Max(1, (cell.Height - y - 6) / 20);
 
-                        foreach (var ev in Events.Where(e => e.Start.Date == date).OrderBy(e => e.Start).Take(maxLines))
+                        var dayEvents = Events
+                            .Where(e => e.Start.Date == date.Date)
+                            .OrderBy(e => e.Start)
+                            .ToList();
+
+                        foreach (var ev in dayEvents.Take(maxLines))
                         {
-                            var sz = new Size(cell.Width - 6, 18);
-                            var pt = new Point(3, y);
-                            cell.Controls.Add(CreateEventPanel(ev, sz, pt));
+                            cell.Controls.Add(CreateEventPanel(
+                                ev,
+                                new Size(cell.Width - 6, 18),
+                                new Point(3, y)));
                             y += 20;
                         }
 
-                        // optional "+N more" indicator
-                        int total = Events.Count(e => e.Start.Date == date);
-                        if (total > maxLines)
+                        if (dayEvents.Count > maxLines)
                         {
                             cell.Controls.Add(new Label
                             {
-                                Text = $"+{total - maxLines} más",
+                                Text = $"+{dayEvents.Count - maxLines} más",
                                 AutoSize = true,
                                 ForeColor = Color.DimGray,
                                 Location = new Point(3, cell.Height - 18)
@@ -428,7 +446,6 @@ namespace FisioKH
         }
 
         // ================= WEEK VIEW =================
-
         private void RenderWeekView()
         {
             panelWeek.Controls.Clear();
@@ -474,13 +491,13 @@ namespace FisioKH
                 }
             }
 
-            // Week overlaps: compute per-day layout and render side-by-side in each column
+            // Overlap-aware rendering PER DAY column
             for (int d = 0; d < 7; d++)
             {
                 DateTime date = start.AddDays(d).Date;
                 var layouts = BuildLayoutForDate(date);
 
-                int dayLeft = labelWidth + d * colWidth;
+                int baseX = labelWidth + d * colWidth;
                 int usableW = colWidth;
 
                 foreach (var l in layouts)
@@ -489,20 +506,17 @@ namespace FisioKH
                     int h = Math.Max(28, (int)((l.Event.End - l.Event.Start).TotalMinutes / 60 * HourHeight));
 
                     int slotW = Math.Max(MinEventWidth, usableW / Math.Max(1, l.SlotCount));
-                    int x = dayLeft + l.SlotIndex * slotW;
+                    int x = baseX + l.SlotIndex * slotW;
 
                     int cardX = x + OuterPad;
                     int cardW = Math.Max(MinEventWidth, slotW - OverlapGap - OuterPad);
 
-                    panelWeek.Controls.Add(CreateEventPanel(l.Event,
-                        new Size(cardW, h),
-                        new Point(cardX, y)));
+                    panelWeek.Controls.Add(CreateEventPanel(l.Event, new Size(cardW, h), new Point(cardX, y)));
                 }
             }
         }
 
         // ================= DAY VIEW =================
-
         private void RenderDayView()
         {
             panelDay.Controls.Clear();
@@ -542,9 +556,7 @@ namespace FisioKH
                 int cardX = x + OuterPad;
                 int cardW = Math.Max(MinEventWidth, slotW - OverlapGap - OuterPad);
 
-                panelDay.Controls.Add(CreateEventPanel(l.Event,
-                    new Size(cardW, h),
-                    new Point(cardX, y)));
+                panelDay.Controls.Add(CreateEventPanel(l.Event, new Size(cardW, h), new Point(cardX, y)));
             }
         }
 
@@ -554,227 +566,6 @@ namespace FisioKH
 
             int y = HeaderHeight + (int)((DateTime.Now.Hour + DateTime.Now.Minute / 60.0 - StartHour) * HourHeight);
             panelDay.AutoScrollPosition = new Point(0, Math.Max(0, y - panelDay.Height / 2));
-        }
-
-        // ================= EVENT PANEL (hover + shadow + overlap-friendly) =================
-
-        private Color GetSoftColor(Color c)
-        {
-            int r = (c.R + 255) / 2;
-            int g = (c.G + 255) / 2;
-            int b = (c.B + 255) / 2;
-            return Color.FromArgb(r, g, b);
-        }
-
-        private sealed class EventPanel : Panel
-        {
-            public Color AccentColor { get; set; } = Color.DeepSkyBlue;
-            public Color BaseFill { get; set; } = Color.LightBlue;
-            public bool Hovered { get; private set; }
-            public int CornerRadius { get; set; } = 6;
-            public int StripeWidth { get; set; } = 5;
-
-            public EventPanel()
-            {
-                DoubleBuffered = true;
-                SetStyle(ControlStyles.AllPaintingInWmPaint |
-                         ControlStyles.OptimizedDoubleBuffer |
-                         ControlStyles.UserPaint |
-                         ControlStyles.ResizeRedraw, true);
-
-                MouseEnter += (s, e) => { Hovered = true; Invalidate(); BringToFront(); };
-                MouseLeave += (s, e) => { Hovered = false; Invalidate(); };
-                MouseDown += (s, e) => BringToFront();
-            }
-
-            protected override void OnPaint(PaintEventArgs e)
-            {
-                var g = e.Graphics;
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                var rect = new Rectangle(0, 0, Width - 1, Height - 1);
-
-                DrawShadow(g, rect, CornerRadius);
-
-                var fill = Hovered ? ControlPaint.Light(AccentColor, 0.45f) : BaseFill;
-                using (var path = RoundedRect(rect, CornerRadius))
-                using (var b = new SolidBrush(fill))
-                    g.FillPath(b, path);
-
-                if (Hovered)
-                {
-                    using (var path = RoundedRect(rect, CornerRadius))
-                    using (var pen = new Pen(Color.FromArgb(160, AccentColor), 1f))
-                        g.DrawPath(pen, path);
-                }
-
-                using (var sb = new SolidBrush(AccentColor))
-                    g.FillRectangle(sb, 0, 0, StripeWidth, Height);
-
-                base.OnPaint(e);
-            }
-
-            private static GraphicsPath RoundedRect(Rectangle r, int radius)
-            {
-                int d = radius * 2;
-                var path = new GraphicsPath();
-                path.AddArc(r.X, r.Y, d, d, 180, 90);
-                path.AddArc(r.Right - d, r.Y, d, d, 270, 90);
-                path.AddArc(r.Right - d, r.Bottom - d, d, d, 0, 90);
-                path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
-                path.CloseFigure();
-                return path;
-            }
-
-            private static void DrawShadow(Graphics g, Rectangle rect, int radius)
-            {
-                for (int i = 3; i >= 1; i--)
-                {
-                    int alpha = 16 / i; // subtle
-                    var shadowRect = new Rectangle(rect.X + i, rect.Y + i, rect.Width, rect.Height);
-                    using (var path = RoundedRect(shadowRect, radius))
-                    using (var b = new SolidBrush(Color.FromArgb(alpha, 0, 0, 0)))
-                        g.FillPath(b, path);
-                }
-            }
-        }
-
-        private Panel CreateEventPanel(CalendarEventKH ev, Size size, Point loc)
-        {
-            var p = new EventPanel
-            {
-                Size = size,
-                Location = loc,
-                AccentColor = ev.Color,
-                BaseFill = GetSoftColor(ev.Color),
-                BorderStyle = BorderStyle.None,
-                Cursor = Cursors.Hand,
-                Padding = new Padding(5 + 6, 4, 4, 4)
-            };
-
-            // ensure children clip to rounded area
-            p.SizeChanged += (s, e) =>
-            {
-                var gp = new GraphicsPath();
-                int radius = p.CornerRadius;
-                gp.AddArc(0, 0, radius, radius, 180, 90);
-                gp.AddArc(p.Width - radius, 0, radius, radius, 270, 90);
-                gp.AddArc(p.Width - radius, p.Height - radius, radius, radius, 0, 90);
-                gp.AddArc(0, p.Height - radius, radius, radius, 90, 90);
-                gp.CloseAllFigures();
-                p.Region = new Region(gp);
-            };
-
-            var title = new Label
-            {
-                Text = ev.Title,
-                Dock = DockStyle.Top,
-                Height = 16,
-                Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
-                ForeColor = Color.Black,
-                BackColor = Color.Transparent,
-                AutoEllipsis = true
-            };
-
-            var time = new Label
-            {
-                Text = $"{ev.Start:h:mm tt} - {ev.End:h:mm tt}",
-                Dock = DockStyle.Top,
-                Height = 14,
-                Font = new Font("Segoe UI", 7.5f, FontStyle.Regular),
-                ForeColor = Color.DimGray,
-                BackColor = Color.Transparent,
-                AutoEllipsis = true
-            };
-
-            //p.Controls.Add(time);
-            p.Controls.Add(title);
-
-            // hover/overlap friendliness: bring to front when interacting with labels too
-            title.MouseEnter += (s, e) => p.BringToFront();
-            time.MouseEnter += (s, e) => p.BringToFront();
-            title.MouseDown += (s, e) => p.BringToFront();
-            time.MouseDown += (s, e) => p.BringToFront();
-
-            p.Click += (s, e) => EventClick?.Invoke(this, ev);
-            title.Click += (s, e) => EventClick?.Invoke(this, ev);
-            time.Click += (s, e) => EventClick?.Invoke(this, ev);
-
-            return p;
-        }
-
-        // ================= HELPERS =================
-
-        public class CalendarEventKH
-        {
-            public string Id { get; set; }
-            public long CitaID { get; set; }
-            public string Title { get; set; }
-            public DateTime Start { get; set; }
-            public DateTime End { get; set; }
-            public Color Color { get; set; }
-            public string ColorId { get; set; }
-        }
-
-        public class EventLayoutInfo
-        {
-            public CalendarEventKH Event;
-            public int SlotIndex;
-            public int SlotCount;
-        }
-
-        // used by both Day and Week (and month list selection)
-        private List<EventLayoutInfo> BuildLayoutForDate(DateTime day)
-        {
-            var list = Events
-                .Where(e => e.Start.Date == day.Date)
-                .OrderBy(e => e.Start)
-                .ThenBy(e => e.End)
-                .ToList();
-
-            var result = new List<EventLayoutInfo>();
-
-            foreach (var ev in list)
-            {
-                int slot = 0;
-                while (result.Any(r =>
-                       r.SlotIndex == slot &&
-                       r.Event.End > ev.Start &&
-                       r.Event.Start < ev.End))
-                {
-                    slot++;
-                }
-
-                result.Add(new EventLayoutInfo { Event = ev, SlotIndex = slot });
-            }
-
-            foreach (var r in result)
-            {
-                r.SlotCount = Math.Max(1, result.Count(x =>
-                    x.Event.End > r.Event.Start &&
-                    x.Event.Start < r.Event.End));
-            }
-
-            return result;
-        }
-
-        public static Color GoogleColorToSystem(string colorId)
-        {
-            switch (colorId)
-            {
-                case "1": return Color.FromArgb(121, 134, 203);
-                case "2": return Color.FromArgb(51, 182, 121);
-                case "3": return Color.FromArgb(142, 36, 170);
-                case "4": return Color.FromArgb(230, 124, 115);
-                case "5": return Color.FromArgb(246, 191, 38);
-                case "6": return Color.FromArgb(244, 81, 30);
-                case "7": return Color.FromArgb(3, 155, 229);
-                case "8": return Color.FromArgb(97, 97, 97);
-                case "9": return Color.FromArgb(63, 81, 181);
-                case "10": return Color.FromArgb(11, 128, 67);
-                case "11": return Color.FromArgb(213, 0, 0);
-                default: return Color.LightGray;
-            }
         }
     }
 }

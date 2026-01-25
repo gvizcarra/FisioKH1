@@ -161,6 +161,18 @@
     <Compile Include="classes\configSettings.cs" />
     <Compile Include="classes\DBHelperAsync.cs" />
     <Compile Include="classes\etiquetasPaciente.cs" />
+    <Compile Include="componentes\FisioKHCalendar.EventPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="componentes\FisioKHCalendar.Layout.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="componentes\FisioKHCalendar.Models.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="componentes\FisioKHCalendar.RenderCache.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="EventDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,7 +198,7 @@
       <DependentUpon>FisioTerapeutas.cs</DependentUpon>
     </Compile>
     <Compile Include="classes\GoogleCalendarService.cs" />
-    <Compile Include="ValidatedTextbox.cs">
+    <Compile Include="componentes\ValidatedTextbox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="classes\WebCamHelper.cs" />
