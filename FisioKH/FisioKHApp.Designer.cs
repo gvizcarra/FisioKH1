@@ -39,6 +39,7 @@ namespace FisioKH
             this.boton1 = new FisioKH.Boton();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnCerrarSesion = new FisioKH.Boton();
             this.txtUsuario = new FisioKH.ValidatedNumericTextBox();
             this.btnLogin = new FisioKH.Boton();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@ namespace FisioKH
             this.tbReportes = new System.Windows.Forms.TabPage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnCerrarSesion = new FisioKH.Boton();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tbInicio.SuspendLayout();
@@ -140,6 +140,21 @@ namespace FisioKH
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
             // 
+            // btnCerrarSesion
+            // 
+            this.btnCerrarSesion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnCerrarSesion.FlatAppearance.BorderSize = 2;
+            this.btnCerrarSesion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCerrarSesion.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnCerrarSesion.Location = new System.Drawing.Point(0, 528);
+            this.btnCerrarSesion.Margin = new System.Windows.Forms.Padding(10);
+            this.btnCerrarSesion.Name = "btnCerrarSesion";
+            this.btnCerrarSesion.Size = new System.Drawing.Size(140, 34);
+            this.btnCerrarSesion.TabIndex = 9;
+            this.btnCerrarSesion.Text = "&Cerrar Sesion";
+            this.btnCerrarSesion.UseVisualStyleBackColor = false;
+            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
+            // 
             // txtUsuario
             // 
             this.txtUsuario.AcceptsReturn = true;
@@ -157,7 +172,6 @@ namespace FisioKH
             this.txtUsuario.NumericOnly = false;
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
             this.txtUsuario.TabIndex = 6;
-            this.txtUsuario.Text = "gabriel";
             // 
             // btnLogin
             // 
@@ -203,7 +217,6 @@ namespace FisioKH
             this.txtPassPin.PasswordChar = '*';
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.TabIndex = 7;
-            this.txtPassPin.Text = "nada";
             this.txtPassPin.UseSystemPasswordChar = true;
             // 
             // label2
@@ -231,7 +244,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 1, 14, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 1, 25, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -368,21 +381,6 @@ namespace FisioKH
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // btnCerrarSesion
-            // 
-            this.btnCerrarSesion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnCerrarSesion.FlatAppearance.BorderSize = 2;
-            this.btnCerrarSesion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.btnCerrarSesion.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(0, 528);
-            this.btnCerrarSesion.Margin = new System.Windows.Forms.Padding(10);
-            this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(140, 34);
-            this.btnCerrarSesion.TabIndex = 9;
-            this.btnCerrarSesion.Text = "&Cerrar Sesion";
-            this.btnCerrarSesion.UseVisualStyleBackColor = false;
-            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
             // 
             // FisioKHApp
             // 

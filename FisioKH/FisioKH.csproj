@@ -152,15 +152,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseForm.cs">
+    <Compile Include="componentes\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="boton.cs">
+    <Compile Include="componentes\boton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="configSettings.cs" />
-    <Compile Include="DBHelperAsync.cs" />
-    <Compile Include="etiquetasPaciente.cs" />
+    <Compile Include="classes\configSettings.cs" />
+    <Compile Include="classes\DBHelperAsync.cs" />
+    <Compile Include="classes\etiquetasPaciente.cs" />
     <Compile Include="EventDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,10 +173,10 @@
     <Compile Include="FisioKHApp.Designer.cs">
       <DependentUpon>FisioKHApp.cs</DependentUpon>
     </Compile>
-    <Compile Include="FisioKHCalendar.cs">
+    <Compile Include="componentes\FisioKHCalendar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FisioKHCalendar.Designer.cs">
+    <Compile Include="componentes\FisioKHCalendar.Designer.cs">
       <DependentUpon>FisioKHCalendar.cs</DependentUpon>
     </Compile>
     <Compile Include="FisioTerapeutas.cs">
@@ -185,11 +185,11 @@
     <Compile Include="FisioTerapeutas.Designer.cs">
       <DependentUpon>FisioTerapeutas.cs</DependentUpon>
     </Compile>
-    <Compile Include="GoogleCalendarService.cs" />
+    <Compile Include="classes\GoogleCalendarService.cs" />
     <Compile Include="ValidatedTextbox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WebCamHelper.cs" />
+    <Compile Include="classes\WebCamHelper.cs" />
     <Compile Include="MetodosPago.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,21 +208,24 @@
     <Compile Include="Precios.Designer.cs">
       <DependentUpon>Precios.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="classes\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DBHelper.cs" />
+    <Compile Include="classes\DBHelper.cs" />
     <Compile Include="Tratamientos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tratamientos.Designer.cs">
       <DependentUpon>Tratamientos.cs</DependentUpon>
     </Compile>
-    <Compile Include="usuario.cs" />
+    <Compile Include="classes\usuario.cs" />
     <EmbeddedResource Include="EventDetailsForm.resx">
       <DependentUpon>EventDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FisioKHApp.resx">
       <DependentUpon>FisioKHApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="componentes\FisioKHCalendar.resx">
+      <DependentUpon>FisioKHCalendar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FisioTerapeutas.resx">
       <DependentUpon>FisioTerapeutas.cs</DependentUpon>
@@ -249,6 +252,12 @@
     <EmbeddedResource Include="Tratamientos.resx">
       <DependentUpon>Tratamientos.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="assets\GoogleCalendarCredentialsFisioKhFile.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\GoogleCalendarCredentialsFisioKhFileGVS.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="FisioKH_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -262,7 +271,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="componentes\App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\fisiokh.png">

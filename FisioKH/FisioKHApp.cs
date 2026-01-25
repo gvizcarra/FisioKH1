@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace FisioKH
 {
@@ -9,9 +10,11 @@ namespace FisioKH
     {
         GoogleCalendarService calendar = new GoogleCalendarService();
 
+
         public FisioKHApp()
         {
             InitializeComponent();
+
         }
 
         private Array ObtentabsSeguras()
@@ -20,30 +23,29 @@ namespace FisioKH
             return tabsSeguras;
         }
 
-     
- 
+
+
         private static DataTable InitStaticDataSet(DataTable dt)
         {
-            
             DataTable table = new DataTable();
             table.Columns.Add("Title", typeof(string));
             table.Columns.Add("Start", typeof(DateTime));
             table.Columns.Add("End", typeof(DateTime));
             table.Columns.Add("ColorId", typeof(string));
-            
+
             foreach (DataRow row in dt.Rows)
             {
                 table.Rows.Add(
-                             row["Title"].ToString()
-                            ,row["Start"].ToString()
-                            ,row["End"].ToString()
-                            ,row["ColorId"].ToString()
-                    ); 
+                    row["Title"].ToString(),
+                    Convert.ToDateTime(row["Start"]),   
+                    Convert.ToDateTime(row["End"]),     
+                    row["ColorId"].ToString()
+                );
             }
 
-             return table;
-
+            return table;
         }
+
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,10 +53,28 @@ namespace FisioKH
             
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
+
+            fisioKHCalendar1.RequestDataAsync += LoadCalendarDataAsync;
+
             this.fisioKHCalendar1.EventClick += MyCalendar_EventClick;
  
-            DesHabilitaTabs(ObtentabsSeguras());
+            //DesHabilitaTabs(ObtentabsSeguras());
         }
+
+
+        private async Task<DataTable> LoadCalendarDataAsync(DateTime from, DateTime to)
+        {
+            if (!EnsureCalendar())
+                return null;
+
+            // If your API is sync, wrap it:
+            return await Task.Run(() =>
+            {
+                var table = calendar.GetEventsTable(from, to);
+                return InitStaticDataSet(table);
+            });
+        }
+
 
         private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
         {
@@ -78,26 +98,34 @@ namespace FisioKH
        }
 
 
-        private void MostrarCalendario()
+        private async void MostrarCalendario()
         {
-            if (EnsureCalendar())
+            if (!EnsureCalendar())
+                return;
+
+            this.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
+
+            try
             {
-                var table = calendar.GetEventsTable(
-                DateTime.Today,
-                DateTime.Today.AddDays(7));
-
-                fisioKHCalendar1.DataSource = InitStaticDataSet(table);
-                this.fisioKHCalendar1.RefreshCurrentView();
-   
-
+                await fisioKHCalendar1.ReloadDataFromFormAsync();
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+                this.Enabled = true;
             }
         }
 
+
+     
+
         private bool EnsureCalendar()
         {
+
             if (calendar == null || !calendar.IsConnected())
             {
-                MessageBox.Show("No Esta Conectado a Google Calendar.");
+                MessageBox.Show("No Esta Conectado a Google Calendar,Revisar Acceso a Red/Internet!");
                 return false;
             }
             return true;
@@ -196,7 +224,9 @@ namespace FisioKH
                 {
                     MessageBox.Show("Error, revisar log de errores!");
                     this.lstBoxLogs.Items.Add(Program.UsuarioLogeado.ErrorLogin);
-                    this.lstBoxLogs.Focus();
+                    this.btnLogin.Enabled = true;
+
+                    this.txtPassPin.Focus();
                     return;
                 }
 
@@ -213,10 +243,12 @@ namespace FisioKH
                 }
                 else
                 {
+                     
                     if (!Program.UsuarioLogeado.Activo)
-                        MessageBox.Show("Usuario no Activo!");
+                    { MessageBox.Show("Usuario no Activo!"); }
                     else
-                        MessageBox.Show("Credenciales Invalidas");
+                    { MessageBox.Show("Credenciales Invalidas"); }
+                         
                 }
             }
             catch (Exception ex)
@@ -227,6 +259,7 @@ namespace FisioKH
             {
                 // Reset button in any case
                 this.btnLogin.Text = "Ingresar";
+
                // this.btnLogin.Enabled = true;
                 Program.UsuarioLogeado.ErrorLogin = "";
             }
