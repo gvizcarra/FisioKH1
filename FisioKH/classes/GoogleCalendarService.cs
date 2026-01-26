@@ -182,22 +182,21 @@ public class GoogleCalendarService
         table.Columns.Add("End", typeof(DateTime));
         table.Columns.Add("ColorId");
 
+        // Flag columns
+        table.Columns.Add("HasDbMatch", typeof(bool));
+        table.Columns.Add("MatchStatus"); // "OK" / "NO_DB"
+
         // DB extras
         table.Columns.Add("idCita", typeof(long));
-        table.Columns.Add("idPaciente", typeof(long));
-        table.Columns.Add("fechaRegistro", typeof(DateTime));
-        table.Columns.Add("realizada", typeof(bool));
         table.Columns.Add("codigoCita");
-        table.Columns.Add("idUsuario", typeof(long));
-        table.Columns.Add("idTipoTratamiento", typeof(long));
-        table.Columns.Add("idFisioTerapeuta", typeof(long));
-        table.Columns.Add("nombreFisioterapeuta");
-        table.Columns.Add("claveEtiqueta");
+        table.Columns.Add("realizada", typeof(bool));
         table.Columns.Add("nombreCompletoPaciente");
         table.Columns.Add("nombreTratamiento");
+        table.Columns.Add("nombreFisioterapeuta");
+        table.Columns.Add("claveEtiqueta");
 
-        // 1️⃣ Google events
-        var request = Service.Events.List("primary"); // or calendarId
+        // Google events
+        var request = Service.Events.List("primary"); // or your calendarId
         request.TimeMin = from;
         request.TimeMax = to;
         request.ShowDeleted = false;
@@ -206,23 +205,15 @@ public class GoogleCalendarService
 
         var events = request.Execute().Items ?? new List<Google.Apis.Calendar.v3.Data.Event>();
 
-        // 2️⃣ Collect Google EventIds
-        var eventIds = events
-            .Select(e => e.Id)
-            .Where(id => !string.IsNullOrWhiteSpace(id))
-            .Distinct()
-            .ToList();
+        var eventIds = events.Select(e => e.Id)
+                             .Where(id => !string.IsNullOrWhiteSpace(id))
+                             .Distinct()
+                             .ToList();
 
-        // 3️⃣ DB lookup (ASYNC)
-        var dbHelper = new FisioKH.DBHelperAsync();
-        var dbRows = await dbHelper.GetCitasByGoogleEventIdsAsync(eventIds)
-                                   .ConfigureAwait(false);
+        // Cached DB map: EventId -> data (or null if no match)
+        var db = new FisioKH.DBHelperAsync();
+        var dbMap = await db.GetCitasMapByGoogleEventIdsAsync(eventIds).ConfigureAwait(false);
 
-        var map = dbRows.AsEnumerable()
-            .Where(r => r["idGoogleCalendar"] != DBNull.Value)
-            .ToDictionary(r => r["idGoogleCalendar"].ToString(), r => r);
-
-        // 4️⃣ Merge
         foreach (var ev in events)
         {
             DateTime start = ev.Start.DateTime ?? DateTime.Parse(ev.Start.Date);
@@ -235,27 +226,37 @@ public class GoogleCalendarService
             row["End"] = end;
             row["ColorId"] = ev.ColorId ?? "";
 
-            if (ev.Id != null && map.TryGetValue(ev.Id, out var db))
+            bool hasMatch = false;
+
+            if (!string.IsNullOrWhiteSpace(ev.Id) && dbMap.TryGetValue(ev.Id, out var data) && data != null)
             {
-                Copy(row, "idCita", db, "idCita");
-                Copy(row, "idPaciente", db, "idPaciente");
-                Copy(row, "fechaRegistro", db, "fechaRegistro");
-                Copy(row, "realizada", db, "realizada");
-                Copy(row, "codigoCita", db, "codigoCita");
-                Copy(row, "idUsuario", db, "idUsuario");
-                Copy(row, "idTipoTratamiento", db, "idTipoTratamiento");
-                Copy(row, "idFisioTerapeuta", db, "idFisioTerapeuta");
-                Copy(row, "nombreFisioterapeuta", db, "nombreFisioterapeuta");
-                Copy(row, "claveEtiqueta", db, "claveEtiqueta");
-                Copy(row, "nombreCompletoPaciente", db, "nombreCompletoPaciente");
-                Copy(row, "nombreTratamiento", db, "nombreTratamiento");
+                hasMatch = true;
+
+                // fill extras (safe reads)
+                //SetIf(row, "idCita", data, "idCita");
+                SetIf(row, "codigoCita", data, "codigoCita");
+                SetIf(row, "realizada", data, "realizada");
+                SetIf(row, "nombreCompletoPaciente", data, "nombreCompletoPaciente");
+                SetIf(row, "nombreTratamiento", data, "nombreTratamiento");
+                SetIf(row, "nombreFisioterapeuta", data, "nombreFisioterapeuta");
+                SetIf(row, "claveEtiqueta", data, "claveEtiqueta");
             }
+
+            row["HasDbMatch"] = hasMatch;
+            row["MatchStatus"] = hasMatch ? "OK" : "NO_DB";
 
             table.Rows.Add(row);
         }
 
         return table;
     }
+
+    private static void SetIf(DataRow row, string col, Dictionary<string, object> data, string key)
+    {
+        if (!data.TryGetValue(key, out var v) || v == null) return;
+        row[col] = v;
+    }
+
 
     private static void Copy(DataRow target, string targetCol, DataRow src, string srcCol)
     {
