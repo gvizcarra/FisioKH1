@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FisioKH
 {
@@ -25,9 +27,102 @@ namespace FisioKH
 
 
 
+        private static async Task<DataTable> InitStaticDataSetAsync(DataTable dt)
+        {
+            // Output table (Google + DB extras)
+            DataTable table = new DataTable();
+            table.Columns.Add("Id", typeof(string));           // Google EventId
+            table.Columns.Add("Title", typeof(string));
+            table.Columns.Add("Start", typeof(DateTime));
+            table.Columns.Add("End", typeof(DateTime));
+            table.Columns.Add("ColorId", typeof(string));
+
+            // DB extras (from your SP)
+            table.Columns.Add("idCita", typeof(long));
+            table.Columns.Add("codigoCita", typeof(string));
+            table.Columns.Add("realizada", typeof(bool));
+            table.Columns.Add("nombreCompletoPaciente", typeof(string));
+            table.Columns.Add("nombreTratamiento", typeof(string));
+            table.Columns.Add("nombreFisioterapeuta", typeof(string));
+            table.Columns.Add("claveEtiqueta", typeof(string));
+
+            // Flag
+            table.Columns.Add("HasDbMatch", typeof(bool));
+
+            if (dt == null || dt.Rows.Count == 0)
+                return table;
+
+            // 1) Collect Google EventIds from incoming dt
+            var eventIds = dt.AsEnumerable()
+                .Select(r => r["Id"]?.ToString())
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .Distinct()
+                .ToList();
+
+            // 2) Load DB rows (ONE call) using your async helper
+            var db = new FisioKH.DBHelperAsync();
+            var dbRows = await db.GetCitasByGoogleEventIdsAsync(eventIds).ConfigureAwait(false);
+
+            // Map: idGoogleCalendar (EventId) -> DataRow
+            var map = new Dictionary<string, DataRow>(StringComparer.Ordinal);
+            if (dbRows != null && dbRows.Columns.Contains("idGoogleCalendar"))
+            {
+                foreach (DataRow r in dbRows.Rows)
+                {
+                    var key = r["idGoogleCalendar"] == DBNull.Value ? null : r["idGoogleCalendar"].ToString();
+                    if (!string.IsNullOrWhiteSpace(key))
+                        map[key] = r;
+                }
+            }
+
+            // 3) Build final table + attach db fields by match
+            foreach (DataRow row in dt.Rows)
+            {
+                string googleId = row["Id"]?.ToString() ?? "";
+
+                var newRow = table.NewRow();
+                newRow["Id"] = googleId;
+                newRow["Title"] = row["Title"]?.ToString() ?? "";
+                newRow["Start"] = Convert.ToDateTime(row["Start"]);
+                newRow["End"] = Convert.ToDateTime(row["End"]);
+                newRow["ColorId"] = row["ColorId"]?.ToString() ?? "";
+
+                bool matched = false;
+
+                if (!string.IsNullOrWhiteSpace(googleId) && map.TryGetValue(googleId, out var dbRow))
+                {
+                    matched = true;
+
+                    // IMPORTANT: your SP returns idCita (NOT id)
+                    CopyIfExists(newRow, "idCita", dbRow, "idCita");
+                    CopyIfExists(newRow, "codigoCita", dbRow, "codigoCita");
+                    CopyIfExists(newRow, "realizada", dbRow, "realizada");
+                    CopyIfExists(newRow, "nombreCompletoPaciente", dbRow, "nombreCompletoPaciente");
+                    CopyIfExists(newRow, "nombreTratamiento", dbRow, "nombreTratamiento");
+                    CopyIfExists(newRow, "nombreFisioterapeuta", dbRow, "nombreFisioterapeuta");
+                    CopyIfExists(newRow, "claveEtiqueta", dbRow, "claveEtiqueta");
+                }
+
+                newRow["HasDbMatch"] = matched;
+
+                table.Rows.Add(newRow);
+            }
+
+            return table;
+        }
+
+        private static void CopyIfExists(DataRow target, string targetCol, DataRow src, string srcCol)
+        {
+            if (!src.Table.Columns.Contains(srcCol)) return;
+            var v = src[srcCol];
+            if (v == null || v == DBNull.Value) return;
+            target[targetCol] = v;
+        }
+
         private static DataTable InitStaticDataSet(DataTable dt)
         {
             DataTable table = new DataTable();
+            table.Columns.Add("Id", typeof(string));
             table.Columns.Add("Title", typeof(string));
             table.Columns.Add("Start", typeof(DateTime));
             table.Columns.Add("End", typeof(DateTime));
@@ -36,6 +131,7 @@ namespace FisioKH
             foreach (DataRow row in dt.Rows)
             {
                 table.Rows.Add(
+                    row["Id"].ToString(),
                     row["Title"].ToString(),
                     Convert.ToDateTime(row["Start"]),   
                     Convert.ToDateTime(row["End"]),     
@@ -67,19 +163,19 @@ namespace FisioKH
             if (!EnsureCalendar())
                 return null;
 
-            // If your API is sync, wrap it:
-            return await Task.Run(() =>
-            {
-                var table = calendar.GetEventsTable(from, to);
-                return InitStaticDataSet(table);
-            });
+            // 1) Get Google events (already async in your flow)
+            var table = await calendar.GetEventsTableAsync(from, to);
+
+            // 2) Match with DB using async DBHelper
+            return await InitStaticDataSetAsync(table);
         }
+
 
 
         private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
         {
        
-            MessageBox.Show($"Cita: {e.Title}\nInicio: {e.Start}\nFin: {e.End}\nIdCita: {e.Id}");
+            MessageBox.Show($"Id: {e.NombreFisioterapeuta}\nCita: {e.Title}\nInicio: {e.Start}\nFin: {e.End}\nIdCita: {e.Id}");
         }
 
 

@@ -31,7 +31,7 @@ namespace FisioKH
         public event Func<DateTime, DateTime, Task<DataTable>> RequestDataAsync;
         public event EventHandler<CalendarEventKH> EventClick;
 
-        private readonly List<CalendarEventKH> Events = new List<CalendarEventKH>();
+        private readonly new List<CalendarEventKH> Events = new List<CalendarEventKH>();
 
         private FlowLayoutPanel topBar;
         private Button btnMonth, btnWeek, btnDay, btnPrev, btnNext;
@@ -238,6 +238,7 @@ namespace FisioKH
             {
                 Events.Add(new CalendarEventKH
                 {
+                    Id = r["Id"].ToString(),
                     Title = r["Title"].ToString(),
                     Start = (DateTime)r["Start"],
                     End = (DateTime)r["End"],

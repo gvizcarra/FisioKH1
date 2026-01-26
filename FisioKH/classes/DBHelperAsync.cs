@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace FisioKH
 {
@@ -56,6 +57,181 @@ namespace FisioKH
             }
 
             return usr;
+        }
+
+
+        private static readonly object _cacheLock = new object();
+        private static readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>(StringComparer.Ordinal);
+        private static readonly TimeSpan _ttl = TimeSpan.FromMinutes(5);
+
+        private sealed class CacheEntry
+        {
+            public DateTime CachedAtUtc { get; set; }
+            public Dictionary<string, object> Data { get; set; } // DB columns -> values
+        }
+
+       
+
+        /// <summary>
+        /// Returns map: GoogleEventId -> DB data (cached + fetched for misses).
+        /// </summary>
+        public async Task<Dictionary<string, Dictionary<string, object>>> GetCitasMapByGoogleEventIdsAsync(List<string> eventIds)
+        {
+            var result = new Dictionary<string, Dictionary<string, object>>(StringComparer.Ordinal);
+            if (eventIds == null || eventIds.Count == 0) return result;
+
+            var now = DateTime.UtcNow;
+
+            // 1) Pull from cache + collect missing
+            var missing = new List<string>();
+            lock (_cacheLock)
+            {
+                foreach (var id in eventIds.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct())
+                {
+                    if (_cache.TryGetValue(id, out var entry) && (now - entry.CachedAtUtc) <= _ttl)
+                    {
+                        result[id] = entry.Data;
+                    }
+                    else
+                    {
+                        missing.Add(id);
+                    }
+                }
+
+                // Optional: small cleanup to prevent growth
+                if (_cache.Count > 5000)
+                {
+                    var expiredKeys = _cache.Where(kvp => (now - kvp.Value.CachedAtUtc) > _ttl)
+                                            .Select(kvp => kvp.Key)
+                                            .Take(2000)
+                                            .ToList();
+                    foreach (var k in expiredKeys) _cache.Remove(k);
+                }
+            }
+
+            // 2) Fetch only missing via TVP
+            if (missing.Count > 0)
+            {
+                DataTable dt = await FetchCitasByGoogleEventIdsTVPAsync(missing).ConfigureAwait(false);
+
+                // Build map from DB
+                foreach (DataRow r in dt.Rows)
+                {
+                    var id = Convert.ToString(r["idGoogleCalendar"]);
+                    if (string.IsNullOrWhiteSpace(id)) continue;
+
+                    var data = RowToDict(r);
+                    result[id] = data;
+
+                    lock (_cacheLock)
+                    {
+                        _cache[id] = new CacheEntry { CachedAtUtc = now, Data = data };
+                    }
+                }
+
+                // Also cache "negative" results to avoid refetch spam (optional)
+                lock (_cacheLock)
+                {
+                    foreach (var id in missing)
+                    {
+                        if (!_cache.ContainsKey(id))
+                        {
+                            _cache[id] = new CacheEntry { CachedAtUtc = now, Data = null }; // null means "no match"
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private async Task<DataTable> FetchCitasByGoogleEventIdsTVPAsync(List<string> eventIds)
+        {
+            var dt = new DataTable();
+            if (eventIds == null || eventIds.Count == 0) return dt;
+
+            var tvp = new DataTable();
+            tvp.Columns.Add("EventId", typeof(string));
+            foreach (var id in eventIds)
+                tvp.Rows.Add(id);
+
+            using (var cn = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand("dbo.usp_obtenCitasPorGoogleEventIds", cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                var p = cmd.Parameters.AddWithValue("@eventIds", tvp);
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "dbo.GoogleEventIdList";
+
+                await cn.OpenAsync().ConfigureAwait(false);
+                using (var reader = await cmd.ExecuteReaderAsync(CommandBehavior.SequentialAccess).ConfigureAwait(false))
+                {
+                    dt.Load(reader);
+                }
+            }
+
+            return dt;
+        }
+
+        private static Dictionary<string, object> RowToDict(DataRow r)
+        {
+            var d = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+            foreach (DataColumn c in r.Table.Columns)
+            {
+                var v = r[c];
+                d[c.ColumnName] = (v == DBNull.Value) ? null : v;
+            }
+            return d;
+        }
+
+        // Optional: call this when you know data changed (after insert/update)
+        public static void InvalidateCacheForEventId(string eventId)
+        {
+            if (string.IsNullOrWhiteSpace(eventId)) return;
+            lock (_cacheLock) _cache.Remove(eventId);
+        }
+
+        public static void ClearCache()
+        {
+            lock (_cacheLock) _cache.Clear();
+        }
+
+        /// <summary>
+        /// Async: returns Citas rows matched by Google EventId (Citas.idGoogleCalendar)
+        /// Uses TVP param dbo.GoogleEventIdList and SP dbo.usp_obtenCitasPorGoogleEventIds
+        /// </summary>
+        public async Task<DataTable> GetCitasByGoogleEventIdsAsync(List<string> eventIds)
+        {
+            var dt = new DataTable();
+
+            if (eventIds == null || eventIds.Count == 0)
+                return dt;
+
+            // Build TVP
+            var tvp = new DataTable();
+            tvp.Columns.Add("EventId", typeof(string));
+            foreach (var id in eventIds)
+                tvp.Rows.Add(id);
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand("dbo.usp_obtenCitasPorGoogleEventIds", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                var p = cmd.Parameters.AddWithValue("@eventIds", tvp);
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "dbo.GoogleEventIdList";
+
+                await conn.OpenAsync().ConfigureAwait(false);
+
+                using (var reader = await cmd.ExecuteReaderAsync(CommandBehavior.SequentialAccess).ConfigureAwait(false))
+                {
+                    dt.Load(reader);
+                }
+            }
+
+            return dt;
         }
 
         #endregion

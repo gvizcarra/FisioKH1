@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Accord.Video.DirectShow;
 
@@ -263,6 +260,8 @@ namespace FisioKH
             var parameters = new Dictionary<string, object>
             {
                 { "@nombreCompleto", null },
+                { "@apellidoPaterno", null },
+                { "@apellidoMaterno", null },
                 { "@celular", null },
                 { "@ciudad", null },
                 { "@sexo", null },
@@ -285,6 +284,8 @@ namespace FisioKH
 
 
             parameters["@nombreCompleto"] = this.txtNombreCompleto.Text;
+            parameters["@apellidoPaterno"] = this.txtApellidoPaterno.Text;
+            parameters["@apellidoMaterno"] = this.txtApellidoMaterno.Text;
             parameters["@celular"] = this.txtCelularAlta.Text;
             parameters["@ciudad"] = this.txtCiudad.Text;
             parameters["@sexo"] = this.gbSexo.Controls.OfType<RadioButton>().First(r => r.Checked).Text.ToString();

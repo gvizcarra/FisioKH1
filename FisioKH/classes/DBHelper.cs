@@ -167,10 +167,43 @@ namespace FisioKH
             return rowsAffected;
         }
 
-        /// <summary>
-        /// Executes raw SQL for insert/update/delete
-        /// </summary>
-        public string EjecutaSqlNonQuery(string sql)
+       
+
+        public DataTable GetCitasByGoogleEventIdsTVP(List<string> eventIds)
+    {
+        var dt = new DataTable();
+        if (eventIds == null || eventIds.Count == 0) return dt;
+
+            //using (var conn = new SqlConnection(configSettings.ObtenConectionString))
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            
+        using (var cmd = new SqlCommand("dbo.usp_obtenCitasPorGoogleEventIds", conn))
+        {
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            // Build TVP
+            var tvp = new DataTable();
+            tvp.Columns.Add("EventId", typeof(string));
+            foreach (var id in eventIds)
+                tvp.Rows.Add(id);
+
+            var p = cmd.Parameters.AddWithValue("@eventIds", tvp);
+            p.SqlDbType = SqlDbType.Structured;
+            p.TypeName = "dbo.GoogleEventIdList";
+
+            using (var da = new SqlDataAdapter(cmd))
+                da.Fill(dt);
+
+            return dt;
+        }
+    }
+
+
+    /// <summary>
+    /// Executes raw SQL for insert/update/delete
+    /// </summary>
+    public string EjecutaSqlNonQuery(string sql)
         {
             string result = string.Empty;
 
