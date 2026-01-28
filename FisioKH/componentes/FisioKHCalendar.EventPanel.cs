@@ -113,7 +113,7 @@ namespace FisioKH
 
             var title = new Label
             {
-                Text = ev.Title,
+                Text = ev.Title +" - "+ev.NombreFisioterapeuta,
                 Dock = DockStyle.Top,
                 Height = 16,
                 Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),

@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static FisioKH.FisioKHCalendar;
 
 namespace FisioKH
 {
     public partial class EventDetailsForm : Form
     {
-        public FisioKHCalendar Event { get; private set; }
-        public bool Deleted { get; private set; }
+        private FisioKH.FisioKHCalendar.CalendarEventKH fce;
+       
 
         // REQUIRED for Designer
-        public EventDetailsForm()
+        public EventDetailsForm(CalendarEventKH ce)
         {
+            fce = ce;
             InitializeComponent();
         }
 
-        // Runtime constructor
-        public EventDetailsForm(FisioKHCalendar ev) : this()
-        {
-            Event = ev;
-
-           /* txtTitle.Text = ev..Title;
-            dtStart.Value = ev.StartTime;
-            dtEnd.Value = ev.EndTime;
-            pnlColor.BackColor = ev.Color;*/
-        }
+      
+        
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -38,7 +32,7 @@ namespace FisioKH
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Deleted = true;
+            
             DialogResult = DialogResult.OK;
         }
 
@@ -48,6 +42,11 @@ namespace FisioKH
             {
                 pnlColor.BackColor = colorDialog1.Color;
             }
+        }
+
+        private void EventDetailsForm_Load(object sender, EventArgs e)
+        {
+            this.txtTitle.Text = fce.Id.ToString();
         }
     }
 }

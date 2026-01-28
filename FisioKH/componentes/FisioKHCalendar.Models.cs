@@ -7,34 +7,26 @@ namespace FisioKH
     {
         public class CalendarEventKH
         {
-         
-            public string Id { get; set; }             
-            public string Title { get; set; }
+            // Google base
+            public string Id { get; set; } = "";
+            public string Title { get; set; } = "";
             public DateTime Start { get; set; }
             public DateTime End { get; set; }
-            public string ColorId { get; set; }
-            public Color Color { get; set; }
+            public string ColorId { get; set; } = "";
+            public Color Color { get; set; } = Color.White;
 
-    
-            public long CitaID { get; set; }            
-            public long? PacienteID { get; set; }
-            public long? UsuarioID { get; set; }
-            public long? TipoTratamientoID { get; set; }
-            public long? FisioTerapeutaID { get; set; }
+            // Match info
+            public bool HasDbMatch { get; set; }
+            public string MatchStatus { get; set; } = "";
 
-            public DateTime? FechaRegistro { get; set; }
-            public DateTime? FechaCita { get; set; }
-            public bool? Realizada { get; set; }
-            public string CodigoCita { get; set; }
-
-
-            public string NombreFisioterapeuta { get; set; }
-            public string NombreCompletoPaciente { get; set; }
-            public string NombreTratamiento { get; set; }
-            public string ClaveEtiqueta { get; set; }
-
-
-            public bool HasDbMatch => CitaID > 0;
+            // DB extras
+            public long CitaID { get; set; }
+            public string CodigoCita { get; set; } = "";
+            public bool Realizada { get; set; }
+            public string NombreCompletoPaciente { get; set; } = "";
+            public string NombreTratamiento { get; set; } = "";
+            public string NombreFisioterapeuta { get; set; } = "";
+            public string ClaveEtiqueta { get; set; } = "";
         }
 
 

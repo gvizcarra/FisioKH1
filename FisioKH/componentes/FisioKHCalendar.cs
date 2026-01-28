@@ -17,8 +17,6 @@ namespace FisioKH
         private Timer loadingTimer;
         private int loadingX = 0;
 
-
-
         private const int HourHeight = 38;
         private const int HeaderHeight = 30;
         private const int StartHour = 8;
@@ -37,8 +35,6 @@ namespace FisioKH
         private Button btnMonth, btnWeek, btnDay, btnPrev, btnNext;
         private Label lblCurrentDay;
         private DateTimePicker dtpJump;
-
-         
 
         private enum CalendarView { Month, Week, Day }
         private CalendarView currentView = CalendarView.Day;
@@ -69,7 +65,6 @@ namespace FisioKH
 
             InitRenderCache();
 
-            //Resize += (s, e) => RefreshCurrentView();
             Load += FisioKHCalendar_Load;
         }
 
@@ -110,13 +105,12 @@ namespace FisioKH
 
         // ================= TOP BAR =================
 
-
         private void BuildLoadingOverlay()
         {
             loadingOverlay = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 8,                 // thicker => more visible
+                Height = 8,
                 BackColor = Color.FromArgb(230, 230, 230),
                 Visible = false
             };
@@ -124,8 +118,8 @@ namespace FisioKH
             loadingBar = new Panel
             {
                 Height = 8,
-                Width = 260,                // longer segment => eye-catching
-                BackColor = Color.FromArgb(26, 115, 232) // nice blue
+                Width = 260,
+                BackColor = Color.FromArgb(26, 115, 232)
             };
 
             loadingOverlay.Controls.Add(loadingBar);
@@ -143,8 +137,6 @@ namespace FisioKH
                 loadingBar.Top = 0;
             };
         }
-
-
 
         private void BuildTopBar()
         {
@@ -229,6 +221,7 @@ namespace FisioKH
 
         // ================= DATA =================
 
+        // ✅ FIX: map DB fields + HasDbMatch/MatchStatus into CalendarEventKH
         private void LoadEventsFromDataSource()
         {
             Events.Clear();
@@ -236,21 +229,36 @@ namespace FisioKH
 
             foreach (DataRow r in DataSource.Rows)
             {
-                Events.Add(new CalendarEventKH
+                var ev = new CalendarEventKH
                 {
-                    Id = r["Id"].ToString(),
-                    Title = r["Title"].ToString(),
-                    Start = (DateTime)r["Start"],
-                    End = (DateTime)r["End"],
-                    Color = GoogleColorToSystem(r["ColorId"].ToString()),
-                    ColorId = r["ColorId"].ToString()
-                });
+                    Id = GetString(r, "Id"),
+                    Title = GetString(r, "Title"),
+                    Start = GetDateTime(r, "Start"),
+                    End = GetDateTime(r, "End"),
+                    ColorId = GetString(r, "ColorId"),
+                };
+
+                ev.Color = GoogleColorToSystem(ev.ColorId);
+
+                // flags
+                ev.HasDbMatch = GetBool(r, "HasDbMatch");
+                ev.MatchStatus = GetString(r, "MatchStatus");
+
+                // DB extras
+                ev.CitaID = GetLong(r, "idCita");
+                ev.CodigoCita = GetString(r, "codigoCita");
+                ev.Realizada = GetBool(r, "realizada");
+                ev.NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente");
+                ev.NombreTratamiento = GetString(r, "nombreTratamiento");
+                ev.NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta");
+                ev.ClaveEtiqueta = GetString(r, "claveEtiqueta");
+
+                Events.Add(ev);
             }
 
-            _eventsVersion++;      
-            ClearRenderCache();    
+            _eventsVersion++;
+            ClearRenderCache();
         }
-
 
         public async Task ReloadDataFromFormAsync() => await ReloadDataAsync();
 
@@ -287,6 +295,8 @@ namespace FisioKH
                 if (table != null)
                 {
                     DataSource = table;
+
+                    // ✅ important: don’t call LoadEventsFromDataSource twice elsewhere.
                     LoadEventsFromDataSource();
                     RefreshCurrentView();
                 }
@@ -311,7 +321,6 @@ namespace FisioKH
                 loadingTimer.Stop();
             }
         }
-
 
         // ================= VIEW SWITCH =================
 
@@ -350,24 +359,22 @@ namespace FisioKH
         }
 
         public void RefreshCurrentView(bool useCache = true)
-{
-    LoadEventsFromDataSource();
+        {
+            LoadEventsFromDataSource();
 
-    if (currentView == CalendarView.Month)
-        RenderCached(panelMonth, CacheKey_Month(), RenderMonthView, useCache);
+            if (currentView == CalendarView.Month)
+                RenderCached(panelMonth, CacheKey_Month(), RenderMonthView, useCache);
 
-    if (currentView == CalendarView.Week)
-        RenderCached(panelWeek, CacheKey_Week(), RenderWeekView, useCache);
+            if (currentView == CalendarView.Week)
+                RenderCached(panelWeek, CacheKey_Week(), RenderWeekView, useCache);
 
-    if (currentView == CalendarView.Day)
-        RenderCached(panelDay, CacheKey_Day(), RenderDayView, useCache);
+            if (currentView == CalendarView.Day)
+                RenderCached(panelDay, CacheKey_Day(), RenderDayView, useCache);
 
-    UpdateDayNavigation();
-}
-
+            UpdateDayNavigation();
+        }
 
         // ================= MONTH VIEW =================
-        // Month = list-like (Google behavior): show a few events + “+N más”
         private void RenderMonthView()
         {
             panelMonth.Controls.Clear();
@@ -492,7 +499,6 @@ namespace FisioKH
                 }
             }
 
-            // Overlap-aware rendering PER DAY column
             for (int d = 0; d < 7; d++)
             {
                 DateTime date = start.AddDays(d).Date;
@@ -567,6 +573,41 @@ namespace FisioKH
 
             int y = HeaderHeight + (int)((DateTime.Now.Hour + DateTime.Now.Minute / 60.0 - StartHour) * HourHeight);
             panelDay.AutoScrollPosition = new Point(0, Math.Max(0, y - panelDay.Height / 2));
+        }
+
+        // ================= SAFE DataRow GETTERS =================
+
+        private static bool HasCol(DataRow r, string col) => r?.Table?.Columns.Contains(col) == true;
+
+        private static string GetString(DataRow r, string col)
+        {
+            if (!HasCol(r, col)) return "";
+            var v = r[col];
+            return (v == null || v == DBNull.Value) ? "" : Convert.ToString(v) ?? "";
+        }
+
+        private static DateTime GetDateTime(DataRow r, string col)
+        {
+            if (!HasCol(r, col)) return DateTime.MinValue;
+            var v = r[col];
+            if (v == null || v == DBNull.Value) return DateTime.MinValue;
+            return Convert.ToDateTime(v);
+        }
+
+        private static long GetLong(DataRow r, string col)
+        {
+            if (!HasCol(r, col)) return 0;
+            var v = r[col];
+            if (v == null || v == DBNull.Value) return 0;
+            try { return Convert.ToInt64(v); } catch { return 0; }
+        }
+
+        private static bool GetBool(DataRow r, string col)
+        {
+            if (!HasCol(r, col)) return false;
+            var v = r[col];
+            if (v == null || v == DBNull.Value) return false;
+            try { return Convert.ToBoolean(v); } catch { return false; }
         }
     }
 }

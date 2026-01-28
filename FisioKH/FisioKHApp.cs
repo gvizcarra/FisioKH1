@@ -10,13 +10,11 @@ namespace FisioKH
 {
     public partial class FisioKHApp : BaseForm
     {
-        GoogleCalendarService calendar = new GoogleCalendarService();
-
+        private readonly GoogleCalendarService calendar = new GoogleCalendarService();
 
         public FisioKHApp()
         {
             InitializeComponent();
-
         }
 
         private Array ObtentabsSeguras()
@@ -25,174 +23,66 @@ namespace FisioKH
             return tabsSeguras;
         }
 
-
-
-        private static async Task<DataTable> InitStaticDataSetAsync(DataTable dt)
-        {
-            // Output table (Google + DB extras)
-            DataTable table = new DataTable();
-            table.Columns.Add("Id", typeof(string));           // Google EventId
-            table.Columns.Add("Title", typeof(string));
-            table.Columns.Add("Start", typeof(DateTime));
-            table.Columns.Add("End", typeof(DateTime));
-            table.Columns.Add("ColorId", typeof(string));
-
-            // DB extras (from your SP)
-            table.Columns.Add("idCita", typeof(long));
-            table.Columns.Add("codigoCita", typeof(string));
-            table.Columns.Add("realizada", typeof(bool));
-            table.Columns.Add("nombreCompletoPaciente", typeof(string));
-            table.Columns.Add("nombreTratamiento", typeof(string));
-            table.Columns.Add("nombreFisioterapeuta", typeof(string));
-            table.Columns.Add("claveEtiqueta", typeof(string));
-
-            // Flag
-            table.Columns.Add("HasDbMatch", typeof(bool));
-
-            if (dt == null || dt.Rows.Count == 0)
-                return table;
-
-            // 1) Collect Google EventIds from incoming dt
-            var eventIds = dt.AsEnumerable()
-                .Select(r => r["Id"]?.ToString())
-                .Where(id => !string.IsNullOrWhiteSpace(id))
-                .Distinct()
-                .ToList();
-
-            // 2) Load DB rows (ONE call) using your async helper
-            var db = new FisioKH.DBHelperAsync();
-            var dbRows = await db.GetCitasByGoogleEventIdsAsync(eventIds).ConfigureAwait(false);
-
-            // Map: idGoogleCalendar (EventId) -> DataRow
-            var map = new Dictionary<string, DataRow>(StringComparer.Ordinal);
-            if (dbRows != null && dbRows.Columns.Contains("idGoogleCalendar"))
-            {
-                foreach (DataRow r in dbRows.Rows)
-                {
-                    var key = r["idGoogleCalendar"] == DBNull.Value ? null : r["idGoogleCalendar"].ToString();
-                    if (!string.IsNullOrWhiteSpace(key))
-                        map[key] = r;
-                }
-            }
-
-            // 3) Build final table + attach db fields by match
-            foreach (DataRow row in dt.Rows)
-            {
-                string googleId = row["Id"]?.ToString() ?? "";
-
-                var newRow = table.NewRow();
-                newRow["Id"] = googleId;
-                newRow["Title"] = row["Title"]?.ToString() ?? "";
-                newRow["Start"] = Convert.ToDateTime(row["Start"]);
-                newRow["End"] = Convert.ToDateTime(row["End"]);
-                newRow["ColorId"] = row["ColorId"]?.ToString() ?? "";
-
-                bool matched = false;
-
-                if (!string.IsNullOrWhiteSpace(googleId) && map.TryGetValue(googleId, out var dbRow))
-                {
-                    matched = true;
-
-                    // IMPORTANT: your SP returns idCita (NOT id)
-                    CopyIfExists(newRow, "idCita", dbRow, "idCita");
-                    CopyIfExists(newRow, "codigoCita", dbRow, "codigoCita");
-                    CopyIfExists(newRow, "realizada", dbRow, "realizada");
-                    CopyIfExists(newRow, "nombreCompletoPaciente", dbRow, "nombreCompletoPaciente");
-                    CopyIfExists(newRow, "nombreTratamiento", dbRow, "nombreTratamiento");
-                    CopyIfExists(newRow, "nombreFisioterapeuta", dbRow, "nombreFisioterapeuta");
-                    CopyIfExists(newRow, "claveEtiqueta", dbRow, "claveEtiqueta");
-                }
-
-                newRow["HasDbMatch"] = matched;
-
-                table.Rows.Add(newRow);
-            }
-
-            return table;
-        }
-
-        private static void CopyIfExists(DataRow target, string targetCol, DataRow src, string srcCol)
-        {
-            if (!src.Table.Columns.Contains(srcCol)) return;
-            var v = src[srcCol];
-            if (v == null || v == DBNull.Value) return;
-            target[targetCol] = v;
-        }
-
-        private static DataTable InitStaticDataSet(DataTable dt)
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("Id", typeof(string));
-            table.Columns.Add("Title", typeof(string));
-            table.Columns.Add("Start", typeof(DateTime));
-            table.Columns.Add("End", typeof(DateTime));
-            table.Columns.Add("ColorId", typeof(string));
-
-            foreach (DataRow row in dt.Rows)
-            {
-                table.Rows.Add(
-                    row["Id"].ToString(),
-                    row["Title"].ToString(),
-                    Convert.ToDateTime(row["Start"]),   
-                    Convert.ToDateTime(row["End"]),     
-                    row["ColorId"].ToString()
-                );
-            }
-
-            return table;
-        }
-
-
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
 
+            // Calendar control
             fisioKHCalendar1.RequestDataAsync += LoadCalendarDataAsync;
+            fisioKHCalendar1.EventClick += MyCalendar_EventClick;
 
-            this.fisioKHCalendar1.EventClick += MyCalendar_EventClick;
- 
             //DesHabilitaTabs(ObtentabsSeguras());
         }
 
-
+        /// <summary>
+        /// This is the ONLY data path: it returns a DataTable already merged (Google + DB extras)
+        /// </summary>
         private async Task<DataTable> LoadCalendarDataAsync(DateTime from, DateTime to)
         {
             if (!EnsureCalendar())
                 return null;
 
-            // 1) Get Google events (already async in your flow)
-            var table = await calendar.GetEventsTableAsync(from, to);
-
-            // 2) Match with DB using async DBHelper
-            return await InitStaticDataSetAsync(table);
+            try
+            {
+                // ONE call. GoogleCalendarService.GetEventsTableAsync() already merges DB columns.
+                return await calendar.GetEventsTableAsync(from, to);
+            }
+            catch (Exception ex)
+            {
+                // optional logging
+                this.lstBoxLogs.Items.Add(DateTime.Now + " - Error cargando calendario: " + ex.Message);
+                return null;
+            }
         }
-
-
 
         private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
         {
-       
-            MessageBox.Show($"Id: {e.NombreFisioterapeuta}\nCita: {e.Title}\nInicio: {e.Start}\nFin: {e.End}\nIdCita: {e.Id}");
+            EventDetailsForm edt = new EventDetailsForm(e);
+            edt.ShowDialog();
+            // Fixed: show correct properties (GoogleId vs IdCita)
+            //MessageBox.Show(
+                //$"GoogleId: {e.Id}\n" +
+                //$"Cita: {e.Title}\n" +
+                //$"Fisio: {e.CodigoCita}\n" +
+                //$"Inicio: {e.Start}\n" +
+                //$"Fin: {e.End}\n" +
+                //$"IdCita: {e.CitaID}");
         }
 
-
-        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
+        private async void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            int tabid = e.TabPageIndex;
+            if (e.TabPage.Name != "tbIngresos")
+                return;
 
-            if(e.TabPage.Name.ToString()== "tbIngresos")
-            {
-                if (calendar.Authenticate())
-                { MostrarCalendario(); }                
-                else
+            // Authenticate async to avoid UI freeze
+            bool ok = await calendar.AuthenticateAsync();
 
-                { MessageBox.Show("No Se Puede Conectar a Google Calendar!"); }
-            }
-       }
-
+            if (ok)
+                MostrarCalendario();
+            else
+                MessageBox.Show("No Se Puede Conectar a Google Calendar!");
+        }
 
         private async void MostrarCalendario()
         {
@@ -213,15 +103,12 @@ namespace FisioKH
             }
         }
 
-
-     
-
         private bool EnsureCalendar()
         {
-
-            if (calendar == null || !calendar.IsConnected())
+            // Avoid hitting Google every time (IsConnected does a network call)
+            if (calendar?.Service == null)
             {
-                MessageBox.Show("No Esta Conectado a Google Calendar,Revisar Acceso a Red/Internet!");
+                MessageBox.Show("No Está Autenticado a Google Calendar.");
                 return false;
             }
             return true;
@@ -252,39 +139,34 @@ namespace FisioKH
             }
         }
 
-
         private void DesHabilitaTabs(Array tbs)
         {
-            foreach(int n in tbs)
+            foreach (int n in tbs)
             {
                 tabControl1.TabPages[n].Enabled = false;
             }
-            
         }
+
         private void HabilitaTabs(Array tbs)
         {
-            foreach(int n in tbs)
+            foreach (int n in tbs)
             {
                 tabControl1.TabPages[n].Enabled = true;
             }
-            
         }
-
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
-
             if (!ValidateChildren())
             {
-                // Focus first invalid field
                 var failedControl = GetFirstInvalidControl(this);
                 if (failedControl != null)
                     failedControl.Focus();
 
-                MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
 
             string usuario = this.txtUsuario.Text.Trim();
             string passPin = this.txtPassPin.Text.Trim();
@@ -310,11 +192,10 @@ namespace FisioKH
 
             try
             {
-
-                using (var db = new DBHelperAsync())  // <- constructor is called here
+                using (var db = new DBHelperAsync())
                 {
                     Program.UsuarioLogeado = await db.AutenticarUsuarioAsync(usuario, passPin);
-                }                
+                }
 
                 if (!string.IsNullOrEmpty(Program.UsuarioLogeado.ErrorLogin))
                 {
@@ -328,23 +209,20 @@ namespace FisioKH
 
                 if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
                 {
-                    // MessageBox.Show("Bienvenido!", "Anuncio!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    this.lstBoxLogs.Items.Add(DateTime.Now.ToString()+ " - Bienvenido : "+ Program.UsuarioLogeado.Nombre);                    
+                    this.lstBoxLogs.Items.Add(DateTime.Now + " - Bienvenido : " + Program.UsuarioLogeado.Nombre);
                     this.Text = $"{configSettings.ObtenNombreApp} - Usuario: {Program.UsuarioLogeado.Nombre}";
                     this.txtUsuario.Enabled = false;
                     this.txtPassPin.Enabled = false;
-                    this.btnLogin.Enabled = false;                    
+                    this.btnLogin.Enabled = false;
                     this.btnCerrarSesion.Enabled = true;
                     HabilitaTabs(ObtentabsSeguras());
                 }
                 else
                 {
-                     
                     if (!Program.UsuarioLogeado.Activo)
-                    { MessageBox.Show("Usuario no Activo!"); }
+                        MessageBox.Show("Usuario no Activo!");
                     else
-                    { MessageBox.Show("Credenciales Invalidas"); }
-                         
+                        MessageBox.Show("Credenciales Invalidas");
                 }
             }
             catch (Exception ex)
@@ -353,15 +231,10 @@ namespace FisioKH
             }
             finally
             {
-                // Reset button in any case
                 this.btnLogin.Text = "Ingresar";
-
-               // this.btnLogin.Enabled = true;
                 Program.UsuarioLogeado.ErrorLogin = "";
             }
         }
-
-
 
         private void lstBoxLogs_Click(object sender, EventArgs e)
         {
@@ -374,7 +247,7 @@ namespace FisioKH
 
         private void boton1_Click(object sender, EventArgs e)
         {
-            if( (MessageBox.Show("Desea Limpiar log?","Pregunta: ",MessageBoxButtons.YesNo) == DialogResult.Yes ))
+            if (MessageBox.Show("Desea Limpiar log?", "Pregunta: ", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 this.lstBoxLogs.Items.Clear();
             }
@@ -395,33 +268,30 @@ namespace FisioKH
         {
             Precios fm = new Precios();
             fm.ShowDialog();
-
         }
 
         private void btnMetodosPago_Click(object sender, EventArgs e)
         {
             MetodosPago fm = new MetodosPago();
             fm.ShowDialog();
-
         }
 
         private void btnPacientes_Click(object sender, EventArgs e)
         {
             Pacientes fm = new Pacientes();
             fm.ShowDialog();
-
         }
 
         private void btnFisios_Click(object sender, EventArgs e)
         {
             FisioTerapeutas fm = new FisioTerapeutas();
             fm.ShowDialog();
-
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            if ((MessageBox.Show("Desea Salir del Sistema?", "Pregunta: ", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            if (MessageBox.Show("Desea Salir del Sistema?", "Pregunta: ",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 DesHabilitaTabs(ObtentabsSeguras());
                 this.lstBoxLogs.Items.Clear();
@@ -433,11 +303,6 @@ namespace FisioKH
 
                 Program.UsuarioLogeado = null;
             }
-           
-
         }
-
-
-        
     }
 }

@@ -1,17 +1,17 @@
 ﻿using FisioKH;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Linq;
-using Google.Apis.Calendar.v3.Data;
 
 public class GoogleCalendarService
 {
@@ -20,80 +20,16 @@ public class GoogleCalendarService
 
     public CalendarService Service { get; private set; }
 
-    public async Task<List<FisioKHCalendar.CalendarEventKH>> GetCalendarEventsKHAsync(
-           DateTime from,
-           DateTime to)
-    {
-        // 1️⃣ Get Google events
-        var request = Service.Events.List("primary");
-        request.TimeMin = from;
-        request.TimeMax = to;
-        request.SingleEvents = true;
-        request.ShowDeleted = false;
-        request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-        var googleEvents = request.Execute().Items ?? new List<Event>();
-
-        // 2️⃣ Collect IDs
-        var ids = googleEvents
-            .Select(e => e.Id)
-            .Where(id => !string.IsNullOrWhiteSpace(id))
-            .Distinct()
-            .ToList();
-
-        // 3️⃣ Get DB matches (async)
-        var db = new DBHelperAsync();
-        var dbMap = await db.GetCitasMapByGoogleEventIdsAsync(ids);
-
-        // 4️⃣ 🔥 THIS IS WHERE YOUR CODE GOES
-        var result = new List<FisioKHCalendar.CalendarEventKH>();
-
-        foreach (var ev in googleEvents)
-        {
-            dbMap.TryGetValue(ev.Id, out var dbData); // dbData may be null
-            result.Add(MapToCalendarEventKH(ev, dbData));
-        }
-
-        return result;
-    }
-
-    // helper mapper stays in SAME file or partial
-    private static FisioKHCalendar.CalendarEventKH MapToCalendarEventKH(
-        Event ev,
-        Dictionary<string, object> dbData)
-    {
-        DateTime start = ev.Start.DateTime ?? DateTime.Parse(ev.Start.Date);
-        DateTime end = ev.End.DateTime ?? DateTime.Parse(ev.End.Date);
-
-        long citaId = 0;
-        if (dbData != null && dbData.TryGetValue("idCita", out var v) && v != null)
-            citaId = Convert.ToInt64(v);
-
-        string colorId = ev.ColorId ?? "";
-
-        return new FisioKHCalendar.CalendarEventKH
-        {
-            Id = ev.Id,
-            Title = ev.Summary ?? "",
-            Start = start,
-            End = end,
-            ColorId = colorId,
-            Color = FisioKHCalendar.GoogleColorToSystem(colorId),
-            CitaID = citaId
-        };
-    }
-
+    #region Authenticate
 
     public async Task<bool> AuthenticateAsync()
     {
         try
         {
             UserCredential credential;
-            string CalendarApiFile = configSettings.ObtenCalendarApiFile;
+            string calendarApiFile = configSettings.ObtenCalendarApiFile;
 
-         
-
-            using (var stream = new FileStream(CalendarApiFile, FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(calendarApiFile, FileMode.Open, FileAccess.Read))
             {
                 var credPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -104,7 +40,7 @@ public class GoogleCalendarService
                     Scopes,
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true));
+                    new FileDataStore(credPath, true)).ConfigureAwait(false);
             }
 
             Service = new CalendarService(new BaseClientService.Initializer()
@@ -115,23 +51,21 @@ public class GoogleCalendarService
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            ex.ToString();
             MessageBox.Show("No Existe Archivo de Acceso al Calendario GoogleCalendar");
             return false;
         }
     }
-
 
     public bool Authenticate()
     {
         try
         {
             UserCredential credential;
-            String CalendarApiFile = configSettings.ObtenCalendarApiFile;
+            string calendarApiFile = configSettings.ObtenCalendarApiFile;
 
-            using (var stream = new FileStream(CalendarApiFile, FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(calendarApiFile, FileMode.Open, FileAccess.Read))
             {
                 var credPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -151,153 +85,28 @@ public class GoogleCalendarService
                 ApplicationName = AppName,
             });
 
-            return true;   // success
+            return true;
         }
         catch (FileNotFoundException ex)
         {
-            MessageBox.Show("Archivo GoogleApi no existe, revisar!\n\n" + ex.FileName.ToString());
+            MessageBox.Show("Archivo GoogleApi no existe, revisar!\n\n" + ex.FileName);
             return false;
-        } 
+        }
         catch (UnauthorizedAccessException unex)
         {
-            MessageBox.Show("Sin Permiso de Archivo GoogleApi, revisar!\n\n" + unex.ToString());
+            MessageBox.Show("Sin Permiso de Archivo GoogleApi, revisar!\n\n" + unex);
             return false;
-        } 
+        }
         catch (System.Net.Http.HttpRequestException httpex)
         {
-            MessageBox.Show("Revisar Acceso a Red/Internet!\n\n" + httpex.Message.ToString());
+            MessageBox.Show("Revisar Acceso a Red/Internet!\n\n" + httpex.Message);
             return false;
         }
     }
 
-    public async Task<DataTable> GetEventsTableAsync(DateTime from, DateTime to)
-    {
-        if (Service == null)
-            throw new InvalidOperationException("Google Calendar not authenticated.");
+    #endregion
 
-        var table = new DataTable();
-        table.Columns.Add("Id"); // Google EventId
-        table.Columns.Add("Title");
-        table.Columns.Add("Start", typeof(DateTime));
-        table.Columns.Add("End", typeof(DateTime));
-        table.Columns.Add("ColorId");
-
-        // Flag columns
-        table.Columns.Add("HasDbMatch", typeof(bool));
-        table.Columns.Add("MatchStatus"); // "OK" / "NO_DB"
-
-        // DB extras
-        table.Columns.Add("idCita", typeof(long));
-        table.Columns.Add("codigoCita");
-        table.Columns.Add("realizada", typeof(bool));
-        table.Columns.Add("nombreCompletoPaciente");
-        table.Columns.Add("nombreTratamiento");
-        table.Columns.Add("nombreFisioterapeuta");
-        table.Columns.Add("claveEtiqueta");
-
-        // Google events
-        var request = Service.Events.List("primary"); // or your calendarId
-        request.TimeMin = from;
-        request.TimeMax = to;
-        request.ShowDeleted = false;
-        request.SingleEvents = true;
-        request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-        var events = request.Execute().Items ?? new List<Google.Apis.Calendar.v3.Data.Event>();
-
-        var eventIds = events.Select(e => e.Id)
-                             .Where(id => !string.IsNullOrWhiteSpace(id))
-                             .Distinct()
-                             .ToList();
-
-        // Cached DB map: EventId -> data (or null if no match)
-        var db = new FisioKH.DBHelperAsync();
-        var dbMap = await db.GetCitasMapByGoogleEventIdsAsync(eventIds).ConfigureAwait(false);
-
-        foreach (var ev in events)
-        {
-            DateTime start = ev.Start.DateTime ?? DateTime.Parse(ev.Start.Date);
-            DateTime end = ev.End.DateTime ?? DateTime.Parse(ev.End.Date);
-
-            var row = table.NewRow();
-            row["Id"] = ev.Id;
-            row["Title"] = ev.Summary ?? "";
-            row["Start"] = start;
-            row["End"] = end;
-            row["ColorId"] = ev.ColorId ?? "";
-
-            bool hasMatch = false;
-
-            if (!string.IsNullOrWhiteSpace(ev.Id) && dbMap.TryGetValue(ev.Id, out var data) && data != null)
-            {
-                hasMatch = true;
-
-                // fill extras (safe reads)
-                //SetIf(row, "idCita", data, "idCita");
-                SetIf(row, "codigoCita", data, "codigoCita");
-                SetIf(row, "realizada", data, "realizada");
-                SetIf(row, "nombreCompletoPaciente", data, "nombreCompletoPaciente");
-                SetIf(row, "nombreTratamiento", data, "nombreTratamiento");
-                SetIf(row, "nombreFisioterapeuta", data, "nombreFisioterapeuta");
-                SetIf(row, "claveEtiqueta", data, "claveEtiqueta");
-            }
-
-            row["HasDbMatch"] = hasMatch;
-            row["MatchStatus"] = hasMatch ? "OK" : "NO_DB";
-
-            table.Rows.Add(row);
-        }
-
-        return table;
-    }
-
-    private static void SetIf(DataRow row, string col, Dictionary<string, object> data, string key)
-    {
-        if (!data.TryGetValue(key, out var v) || v == null) return;
-        row[col] = v;
-    }
-
-
-    private static void Copy(DataRow target, string targetCol, DataRow src, string srcCol)
-    {
-        if (!src.Table.Columns.Contains(srcCol)) return;
-        var v = src[srcCol];
-        if (v == null || v == DBNull.Value) return;
-        target[targetCol] = v;
-    }
-
-
-
-    public DataTable GetEventsTable(DateTime from, DateTime to)
-    {
-        var table = new DataTable();
-        table.Columns.Add("Id");
-        table.Columns.Add("Title");
-        table.Columns.Add("Start", typeof(DateTime));
-        table.Columns.Add("End", typeof(DateTime));
-        table.Columns.Add("ColorId");
-
-        var request = Service.Events.List("primary");
-
-        request.TimeMin = from;
-        request.TimeMax = to;
-        request.ShowDeleted = false;
-        request.SingleEvents = true;
-        request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-        var events = request.Execute().Items;
-
-        foreach (var ev in events)
-        {
-            DateTime start = ev.Start.DateTime ?? DateTime.Parse(ev.Start.Date);
-            DateTime end = ev.End.DateTime ?? DateTime.Parse(ev.End.Date);
-
-            table.Rows.Add(ev.Id, ev.Summary, start, end, ev.ColorId);
-        }
-
-        return table;
-    }
-
+    #region Connectivity
 
     public bool IsConnected()
     {
@@ -316,32 +125,134 @@ public class GoogleCalendarService
         }
     }
 
+    #endregion
 
-    public bool AddEvent(string title, DateTime start, DateTime end)
+    #region Read events -> DataTable (Google + DB match)
+
+    public async Task<DataTable> GetEventsTableAsync(DateTime from, DateTime to)
     {
-        try
-        {
-            var ev = new Google.Apis.Calendar.v3.Data.Event()
-            {
-                Summary = title,
-                Start = new Google.Apis.Calendar.v3.Data.EventDateTime { DateTime = start },
-                End = new Google.Apis.Calendar.v3.Data.EventDateTime { DateTime = end }
-            };
+        if (Service == null)
+            throw new InvalidOperationException("Google Calendar not authenticated.");
 
-            Service.Events.Insert(ev, "primary").Execute();
-            return true;
-        }
-        catch (Exception ex)
+        var table = BuildEventsSchema();
+
+        string KeyOf(Event e) => (e.Id ?? "").Trim();
+
+        // Google events (ASYNC)
+        var request = Service.Events.List("primary");
+        request.TimeMin = from;
+        request.TimeMax = to;
+        request.ShowDeleted = false;
+        request.SingleEvents = true;
+        request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+        var list = await request.ExecuteAsync().ConfigureAwait(false);
+        var events = list?.Items ?? new List<Event>();
+
+        var eventIds = events.Select(KeyOf)
+                             .Where(id => id.Length > 0)
+                             .Distinct(StringComparer.OrdinalIgnoreCase)
+                             .ToList();
+
+        // DB map: key -> dict (value may be null in your helper design)
+        var db = new FisioKH.DBHelperAsync();
+        var dbMap = (eventIds.Count == 0)
+            ? new Dictionary<string, Dictionary<string, object>>(StringComparer.OrdinalIgnoreCase)
+            : await db.GetCitasMapByGoogleEventIdsAsync(eventIds).ConfigureAwait(false);
+
+      
+
+        foreach (var ev in events)
         {
-            ex.ToString();
-            // MessageBox.Show("Error adding event:\n" + ex.Message);
-            return false;
+            var row = table.NewRow();
+
+            DateTime start = ev.Start?.DateTime ?? DateTime.Parse(ev.Start?.Date ?? DateTime.MinValue.ToString("yyyy-MM-dd"));
+            DateTime end = ev.End?.DateTime ?? DateTime.Parse(ev.End?.Date ?? DateTime.MinValue.ToString("yyyy-MM-dd"));
+
+            string key = KeyOf(ev);
+
+            row["Id"] = ev.Id ?? "";
+            row["Title"] = ev.Summary ?? "";
+            row["Start"] = start;
+            row["End"] = end;
+            row["ColorId"] = ev.ColorId ?? "";
+
+           
+            bool hasMatch = key.Length > 0 && dbMap.ContainsKey(key);
+
+            row["HasDbMatch"] = hasMatch;
+            row["MatchStatus"] = hasMatch ? "OK" : "NO_DB";
+
+            // extras only if dict exists
+            if (hasMatch && dbMap.TryGetValue(key, out var data) && data != null)
+            {
+                row["idCita"] = GetLong(data, "idCita", 0);
+                row["codigoCita"] = GetString(data, "codigoCita");
+                row["realizada"] = GetBool(data, "realizada", false);
+                row["nombreCompletoPaciente"] = GetString(data, "nombreCompletoPaciente");
+                row["nombreTratamiento"] = GetString(data, "nombreTratamiento");
+                row["nombreFisioterapeuta"] = GetString(data, "nombreFisioterapeuta");
+                row["claveEtiqueta"] = GetString(data, "claveEtiqueta");
+            }
+
+            table.Rows.Add(row);
         }
+
+  
+
+        return table;
     }
 
+    private static DataTable BuildEventsSchema()
+    {
+        var table = new DataTable();
 
+        table.Columns.Add("Id"); // Google EventId
+        table.Columns.Add("Title");
+        table.Columns.Add("Start", typeof(DateTime));
+        table.Columns.Add("End", typeof(DateTime));
+        table.Columns.Add("ColorId");
 
+        // Flags
+        table.Columns.Add("HasDbMatch", typeof(bool));
+        table.Columns.Add("MatchStatus"); // OK / NO_DB
 
+        // DB extras
+        table.Columns.Add("idCita", typeof(long));
+        table.Columns.Add("codigoCita");
+        table.Columns.Add("realizada", typeof(bool));
+        table.Columns.Add("nombreCompletoPaciente");
+        table.Columns.Add("nombreTratamiento");
+        table.Columns.Add("nombreFisioterapeuta");
+        table.Columns.Add("claveEtiqueta");
 
+        return table;
+    }
 
+    #endregion
+
+    #region Safe getters
+
+    private static string GetString(Dictionary<string, object> data, string key)
+    {
+        if (data == null) return "";
+        if (!data.TryGetValue(key, out var v) || v == null || v == DBNull.Value) return "";
+        return Convert.ToString(v) ?? "";
+    }
+
+    private static long GetLong(Dictionary<string, object> data, string key, long fallback)
+    {
+        if (data == null) return fallback;
+        if (!data.TryGetValue(key, out var v) || v == null || v == DBNull.Value) return fallback;
+        try { return Convert.ToInt64(v); } catch { return fallback; }
+    }
+
+    private static bool GetBool(Dictionary<string, object> data, string key, bool fallback)
+    {
+        if (data == null) return fallback;
+        if (!data.TryGetValue(key, out var v) || v == null || v == DBNull.Value) return fallback;
+        try { return Convert.ToBoolean(v); } catch { return fallback; }
+    }
+
+    #endregion
 }
