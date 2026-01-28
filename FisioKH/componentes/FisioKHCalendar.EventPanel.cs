@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
+using FontAwesome.Sharp;
 
 namespace FisioKH
 {
     public partial class FisioKHCalendar
     {
-        // Google-like event card: soft fill + left stripe + hover outline + subtle shadow
         private sealed class EventPanel : Panel
         {
             public Color AccentColor { get; set; } = Color.DeepSkyBlue;
@@ -84,6 +85,14 @@ namespace FisioKH
             }
         }
 
+        private readonly ToolTip _eventTip = new ToolTip
+        {
+            AutoPopDelay = 5000,
+            InitialDelay = 400,
+            ReshowDelay = 200,
+            ShowAlways = true
+        };
+
         // Creates the visual event card used in Month/Week/Day.
         private Panel CreateEventPanel(CalendarEventKH ev, Size size, Point loc)
         {
@@ -95,7 +104,9 @@ namespace FisioKH
                 BaseFill = GetSoftColor(ev.Color),
                 BorderStyle = BorderStyle.None,
                 Cursor = Cursors.Hand,
-                Padding = new Padding(5 + 6, 4, 4, 4) // stripe + text padding
+
+                // leave room on the right for icons
+                Padding = new Padding(5 + 6, 4, 26, 4) // stripe + text padding + icons space
             };
 
             // clip children into rounded shape
@@ -113,7 +124,7 @@ namespace FisioKH
 
             var title = new Label
             {
-                Text = ev.Title +" - "+ev.NombreFisioterapeuta,
+                Text = ev.Title + " - " + (ev.NombreFisioterapeuta ?? ""),
                 Dock = DockStyle.Top,
                 Height = 16,
                 Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
@@ -122,7 +133,6 @@ namespace FisioKH
                 AutoEllipsis = true
             };
 
-            // if too short, skip time label for tiny month rows
             var time = new Label
             {
                 Text = $"{ev.Start:h:mm tt} - {ev.End:h:mm tt}",
@@ -135,8 +145,79 @@ namespace FisioKH
                 Visible = (size.Height >= 26)
             };
 
-            //p.Controls.Add(time);
+            // Add labels (keep your choice: time hidden for month rows)
+            // p.Controls.Add(time);
             p.Controls.Add(title);
+
+            // -------------------------
+            // FontAwesome icons (top-right)
+            // -------------------------
+            int iconSize = 14;
+            int padRight = 6;
+            int top = 4;
+
+            int x = p.Width - (iconSize + padRight);
+            void place(Control c, int xx)
+            {
+                c.Location = new Point(xx, top);
+                c.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                c.BackColor = Color.Transparent;
+                c.Cursor = Cursors.Hand;
+                p.Controls.Add(c);
+                c.BringToFront();
+            }
+
+            // Keep icon positions correct on resize
+            p.SizeChanged += (s, e) =>
+            {
+                // reflow icons (walk controls from right)
+                int xx = p.Width - (iconSize + padRight);
+                foreach (Control c in p.Controls.OfType<IconPictureBox>())
+                {
+                    c.Location = new Point(xx, top);
+                    xx -= (iconSize + 4);
+                }
+            };
+
+            // Add icons in a stable order: DB then Done
+            if (ev.HasDbMatch)
+            {
+                var dbIcon = new IconPictureBox
+                {
+                    IconChar = IconChar.Database,
+                    IconColor = Color.DarkGreen,
+                    IconSize = iconSize,
+                    Size = new Size(iconSize, iconSize),
+                    TabStop = false
+                };
+                _eventTip.SetToolTip(dbIcon, $"En BD (CitaID: {ev.CitaID})");
+                place(dbIcon, x);
+                x -= (iconSize + 4);
+
+                // click should behave like the card
+                dbIcon.Click += (s, e) => EventClick?.Invoke(this, ev);
+                dbIcon.MouseEnter += (s, e) => p.BringToFront();
+                dbIcon.MouseDown += (s, e) => p.BringToFront();
+            }
+
+            if (ev.Realizada == true)
+            {
+                var doneIcon = new IconPictureBox
+                {
+                    IconChar = IconChar.CheckCircle,
+                    IconColor = Color.SeaGreen,
+                    IconSize = iconSize,
+                    Size = new Size(iconSize, iconSize),
+                    TabStop = false
+                };
+                _eventTip.SetToolTip(doneIcon, "Cita realizada");
+                place(doneIcon, x);
+                x -= (iconSize + 4);
+
+                doneIcon.Click += (s, e) => EventClick?.Invoke(this, ev);
+                doneIcon.MouseEnter += (s, e) => p.BringToFront();
+                doneIcon.MouseDown += (s, e) => p.BringToFront();
+            }
 
             // overlap friendliness: interacting with labels brings card forward too
             title.MouseEnter += (s, e) => p.BringToFront();
