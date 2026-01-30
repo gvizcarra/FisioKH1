@@ -123,111 +123,34 @@ namespace FisioKH
         {
             ObtenUsuarios(this.txtUsuario.Text);
         }
-
-        private void btnGuardarFT_Click(object sender, EventArgs e)
-        {
-            //int id = 0, qtyi =0;
-
-            //int.TryParse(this.txtId.Text, out id);
-
-            //DBHelper sdb = new DBHelper();
-
-            //var parameters = new Dictionary<string, object>
-            //{
-
-            //    { "@nombre", null },
-            //    { "@celular", null },
-            //    { "@nombreCorto", null },
-            //    { "@activo", null },
-            //    { "@idUsuario", Program.UsuarioLogeado.Id },
-            //    { "@haceValoracion", null },
-            //    { "@foto", null },
-            //};
-
  
-            
-            //parameters["@nombre"] = this.txtNombre.Text;
-            //parameters["@celular"] = this.txtCelular.Text;
-            //parameters["@nombreCorto"] = this.txtPassword.Text;
-            //parameters["@activo"] = this.chkActivo.Checked;
-            //parameters["@haceValoracion"] = this.chkValora.Checked;
-            //parameters["@foto"] = (object)wch.ImageToByteArray(this.pbxFotoFisio) ?? DBNull.Value;
-
-            //if (id > 0)
-            //{ 
-            //    parameters.Add("@id", id);
-            //      qtyi = sdb.EjecutarNonQuery("usp_UpdateFisioterapeuta", parameters);
-            
-            //}
-            //else
-            //{   qtyi = sdb.EjecutarNonQuery("usp_InsertFisioterapeuta", parameters); }
-
-            //if (qtyi > 0)
-            //{ MessageBox.Show("Registro Insertado"); }
-
-            //this.txtId.Text = "";
-            //this.txtNombre.Text = "";
-            //this.txtPassword.Text = "";
-            //this.txtCelular.Text = "";
-            //this.txtFisioTerapeuta.Text = "";
-            //this.chkValora.Checked = false;
-
-            //limpiarFormulario();
-            //ObtenFisioTerapeutas(this.txtFisioTerapeuta.Text);
-        }
 
         private void limpiarFormulario()
         {
-            //this.txtId.Text = "";
-            //this.txtNombre.Text = "";
-            //this.txtPassword.Text = "";
-            //this.txtCelular.Text = "";
-            //this.txtFisioTerapeuta.Text = "";
-            //this.chkValora.Checked = false;
+            this.txtId.Text = "";
+            this.txtNombre.Text = "";
+            this.txtPassword.Text = "";
+            this.txtPasswordC.Text = "";
+            this.txtPin.Text = "";
+            this.txtPassword.IsRequired = true;
+            this.txtPasswordC.IsRequired = true;
+            
+            
+            this.chkActivo.Checked = false;
         }
-
-        private void dgvFisioTerapeutas_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            if (dgvUsuarios.Columns[e.ColumnIndex].Name == "btnEdit")
-            {
-                DataRow row = dt.Rows[e.RowIndex];
-
-                //this.txtId.Text = row["Id"].ToString();
-                //this.txtNombre.Text = row["nombre"].ToString();
-                //this.txtPassword.Text = row["nombreCorto"].ToString();
-                //this.txtCelular.Text = row["celular"].ToString();
-                //this.chkActivo.Checked = (bool)row["activo"];
-                //this.chkValora.Checked = (bool)row["haceValoracion"];
-
-                //DBHelper db = new DBHelper();
-
-                //Bitmap foto = db.GetImageFromField(row, "Foto");
-                //db.Dispose();
-                
-
-                //this.pbxFotoFisio.Image = foto ?? FisioKH.Properties.Resources.fisioTerapeuta;
- 
-
-            }
-        }
-
-
-       
-
-       
-
-
-        
- 
 
         
 
 
        
+
+       
+
+
+         
  
 
-        private void dgvFisioTerapeutas_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void dgvUsuarios_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (dgvUsuarios.Columns[e.ColumnIndex].Name == "btnEdit")
             {
@@ -238,6 +161,8 @@ namespace FisioKH
                 this.txtPin.Text = row["pin"].ToString();
                 this.cboNivel.SelectedValue = (int)row["nivel"];
                 this.chkActivo.Checked = (bool)row["activo"];
+                this.txtPassword.IsRequired = false;
+                this.txtPasswordC.IsRequired = false;
 
             }
         }
@@ -252,7 +177,58 @@ namespace FisioKH
 
         private void btnGuardarUsu_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(this.cboNivel.SelectedValue.ToString());
+            if (txtId.Text == "")
+            {
+                if (this.txtPassword.Text != this.txtPasswordC.Text)
+                {
+                    MessageBox.Show("No Coinciden las Contraseñas");
+                    this.txtPassword.Focus();
+                    return;
+                }
+            }
+
+            int id = 0, qtyi = 0;
+
+            int.TryParse(this.txtId.Text, out id);
+
+            DBHelper sdb = new DBHelper();
+
+            var parameters = new Dictionary<string, object>
+            {
+
+                { "@nombre", null },
+                { "@pin", null },
+                { "@nivel", null },                
+                { "@password", null },               
+                { "@activo", null },
+                { "@idUsuario", Program.UsuarioLogeado.Id },
+                
+            };
+
+
+
+            parameters["@nombre"] = this.txtNombre.Text;
+            parameters["@pin"] = this.txtPin.Text;
+            parameters["@nivel"] = (int)this.cboNivel.SelectedValue;
+            parameters["@password"] = string.IsNullOrWhiteSpace(txtPassword.Text) ? (object)DBNull.Value : txtPassword.Text.Trim();
+            parameters["@activo"] = this.chkActivo.Checked;
+
+            if (id > 0)
+            {
+                parameters.Add("@id", id);
+                qtyi = sdb.EjecutarNonQuery("usp_UpdateUsuarios", parameters);
+
+            }
+            else
+            { qtyi = sdb.EjecutarNonQuery("usp_InsertUsuarios", parameters); }
+
+            if (qtyi > 0)
+            { MessageBox.Show("Registro Insertado"); }
+
+
+
+            limpiarFormulario();
+            ObtenUsuarios(this.txtUsuario.Text);
         }
     }
 }

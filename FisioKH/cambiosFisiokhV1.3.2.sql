@@ -628,3 +628,151 @@ BEGIN
 END
 GO
 ALTER TABLE [dbo].[usuarios] ALTER COLUMN [nivel] INT NULL;
+
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_ObtenerUsuarios]    Script Date: 1/29/2026 9:46:44 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[usp_ObtenerUsuarios]
+    @nombre NVARCHAR(100) = NULL,
+	@nivel INT = NULL,
+    @activo BIT = true
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Treat NULL as 0
+    SET @activo = ISNULL(@activo, 1);
+
+    DECLARE @sql NVARCHAR(MAX);
+    DECLARE @params NVARCHAR(MAX);
+
+    -- Base query
+    SET @sql = N'
+        SELECT
+            *
+        FROM dbo.usuarios
+        WHERE 1 = 1
+    ';
+ 
+    IF @nombre IS NOT NULL
+        SET @sql += N' AND nombre LIKE ''%'' + @nombre + ''%''';
+
+	 IF @nivel IS NOT NULL
+        SET @sql += N' AND nivel ='+ @nivel + '';
+ 
+ 
+ 
+    SET @params = N'@nombre NVARCHAR(100),@nivel INT, @activo BIT';
+ 
+    EXEC sp_executesql
+        @sql,
+        @params,
+        @nombre = @nombre,
+		@nivel  = @nivel,
+        @activo = @activo;
+END;
+GO
+
+
+
+USE [FisioKH]
+GO
+
+ 
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+ 
+
+CREATE PROCEDURE [dbo].[usp_UpdateUsuarios]
+    @id AS bigint,
+	@nombre NVARCHAR(250),
+	@password NVARCHAR(250),
+	@pin NVARCHAR(10),
+	@nivel int,
+	@activo bit,
+    @idUsuario BIGINT,
+    @rowsAffected INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+UPDATE [dbo].[usuarios]
+SET 
+	 [nombre] = @nombre
+	,[pin] = @pin
+	,[nivel] = @nivel
+	,[password] = COALESCE(@password,[password])
+	,[activo] = @activo
+	,idUsuario = @idUsuario
+
+WHERE id = @id
+
+SET @rowsAffected= @@ROWCOUNT;
+END;
+GO
+
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_InsertUsuarios]    Script Date: 1/29/2026 9:56:56 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+CREATE PROCEDURE [dbo].[usp_InsertUsuarios]
+    @nombre NVARCHAR(250),
+	@password NVARCHAR(250),
+	@pin NVARCHAR(10),
+	@nivel int,
+	@activo bit,
+    @idUsuario BIGINT,
+    @rowsAffected INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+
+INSERT INTO [dbo].[usuarios]
+           ([nombre]
+           ,[pin]
+           ,[nivel]
+           ,[password]
+           ,[activo]
+           ,[idUsuario])
+     VALUES
+           (
+		   @nombre,
+		   @pin,
+		   @nivel,
+		   @password,
+		   @activo,
+		   @idUsuario
+		   )
+
+
+SET @rowsAffected= @@ROWCOUNT;
+END;
+GO
+
+
+
