@@ -246,7 +246,6 @@ namespace FisioKH
 
                 // DB extras
                 ev.CitaID = GetLong(r, "idCita");
-                ev.CodigoCita = GetString(r, "codigoCita");
                 ev.Realizada = GetBool(r, "realizada");
                 ev.NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente");
                 ev.NombreTratamiento = GetString(r, "nombreTratamiento");

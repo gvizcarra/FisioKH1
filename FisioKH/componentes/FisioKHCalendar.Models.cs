@@ -21,7 +21,6 @@ namespace FisioKH
 
             // DB extras
             public long CitaID { get; set; }
-            public string CodigoCita { get; set; } = "";
             public bool Realizada { get; set; }
             public string NombreCompletoPaciente { get; set; } = "";
             public string NombreTratamiento { get; set; } = "";

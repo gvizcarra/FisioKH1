@@ -187,7 +187,6 @@ public class GoogleCalendarService
             if (hasMatch && dbMap.TryGetValue(key, out var data) && data != null)
             {
                 row["idCita"] = GetLong(data, "idCita", 0);
-                row["codigoCita"] = GetString(data, "codigoCita");
                 row["realizada"] = GetBool(data, "realizada", false);
                 row["nombreCompletoPaciente"] = GetString(data, "nombreCompletoPaciente");
                 row["nombreTratamiento"] = GetString(data, "nombreTratamiento");
@@ -219,7 +218,6 @@ public class GoogleCalendarService
 
         // DB extras
         table.Columns.Add("idCita", typeof(long));
-        table.Columns.Add("codigoCita");
         table.Columns.Add("realizada", typeof(bool));
         table.Columns.Add("nombreCompletoPaciente");
         table.Columns.Add("nombreTratamiento");

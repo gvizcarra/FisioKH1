@@ -64,7 +64,6 @@ namespace FisioKH
             //MessageBox.Show(
                 //$"GoogleId: {e.Id}\n" +
                 //$"Cita: {e.Title}\n" +
-                //$"Fisio: {e.CodigoCita}\n" +
                 //$"Inicio: {e.Start}\n" +
                 //$"Fin: {e.End}\n" +
                 //$"IdCita: {e.CitaID}");

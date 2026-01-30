@@ -21,7 +21,6 @@ namespace FisioKH
         };
 
         private DataTable dt;
-        private WebCamHelper wch;
 
         public Usuarios()
         {
@@ -29,10 +28,7 @@ namespace FisioKH
             
         }
 
-     
-
-
-       
+      
 
         private void ObtenUsuarios(string nombre = null)
         {

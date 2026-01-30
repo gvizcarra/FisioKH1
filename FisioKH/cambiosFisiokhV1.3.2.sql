@@ -1,3 +1,4 @@
+-- ELIMINAR CAMPO codigocita de citas
 use FisioKH
 go
 
@@ -774,5 +775,113 @@ SET @rowsAffected= @@ROWCOUNT;
 END;
 GO
 
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenCitasCalendar]    Script Date: 1/29/2026 10:13:00 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER PROCEDURE [dbo].[usp_obtenCitasCalendar]
+    @idGoogleCalendar NVARCHAR(250)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        c.id AS idCita,
+        c.idPaciente,
+        c.fechaCita,
+        c.fechaRegistro,
+        c.realizada,
+        c.idUsuario,
+        c.idTipoTratamiento,
+        c.idGoogleCalendar,
+
+        ft.nombre AS nombreFisioterapeuta,
+        ft.id AS idFisioTerapeuta,
+
+        p.id AS idPaciente,
+        p.claveEtiqueta AS claveEtiqueta,
+
+        CONCAT(
+            p.nombreCompleto, ' ',
+            COALESCE(p.apellidoPaterno, ''), ' ',
+            COALESCE(p.apellidoMaterno, '')
+        ) AS nombreCompletoPaciente,
+
+        tt.nombre AS nombreTratamiento,
+        tt.id AS idTipoTratamiento
+
+    FROM Citas AS c
+
+    INNER JOIN fisioTerapeutas AS ft
+        ON c.idFisioTerapeuta = ft.id
+
+    INNER JOIN Pacientes AS p
+        ON c.idPaciente = p.id
+
+    INNER JOIN tipoTratamiento AS tt
+        ON c.idTipoTratamiento = tt.id
+
+    WHERE c.idGoogleCalendar = @idGoogleCalendar;
+END;
+GO
+
+
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenCitasPorGoogleEventIds]    Script Date: 1/29/2026 10:12:34 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER   PROCEDURE [dbo].[usp_obtenCitasPorGoogleEventIds]
+    @eventIds dbo.GoogleEventIdList READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        c.id AS idCita,
+        c.idPaciente,
+        c.fechaCita,
+        c.fechaRegistro,
+        c.realizada,
+        c.idUsuario,
+        c.idTipoTratamiento,
+        c.idGoogleCalendar,     
+        c.idFisioTerapeuta,
+
+        ft.nombre AS nombreFisioterapeuta,
+
+        p.claveEtiqueta,
+
+        CONCAT(
+            p.nombreCompleto, ' ',
+            COALESCE(p.apellidoPaterno, ''), ' ',
+            COALESCE(p.apellidoMaterno, '')
+        ) AS nombreCompletoPaciente,
+
+        tt.nombre AS nombreTratamiento
+    FROM Citas c
+    INNER JOIN fisioTerapeutas ft ON c.idFisioTerapeuta = ft.id
+    INNER JOIN Pacientes p ON c.idPaciente = p.id
+    INNER JOIN tipoTratamiento tt ON c.idTipoTratamiento = tt.id
+    WHERE c.idGoogleCalendar IN (SELECT EventId FROM @eventIds);
+END
+GO
 
 
