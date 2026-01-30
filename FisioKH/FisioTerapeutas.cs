@@ -184,7 +184,7 @@ namespace FisioKH
             {   qtyi = sdb.EjecutarNonQuery("usp_InsertFisioterapeuta", parameters); }
 
             if (qtyi > 0)
-            { MessageBox.Show("Registro Insertado"); }
+            { MessageBox.Show("Registro Guardado"); }
 
             this.txtId.Text = "";
             this.txtNombre.Text = "";

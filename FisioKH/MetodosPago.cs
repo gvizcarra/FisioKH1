@@ -76,7 +76,7 @@ namespace FisioKH
                         int qtyi =  sdb.EjecutarNonQuery("usp_InsertMetodoPago",parameters);
 
                         if (qtyi > 0)
-                        { MessageBox.Show("Registro Insertado"); }
+                        { MessageBox.Show("Registro Guardado"); }
                         break;
                     case DataRowState.Modified:
                         parameters["@id"] = row[0];
@@ -85,7 +85,7 @@ namespace FisioKH
                         int qtyu = sdb.EjecutarNonQuery("usp_UpdateMetodoPago", parameters);
                         
                         if (qtyu > 0)
-                        { MessageBox.Show("Registro Actualizado"); }
+                        { MessageBox.Show("Registro Guardado"); }
 
                         break;
                     case DataRowState.Deleted:

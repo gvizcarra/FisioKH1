@@ -305,7 +305,7 @@ namespace FisioKH
             { qtyi = sdb.EjecutarNonQuery("usp_InsertPaciente", parameters); }
 
             if (qtyi > 0)
-            { MessageBox.Show("Registro Insertado"); }
+            { MessageBox.Show("Registro Guardado"); }
 
 
             limpiarFormulario();

@@ -223,7 +223,7 @@ namespace FisioKH
             { qtyi = sdb.EjecutarNonQuery("usp_InsertUsuarios", parameters); }
 
             if (qtyi > 0)
-            { MessageBox.Show("Registro Insertado"); }
+            { MessageBox.Show("Registro Guardado"); }
 
 
 
