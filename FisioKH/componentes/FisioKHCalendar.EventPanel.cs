@@ -152,7 +152,7 @@ namespace FisioKH
             // -------------------------
             // FontAwesome icons (top-right)
             // -------------------------
-            int iconSize = 14;
+            int iconSize = 16;
             int padRight = 6;
             int top = 4;
 
@@ -180,17 +180,17 @@ namespace FisioKH
             };
 
             // Add icons in a stable order: DB then Done
-            if (ev.HasDbMatch)
+            if (ev.HasDbMatch && ev.CitaID != 0)
             {
                 var dbIcon = new IconPictureBox
                 {
-                    IconChar = IconChar.Database,
-                    IconColor = Color.DarkGreen,
+                    IconChar = IconChar.Calendar,
+                    IconColor = Color.White,
                     IconSize = iconSize,
                     Size = new Size(iconSize, iconSize),
                     TabStop = false
                 };
-                _eventTip.SetToolTip(dbIcon, $"En BD (CitaID: {ev.CitaID})");
+                _eventTip.SetToolTip(dbIcon, $"Cita Capturada: {ev.CitaID}");
                 place(dbIcon, x);
                 x -= (iconSize + 4);
 
@@ -205,7 +205,7 @@ namespace FisioKH
                 var doneIcon = new IconPictureBox
                 {
                     IconChar = IconChar.CheckCircle,
-                    IconColor = Color.SeaGreen,
+                    IconColor = Color.White,
                     IconSize = iconSize,
                     Size = new Size(iconSize, iconSize),
                     TabStop = false
