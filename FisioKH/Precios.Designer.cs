@@ -30,27 +30,14 @@ namespace FisioKH
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Precios));
-            this.btnGuardarPrecio = new FisioKH.Boton();
             this.txtPrecio = new System.Windows.Forms.TextBox();
-            this.btnBuscarPrecio = new FisioKH.Boton();
             this.dgvPrecio = new System.Windows.Forms.DataGridView();
             this.lblNombreMP = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnGuardarPrecio = new FisioKH.Boton();
+            this.btnBuscarPrecio = new FisioKH.Boton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPrecio)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnGuardarPrecio
-            // 
-            this.btnGuardarPrecio.FlatAppearance.BorderSize = 2;
-            this.btnGuardarPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnGuardarPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnGuardarPrecio.Location = new System.Drawing.Point(11, 401);
-            this.btnGuardarPrecio.Margin = new System.Windows.Forms.Padding(10);
-            this.btnGuardarPrecio.Name = "btnGuardarPrecio";
-            this.btnGuardarPrecio.Size = new System.Drawing.Size(95, 30);
-            this.btnGuardarPrecio.TabIndex = 8;
-            this.btnGuardarPrecio.Text = "Guardar Cambios";
-            this.btnGuardarPrecio.UseVisualStyleBackColor = true;
-            this.btnGuardarPrecio.Click += new System.EventHandler(this.btnGuardarPrecio_Click);
             // 
             // txtPrecio
             // 
@@ -60,20 +47,6 @@ namespace FisioKH
             this.txtPrecio.Name = "txtPrecio";
             this.txtPrecio.Size = new System.Drawing.Size(146, 26);
             this.txtPrecio.TabIndex = 7;
-            // 
-            // btnBuscarPrecio
-            // 
-            this.btnBuscarPrecio.FlatAppearance.BorderSize = 2;
-            this.btnBuscarPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.btnBuscarPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnBuscarPrecio.Location = new System.Drawing.Point(234, 6);
-            this.btnBuscarPrecio.Margin = new System.Windows.Forms.Padding(10);
-            this.btnBuscarPrecio.Name = "btnBuscarPrecio";
-            this.btnBuscarPrecio.Size = new System.Drawing.Size(95, 40);
-            this.btnBuscarPrecio.TabIndex = 6;
-            this.btnBuscarPrecio.Text = "Buscar";
-            this.btnBuscarPrecio.UseVisualStyleBackColor = true;
-            this.btnBuscarPrecio.Click += new System.EventHandler(this.btnBuscarPrecio_Click);
             // 
             // dgvPrecio
             // 
@@ -96,11 +69,51 @@ namespace FisioKH
             this.lblNombreMP.TabIndex = 9;
             this.lblNombreMP.Text = "Precio";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.label1.Location = new System.Drawing.Point(375, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(209, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "* Cita CMD = Cancelable Mismo Dia";
+            // 
+            // btnGuardarPrecio
+            // 
+            this.btnGuardarPrecio.FlatAppearance.BorderSize = 2;
+            this.btnGuardarPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnGuardarPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnGuardarPrecio.Location = new System.Drawing.Point(11, 401);
+            this.btnGuardarPrecio.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarPrecio.Name = "btnGuardarPrecio";
+            this.btnGuardarPrecio.Size = new System.Drawing.Size(95, 30);
+            this.btnGuardarPrecio.TabIndex = 8;
+            this.btnGuardarPrecio.Text = "Guardar Cambios";
+            this.btnGuardarPrecio.UseVisualStyleBackColor = true;
+            this.btnGuardarPrecio.Click += new System.EventHandler(this.btnGuardarPrecio_Click);
+            // 
+            // btnBuscarPrecio
+            // 
+            this.btnBuscarPrecio.FlatAppearance.BorderSize = 2;
+            this.btnBuscarPrecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBuscarPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnBuscarPrecio.Location = new System.Drawing.Point(234, 6);
+            this.btnBuscarPrecio.Margin = new System.Windows.Forms.Padding(10);
+            this.btnBuscarPrecio.Name = "btnBuscarPrecio";
+            this.btnBuscarPrecio.Size = new System.Drawing.Size(95, 40);
+            this.btnBuscarPrecio.TabIndex = 6;
+            this.btnBuscarPrecio.Text = "Buscar";
+            this.btnBuscarPrecio.UseVisualStyleBackColor = true;
+            this.btnBuscarPrecio.Click += new System.EventHandler(this.btnBuscarPrecio_Click);
+            // 
             // Precios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(653, 437);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblNombreMP);
             this.Controls.Add(this.btnGuardarPrecio);
             this.Controls.Add(this.txtPrecio);
@@ -123,5 +136,6 @@ namespace FisioKH
         private Boton btnBuscarPrecio;
         private System.Windows.Forms.DataGridView dgvPrecio;
         private System.Windows.Forms.Label lblNombreMP;
+        private System.Windows.Forms.Label label1;
     }
 }

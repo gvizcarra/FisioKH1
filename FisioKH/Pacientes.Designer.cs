@@ -565,11 +565,11 @@ namespace FisioKH
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(416, 127);
+            this.label13.Location = new System.Drawing.Point(407, 127);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(34, 19);
+            this.label13.Size = new System.Drawing.Size(85, 19);
             this.label13.TabIndex = 42;
-            this.label13.Text = "TAG";
+            this.label13.Text = "Tipo Ingreso";
             // 
             // txtMedicoTratante
             // 

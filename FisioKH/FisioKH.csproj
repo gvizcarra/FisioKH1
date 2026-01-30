@@ -180,11 +180,17 @@
     <Compile Include="componentes\FisioKHCalendar.RenderCache.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EventDetailsForm.cs">
+    <Compile Include="Usuarios.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EventDetailsForm.Designer.cs">
-      <DependentUpon>EventDetailsForm.cs</DependentUpon>
+    <Compile Include="Usuarios.Designer.cs">
+      <DependentUpon>Usuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IngresoPaciente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IngresoPaciente.Designer.cs">
+      <DependentUpon>IngresoPaciente.cs</DependentUpon>
     </Compile>
     <Compile Include="FisioKHApp.cs">
       <SubType>Form</SubType>
@@ -237,8 +243,11 @@
       <DependentUpon>Tratamientos.cs</DependentUpon>
     </Compile>
     <Compile Include="classes\usuario.cs" />
-    <EmbeddedResource Include="EventDetailsForm.resx">
-      <DependentUpon>EventDetailsForm.cs</DependentUpon>
+    <EmbeddedResource Include="Usuarios.resx">
+      <DependentUpon>Usuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IngresoPaciente.resx">
+      <DependentUpon>IngresoPaciente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FisioKHApp.resx">
       <DependentUpon>FisioKHApp.cs</DependentUpon>

@@ -48,6 +48,7 @@ namespace FisioKH
             this.tbIngresos = new System.Windows.Forms.TabPage();
             this.fisioKHCalendar1 = new FisioKH.FisioKHCalendar();
             this.tbAdmin = new System.Windows.Forms.TabPage();
+            this.btnUsuarios = new FisioKH.Boton();
             this.btnFisios = new FisioKH.Boton();
             this.btnMetodosPago = new FisioKH.Boton();
             this.btnTratamientos = new FisioKH.Boton();
@@ -244,7 +245,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 1, 25, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 1, 29, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -255,6 +256,7 @@ namespace FisioKH
             // 
             // tbAdmin
             // 
+            this.tbAdmin.Controls.Add(this.btnUsuarios);
             this.tbAdmin.Controls.Add(this.btnFisios);
             this.tbAdmin.Controls.Add(this.btnMetodosPago);
             this.tbAdmin.Controls.Add(this.btnTratamientos);
@@ -269,6 +271,21 @@ namespace FisioKH
             this.tbAdmin.TabIndex = 1;
             this.tbAdmin.Text = "Administración";
             this.tbAdmin.UseVisualStyleBackColor = true;
+            // 
+            // btnUsuarios
+            // 
+            this.btnUsuarios.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnUsuarios.FlatAppearance.BorderSize = 2;
+            this.btnUsuarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnUsuarios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
+            this.btnUsuarios.Location = new System.Drawing.Point(602, 80);
+            this.btnUsuarios.Margin = new System.Windows.Forms.Padding(10);
+            this.btnUsuarios.Name = "btnUsuarios";
+            this.btnUsuarios.Size = new System.Drawing.Size(168, 58);
+            this.btnUsuarios.TabIndex = 10;
+            this.btnUsuarios.Text = "&Usuarios";
+            this.btnUsuarios.UseVisualStyleBackColor = false;
+            this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
             // 
             // btnFisios
             // 
@@ -291,7 +308,7 @@ namespace FisioKH
             this.btnMetodosPago.FlatAppearance.BorderSize = 2;
             this.btnMetodosPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnMetodosPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
-            this.btnMetodosPago.Location = new System.Drawing.Point(459, 80);
+            this.btnMetodosPago.Location = new System.Drawing.Point(372, 80);
             this.btnMetodosPago.Margin = new System.Windows.Forms.Padding(10);
             this.btnMetodosPago.Name = "btnMetodosPago";
             this.btnMetodosPago.Size = new System.Drawing.Size(168, 58);
@@ -433,6 +450,7 @@ namespace FisioKH
         private ValidatedNumericTextBox txtPassPin;
         private ValidatedNumericTextBox txtUsuario;
         private Boton btnCerrarSesion;
+        private Boton btnUsuarios;
     }
 }
 

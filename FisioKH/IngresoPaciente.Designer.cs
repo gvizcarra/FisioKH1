@@ -1,6 +1,6 @@
 ﻿namespace FisioKH
 {
-    partial class EventDetailsForm
+    partial class IngresoPaciente
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -137,9 +137,9 @@
             this.btnDelete.Text = "Delete";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // EventDetailsForm
+            // IngresoPaciente
             // 
-            this.ClientSize = new System.Drawing.Size(333, 225);
+            this.ClientSize = new System.Drawing.Size(1164, 681);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.lblStart);
@@ -153,9 +153,9 @@
             this.Controls.Add(this.btnDelete);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
-            this.Name = "EventDetailsForm";
+            this.Name = "IngresoPaciente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Event Details";
+            this.Text = "Ingreso Paciente";
             this.Load += new System.EventHandler(this.EventDetailsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

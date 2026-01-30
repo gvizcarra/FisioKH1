@@ -171,14 +171,13 @@ namespace FisioKH
             {
                 DataRow row = dt.Rows[e.RowIndex];
 
-                //Id Nombre  Celular Ciudad  Sexo Edad    MedicoTratante Fisio   Etiqueta Email   Usuario FechaRegistro   Rfc DFiscal NFiscal FechaNacimiento observaciones
-
                 this.txtId.Text = row["Id"].ToString();
                 this.txtNombreCompleto.Text = row["Nombre"].ToString();
+                this.txtApellidoPaterno.Text = row["ApellidoPaterno"].ToString();
+                this.txtApellidoMaterno.Text = row["ApellidoMaterno"].ToString();
                 this.txtCelularAlta.Text = row["Celular"].ToString();
                 this.txtCiudad.Text = row["Ciudad"].ToString();
-                this.txtRfcFiscal.Text = row["Rfc"].ToString();
-                //this.txtId.Text = row["Sexo"].ToString();
+                this.txtRfcFiscal.Text = row["Rfc"].ToString();                
                 this.txtEdad.Text = row["Edad"].ToString();
                 this.txtMedicoTratante.Text = row["MedicoTratante"].ToString();
                 this.cboEtiqueta.SelectedValue = row["Etiqueta"].ToString();
@@ -199,11 +198,7 @@ namespace FisioKH
                 Bitmap foto = db.GetImageFromField(row, "Foto");
                 db.Dispose();
 
-
                 this.pbxFotoPaciente.Image = foto ?? FisioKH.Properties.Resources.patient;
-
-                //MessageBox.Show(row[1].ToString());
-
             }
         }
 

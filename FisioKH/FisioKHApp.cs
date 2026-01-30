@@ -58,7 +58,7 @@ namespace FisioKH
 
         private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
         {
-            EventDetailsForm edt = new EventDetailsForm(e);
+            IngresoPaciente edt = new IngresoPaciente(e);
             edt.ShowDialog();
             // Fixed: show correct properties (GoogleId vs IdCita)
             //MessageBox.Show(
@@ -304,5 +304,12 @@ namespace FisioKH
                 Program.UsuarioLogeado = null;
             }
         }
+
+        private void btnUsuarios_Click(object sender, EventArgs e)
+        {
+            Usuarios u = new Usuarios();
+            u.ShowDialog();
+        }
+ 
     }
 }

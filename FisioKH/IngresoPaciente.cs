@@ -5,13 +5,13 @@ using static FisioKH.FisioKHCalendar;
 
 namespace FisioKH
 {
-    public partial class EventDetailsForm : Form
+    public partial class IngresoPaciente : BaseForm
     {
         private FisioKH.FisioKHCalendar.CalendarEventKH fce;
        
 
         // REQUIRED for Designer
-        public EventDetailsForm(CalendarEventKH ce)
+        public IngresoPaciente(CalendarEventKH ce)
         {
             fce = ce;
             InitializeComponent();
