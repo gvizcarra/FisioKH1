@@ -88,10 +88,7 @@ namespace FisioKH
                         { MessageBox.Show("Registro Guardado"); }
 
                         break;
-                    case DataRowState.Deleted:
-                        MessageBox.Show("del");
-
-                        break;
+                  
                 }
             }
         }
