@@ -726,7 +726,7 @@ GO
 
 
 USE [FisioKH]
-GO
+GO 
 
 /****** Object:  StoredProcedure [dbo].[usp_InsertUsuarios]    Script Date: 1/29/2026 9:56:56 PM ******/
 SET ANSI_NULLS ON
