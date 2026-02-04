@@ -156,6 +156,11 @@ namespace FisioKH
 
         private async void btnLogin_Click(object sender, EventArgs e)
         {
+            await Login();
+        }
+
+        private async Task Login()
+        {
             if (!ValidateChildren())
             {
                 var failedControl = GetFirstInvalidControl(this);
@@ -212,6 +217,7 @@ namespace FisioKH
                     this.Text = $"{configSettings.ObtenNombreApp} - Usuario: {Program.UsuarioLogeado.Nombre}";
                     this.txtUsuario.Enabled = false;
                     this.txtPassPin.Enabled = false;
+                    this.txtPassPin.IsRequired = false;
                     this.btnLogin.Enabled = false;
                     this.btnCerrarSesion.Enabled = true;
                     HabilitaTabs(ObtentabsSeguras());
@@ -309,6 +315,13 @@ namespace FisioKH
             Usuarios u = new Usuarios();
             u.ShowDialog();
         }
- 
+
+        private async void txtPassPin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                await Login();
+            }
+        }
     }
 }

@@ -426,5 +426,31 @@ namespace FisioKH
         {
             ActivarCamara();
         }
+ 
+
+        private void txtPaciente_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
+            }
+
+        }
+
+        private void txtCelular_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
+            }
+        }
+
+        private void txtEmail_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
+            }
+        }
     }
 }

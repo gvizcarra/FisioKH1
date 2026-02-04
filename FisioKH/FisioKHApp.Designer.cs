@@ -209,7 +209,7 @@ namespace FisioKH
             this.txtPassPin.ErrorProvider = null;
             this.txtPassPin.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.txtPassPin.ForeColor = System.Drawing.Color.Black;
-            this.txtPassPin.IsRequired = true;
+            this.txtPassPin.IsRequired = false;
             this.txtPassPin.Location = new System.Drawing.Point(209, 66);
             this.txtPassPin.MaxValue = null;
             this.txtPassPin.MinValue = null;
@@ -219,6 +219,7 @@ namespace FisioKH
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.TabIndex = 7;
             this.txtPassPin.UseSystemPasswordChar = true;
+            this.txtPassPin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassPin_KeyDown);
             // 
             // label2
             // 
@@ -245,7 +246,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 1, 29, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 3, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);

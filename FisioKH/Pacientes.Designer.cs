@@ -122,6 +122,7 @@ namespace FisioKH
             this.txtPaciente.NumericOnly = false;
             this.txtPaciente.Size = new System.Drawing.Size(133, 26);
             this.txtPaciente.TabIndex = 12;
+            this.txtPaciente.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPaciente_KeyDown);
             // 
             // dgvPacientes
             // 
@@ -169,6 +170,7 @@ namespace FisioKH
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(166, 26);
             this.txtEmail.TabIndex = 19;
+            this.txtEmail.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtEmail_KeyDown);
             // 
             // txtCelular
             // 
@@ -179,6 +181,7 @@ namespace FisioKH
             this.txtCelular.Size = new System.Drawing.Size(118, 25);
             this.txtCelular.TabIndex = 26;
             this.txtCelular.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.txtCelular.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCelular_KeyDown);
             // 
             // label8
             // 
