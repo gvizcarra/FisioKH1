@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Collections.Generic;
 using static FisioKH.FisioKHCalendar;
-
+using System.IO;
 
 namespace FisioKH
 {
@@ -76,10 +76,7 @@ namespace FisioKH
             this.txtTitle.Text = fce.Id.ToString();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+  
 
         private void cargarGridPacientes(string paciente = null)
         {
@@ -102,14 +99,20 @@ namespace FisioKH
 
             DataTable dtp = dsmp.Tables[dsname];
 
+            dtp.Columns.Add("Apellidos", typeof(string), "apellidoPaterno + ' ' + apellidoMaterno");
+
             this.dgvBuscarPaciente.Visible = false;
             this.dgvBuscarPaciente.DataSource = dtp;
 
-            foreach (DataGridViewColumn col in dgvBuscarPaciente.Columns)
-                col.Visible = false;
 
+
+            foreach (DataGridViewColumn col in dgvBuscarPaciente.Columns)
+            { col.Visible = false; }
+
+            dgvBuscarPaciente.Columns["Apellidos"].HeaderText = "Apellidos";
             dgvBuscarPaciente.Columns["Nombre"].Visible = true;
-            dgvBuscarPaciente.Columns["ApellidoPaterno"].Visible = true;
+            dgvBuscarPaciente.Columns["Apellidos"].Visible = true;
+
 
             this.dgvBuscarPaciente.Visible = true;
         }
@@ -126,5 +129,71 @@ namespace FisioKH
 
 
         }
+
+        private void dgvBuscarPaciente_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow gridRow = dgvBuscarPaciente.Rows[e.RowIndex];
+            DataRowView drv = gridRow.DataBoundItem as DataRowView;
+            if (drv == null) return;
+
+
+            lblNombreCompleto.Text = (drv["Nombre"]?.ToString() ?? "") + ' ' + (drv["apellidoPaterno"]?.ToString() ?? "") + ' ' + (drv["apellidoMaterno"]?.ToString() ?? "");
+
+            lblCelular.Text = drv["Celular"]?.ToString() ?? "";
+            lblSexo.Text = drv["Sexo"]?.ToString() ?? "";
+            lblEdad.Text = drv["Edad"]?.ToString() ?? "";
+            lblMedicoTratante.Text = drv["MedicoTratante"]?.ToString() ?? "";
+            lblFisio.Text = drv["Fisio"]?.ToString() ?? "";
+            lblDob.Text = drv["FechaNacimiento"]?.ToString().Substring(0,9) ?? "";
+            txtObservaciones.Text = drv["observaciones"]?.ToString() ?? "";
+            lblEmail.Text = drv["email"]?.ToString() ?? "";
+            lblTipoIngreso.Text = drv["Etiqueta"]?.ToString() ?? "";
+            lblCitas.Text = drv["totalCitas"]?.ToString() ?? "";
+            lblIngresos.Text = drv["totalIngresos"]?.ToString() ?? "";
+            lblIngresosPagados.Text = drv["totalIngresosPagados"]?.ToString() ?? "";
+            
+            SetPictureFromVarbinary(pbxPacienteIngreso, drv["Foto"]);
+
+
+        }
+
+        private void SetPictureFromVarbinary(PictureBox pb, object fotoValue)
+        {
+            if (pb.Image != null)
+            {
+                var old = pb.Image;
+                pb.Image = null;
+                old.Dispose();
+            }
+
+            if (fotoValue == DBNull.Value || fotoValue == null)
+            {
+                pb.Image = null; // or default avatar
+                return;
+            }
+
+            byte[] bytes = (byte[])fotoValue;
+
+            using (MemoryStream ms = new MemoryStream(bytes))
+            using (Image img = Image.FromStream(ms))
+            {
+                pb.Image = new Bitmap(img);
+            }
+
+            pb.SizeMode = PictureBoxSizeMode.Zoom;
+        }
+
+        private void txtBuscarPacienteIngreso_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                cargarGridPacientes(this.txtBuscarPacienteIngreso.Text);
+            }
+        }
+
+      
     }
 }

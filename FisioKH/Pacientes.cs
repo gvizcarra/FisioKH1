@@ -452,5 +452,11 @@ namespace FisioKH
                 ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
             }
         }
+
+        private void Pacientes_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            wch?.StopCamera();
+            btnAbrirCamara.Enabled = true;
+        }
     }
 }

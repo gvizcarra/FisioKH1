@@ -829,6 +829,7 @@ namespace FisioKH
             this.Name = "Pacientes";
             this.Padding = new System.Windows.Forms.Padding(12, 13, 12, 13);
             this.Text = "Pacientes";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Pacientes_FormClosing);
             this.Load += new System.EventHandler(this.Pacientes_Load);
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
