@@ -23,7 +23,6 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTitle = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblStart = new System.Windows.Forms.Label();
@@ -371,7 +370,7 @@
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblEmail.ForeColor = System.Drawing.Color.Black;
-            this.lblEmail.Location = new System.Drawing.Point(227, 42);
+            this.lblEmail.Location = new System.Drawing.Point(221, 42);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(41, 19);
             this.lblEmail.TabIndex = 44;
@@ -390,6 +389,7 @@
             // 
             // txtObservaciones
             // 
+            this.txtObservaciones.Font = new System.Drawing.Font("Arial", 10F);
             this.txtObservaciones.Location = new System.Drawing.Point(6, 16);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
@@ -453,7 +453,7 @@
             this.lblMedicoTratante.AutoSize = true;
             this.lblMedicoTratante.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblMedicoTratante.ForeColor = System.Drawing.Color.Black;
-            this.lblMedicoTratante.Location = new System.Drawing.Point(543, 41);
+            this.lblMedicoTratante.Location = new System.Drawing.Point(690, 21);
             this.lblMedicoTratante.Name = "lblMedicoTratante";
             this.lblMedicoTratante.Size = new System.Drawing.Size(53, 19);
             this.lblMedicoTratante.TabIndex = 9;
@@ -463,7 +463,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label5.Location = new System.Drawing.Point(483, 40);
+            this.label5.Location = new System.Drawing.Point(639, 21);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(54, 19);
             this.label5.TabIndex = 8;
@@ -474,7 +474,7 @@
             this.lblEdad.AutoSize = true;
             this.lblEdad.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblEdad.ForeColor = System.Drawing.Color.Black;
-            this.lblEdad.Location = new System.Drawing.Point(678, 22);
+            this.lblEdad.Location = new System.Drawing.Point(558, 42);
             this.lblEdad.Name = "lblEdad";
             this.lblEdad.Size = new System.Drawing.Size(39, 19);
             this.lblEdad.TabIndex = 7;
@@ -484,7 +484,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label4.Location = new System.Drawing.Point(639, 22);
+            this.label4.Location = new System.Drawing.Point(519, 42);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 19);
             this.label4.TabIndex = 6;
@@ -495,7 +495,7 @@
             this.lblSexo.AutoSize = true;
             this.lblSexo.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lblSexo.ForeColor = System.Drawing.Color.Black;
-            this.lblSexo.Location = new System.Drawing.Point(528, 22);
+            this.lblSexo.Location = new System.Drawing.Point(558, 22);
             this.lblSexo.Name = "lblSexo";
             this.lblSexo.Size = new System.Drawing.Size(36, 19);
             this.lblSexo.TabIndex = 5;
@@ -505,7 +505,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label3.Location = new System.Drawing.Point(495, 22);
+            this.label3.Location = new System.Drawing.Point(519, 22);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 19);
             this.label3.TabIndex = 4;
@@ -565,16 +565,15 @@
             // 
             // dgvExpediente
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Aquamarine;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.LightCyan;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.dgvExpediente.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvExpediente.AllowUserToAddRows = false;
+            this.dgvExpediente.AllowUserToDeleteRows = false;
             this.dgvExpediente.BackgroundColor = System.Drawing.Color.AliceBlue;
+            this.dgvExpediente.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvExpediente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvExpediente.Location = new System.Drawing.Point(6, 18);
             this.dgvExpediente.MultiSelect = false;
             this.dgvExpediente.Name = "dgvExpediente";
+            this.dgvExpediente.ReadOnly = true;
             this.dgvExpediente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvExpediente.Size = new System.Drawing.Size(850, 458);
             this.dgvExpediente.TabIndex = 0;
