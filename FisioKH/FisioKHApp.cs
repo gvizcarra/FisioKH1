@@ -28,11 +28,9 @@ namespace FisioKH
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
 
-            // Calendar control
-            fisioKHCalendar1.RequestDataAsync += LoadCalendarDataAsync;
-            fisioKHCalendar1.EventClick += MyCalendar_EventClick;
+           
 
-            //DesHabilitaTabs(ObtentabsSeguras());
+            DesHabilitaTabs(ObtentabsSeguras());
         }
 
         /// <summary>
@@ -73,14 +71,20 @@ namespace FisioKH
         {
             if (e.TabPage.Name != "tbIngresos")
                 return;
+            if (Program.UsuarioLogeado.Autenticado)
+            {
+                // Authenticate async to avoid UI freeze
+                // Calendar control
+                fisioKHCalendar1.RequestDataAsync += LoadCalendarDataAsync;
+                fisioKHCalendar1.EventClick += MyCalendar_EventClick;
 
-            // Authenticate async to avoid UI freeze
-            bool ok = await calendar.AuthenticateAsync();
+                bool ok = await calendar.AuthenticateAsync();
 
-            if (ok)
-                MostrarCalendario();
-            else
-                MessageBox.Show("No Se Puede Conectar a Google Calendar!");
+                if (ok)
+                { MostrarCalendario(); }
+                else
+                { MessageBox.Show("No Se Puede Conectar a Google Calendar!"); }
+            }
         }
 
         private async void MostrarCalendario()
@@ -220,6 +224,16 @@ namespace FisioKH
                     this.txtPassPin.IsRequired = false;
                     this.btnLogin.Enabled = false;
                     this.btnCerrarSesion.Enabled = true;
+                    
+                    if (Program.UsuarioLogeado.Nivel==1)
+                    {
+                        this.btnUsuarios.Enabled = true;
+                        this.btnPrecios.Enabled = true;
+                        this.btnFisios.Enabled = true;
+                        this.btnTratamientos.Enabled = true;
+                        this.btnMetodosPago.Enabled = true;                        
+                    }
+
                     HabilitaTabs(ObtentabsSeguras());
                 }
                 else
@@ -306,7 +320,14 @@ namespace FisioKH
                 this.Text = $"{configSettings.ObtenNombreApp}";
                 this.btnCerrarSesion.Enabled = false;
 
-                Program.UsuarioLogeado = null;
+                this.btnUsuarios.Enabled = false;
+                this.btnPrecios.Enabled = false;
+                this.btnFisios.Enabled = false;
+                this.btnTratamientos.Enabled = false;
+                this.btnMetodosPago.Enabled = false;
+
+                Program.UsuarioLogeado.Autenticado = false;
+                Program.UsuarioLogeado.Nivel = 0;
             }
         }
 

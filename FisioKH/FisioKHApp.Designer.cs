@@ -246,7 +246,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 3, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 5, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -276,6 +276,7 @@ namespace FisioKH
             // btnUsuarios
             // 
             this.btnUsuarios.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnUsuarios.Enabled = false;
             this.btnUsuarios.FlatAppearance.BorderSize = 2;
             this.btnUsuarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnUsuarios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
@@ -284,13 +285,14 @@ namespace FisioKH
             this.btnUsuarios.Name = "btnUsuarios";
             this.btnUsuarios.Size = new System.Drawing.Size(168, 58);
             this.btnUsuarios.TabIndex = 10;
-            this.btnUsuarios.Text = "&Usuarios";
+            this.btnUsuarios.Text = "&USUARIOS";
             this.btnUsuarios.UseVisualStyleBackColor = false;
             this.btnUsuarios.Click += new System.EventHandler(this.btnUsuarios_Click);
             // 
             // btnFisios
             // 
             this.btnFisios.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnFisios.Enabled = false;
             this.btnFisios.FlatAppearance.BorderSize = 2;
             this.btnFisios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnFisios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
@@ -306,6 +308,7 @@ namespace FisioKH
             // btnMetodosPago
             // 
             this.btnMetodosPago.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMetodosPago.Enabled = false;
             this.btnMetodosPago.FlatAppearance.BorderSize = 2;
             this.btnMetodosPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnMetodosPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
@@ -321,6 +324,7 @@ namespace FisioKH
             // btnTratamientos
             // 
             this.btnTratamientos.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnTratamientos.Enabled = false;
             this.btnTratamientos.FlatAppearance.BorderSize = 2;
             this.btnTratamientos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnTratamientos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
@@ -351,6 +355,7 @@ namespace FisioKH
             // btnPrecios
             // 
             this.btnPrecios.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnPrecios.Enabled = false;
             this.btnPrecios.FlatAppearance.BorderSize = 2;
             this.btnPrecios.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnPrecios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(134)))), ((int)(((byte)(193)))));
