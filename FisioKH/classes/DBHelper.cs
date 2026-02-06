@@ -17,6 +17,35 @@ namespace FisioKH
             connectionString = configSettings.ObtenConectionString;
         }
 
+        public DataTable obtenerTratamientos()
+        {
+            DataTable dt = new DataTable();
+            string sql = "SELECT   [id] ,[nombre]  FROM [dbo].[tipoTratamiento] ORDER  BY nombre ";
+            dt = ObtenerDatosDT(sql);
+
+
+            return dt;
+        }
+        public DataTable obtenerPrecios()
+        {
+            DataTable dt = new DataTable();
+            string sql = "SELECT [id],[nombre],[pacientePaga] FROM [dbo].[precios] WHERE activo = 1 ORDER BY nombre";
+            dt = ObtenerDatosDT(sql);
+
+
+            return dt;
+        }
+        
+        public DataTable obtenerFisios()
+        {
+            DataTable dt = new DataTable();
+            string sql = "SELECT [id],[nombreCorto] AS nombre FROM [dbo].[fisioTerapeutas] WHERE activo = 1  ORDER BY nombre";
+            dt = ObtenerDatosDT(sql);
+
+
+            return dt;
+        }
+
         /// <summary>
         /// Authenticate user by username and password/pin
         /// </summary>
@@ -125,6 +154,32 @@ namespace FisioKH
             }
 
             return ds;
+        }  
+        
+        /// <summary>
+        /// Executes a raw SQL query and returns a DataSet
+        /// </summary>
+        private DataTable ObtenerDatosDT(string sql)
+        {
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(sql, conn))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener datos: " + ex.Message);
+                }
+            }
+
+            return dt;
         }
 
         /// <summary>
@@ -169,7 +224,7 @@ namespace FisioKH
 
        
 
-        public DataTable GetCitasByGoogleEventIdsTVP(List<string> eventIds)
+   public DataTable GetCitasByGoogleEventIdsTVP(List<string> eventIds)
     {
         var dt = new DataTable();
         if (eventIds == null || eventIds.Count == 0) return dt;

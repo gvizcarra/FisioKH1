@@ -1,3 +1,108 @@
+/*
+cambios para entregar viernes 6 febrero
+*/
+USE [FisioKH];
+GO
+
+CREATE OR ALTER PROCEDURE dbo.usp_crearCitaVisita
+(
+    -- ====== Citas ======
+    @idPaciente            BIGINT,
+    @fechaCita             DATETIME,
+    @realizada             BIT,
+    @idUsuario             BIGINT,
+    @idTipoTratamiento     BIGINT,
+    @idGoogleCalendar      NVARCHAR(250) = NULL,
+    @idFisioTerapeuta      BIGINT = NULL,
+    @fechaRegistroCita     DATETIME = NULL,   -- optional
+
+    -- ====== visitasRealizadas ======
+    @fechaVisita           DATETIME,
+    @idPrecio              BIGINT,
+    @pagado                BIT = NULL,
+    @ocupaFactura          BIT = NULL,
+    @claveFacturaGenerada  NVARCHAR(150) = NULL,
+    @notas                 NVARCHAR(4000) = NULL,
+
+    -- ====== OUTPUTS ======
+    @idCita   BIGINT OUTPUT,
+    @idVisita BIGINT OUTPUT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SET XACT_ABORT ON;
+
+    BEGIN TRY
+        BEGIN TRAN;
+
+        -- Insert into Citas
+        INSERT INTO dbo.Citas
+        (
+            idPaciente,
+            fechaCita,
+            realizada,
+            idUsuario,
+            idTipoTratamiento,
+            idGoogleCalendar,
+            idFisioTerapeuta
+        )
+        VALUES
+        (
+            @idPaciente,
+            @fechaCita,
+            @realizada,
+            @idUsuario,
+            @idTipoTratamiento,
+            @idGoogleCalendar,
+            @idFisioTerapeuta
+        );
+
+        SET @idCita = SCOPE_IDENTITY();
+
+        -- Insert into visitasRealizadas
+        INSERT INTO dbo.visitasRealizadas
+        (
+            idPaciente,
+            idCita,
+            fechaVisita,
+            idUsuario,
+            idTipoTratamiento,
+            idPrecio,
+            pagado,
+            ocupaFactura,
+            claveFacturaGenerada,
+            notas,
+            idFisioterapeuta
+        )
+        VALUES
+        (
+            @idPaciente,
+            @idCita,
+            @fechaVisita,
+            @idUsuario,
+            @idTipoTratamiento,
+            @idPrecio,
+            @pagado,
+            @ocupaFactura,
+            @claveFacturaGenerada,
+            @notas,
+            @idFisioTerapeuta
+        );
+
+        SET @idVisita = SCOPE_IDENTITY();
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+
+
 -- ELIMINAR CAMPO codigocita de citas
 use FisioKH
 go

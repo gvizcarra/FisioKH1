@@ -16,52 +16,64 @@
         {
             this.gbIngresoPaciente = new System.Windows.Forms.GroupBox();
             this.btnAgregarPx = new FisioKH.Boton();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.lblIngresosPagados = new System.Windows.Forms.Label();
-            this.lblCitas = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.lblTipoIngreso = new System.Windows.Forms.Label();
-            this.lblIngresos = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.pbxPacienteIngreso = new System.Windows.Forms.PictureBox();
             this.dgvBuscarPaciente = new System.Windows.Forms.DataGridView();
             this.btnBuscarPaciente = new FisioKH.Boton();
             this.txtBuscarPacienteIngreso = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lblEmail = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtObservaciones = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.lblIngresosPagados = new System.Windows.Forms.Label();
+            this.lblNombreLbl = new System.Windows.Forms.Label();
+            this.lblCitas = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.lblNombreCompleto = new System.Windows.Forms.Label();
             this.lblDob = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblTipoIngreso = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.lblIngresos = new System.Windows.Forms.Label();
+            this.lblCelular = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.lblFisio = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lblMedicoTratante = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.lblEdad = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lblSexo = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblCelular = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblNombreCompleto = new System.Windows.Forms.Label();
-            this.lblNombreLbl = new System.Windows.Forms.Label();
+            this.lblMedicoTratante = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvExpediente = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGral = new System.Windows.Forms.TabPage();
             this.tabDocs = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cboFisioTerapeuta = new System.Windows.Forms.ComboBox();
+            this.dtpIngresoFecha = new System.Windows.Forms.DateTimePicker();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtIdGoogleCalendar = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboTratamiento = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.cboPrecio = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.gbIngresoPaciente.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPacienteIngreso)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBuscarPaciente)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpediente)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGral.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbIngresoPaciente
@@ -71,9 +83,9 @@
             this.gbIngresoPaciente.Controls.Add(this.dgvBuscarPaciente);
             this.gbIngresoPaciente.Controls.Add(this.btnBuscarPaciente);
             this.gbIngresoPaciente.Controls.Add(this.txtBuscarPacienteIngreso);
-            this.gbIngresoPaciente.Location = new System.Drawing.Point(1, 1);
+            this.gbIngresoPaciente.Location = new System.Drawing.Point(5, 261);
             this.gbIngresoPaciente.Name = "gbIngresoPaciente";
-            this.gbIngresoPaciente.Size = new System.Drawing.Size(290, 680);
+            this.gbIngresoPaciente.Size = new System.Drawing.Size(290, 422);
             this.gbIngresoPaciente.TabIndex = 11;
             this.gbIngresoPaciente.TabStop = false;
             this.gbIngresoPaciente.Text = "Paciente";
@@ -85,7 +97,7 @@
             this.btnAgregarPx.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAgregarPx.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.btnAgregarPx.ForeColor = System.Drawing.Color.Black;
-            this.btnAgregarPx.Location = new System.Drawing.Point(237, 20);
+            this.btnAgregarPx.Location = new System.Drawing.Point(242, 17);
             this.btnAgregarPx.Margin = new System.Windows.Forms.Padding(10);
             this.btnAgregarPx.Name = "btnAgregarPx";
             this.btnAgregarPx.Size = new System.Drawing.Size(46, 26);
@@ -93,6 +105,63 @@
             this.btnAgregarPx.Text = "&++";
             this.btnAgregarPx.UseVisualStyleBackColor = false;
             this.btnAgregarPx.Click += new System.EventHandler(this.btnAgregarPx_Click);
+            // 
+            // pbxPacienteIngreso
+            // 
+            this.pbxPacienteIngreso.ErrorImage = null;
+            this.pbxPacienteIngreso.Image = global::FisioKH.Properties.Resources.fisioTerapeuta;
+            this.pbxPacienteIngreso.InitialImage = null;
+            this.pbxPacienteIngreso.Location = new System.Drawing.Point(8, 197);
+            this.pbxPacienteIngreso.MaximumSize = new System.Drawing.Size(282, 217);
+            this.pbxPacienteIngreso.Name = "pbxPacienteIngreso";
+            this.pbxPacienteIngreso.Size = new System.Drawing.Size(282, 217);
+            this.pbxPacienteIngreso.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbxPacienteIngreso.TabIndex = 22;
+            this.pbxPacienteIngreso.TabStop = false;
+            // 
+            // dgvBuscarPaciente
+            // 
+            this.dgvBuscarPaciente.AllowUserToAddRows = false;
+            this.dgvBuscarPaciente.AllowUserToDeleteRows = false;
+            this.dgvBuscarPaciente.AllowUserToOrderColumns = true;
+            this.dgvBuscarPaciente.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvBuscarPaciente.BackgroundColor = System.Drawing.Color.AliceBlue;
+            this.dgvBuscarPaciente.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.dgvBuscarPaciente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBuscarPaciente.Location = new System.Drawing.Point(7, 46);
+            this.dgvBuscarPaciente.MultiSelect = false;
+            this.dgvBuscarPaciente.Name = "dgvBuscarPaciente";
+            this.dgvBuscarPaciente.ReadOnly = true;
+            this.dgvBuscarPaciente.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvBuscarPaciente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvBuscarPaciente.Size = new System.Drawing.Size(282, 147);
+            this.dgvBuscarPaciente.TabIndex = 2;
+            this.dgvBuscarPaciente.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBuscarPaciente_RowEnter);
+            // 
+            // btnBuscarPaciente
+            // 
+            this.btnBuscarPaciente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnBuscarPaciente.FlatAppearance.BorderSize = 2;
+            this.btnBuscarPaciente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscarPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnBuscarPaciente.ForeColor = System.Drawing.Color.Black;
+            this.btnBuscarPaciente.Location = new System.Drawing.Point(179, 17);
+            this.btnBuscarPaciente.Margin = new System.Windows.Forms.Padding(10);
+            this.btnBuscarPaciente.Name = "btnBuscarPaciente";
+            this.btnBuscarPaciente.Size = new System.Drawing.Size(61, 26);
+            this.btnBuscarPaciente.TabIndex = 1;
+            this.btnBuscarPaciente.Text = "&Buscar Px";
+            this.btnBuscarPaciente.UseVisualStyleBackColor = false;
+            this.btnBuscarPaciente.Click += new System.EventHandler(this.btnBuscarPaciente_Click);
+            // 
+            // txtBuscarPacienteIngreso
+            // 
+            this.txtBuscarPacienteIngreso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtBuscarPacienteIngreso.Location = new System.Drawing.Point(6, 18);
+            this.txtBuscarPacienteIngreso.Name = "txtBuscarPacienteIngreso";
+            this.txtBuscarPacienteIngreso.Size = new System.Drawing.Size(169, 25);
+            this.txtBuscarPacienteIngreso.TabIndex = 0;
+            this.txtBuscarPacienteIngreso.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBuscarPacienteIngreso_KeyDown);
             // 
             // groupBox4
             // 
@@ -127,6 +196,17 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Generales";
             // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblEmail.ForeColor = System.Drawing.Color.Black;
+            this.lblEmail.Location = new System.Drawing.Point(227, 60);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(41, 19);
+            this.lblEmail.TabIndex = 44;
+            this.lblEmail.Text = "email";
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -148,6 +228,16 @@
             this.lblIngresosPagados.TabIndex = 48;
             this.lblIngresosPagados.Text = "#";
             // 
+            // lblNombreLbl
+            // 
+            this.lblNombreLbl.AutoSize = true;
+            this.lblNombreLbl.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblNombreLbl.Location = new System.Drawing.Point(12, 40);
+            this.lblNombreLbl.Name = "lblNombreLbl";
+            this.lblNombreLbl.Size = new System.Drawing.Size(59, 19);
+            this.lblNombreLbl.TabIndex = 0;
+            this.lblNombreLbl.Text = "Nombre";
+            // 
             // lblCitas
             // 
             this.lblCitas.AutoSize = true;
@@ -159,6 +249,15 @@
             this.lblCitas.TabIndex = 47;
             this.lblCitas.Text = "#";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(186, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 19);
+            this.label1.TabIndex = 43;
+            this.label1.Text = "Email";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -169,145 +268,16 @@
             this.label10.TabIndex = 46;
             this.label10.Text = "Ingresos";
             // 
-            // label8
+            // lblNombreCompleto
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label8.Location = new System.Drawing.Point(136, 21);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(39, 19);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Citas";
-            // 
-            // lblTipoIngreso
-            // 
-            this.lblTipoIngreso.AutoSize = true;
-            this.lblTipoIngreso.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblTipoIngreso.ForeColor = System.Drawing.Color.Black;
-            this.lblTipoIngreso.Location = new System.Drawing.Point(97, 21);
-            this.lblTipoIngreso.Name = "lblTipoIngreso";
-            this.lblTipoIngreso.Size = new System.Drawing.Size(17, 19);
-            this.lblTipoIngreso.TabIndex = 45;
-            this.lblTipoIngreso.Text = "#";
-            // 
-            // lblIngresos
-            // 
-            this.lblIngresos.AutoSize = true;
-            this.lblIngresos.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblIngresos.ForeColor = System.Drawing.Color.Black;
-            this.lblIngresos.Location = new System.Drawing.Point(353, 21);
-            this.lblIngresos.Name = "lblIngresos";
-            this.lblIngresos.Size = new System.Drawing.Size(17, 19);
-            this.lblIngresos.TabIndex = 16;
-            this.lblIngresos.Text = "#";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 21);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(85, 19);
-            this.label13.TabIndex = 44;
-            this.label13.Text = "Tipo Ingreso";
-            // 
-            // pbxPacienteIngreso
-            // 
-            this.pbxPacienteIngreso.ErrorImage = null;
-            this.pbxPacienteIngreso.Image = global::FisioKH.Properties.Resources.fisioTerapeuta;
-            this.pbxPacienteIngreso.InitialImage = null;
-            this.pbxPacienteIngreso.Location = new System.Drawing.Point(1, 445);
-            this.pbxPacienteIngreso.MaximumSize = new System.Drawing.Size(282, 217);
-            this.pbxPacienteIngreso.Name = "pbxPacienteIngreso";
-            this.pbxPacienteIngreso.Size = new System.Drawing.Size(282, 217);
-            this.pbxPacienteIngreso.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbxPacienteIngreso.TabIndex = 22;
-            this.pbxPacienteIngreso.TabStop = false;
-            // 
-            // dgvBuscarPaciente
-            // 
-            this.dgvBuscarPaciente.AllowUserToAddRows = false;
-            this.dgvBuscarPaciente.AllowUserToDeleteRows = false;
-            this.dgvBuscarPaciente.AllowUserToOrderColumns = true;
-            this.dgvBuscarPaciente.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvBuscarPaciente.BackgroundColor = System.Drawing.Color.AliceBlue;
-            this.dgvBuscarPaciente.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            this.dgvBuscarPaciente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBuscarPaciente.Location = new System.Drawing.Point(2, 48);
-            this.dgvBuscarPaciente.MultiSelect = false;
-            this.dgvBuscarPaciente.Name = "dgvBuscarPaciente";
-            this.dgvBuscarPaciente.ReadOnly = true;
-            this.dgvBuscarPaciente.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvBuscarPaciente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBuscarPaciente.Size = new System.Drawing.Size(282, 391);
-            this.dgvBuscarPaciente.TabIndex = 2;
-            this.dgvBuscarPaciente.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBuscarPaciente_RowEnter);
-            // 
-            // btnBuscarPaciente
-            // 
-            this.btnBuscarPaciente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnBuscarPaciente.FlatAppearance.BorderSize = 2;
-            this.btnBuscarPaciente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBuscarPaciente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.btnBuscarPaciente.ForeColor = System.Drawing.Color.Black;
-            this.btnBuscarPaciente.Location = new System.Drawing.Point(174, 20);
-            this.btnBuscarPaciente.Margin = new System.Windows.Forms.Padding(10);
-            this.btnBuscarPaciente.Name = "btnBuscarPaciente";
-            this.btnBuscarPaciente.Size = new System.Drawing.Size(61, 26);
-            this.btnBuscarPaciente.TabIndex = 1;
-            this.btnBuscarPaciente.Text = "&Buscar Px";
-            this.btnBuscarPaciente.UseVisualStyleBackColor = false;
-            this.btnBuscarPaciente.Click += new System.EventHandler(this.btnBuscarPaciente_Click);
-            // 
-            // txtBuscarPacienteIngreso
-            // 
-            this.txtBuscarPacienteIngreso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBuscarPacienteIngreso.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtBuscarPacienteIngreso.Location = new System.Drawing.Point(3, 21);
-            this.txtBuscarPacienteIngreso.Name = "txtBuscarPacienteIngreso";
-            this.txtBuscarPacienteIngreso.Size = new System.Drawing.Size(169, 25);
-            this.txtBuscarPacienteIngreso.TabIndex = 0;
-            this.txtBuscarPacienteIngreso.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBuscarPacienteIngreso_KeyDown);
-            // 
-            // lblEmail
-            // 
-            this.lblEmail.AutoSize = true;
-            this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblEmail.ForeColor = System.Drawing.Color.Black;
-            this.lblEmail.Location = new System.Drawing.Point(227, 60);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(41, 19);
-            this.lblEmail.TabIndex = 44;
-            this.lblEmail.Text = "email";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.txtObservaciones);
-            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.groupBox3.Location = new System.Drawing.Point(6, 108);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(845, 146);
-            this.groupBox3.TabIndex = 14;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Observaciones";
-            // 
-            // txtObservaciones
-            // 
-            this.txtObservaciones.Font = new System.Drawing.Font("Arial", 10F);
-            this.txtObservaciones.Location = new System.Drawing.Point(6, 19);
-            this.txtObservaciones.Multiline = true;
-            this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtObservaciones.Size = new System.Drawing.Size(819, 114);
-            this.txtObservaciones.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(186, 60);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 19);
-            this.label1.TabIndex = 43;
-            this.label1.Text = "Email";
+            this.lblNombreCompleto.AutoSize = true;
+            this.lblNombreCompleto.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblNombreCompleto.ForeColor = System.Drawing.Color.Black;
+            this.lblNombreCompleto.Location = new System.Drawing.Point(77, 40);
+            this.lblNombreCompleto.Name = "lblNombreCompleto";
+            this.lblNombreCompleto.Size = new System.Drawing.Size(57, 19);
+            this.lblNombreCompleto.TabIndex = 1;
+            this.lblNombreCompleto.Text = "nombre";
             // 
             // lblDob
             // 
@@ -320,6 +290,37 @@
             this.lblDob.TabIndex = 13;
             this.lblDob.Text = "dob";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label8.Location = new System.Drawing.Point(136, 21);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(39, 19);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Citas";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label2.Location = new System.Drawing.Point(372, 40);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(51, 19);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Celular";
+            // 
+            // lblTipoIngreso
+            // 
+            this.lblTipoIngreso.AutoSize = true;
+            this.lblTipoIngreso.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblTipoIngreso.ForeColor = System.Drawing.Color.Black;
+            this.lblTipoIngreso.Location = new System.Drawing.Point(97, 21);
+            this.lblTipoIngreso.Name = "lblTipoIngreso";
+            this.lblTipoIngreso.Size = new System.Drawing.Size(17, 19);
+            this.lblTipoIngreso.TabIndex = 45;
+            this.lblTipoIngreso.Text = "#";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -329,6 +330,37 @@
             this.label7.Size = new System.Drawing.Size(78, 19);
             this.label7.TabIndex = 12;
             this.label7.Text = "Nacimiento";
+            // 
+            // lblIngresos
+            // 
+            this.lblIngresos.AutoSize = true;
+            this.lblIngresos.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblIngresos.ForeColor = System.Drawing.Color.Black;
+            this.lblIngresos.Location = new System.Drawing.Point(353, 21);
+            this.lblIngresos.Name = "lblIngresos";
+            this.lblIngresos.Size = new System.Drawing.Size(17, 19);
+            this.lblIngresos.TabIndex = 16;
+            this.lblIngresos.Text = "#";
+            // 
+            // lblCelular
+            // 
+            this.lblCelular.AutoSize = true;
+            this.lblCelular.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblCelular.ForeColor = System.Drawing.Color.Black;
+            this.lblCelular.Location = new System.Drawing.Point(420, 40);
+            this.lblCelular.Name = "lblCelular";
+            this.lblCelular.Size = new System.Drawing.Size(25, 19);
+            this.lblCelular.TabIndex = 3;
+            this.lblCelular.Text = "cel";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(85, 19);
+            this.label13.TabIndex = 44;
+            this.label13.Text = "Tipo Ingreso";
             // 
             // lblFisio
             // 
@@ -341,26 +373,26 @@
             this.lblFisio.TabIndex = 11;
             this.lblFisio.Text = "fisio";
             // 
-            // label6
+            // lblEdad
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label6.Location = new System.Drawing.Point(645, 60);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(36, 19);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Fisio";
+            this.lblEdad.AutoSize = true;
+            this.lblEdad.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblEdad.ForeColor = System.Drawing.Color.Black;
+            this.lblEdad.Location = new System.Drawing.Point(564, 60);
+            this.lblEdad.Name = "lblEdad";
+            this.lblEdad.Size = new System.Drawing.Size(39, 19);
+            this.lblEdad.TabIndex = 7;
+            this.lblEdad.Text = "edad";
             // 
-            // lblMedicoTratante
+            // label3
             // 
-            this.lblMedicoTratante.AutoSize = true;
-            this.lblMedicoTratante.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblMedicoTratante.ForeColor = System.Drawing.Color.Black;
-            this.lblMedicoTratante.Location = new System.Drawing.Point(696, 39);
-            this.lblMedicoTratante.Name = "lblMedicoTratante";
-            this.lblMedicoTratante.Size = new System.Drawing.Size(53, 19);
-            this.lblMedicoTratante.TabIndex = 9;
-            this.lblMedicoTratante.Text = "medico";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label3.Location = new System.Drawing.Point(525, 40);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 19);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Sexo";
             // 
             // label5
             // 
@@ -372,16 +404,15 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Medico";
             // 
-            // lblEdad
+            // label6
             // 
-            this.lblEdad.AutoSize = true;
-            this.lblEdad.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblEdad.ForeColor = System.Drawing.Color.Black;
-            this.lblEdad.Location = new System.Drawing.Point(564, 60);
-            this.lblEdad.Name = "lblEdad";
-            this.lblEdad.Size = new System.Drawing.Size(39, 19);
-            this.lblEdad.TabIndex = 7;
-            this.lblEdad.Text = "edad";
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label6.Location = new System.Drawing.Point(645, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(36, 19);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Fisio";
             // 
             // label4
             // 
@@ -404,64 +435,44 @@
             this.lblSexo.TabIndex = 5;
             this.lblSexo.Text = "sexo";
             // 
-            // label3
+            // lblMedicoTratante
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label3.Location = new System.Drawing.Point(525, 40);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 19);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Sexo";
+            this.lblMedicoTratante.AutoSize = true;
+            this.lblMedicoTratante.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblMedicoTratante.ForeColor = System.Drawing.Color.Black;
+            this.lblMedicoTratante.Location = new System.Drawing.Point(696, 39);
+            this.lblMedicoTratante.Name = "lblMedicoTratante";
+            this.lblMedicoTratante.Size = new System.Drawing.Size(53, 19);
+            this.lblMedicoTratante.TabIndex = 9;
+            this.lblMedicoTratante.Text = "medico";
             // 
-            // lblCelular
+            // groupBox3
             // 
-            this.lblCelular.AutoSize = true;
-            this.lblCelular.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblCelular.ForeColor = System.Drawing.Color.Black;
-            this.lblCelular.Location = new System.Drawing.Point(420, 40);
-            this.lblCelular.Name = "lblCelular";
-            this.lblCelular.Size = new System.Drawing.Size(25, 19);
-            this.lblCelular.TabIndex = 3;
-            this.lblCelular.Text = "cel";
+            this.groupBox3.Controls.Add(this.txtObservaciones);
+            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.groupBox3.Location = new System.Drawing.Point(6, 108);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(845, 99);
+            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Observaciones";
             // 
-            // label2
+            // txtObservaciones
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label2.Location = new System.Drawing.Point(372, 40);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 19);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Celular";
-            // 
-            // lblNombreCompleto
-            // 
-            this.lblNombreCompleto.AutoSize = true;
-            this.lblNombreCompleto.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblNombreCompleto.ForeColor = System.Drawing.Color.Black;
-            this.lblNombreCompleto.Location = new System.Drawing.Point(77, 40);
-            this.lblNombreCompleto.Name = "lblNombreCompleto";
-            this.lblNombreCompleto.Size = new System.Drawing.Size(57, 19);
-            this.lblNombreCompleto.TabIndex = 1;
-            this.lblNombreCompleto.Text = "nombre";
-            // 
-            // lblNombreLbl
-            // 
-            this.lblNombreLbl.AutoSize = true;
-            this.lblNombreLbl.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblNombreLbl.Location = new System.Drawing.Point(12, 40);
-            this.lblNombreLbl.Name = "lblNombreLbl";
-            this.lblNombreLbl.Size = new System.Drawing.Size(59, 19);
-            this.lblNombreLbl.TabIndex = 0;
-            this.lblNombreLbl.Text = "Nombre";
+            this.txtObservaciones.Font = new System.Drawing.Font("Arial", 10F);
+            this.txtObservaciones.Location = new System.Drawing.Point(6, 19);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtObservaciones.Size = new System.Drawing.Size(819, 72);
+            this.txtObservaciones.TabIndex = 0;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvExpediente);
             this.groupBox2.Location = new System.Drawing.Point(299, 1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(852, 358);
+            this.groupBox2.Size = new System.Drawing.Size(852, 376);
             this.groupBox2.TabIndex = 24;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Expediente";
@@ -478,17 +489,17 @@
             this.dgvExpediente.Name = "dgvExpediente";
             this.dgvExpediente.ReadOnly = true;
             this.dgvExpediente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvExpediente.Size = new System.Drawing.Size(840, 334);
+            this.dgvExpediente.Size = new System.Drawing.Size(840, 352);
             this.dgvExpediente.TabIndex = 0;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabGral);
             this.tabControl1.Controls.Add(this.tabDocs);
-            this.tabControl1.Location = new System.Drawing.Point(299, 367);
+            this.tabControl1.Location = new System.Drawing.Point(299, 433);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(852, 290);
+            this.tabControl1.Size = new System.Drawing.Size(852, 242);
             this.tabControl1.TabIndex = 45;
             // 
             // tabGral
@@ -498,7 +509,7 @@
             this.tabGral.Location = new System.Drawing.Point(4, 26);
             this.tabGral.Name = "tabGral";
             this.tabGral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGral.Size = new System.Drawing.Size(844, 260);
+            this.tabGral.Size = new System.Drawing.Size(844, 212);
             this.tabGral.TabIndex = 0;
             this.tabGral.Text = "Datos";
             this.tabGral.UseVisualStyleBackColor = true;
@@ -513,9 +524,125 @@
             this.tabDocs.Text = "Documentos";
             this.tabDocs.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.cboPrecio);
+            this.groupBox1.Controls.Add(this.cboTratamiento);
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.cboFisioTerapeuta);
+            this.groupBox1.Controls.Add(this.dtpIngresoFecha);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.txtIdGoogleCalendar);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Location = new System.Drawing.Point(6, 1);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(290, 264);
+            this.groupBox1.TabIndex = 24;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Cita";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(3, 110);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(82, 19);
+            this.label15.TabIndex = 56;
+            this.label15.Text = "Tratamiento";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 78);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(36, 19);
+            this.label14.TabIndex = 54;
+            this.label14.Text = "Fisio";
+            // 
+            // cboFisioTerapeuta
+            // 
+            this.cboFisioTerapeuta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFisioTerapeuta.FormattingEnabled = true;
+            this.cboFisioTerapeuta.Location = new System.Drawing.Point(48, 72);
+            this.cboFisioTerapeuta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboFisioTerapeuta.Name = "cboFisioTerapeuta";
+            this.cboFisioTerapeuta.Size = new System.Drawing.Size(221, 25);
+            this.cboFisioTerapeuta.TabIndex = 53;
+            this.cboFisioTerapeuta.SelectedIndexChanged += new System.EventHandler(this.cboFisioTerapeuta_SelectedIndexChanged);
+            // 
+            // dtpIngresoFecha
+            // 
+            this.dtpIngresoFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpIngresoFecha.Location = new System.Drawing.Point(48, 41);
+            this.dtpIngresoFecha.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpIngresoFecha.Name = "dtpIngresoFecha";
+            this.dtpIngresoFecha.Size = new System.Drawing.Size(121, 25);
+            this.dtpIngresoFecha.TabIndex = 52;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label12.Location = new System.Drawing.Point(3, 47);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(44, 19);
+            this.label12.TabIndex = 51;
+            this.label12.Text = "Fecha";
+            // 
+            // txtIdGoogleCalendar
+            // 
+            this.txtIdGoogleCalendar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIdGoogleCalendar.Location = new System.Drawing.Point(48, 13);
+            this.txtIdGoogleCalendar.Name = "txtIdGoogleCalendar";
+            this.txtIdGoogleCalendar.ReadOnly = true;
+            this.txtIdGoogleCalendar.Size = new System.Drawing.Size(221, 25);
+            this.txtIdGoogleCalendar.TabIndex = 24;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label11.Location = new System.Drawing.Point(2, 18);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(42, 19);
+            this.label11.TabIndex = 50;
+            this.label11.Text = "Clave";
+            // 
+            // cboTratamiento
+            // 
+            this.cboTratamiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTratamiento.FormattingEnabled = true;
+            this.cboTratamiento.Location = new System.Drawing.Point(82, 104);
+            this.cboTratamiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboTratamiento.Name = "cboTratamiento";
+            this.cboTratamiento.Size = new System.Drawing.Size(187, 25);
+            this.cboTratamiento.TabIndex = 57;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(3, 143);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(46, 19);
+            this.label16.TabIndex = 59;
+            this.label16.Text = "Precio";
+            // 
+            // cboPrecio
+            // 
+            this.cboPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPrecio.FormattingEnabled = true;
+            this.cboPrecio.Location = new System.Drawing.Point(55, 137);
+            this.cboPrecio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboPrecio.Name = "cboPrecio";
+            this.cboPrecio.Size = new System.Drawing.Size(214, 25);
+            this.cboPrecio.TabIndex = 58;
+            // 
             // IngresoPaciente
             // 
             this.ClientSize = new System.Drawing.Size(1164, 681);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.gbIngresoPaciente);
             this.Controls.Add(this.groupBox2);
@@ -526,16 +653,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).EndInit();
             this.gbIngresoPaciente.ResumeLayout(false);
             this.gbIngresoPaciente.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPacienteIngreso)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBuscarPaciente)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpediente)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabGral.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -578,5 +707,16 @@
         private System.Windows.Forms.TabPage tabGral;
         private System.Windows.Forms.TabPage tabDocs;
         private Boton btnAgregarPx;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtIdGoogleCalendar;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DateTimePicker dtpIngresoFecha;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cboFisioTerapeuta;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox cboTratamiento;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ComboBox cboPrecio;
     }
 }

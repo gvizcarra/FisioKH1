@@ -320,6 +320,7 @@
     <None Include="assets\search.ico" />
     <None Include="assets\searchsm.ico" />
     <None Include="assets\searchxs.ico" />
+    <Content Include="cambiosFisiokhV1.3.2.sql" />
     <Content Include="fisiokh.ico" />
   </ItemGroup>
   <ItemGroup>

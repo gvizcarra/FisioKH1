@@ -66,14 +66,27 @@ namespace FisioKH
 
             this.dgvExpediente.DataSource = dt;
 
+            DBHelper dbh = new DBHelper();
+
+
+            this.cboTratamiento.DataSource = dbh.obtenerTratamientos();
+            this.cboTratamiento.DisplayMember = "nombre"; // what user sees
+            this.cboTratamiento.ValueMember = "id";
+            
+            this.cboPrecio.DataSource = dbh.obtenerPrecios();
+            this.cboPrecio.DisplayMember = "nombre"; // what user sees
+            this.cboPrecio.ValueMember = "id";
+            
+            this.cboFisioTerapeuta.DataSource = dbh.obtenerFisios();
+            this.cboFisioTerapeuta.DisplayMember = "nombre"; // what user sees
+            this.cboFisioTerapeuta.ValueMember = "id";
+            
 
             cargarGridPacientes(this.txtBuscarPacienteIngreso.Text);
 
 
-            //dgvBuscarPaciente.Columns["ApellidoMaterno"].Visible = true;
-
-
-            //this.txtTitle.Text = fce.Id.ToString();
+            this.txtIdGoogleCalendar.Text = fce.Id.ToString();
+            this.txtIdGoogleCalendar.BackColor = Color.FromArgb(fce.Color.A, fce.Color.R, fce.Color.G, fce.Color.B);
         }
 
   
@@ -198,6 +211,11 @@ namespace FisioKH
         {
             Pacientes fm = new Pacientes();
             fm.ShowDialog();
+        }
+
+        private void cboFisioTerapeuta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
