@@ -73,7 +73,7 @@ namespace FisioKH
             //dgvBuscarPaciente.Columns["ApellidoMaterno"].Visible = true;
 
 
-            this.txtTitle.Text = fce.Id.ToString();
+            //this.txtTitle.Text = fce.Id.ToString();
         }
 
   
@@ -194,6 +194,10 @@ namespace FisioKH
             }
         }
 
-      
+        private void btnAgregarPx_Click(object sender, EventArgs e)
+        {
+            Pacientes fm = new Pacientes();
+            fm.ShowDialog();
+        }
     }
 }
