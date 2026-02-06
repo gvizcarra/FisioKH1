@@ -79,7 +79,11 @@ namespace FisioKH
             
             this.cboFisioTerapeuta.DataSource = dbh.obtenerFisios();
             this.cboFisioTerapeuta.DisplayMember = "nombre"; // what user sees
-            this.cboFisioTerapeuta.ValueMember = "id";
+            this.cboFisioTerapeuta.ValueMember = "id"; 
+            
+            this.cboMetodoPago.DataSource = dbh.obtenerMetodosPago();
+            this.cboMetodoPago.DisplayMember = "nombre"; // what user sees
+            this.cboMetodoPago.ValueMember = "id";
             
 
             cargarGridPacientes(this.txtBuscarPacienteIngreso.Text);
@@ -167,7 +171,10 @@ namespace FisioKH
             lblCitas.Text = drv["totalCitas"]?.ToString() ?? "";
             lblIngresos.Text = drv["totalIngresos"]?.ToString() ?? "";
             lblIngresosPagados.Text = drv["totalIngresosPagados"]?.ToString() ?? "";
-            
+
+            txtNombrePaciente.Text = lblNombreCompleto.Text;
+
+
             SetPictureFromVarbinary(pbxPacienteIngreso, drv["Foto"]);
 
 
@@ -213,9 +220,54 @@ namespace FisioKH
             fm.ShowDialog();
         }
 
-        private void cboFisioTerapeuta_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboPrecio_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cboPrecio.SelectedIndex == -1) return;
 
+            DataRowView row = cboPrecio.SelectedItem as DataRowView;
+            if (row == null) return;
+
+            decimal precio = Convert.ToDecimal(row["precio"]);
+            Boolean pacientePaga = Convert.ToBoolean(row["pacientePaga"]);
+
+            if(pacientePaga)
+            {
+                this.txtPaga.ReadOnly = false;
+                this.cboMetodoPago.Enabled = true;
+                this.txtPaga.Enabled = true;
+                this.txtCambio.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Con Este Precio Paciente No Paga!!");
+                this.cboMetodoPago.Enabled = false;
+                this.txtCantidadAPagar.Text= "";
+                this.txtPaga.ReadOnly = true;
+                this.txtPaga.Enabled = false;
+                this.txtCambio.Text = "";
+                this.txtPaga.Value = 0;
+
+            }
+
+            txtCantidadAPagar.Text = precio.ToString("N2");
+        }
+
+    
+
+        private void txtPaga_ValueChanged(object sender, EventArgs e)
+        {
+            DataRowView row = cboPrecio.SelectedItem as DataRowView;
+            if (row == null) return;
+
+            Boolean pacientePaga = Convert.ToBoolean(row["pacientePaga"]);
+
+            if (pacientePaga)
+            {
+                decimal precio = Convert.ToDecimal(row["precio"]);
+                decimal paga = this.txtPaga.Value;
+                decimal cambio = precio - paga;
+                this.txtCambio.Text = cambio.ToString();
+            }
         }
     }
 }

@@ -29,9 +29,18 @@ namespace FisioKH
         public DataTable obtenerPrecios()
         {
             DataTable dt = new DataTable();
-            string sql = "SELECT [id],[nombre],[pacientePaga] FROM [dbo].[precios] WHERE activo = 1 ORDER BY nombre";
+            string sql = "SELECT [id],CONCAT([nombre],' - ',[precio]) AS nombre,[pacientePaga],[precio] FROM [dbo].[precios] WHERE activo = 1 ORDER BY nombre";
             dt = ObtenerDatosDT(sql);
 
+
+            return dt;
+        }
+        
+        public DataTable obtenerMetodosPago()
+        {
+            DataTable dt = new DataTable();
+            string sql = "SELECT [id],[nombre],[ocupaReferenciaPago]  FROM [dbo].[metodoPago] ORDER BY id";
+            dt = ObtenerDatosDT(sql);
 
             return dt;
         }
