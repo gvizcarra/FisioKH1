@@ -121,6 +121,7 @@ namespace FisioKH
             this.txtPaciente.Name = "txtPaciente";
             this.txtPaciente.NumericOnly = false;
             this.txtPaciente.Size = new System.Drawing.Size(133, 26);
+            this.txtPaciente.SuppressValidation = false;
             this.txtPaciente.TabIndex = 12;
             this.txtPaciente.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPaciente_KeyDown);
             // 
@@ -224,6 +225,7 @@ namespace FisioKH
             this.txtNombreCompleto.Name = "txtNombreCompleto";
             this.txtNombreCompleto.NumericOnly = false;
             this.txtNombreCompleto.Size = new System.Drawing.Size(170, 25);
+            this.txtNombreCompleto.SuppressValidation = false;
             this.txtNombreCompleto.TabIndex = 16;
             // 
             // txtCiudad
@@ -239,6 +241,7 @@ namespace FisioKH
             this.txtCiudad.Name = "txtCiudad";
             this.txtCiudad.NumericOnly = false;
             this.txtCiudad.Size = new System.Drawing.Size(84, 25);
+            this.txtCiudad.SuppressValidation = false;
             this.txtCiudad.TabIndex = 17;
             this.txtCiudad.Visible = false;
             this.txtCiudad.TextChanged += new System.EventHandler(this.txtCiudad_TextChanged);
@@ -279,6 +282,7 @@ namespace FisioKH
             this.txtId.Name = "txtId";
             this.txtId.NumericOnly = false;
             this.txtId.Size = new System.Drawing.Size(62, 25);
+            this.txtId.SuppressValidation = false;
             this.txtId.TabIndex = 23;
             this.txtId.Visible = false;
             // 
@@ -344,6 +348,7 @@ namespace FisioKH
             this.txtApellidoMaterno.Name = "txtApellidoMaterno";
             this.txtApellidoMaterno.NumericOnly = false;
             this.txtApellidoMaterno.Size = new System.Drawing.Size(170, 25);
+            this.txtApellidoMaterno.SuppressValidation = false;
             this.txtApellidoMaterno.TabIndex = 51;
             // 
             // label15
@@ -368,6 +373,7 @@ namespace FisioKH
             this.txtApellidoPaterno.Name = "txtApellidoPaterno";
             this.txtApellidoPaterno.NumericOnly = false;
             this.txtApellidoPaterno.Size = new System.Drawing.Size(170, 25);
+            this.txtApellidoPaterno.SuppressValidation = false;
             this.txtApellidoPaterno.TabIndex = 49;
             // 
             // label14
@@ -458,6 +464,7 @@ namespace FisioKH
             this.txtObservaciones.Name = "txtObservaciones";
             this.txtObservaciones.NumericOnly = false;
             this.txtObservaciones.Size = new System.Drawing.Size(362, 54);
+            this.txtObservaciones.SuppressValidation = false;
             this.txtObservaciones.TabIndex = 40;
             // 
             // txtEdad
@@ -471,9 +478,9 @@ namespace FisioKH
             this.txtEdad.MaxValue = null;
             this.txtEdad.MinValue = null;
             this.txtEdad.Name = "txtEdad";
-            this.txtEdad.NumericOnly = false;
-            this.txtEdad.ReadOnly = true;
+            this.txtEdad.NumericOnly = true;
             this.txtEdad.Size = new System.Drawing.Size(41, 25);
+            this.txtEdad.SuppressValidation = false;
             this.txtEdad.TabIndex = 33;
             // 
             // label7
@@ -587,6 +594,7 @@ namespace FisioKH
             this.txtMedicoTratante.Name = "txtMedicoTratante";
             this.txtMedicoTratante.NumericOnly = false;
             this.txtMedicoTratante.Size = new System.Drawing.Size(219, 25);
+            this.txtMedicoTratante.SuppressValidation = false;
             this.txtMedicoTratante.TabIndex = 41;
             // 
             // label12
@@ -637,6 +645,7 @@ namespace FisioKH
             this.txtNombreFiscal.Name = "txtNombreFiscal";
             this.txtNombreFiscal.NumericOnly = false;
             this.txtNombreFiscal.Size = new System.Drawing.Size(138, 25);
+            this.txtNombreFiscal.SuppressValidation = false;
             this.txtNombreFiscal.TabIndex = 39;
             // 
             // label10
@@ -661,6 +670,7 @@ namespace FisioKH
             this.txtDomicilioFiscal.Name = "txtDomicilioFiscal";
             this.txtDomicilioFiscal.NumericOnly = false;
             this.txtDomicilioFiscal.Size = new System.Drawing.Size(151, 25);
+            this.txtDomicilioFiscal.SuppressValidation = false;
             this.txtDomicilioFiscal.TabIndex = 37;
             // 
             // txtRfc
@@ -694,10 +704,12 @@ namespace FisioKH
             this.txtRfcFiscal.Name = "txtRfcFiscal";
             this.txtRfcFiscal.NumericOnly = false;
             this.txtRfcFiscal.Size = new System.Drawing.Size(107, 25);
+            this.txtRfcFiscal.SuppressValidation = false;
             this.txtRfcFiscal.TabIndex = 35;
             // 
             // dtpFechaNacimiento
             // 
+            this.dtpFechaNacimiento.CausesValidation = false;
             this.dtpFechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpFechaNacimiento.Location = new System.Drawing.Point(21, 147);
             this.dtpFechaNacimiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -718,6 +730,7 @@ namespace FisioKH
             this.txtEmailAlta.Name = "txtEmailAlta";
             this.txtEmailAlta.NumericOnly = false;
             this.txtEmailAlta.Size = new System.Drawing.Size(164, 25);
+            this.txtEmailAlta.SuppressValidation = false;
             this.txtEmailAlta.TabIndex = 31;
             // 
             // label5

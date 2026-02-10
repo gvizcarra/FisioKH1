@@ -285,6 +285,7 @@ namespace FisioKH
             parameters["@ciudad"] = this.txtCiudad.Text;
             parameters["@sexo"] = this.gbSexo.Controls.OfType<RadioButton>().First(r => r.Checked).Text.ToString();
             parameters["@fechaNacimiento"] = this.dtpFechaNacimiento.Text.ToString();
+            parameters["@edad"] = this.txtEdad.Text;
             parameters["@email"] = this.txtEmailAlta.Text;
             parameters["@rfc"] = this.txtRfcFiscal.Text;
             parameters["@domicilioFiscal"] = this.txtDomicilioFiscal.Text;

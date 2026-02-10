@@ -27,7 +27,7 @@ namespace FisioKH
         {
            /* Event.Title = txtTitle.Text;
             Event.StartTime = dtStart.Value;
-            Event.EndTime = dtEnd.Value;
+            //Event.EndTime = dtEnd.Value;
             Event.Color = pnlColor.BackColor;*/
 
             DialogResult = DialogResult.OK;
@@ -91,6 +91,9 @@ namespace FisioKH
 
             this.txtIdGoogleCalendar.Text = fce.Id.ToString();
             this.txtIdGoogleCalendar.BackColor = Color.FromArgb(fce.Color.A, fce.Color.R, fce.Color.G, fce.Color.B);
+            this.txtBuscarPacienteIngreso.Text = fce.Title.ToString();
+            this.txtIdCita.Text = fce.cCitaID.ToString();
+            this.txtIdPaciente.Text = fce.NombreFisioterapeuta.ToString();
         }
 
   
@@ -116,8 +119,7 @@ namespace FisioKH
 
             DataTable dtp = dsmp.Tables[dsname];
 
-            dtp.Columns.Add("Apellidos", typeof(string), "apellidoPaterno + ' ' + apellidoMaterno");
-
+            
             this.dgvBuscarPaciente.Visible = false;
             this.dgvBuscarPaciente.DataSource = dtp;
 
@@ -126,9 +128,9 @@ namespace FisioKH
             foreach (DataGridViewColumn col in dgvBuscarPaciente.Columns)
             { col.Visible = false; }
 
-            dgvBuscarPaciente.Columns["Apellidos"].HeaderText = "Apellidos";
-            dgvBuscarPaciente.Columns["Nombre"].Visible = true;
-            dgvBuscarPaciente.Columns["Apellidos"].Visible = true;
+            dgvBuscarPaciente.Columns["NombreCompleto"].Visible = true;
+            dgvBuscarPaciente.Columns["NombreCompleto"].HeaderText = "Nombre";
+
 
 
             this.dgvBuscarPaciente.Visible = true;

@@ -39,6 +39,7 @@ namespace FisioKH
             this.boton1 = new FisioKH.Boton();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSalir = new FisioKH.Boton();
             this.btnCerrarSesion = new FisioKH.Boton();
             this.txtUsuario = new FisioKH.ValidatedNumericTextBox();
             this.btnLogin = new FisioKH.Boton();
@@ -127,6 +128,7 @@ namespace FisioKH
             this.groupBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.groupBox1.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
             this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.groupBox1.Controls.Add(this.btnSalir);
             this.groupBox1.Controls.Add(this.btnCerrarSesion);
             this.groupBox1.Controls.Add(this.txtUsuario);
             this.groupBox1.Controls.Add(this.btnLogin);
@@ -140,6 +142,22 @@ namespace FisioKH
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
+            // 
+            // btnSalir
+            // 
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnSalir.CausesValidation = false;
+            this.btnSalir.FlatAppearance.BorderSize = 2;
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnSalir.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnSalir.Location = new System.Drawing.Point(509, 35);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(10);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(84, 64);
+            this.btnSalir.TabIndex = 11;
+            this.btnSalir.Text = "&Salir";
+            this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // btnCerrarSesion
             // 
@@ -166,13 +184,15 @@ namespace FisioKH
             this.txtUsuario.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.txtUsuario.ForeColor = System.Drawing.Color.Black;
             this.txtUsuario.IsRequired = true;
-            this.txtUsuario.Location = new System.Drawing.Point(209, 25);
+            this.txtUsuario.Location = new System.Drawing.Point(112, 29);
             this.txtUsuario.MaxValue = null;
             this.txtUsuario.MinValue = null;
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.NumericOnly = false;
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
+            this.txtUsuario.SuppressValidation = false;
             this.txtUsuario.TabIndex = 6;
+            this.txtUsuario.Text = "gabriel";
             // 
             // btnLogin
             // 
@@ -180,7 +200,7 @@ namespace FisioKH
             this.btnLogin.FlatAppearance.BorderSize = 2;
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnLogin.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnLogin.Location = new System.Drawing.Point(363, 31);
+            this.btnLogin.Location = new System.Drawing.Point(266, 35);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(10);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(196, 64);
@@ -194,7 +214,7 @@ namespace FisioKH
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(127, 31);
+            this.label1.Location = new System.Drawing.Point(30, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 19);
             this.label1.TabIndex = 4;
@@ -210,14 +230,16 @@ namespace FisioKH
             this.txtPassPin.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.txtPassPin.ForeColor = System.Drawing.Color.Black;
             this.txtPassPin.IsRequired = false;
-            this.txtPassPin.Location = new System.Drawing.Point(209, 66);
+            this.txtPassPin.Location = new System.Drawing.Point(112, 70);
             this.txtPassPin.MaxValue = null;
             this.txtPassPin.MinValue = null;
             this.txtPassPin.Name = "txtPassPin";
             this.txtPassPin.NumericOnly = false;
             this.txtPassPin.PasswordChar = '*';
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
+            this.txtPassPin.SuppressValidation = false;
             this.txtPassPin.TabIndex = 7;
+            this.txtPassPin.Text = "1049";
             this.txtPassPin.UseSystemPasswordChar = true;
             this.txtPassPin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassPin_KeyDown);
             // 
@@ -226,7 +248,7 @@ namespace FisioKH
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(127, 72);
+            this.label2.Location = new System.Drawing.Point(30, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 19);
             this.label2.TabIndex = 5;
@@ -246,7 +268,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 5, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 9, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -409,12 +431,14 @@ namespace FisioKH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1164, 681);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = true;
             this.Name = "FisioKHApp";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FisioKHApp_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -457,6 +481,7 @@ namespace FisioKH
         private ValidatedNumericTextBox txtUsuario;
         private Boton btnCerrarSesion;
         private Boton btnUsuarios;
+        private Boton btnSalir;
     }
 }
 

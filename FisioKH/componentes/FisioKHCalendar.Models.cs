@@ -20,12 +20,43 @@ namespace FisioKH
             public string MatchStatus { get; set; } = "";
 
             // DB extras
-            public long CitaID { get; set; }
-            public bool Realizada { get; set; }
+            public long cCitaID { get; set; }
+            public long cidPaciente { get; set; }
+            public long cfechaCita{ get; set; }
+            public bool cRealizada { get; set; }
+            public string cidUsuarioCita { get; set; }
+            public string cidTipoTratamiento { get; set; }
+            public string cidGoogleCalendarId { get; set; }
+            public string cidFisioterapeuta { get; set; }
+
+
+            // visitarealizada
+
+            public string vidVisita { get; set; }
+            public string vidPaciente { get; set; }
+            public long vfechaVisita { get; set; }
+            public string vidUsuario { get; set; }
+            public string vidTipoTratamiento { get; set; }
+            public string vidPrecio { get; set; }
+            public bool vpagado { get; set; }
+            public bool vocupaFactura { get; set; }
+            public string vnotas { get; set; }
+
+
+            //pagos
+
+            public string pidPago { get; set; }
+            public string pidVisita { get; set; }
+            public string pidUsuario { get; set; }
+            public string pidMetodoPago { get; set; }
+            public string pcantidaPago { get; set; }
+            public string preferenciaPago { get; set; }
+
             public string NombreCompletoPaciente { get; set; } = "";
             public string NombreTratamiento { get; set; } = "";
             public string NombreFisioterapeuta { get; set; } = "";
             public string ClaveEtiqueta { get; set; } = "";
+
         }
 
 

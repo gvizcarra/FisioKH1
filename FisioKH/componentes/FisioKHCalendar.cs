@@ -244,13 +244,15 @@ namespace FisioKH
                 ev.HasDbMatch = GetBool(r, "HasDbMatch");
                 ev.MatchStatus = GetString(r, "MatchStatus");
 
-                // DB extras
-                ev.CitaID = GetLong(r, "idCita");
-                ev.Realizada = GetBool(r, "realizada");
-                ev.NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente");
-                ev.NombreTratamiento = GetString(r, "nombreTratamiento");
-                ev.NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta");
-                ev.ClaveEtiqueta = GetString(r, "claveEtiqueta");
+                //ev.cCitaID = GetLong(r, "idCita");
+                //ev.cRealizada = GetBool(r, "cRealizada");
+                //ev.vpagado = GetBool(r, "vpagado");
+                //ev.NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente");
+                //ev.NombreTratamiento = GetString(r, "nombreTratamiento");
+                //ev.NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta");
+                //ev.cidTipoTratamiento = GetString(r, "cidTipoTratamiento");
+                //ev.ClaveEtiqueta = GetString(r, "claveEtiqueta");
+                //ev.cidUsuarioCita = GetString(r, "cidUsuarioCita");
 
                 Events.Add(ev);
             }
@@ -295,7 +297,7 @@ namespace FisioKH
                 {
                     DataSource = table;
 
-                    // ✅ important: don’t call LoadEventsFromDataSource twice elsewhere.
+                    
                     LoadEventsFromDataSource();
                     RefreshCurrentView();
                 }

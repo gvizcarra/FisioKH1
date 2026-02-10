@@ -171,8 +171,9 @@ namespace FisioKH
                 if (failedControl != null)
                     failedControl.Focus();
 
-                MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                
+                //MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -217,6 +218,7 @@ namespace FisioKH
 
                 if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
                 {
+
                     this.lstBoxLogs.Items.Add(DateTime.Now + " - Bienvenido : " + Program.UsuarioLogeado.Nombre);
                     this.Text = $"{configSettings.ObtenNombreApp} - Usuario: {Program.UsuarioLogeado.Nombre}";
                     this.txtUsuario.Enabled = false;
@@ -344,5 +346,59 @@ namespace FisioKH
                 await Login();
             }
         }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+        "Desea Salir del Sistema?",
+        "Confirmar salir!",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Warning,
+        MessageBoxDefaultButton.Button2);
+
+            if (result != DialogResult.Yes)
+                return;
+
+
+            this.AutoValidate = AutoValidate.Disable;
+            DisableValidationRecursive(this);
+
+            this.Close();
+        }
+
+        private void DisableValidatedTextboxes(Control parent)
+        {
+            foreach (Control c in parent.Controls)
+            {
+                if (c is ValidatedNumericTextBox v)
+                    v.SuppressValidation = true;
+
+                if (c.HasChildren)
+                    DisableValidatedTextboxes(c);
+            }
+        }
+
+        private void FisioKHApp_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            this.AutoValidate = AutoValidate.Disable;
+            DisableValidatedTextboxes(this);
+            DisableValidationRecursive(this);
+
+        }
+
+        private void DisableValidationRecursive(Control parent)
+        {
+            foreach (Control c in parent.Controls)
+            {
+                if (c is ValidatedNumericTextBox v)
+                    v.SuppressValidation = true;
+
+                if (c.HasChildren)
+                    DisableValidationRecursive(c);
+            }
+        }
+ 
+      
     }
 }
