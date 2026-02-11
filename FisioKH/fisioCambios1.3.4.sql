@@ -467,7 +467,7 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT
-        c.id AS CitaID,
+        c.id AS idCita,
         c.idPaciente AS cidPaciente,
         c.fechaCita AS cfechaCita,
         c.fechaRegistro,
