@@ -45,27 +45,20 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblSexo = new System.Windows.Forms.Label();
             this.lblMedicoTratante = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvExpediente = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGral = new System.Windows.Forms.TabPage();
+            this.tabNotas = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.tabDocs = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txtCambio = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txtCantidadAPagar = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.cboMetodoPago = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtNombrePaciente = new System.Windows.Forms.TextBox();
             this.btnGuardarCitaVisita = new FisioKH.Boton();
             this.txtIdCita = new System.Windows.Forms.TextBox();
             this.txtIdPaciente = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtClaveFactura = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtNotasVisita = new System.Windows.Forms.TextBox();
             this.chkFactura = new System.Windows.Forms.CheckBox();
@@ -81,22 +74,29 @@
             this.label12 = new System.Windows.Forms.Label();
             this.txtIdGoogleCalendar = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.txtPaga = new System.Windows.Forms.NumericUpDown();
-            this.label20 = new System.Windows.Forms.Label();
-            this.txtNombrePaciente = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txtCambio = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txtCantidadAPagar = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cboMetodoPago = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.gbIngresoPaciente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPacienteIngreso)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBuscarPaciente)).BeginInit();
             this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpediente)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGral.SuspendLayout();
+            this.tabNotas.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPaga)).BeginInit();
             this.SuspendLayout();
             // 
@@ -470,33 +470,12 @@
             this.lblMedicoTratante.TabIndex = 9;
             this.lblMedicoTratante.Text = "medico";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.txtObservaciones);
-            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.groupBox3.Location = new System.Drawing.Point(6, 108);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(845, 99);
-            this.groupBox3.TabIndex = 14;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Observaciones";
-            // 
-            // txtObservaciones
-            // 
-            this.txtObservaciones.Font = new System.Drawing.Font("Arial", 10F);
-            this.txtObservaciones.Location = new System.Drawing.Point(6, 24);
-            this.txtObservaciones.Multiline = true;
-            this.txtObservaciones.Name = "txtObservaciones";
-            this.txtObservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtObservaciones.Size = new System.Drawing.Size(819, 67);
-            this.txtObservaciones.TabIndex = 0;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgvExpediente);
-            this.groupBox2.Location = new System.Drawing.Point(299, 155);
+            this.groupBox2.Location = new System.Drawing.Point(299, 300);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(852, 272);
+            this.groupBox2.Size = new System.Drawing.Size(852, 232);
             this.groupBox2.TabIndex = 24;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Expediente";
@@ -513,55 +492,83 @@
             this.dgvExpediente.Name = "dgvExpediente";
             this.dgvExpediente.ReadOnly = true;
             this.dgvExpediente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvExpediente.Size = new System.Drawing.Size(840, 247);
+            this.dgvExpediente.Size = new System.Drawing.Size(840, 208);
             this.dgvExpediente.TabIndex = 0;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabGral);
+            this.tabControl1.Controls.Add(this.tabNotas);
             this.tabControl1.Controls.Add(this.tabDocs);
-            this.tabControl1.Location = new System.Drawing.Point(299, 433);
+            this.tabControl1.Location = new System.Drawing.Point(299, 537);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(852, 242);
+            this.tabControl1.Size = new System.Drawing.Size(852, 138);
             this.tabControl1.TabIndex = 45;
             // 
             // tabGral
             // 
             this.tabGral.Controls.Add(this.groupBox4);
-            this.tabGral.Controls.Add(this.groupBox3);
             this.tabGral.Location = new System.Drawing.Point(4, 26);
             this.tabGral.Name = "tabGral";
             this.tabGral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGral.Size = new System.Drawing.Size(844, 212);
+            this.tabGral.Size = new System.Drawing.Size(844, 108);
             this.tabGral.TabIndex = 0;
             this.tabGral.Text = "Datos";
             this.tabGral.UseVisualStyleBackColor = true;
+            // 
+            // tabNotas
+            // 
+            this.tabNotas.Controls.Add(this.groupBox3);
+            this.tabNotas.Location = new System.Drawing.Point(4, 26);
+            this.tabNotas.Name = "tabNotas";
+            this.tabNotas.Size = new System.Drawing.Size(844, 108);
+            this.tabNotas.TabIndex = 2;
+            this.tabNotas.Text = "Notas";
+            this.tabNotas.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.txtObservaciones);
+            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.groupBox3.Location = new System.Drawing.Point(3, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(838, 99);
+            this.groupBox3.TabIndex = 15;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Observaciones";
+            // 
+            // txtObservaciones
+            // 
+            this.txtObservaciones.Font = new System.Drawing.Font("Arial", 10F);
+            this.txtObservaciones.Location = new System.Drawing.Point(6, 24);
+            this.txtObservaciones.Multiline = true;
+            this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtObservaciones.Size = new System.Drawing.Size(819, 67);
+            this.txtObservaciones.TabIndex = 0;
             // 
             // tabDocs
             // 
             this.tabDocs.Location = new System.Drawing.Point(4, 26);
             this.tabDocs.Name = "tabDocs";
             this.tabDocs.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDocs.Size = new System.Drawing.Size(844, 212);
+            this.tabDocs.Size = new System.Drawing.Size(844, 108);
             this.tabDocs.TabIndex = 1;
             this.tabDocs.Text = "Documentos";
             this.tabDocs.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkRealizada);
             this.groupBox1.Controls.Add(this.label20);
             this.groupBox1.Controls.Add(this.txtNombrePaciente);
-            this.groupBox1.Controls.Add(this.groupBox6);
             this.groupBox1.Controls.Add(this.btnGuardarCitaVisita);
             this.groupBox1.Controls.Add(this.txtIdCita);
             this.groupBox1.Controls.Add(this.txtIdPaciente);
-            this.groupBox1.Controls.Add(this.label17);
-            this.groupBox1.Controls.Add(this.txtClaveFactura);
             this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.chkFactura);
             this.groupBox1.Controls.Add(this.chkPagada);
-            this.groupBox1.Controls.Add(this.chkRealizada);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.cboPrecio);
             this.groupBox1.Controls.Add(this.cboTratamiento);
@@ -574,10 +581,212 @@
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Location = new System.Drawing.Point(6, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1148, 148);
+            this.groupBox1.Size = new System.Drawing.Size(1148, 128);
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cita";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label20.Location = new System.Drawing.Point(43, 55);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(23, 19);
+            this.label20.TabIndex = 67;
+            this.label20.Text = "Px";
+            // 
+            // txtNombrePaciente
+            // 
+            this.txtNombrePaciente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNombrePaciente.Location = new System.Drawing.Point(67, 51);
+            this.txtNombrePaciente.Name = "txtNombrePaciente";
+            this.txtNombrePaciente.ReadOnly = true;
+            this.txtNombrePaciente.Size = new System.Drawing.Size(209, 25);
+            this.txtNombrePaciente.TabIndex = 66;
+            // 
+            // btnGuardarCitaVisita
+            // 
+            this.btnGuardarCitaVisita.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnGuardarCitaVisita.FlatAppearance.BorderSize = 2;
+            this.btnGuardarCitaVisita.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGuardarCitaVisita.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnGuardarCitaVisita.ForeColor = System.Drawing.Color.Black;
+            this.btnGuardarCitaVisita.Location = new System.Drawing.Point(1009, 53);
+            this.btnGuardarCitaVisita.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarCitaVisita.Name = "btnGuardarCitaVisita";
+            this.btnGuardarCitaVisita.Size = new System.Drawing.Size(131, 61);
+            this.btnGuardarCitaVisita.TabIndex = 24;
+            this.btnGuardarCitaVisita.Text = "&Guardar Visita";
+            this.btnGuardarCitaVisita.UseVisualStyleBackColor = false;
+            // 
+            // txtIdCita
+            // 
+            this.txtIdCita.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIdCita.Location = new System.Drawing.Point(2, 70);
+            this.txtIdCita.Name = "txtIdCita";
+            this.txtIdCita.Size = new System.Drawing.Size(38, 25);
+            this.txtIdCita.TabIndex = 65;
+            // 
+            // txtIdPaciente
+            // 
+            this.txtIdPaciente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIdPaciente.Location = new System.Drawing.Point(2, 42);
+            this.txtIdPaciente.Name = "txtIdPaciente";
+            this.txtIdPaciente.Size = new System.Drawing.Size(38, 25);
+            this.txtIdPaciente.TabIndex = 24;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txtNotasVisita);
+            this.groupBox5.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.groupBox5.Location = new System.Drawing.Point(285, 46);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(711, 76);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Notas de Visita";
+            // 
+            // txtNotasVisita
+            // 
+            this.txtNotasVisita.Font = new System.Drawing.Font("Arial", 10F);
+            this.txtNotasVisita.Location = new System.Drawing.Point(9, 18);
+            this.txtNotasVisita.Multiline = true;
+            this.txtNotasVisita.Name = "txtNotasVisita";
+            this.txtNotasVisita.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtNotasVisita.Size = new System.Drawing.Size(692, 52);
+            this.txtNotasVisita.TabIndex = 0;
+            // 
+            // chkFactura
+            // 
+            this.chkFactura.AutoSize = true;
+            this.chkFactura.Location = new System.Drawing.Point(206, 91);
+            this.chkFactura.Name = "chkFactura";
+            this.chkFactura.Size = new System.Drawing.Size(73, 23);
+            this.chkFactura.TabIndex = 63;
+            this.chkFactura.Text = "Factura";
+            this.chkFactura.UseVisualStyleBackColor = true;
+            // 
+            // chkPagada
+            // 
+            this.chkPagada.AutoSize = true;
+            this.chkPagada.Enabled = false;
+            this.chkPagada.Location = new System.Drawing.Point(109, 91);
+            this.chkPagada.Name = "chkPagada";
+            this.chkPagada.Size = new System.Drawing.Size(73, 23);
+            this.chkPagada.TabIndex = 62;
+            this.chkPagada.Text = "Pagada";
+            this.chkPagada.UseVisualStyleBackColor = true;
+            // 
+            // chkRealizada
+            // 
+            this.chkRealizada.AutoSize = true;
+            this.chkRealizada.Enabled = false;
+            this.chkRealizada.Location = new System.Drawing.Point(7, 93);
+            this.chkRealizada.Name = "chkRealizada";
+            this.chkRealizada.Size = new System.Drawing.Size(84, 23);
+            this.chkRealizada.TabIndex = 61;
+            this.chkRealizada.Text = "Realizada";
+            this.chkRealizada.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(539, 23);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(46, 19);
+            this.label16.TabIndex = 59;
+            this.label16.Text = "Precio";
+            // 
+            // cboPrecio
+            // 
+            this.cboPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPrecio.FormattingEnabled = true;
+            this.cboPrecio.Location = new System.Drawing.Point(585, 17);
+            this.cboPrecio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboPrecio.Name = "cboPrecio";
+            this.cboPrecio.Size = new System.Drawing.Size(160, 25);
+            this.cboPrecio.TabIndex = 58;
+            this.cboPrecio.SelectedIndexChanged += new System.EventHandler(this.cboPrecio_SelectedIndexChanged);
+            // 
+            // cboTratamiento
+            // 
+            this.cboTratamiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboTratamiento.FormattingEnabled = true;
+            this.cboTratamiento.Location = new System.Drawing.Point(987, 17);
+            this.cboTratamiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboTratamiento.Name = "cboTratamiento";
+            this.cboTratamiento.Size = new System.Drawing.Size(156, 25);
+            this.cboTratamiento.TabIndex = 57;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(907, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(82, 19);
+            this.label15.TabIndex = 56;
+            this.label15.Text = "Tratamiento";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(748, 20);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(36, 19);
+            this.label14.TabIndex = 54;
+            this.label14.Text = "Fisio";
+            // 
+            // cboFisioTerapeuta
+            // 
+            this.cboFisioTerapeuta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFisioTerapeuta.FormattingEnabled = true;
+            this.cboFisioTerapeuta.Location = new System.Drawing.Point(786, 16);
+            this.cboFisioTerapeuta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboFisioTerapeuta.Name = "cboFisioTerapeuta";
+            this.cboFisioTerapeuta.Size = new System.Drawing.Size(118, 25);
+            this.cboFisioTerapeuta.TabIndex = 53;
+            // 
+            // dtpIngresoFecha
+            // 
+            this.dtpIngresoFecha.CustomFormat = "dd/MM/yyyy hh:mm tt";
+            this.dtpIngresoFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpIngresoFecha.Location = new System.Drawing.Point(321, 18);
+            this.dtpIngresoFecha.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpIngresoFecha.Name = "dtpIngresoFecha";
+            this.dtpIngresoFecha.RightToLeftLayout = true;
+            this.dtpIngresoFecha.ShowUpDown = true;
+            this.dtpIngresoFecha.Size = new System.Drawing.Size(169, 25);
+            this.dtpIngresoFecha.TabIndex = 52;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label12.Location = new System.Drawing.Point(276, 24);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(44, 19);
+            this.label12.TabIndex = 51;
+            this.label12.Text = "Fecha";
+            // 
+            // txtIdGoogleCalendar
+            // 
+            this.txtIdGoogleCalendar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIdGoogleCalendar.Location = new System.Drawing.Point(67, 18);
+            this.txtIdGoogleCalendar.Name = "txtIdGoogleCalendar";
+            this.txtIdGoogleCalendar.ReadOnly = true;
+            this.txtIdGoogleCalendar.Size = new System.Drawing.Size(209, 25);
+            this.txtIdGoogleCalendar.TabIndex = 24;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label11.Location = new System.Drawing.Point(2, 23);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 19);
+            this.label11.TabIndex = 50;
+            this.label11.Text = "Clave GC";
             // 
             // groupBox6
             // 
@@ -590,12 +799,25 @@
             this.groupBox6.Controls.Add(this.label18);
             this.groupBox6.Controls.Add(this.cboMetodoPago);
             this.groupBox6.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.groupBox6.Location = new System.Drawing.Point(7, 70);
+            this.groupBox6.Location = new System.Drawing.Point(300, 155);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(700, 72);
+            this.groupBox6.Size = new System.Drawing.Size(845, 139);
             this.groupBox6.TabIndex = 16;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Informacion de Pago";
+            // 
+            // txtPaga
+            // 
+            this.txtPaga.Location = new System.Drawing.Point(340, 19);
+            this.txtPaga.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.txtPaga.Name = "txtPaga";
+            this.txtPaga.Size = new System.Drawing.Size(60, 25);
+            this.txtPaga.TabIndex = 76;
+            this.txtPaga.ValueChanged += new System.EventHandler(this.txtPaga_ValueChanged);
             // 
             // label22
             // 
@@ -661,241 +883,12 @@
             this.cboMetodoPago.Size = new System.Drawing.Size(117, 25);
             this.cboMetodoPago.TabIndex = 67;
             // 
-            // btnGuardarCitaVisita
-            // 
-            this.btnGuardarCitaVisita.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnGuardarCitaVisita.FlatAppearance.BorderSize = 2;
-            this.btnGuardarCitaVisita.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGuardarCitaVisita.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.btnGuardarCitaVisita.ForeColor = System.Drawing.Color.Black;
-            this.btnGuardarCitaVisita.Location = new System.Drawing.Point(997, 51);
-            this.btnGuardarCitaVisita.Margin = new System.Windows.Forms.Padding(10);
-            this.btnGuardarCitaVisita.Name = "btnGuardarCitaVisita";
-            this.btnGuardarCitaVisita.Size = new System.Drawing.Size(131, 90);
-            this.btnGuardarCitaVisita.TabIndex = 24;
-            this.btnGuardarCitaVisita.Text = "&Guardar Visita";
-            this.btnGuardarCitaVisita.UseVisualStyleBackColor = false;
-            // 
-            // txtIdCita
-            // 
-            this.txtIdCita.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIdCita.Location = new System.Drawing.Point(1104, 12);
-            this.txtIdCita.Name = "txtIdCita";
-            this.txtIdCita.Size = new System.Drawing.Size(38, 25);
-            this.txtIdCita.TabIndex = 65;
-            // 
-            // txtIdPaciente
-            // 
-            this.txtIdPaciente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIdPaciente.Location = new System.Drawing.Point(1059, 12);
-            this.txtIdPaciente.Name = "txtIdPaciente";
-            this.txtIdPaciente.Size = new System.Drawing.Size(38, 25);
-            this.txtIdPaciente.TabIndex = 24;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label17.Location = new System.Drawing.Point(463, 47);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(91, 19);
-            this.label17.TabIndex = 64;
-            this.label17.Text = "Clave Factura";
-            // 
-            // txtClaveFactura
-            // 
-            this.txtClaveFactura.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtClaveFactura.Location = new System.Drawing.Point(556, 44);
-            this.txtClaveFactura.Name = "txtClaveFactura";
-            this.txtClaveFactura.Size = new System.Drawing.Size(151, 25);
-            this.txtClaveFactura.TabIndex = 24;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.txtNotasVisita);
-            this.groupBox5.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.groupBox5.Location = new System.Drawing.Point(713, 41);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(271, 101);
-            this.groupBox5.TabIndex = 15;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Notas de Visita";
-            // 
-            // txtNotasVisita
-            // 
-            this.txtNotasVisita.Font = new System.Drawing.Font("Arial", 10F);
-            this.txtNotasVisita.Location = new System.Drawing.Point(9, 18);
-            this.txtNotasVisita.Multiline = true;
-            this.txtNotasVisita.Name = "txtNotasVisita";
-            this.txtNotasVisita.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtNotasVisita.Size = new System.Drawing.Size(256, 77);
-            this.txtNotasVisita.TabIndex = 0;
-            // 
-            // chkFactura
-            // 
-            this.chkFactura.AutoSize = true;
-            this.chkFactura.Location = new System.Drawing.Point(388, 47);
-            this.chkFactura.Name = "chkFactura";
-            this.chkFactura.Size = new System.Drawing.Size(73, 23);
-            this.chkFactura.TabIndex = 63;
-            this.chkFactura.Text = "Factura";
-            this.chkFactura.UseVisualStyleBackColor = true;
-            // 
-            // chkPagada
-            // 
-            this.chkPagada.AutoSize = true;
-            this.chkPagada.Enabled = false;
-            this.chkPagada.Location = new System.Drawing.Point(309, 47);
-            this.chkPagada.Name = "chkPagada";
-            this.chkPagada.Size = new System.Drawing.Size(73, 23);
-            this.chkPagada.TabIndex = 62;
-            this.chkPagada.Text = "Pagada";
-            this.chkPagada.UseVisualStyleBackColor = true;
-            // 
-            // chkRealizada
-            // 
-            this.chkRealizada.AutoSize = true;
-            this.chkRealizada.Enabled = false;
-            this.chkRealizada.Location = new System.Drawing.Point(219, 47);
-            this.chkRealizada.Name = "chkRealizada";
-            this.chkRealizada.Size = new System.Drawing.Size(84, 23);
-            this.chkRealizada.TabIndex = 61;
-            this.chkRealizada.Text = "Realizada";
-            this.chkRealizada.UseVisualStyleBackColor = true;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(450, 18);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(46, 19);
-            this.label16.TabIndex = 59;
-            this.label16.Text = "Precio";
-            // 
-            // cboPrecio
-            // 
-            this.cboPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboPrecio.FormattingEnabled = true;
-            this.cboPrecio.Location = new System.Drawing.Point(496, 12);
-            this.cboPrecio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboPrecio.Name = "cboPrecio";
-            this.cboPrecio.Size = new System.Drawing.Size(159, 25);
-            this.cboPrecio.TabIndex = 58;
-            this.cboPrecio.SelectedIndexChanged += new System.EventHandler(this.cboPrecio_SelectedIndexChanged);
-            // 
-            // cboTratamiento
-            // 
-            this.cboTratamiento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTratamiento.FormattingEnabled = true;
-            this.cboTratamiento.Location = new System.Drawing.Point(898, 12);
-            this.cboTratamiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboTratamiento.Name = "cboTratamiento";
-            this.cboTratamiento.Size = new System.Drawing.Size(155, 25);
-            this.cboTratamiento.TabIndex = 57;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(818, 15);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(82, 19);
-            this.label15.TabIndex = 56;
-            this.label15.Text = "Tratamiento";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(659, 15);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(36, 19);
-            this.label14.TabIndex = 54;
-            this.label14.Text = "Fisio";
-            // 
-            // cboFisioTerapeuta
-            // 
-            this.cboFisioTerapeuta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboFisioTerapeuta.FormattingEnabled = true;
-            this.cboFisioTerapeuta.Location = new System.Drawing.Point(697, 9);
-            this.cboFisioTerapeuta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboFisioTerapeuta.Name = "cboFisioTerapeuta";
-            this.cboFisioTerapeuta.Size = new System.Drawing.Size(117, 25);
-            this.cboFisioTerapeuta.TabIndex = 53;
-            // 
-            // dtpIngresoFecha
-            // 
-            this.dtpIngresoFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpIngresoFecha.Location = new System.Drawing.Point(321, 13);
-            this.dtpIngresoFecha.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dtpIngresoFecha.Name = "dtpIngresoFecha";
-            this.dtpIngresoFecha.Size = new System.Drawing.Size(121, 25);
-            this.dtpIngresoFecha.TabIndex = 52;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label12.Location = new System.Drawing.Point(276, 19);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(44, 19);
-            this.label12.TabIndex = 51;
-            this.label12.Text = "Fecha";
-            // 
-            // txtIdGoogleCalendar
-            // 
-            this.txtIdGoogleCalendar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIdGoogleCalendar.Location = new System.Drawing.Point(67, 13);
-            this.txtIdGoogleCalendar.Name = "txtIdGoogleCalendar";
-            this.txtIdGoogleCalendar.ReadOnly = true;
-            this.txtIdGoogleCalendar.Size = new System.Drawing.Size(209, 25);
-            this.txtIdGoogleCalendar.TabIndex = 24;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label11.Location = new System.Drawing.Point(2, 18);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 19);
-            this.label11.TabIndex = 50;
-            this.label11.Text = "Clave GC";
-            // 
-            // txtPaga
-            // 
-            this.txtPaga.Location = new System.Drawing.Point(340, 19);
-            this.txtPaga.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.txtPaga.Name = "txtPaga";
-            this.txtPaga.Size = new System.Drawing.Size(60, 25);
-            this.txtPaga.TabIndex = 76;
-            this.txtPaga.ValueChanged += new System.EventHandler(this.txtPaga_ValueChanged);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label20.Location = new System.Drawing.Point(1, 45);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(23, 19);
-            this.label20.TabIndex = 67;
-            this.label20.Text = "Px";
-            // 
-            // txtNombrePaciente
-            // 
-            this.txtNombrePaciente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNombrePaciente.Location = new System.Drawing.Point(25, 41);
-            this.txtNombrePaciente.Name = "txtNombrePaciente";
-            this.txtNombrePaciente.ReadOnly = true;
-            this.txtNombrePaciente.Size = new System.Drawing.Size(180, 25);
-            this.txtNombrePaciente.TabIndex = 66;
-            // 
             // IngresoPaciente
             // 
             this.ClientSize = new System.Drawing.Size(1164, 681);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.gbIngresoPaciente);
             this.Controls.Add(this.groupBox2);
             this.Name = "IngresoPaciente";
@@ -909,18 +902,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvBuscarPaciente)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpediente)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabGral.ResumeLayout(false);
+            this.tabNotas.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPaga)).EndInit();
             this.ResumeLayout(false);
 
@@ -945,10 +939,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblFisio;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lblDob;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtObservaciones;
         private System.Windows.Forms.Label lblIngresos;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lblTipoIngreso;
@@ -978,8 +970,6 @@
         private System.Windows.Forms.CheckBox chkFactura;
         private System.Windows.Forms.CheckBox chkPagada;
         private System.Windows.Forms.CheckBox chkRealizada;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtClaveFactura;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox txtNotasVisita;
         private System.Windows.Forms.TextBox txtCantidadAPagar;
@@ -996,5 +986,8 @@
         private System.Windows.Forms.NumericUpDown txtPaga;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtNombrePaciente;
+        private System.Windows.Forms.TabPage tabNotas;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtObservaciones;
     }
 }
