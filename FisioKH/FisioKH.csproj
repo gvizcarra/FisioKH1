@@ -286,6 +286,7 @@
     <None Include="assets\GoogleCalendarCredentialsFisioKhFileGVS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="cambiosFisiokhV1.3.3.sql" />
     <None Include="FisioKH_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -321,6 +322,7 @@
     <None Include="assets\searchsm.ico" />
     <None Include="assets\searchxs.ico" />
     <Content Include="cambiosFisiokhV1.3.2.sql" />
+    <Content Include="fisioCambios1.3.4.sql" />
     <Content Include="fisiokh.ico" />
   </ItemGroup>
   <ItemGroup>

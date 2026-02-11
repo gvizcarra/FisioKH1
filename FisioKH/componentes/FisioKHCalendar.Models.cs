@@ -20,7 +20,7 @@ namespace FisioKH
             public string MatchStatus { get; set; } = "";
 
             // DB extras
-            public long cCitaID { get; set; }
+            public long CitaID { get; set; }
             public long cidPaciente { get; set; }
             public long cfechaCita{ get; set; }
             public bool cRealizada { get; set; }

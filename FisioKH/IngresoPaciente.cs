@@ -92,7 +92,7 @@ namespace FisioKH
             this.txtIdGoogleCalendar.Text = fce.Id.ToString();
             this.txtIdGoogleCalendar.BackColor = Color.FromArgb(fce.Color.A, fce.Color.R, fce.Color.G, fce.Color.B);
             this.txtBuscarPacienteIngreso.Text = fce.Title.ToString();
-            this.txtIdCita.Text = fce.cCitaID.ToString();
+            this.txtIdCita.Text = fce.CitaID.ToString();
             this.txtIdPaciente.Text = fce.NombreFisioterapeuta.ToString();
         }
 

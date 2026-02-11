@@ -180,7 +180,7 @@ namespace FisioKH
             };
 
             // Add icons in a stable order: DB then Done
-            if (ev.HasDbMatch && ev.cCitaID != 0)
+            if (ev.HasDbMatch && ev.CitaID != 0)
             {
                 var dbIcon = new IconPictureBox
                 {
@@ -190,7 +190,7 @@ namespace FisioKH
                     Size = new Size(iconSize, iconSize),
                     TabStop = false
                 };
-                _eventTip.SetToolTip(dbIcon, $"Cita Capturada: {ev.cCitaID}");
+                _eventTip.SetToolTip(dbIcon, $"Cita Capturada: {ev.CitaID}");
                 place(dbIcon, x);
                 x -= (iconSize + 4);
 
