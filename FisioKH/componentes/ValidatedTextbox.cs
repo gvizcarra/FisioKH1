@@ -8,8 +8,8 @@ namespace FisioKH
     public class ValidatedNumericTextBox : TextBox
     {
         [Browsable(false)]
-        public bool SuppressValidation { get; set; } 
-        
+        public bool SuppressValidation { get; set; }
+
         private bool _isRequired = true;
         private bool _numericOnly = false;
         private decimal? _minValue;
