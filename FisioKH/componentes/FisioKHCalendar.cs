@@ -252,6 +252,16 @@ namespace FisioKH
                 ev.NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta");
                 ev.ClaveEtiqueta = GetString(r, "claveEtiqueta");
 
+
+                ev.cRealizada = GetBool(r, "cRealizada");
+                ev.vpagado = GetBool(r, "vpagado");
+                ev.NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente");
+                ev.NombreTratamiento = GetString(r, "nombreTratamiento");
+                ev.NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta");
+                ev.cidTipoTratamiento = GetString(r, "cidTipoTratamiento");
+                ev.ClaveEtiqueta = GetString(r, "claveEtiqueta");
+                ev.cidUsuarioCita = GetString(r, "cidUsuarioCita");
+
                 Events.Add(ev);
             }
 
