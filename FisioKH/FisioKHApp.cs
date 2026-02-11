@@ -28,7 +28,7 @@ namespace FisioKH
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
 
-           
+
 
             DesHabilitaTabs(ObtentabsSeguras());
         }
@@ -60,11 +60,11 @@ namespace FisioKH
             edt.ShowDialog();
             // Fixed: show correct properties (GoogleId vs IdCita)
             //MessageBox.Show(
-                //$"GoogleId: {e.Id}\n" +
-                //$"Cita: {e.Title}\n" +
-                //$"Inicio: {e.Start}\n" +
-                //$"Fin: {e.End}\n" +
-                //$"IdCita: {e.CitaID}");
+            //$"GoogleId: {e.Id}\n" +
+            //$"Cita: {e.Title}\n" +
+            //$"Inicio: {e.Start}\n" +
+            //$"Fin: {e.End}\n" +
+            //$"IdCita: {e.CitaID}");
         }
 
         private async void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
@@ -171,9 +171,8 @@ namespace FisioKH
                 if (failedControl != null)
                     failedControl.Focus();
 
-                
-                
-                //MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -226,14 +225,14 @@ namespace FisioKH
                     this.txtPassPin.IsRequired = false;
                     this.btnLogin.Enabled = false;
                     this.btnCerrarSesion.Enabled = true;
-                    
-                    if (Program.UsuarioLogeado.Nivel==1)
+
+                    if (Program.UsuarioLogeado.Nivel == 1)
                     {
                         this.btnUsuarios.Enabled = true;
                         this.btnPrecios.Enabled = true;
                         this.btnFisios.Enabled = true;
                         this.btnTratamientos.Enabled = true;
-                        this.btnMetodosPago.Enabled = true;                        
+                        this.btnMetodosPago.Enabled = true;
                     }
 
                     HabilitaTabs(ObtentabsSeguras());
@@ -398,7 +397,5 @@ namespace FisioKH
                     DisableValidationRecursive(c);
             }
         }
- 
-      
     }
 }
