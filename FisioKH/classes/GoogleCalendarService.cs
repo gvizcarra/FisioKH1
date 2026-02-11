@@ -186,7 +186,7 @@ public class GoogleCalendarService
             // extras only if dict exists
             if (hasMatch && dbMap.TryGetValue(key, out var data) && data != null)
             {
-                row["idCita"] = GetLong(data, "idCita", 0);
+                row["idCita"] = GetLong(data, "idCita", 0); 
                 row["realizada"] = GetBool(data, "realizada", false);
                 row["nombreCompletoPaciente"] = GetString(data, "nombreCompletoPaciente");
                 row["nombreTratamiento"] = GetString(data, "nombreTratamiento");
