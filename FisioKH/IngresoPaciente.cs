@@ -11,7 +11,7 @@ namespace FisioKH
     public partial class IngresoPaciente : BaseForm
     {
         private FisioKH.FisioKHCalendar.CalendarEventKH fce;
-       
+
 
         // REQUIRED for Designer
         public IngresoPaciente(CalendarEventKH ce)
@@ -20,26 +20,26 @@ namespace FisioKH
             InitializeComponent();
         }
 
-      
-        
+
+
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-           /* Event.Title = txtTitle.Text;
-            Event.StartTime = dtStart.Value;
-            //Event.EndTime = dtEnd.Value;
-            Event.Color = pnlColor.BackColor;*/
+            /* Event.Title = txtTitle.Text;
+             Event.StartTime = dtStart.Value;
+             //Event.EndTime = dtEnd.Value;
+             Event.Color = pnlColor.BackColor;*/
 
             DialogResult = DialogResult.OK;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            
+
             DialogResult = DialogResult.OK;
         }
 
-     
+
         private void EventDetailsForm_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable("PatientHistory");
@@ -72,19 +72,19 @@ namespace FisioKH
             this.cboTratamiento.DataSource = dbh.obtenerTratamientos();
             this.cboTratamiento.DisplayMember = "nombre"; // what user sees
             this.cboTratamiento.ValueMember = "id";
-            
+
             this.cboPrecio.DataSource = dbh.obtenerPrecios();
             this.cboPrecio.DisplayMember = "nombre"; // what user sees
             this.cboPrecio.ValueMember = "id";
-            
+
             this.cboFisioTerapeuta.DataSource = dbh.obtenerFisios();
             this.cboFisioTerapeuta.DisplayMember = "nombre"; // what user sees
-            this.cboFisioTerapeuta.ValueMember = "id"; 
-            
+            this.cboFisioTerapeuta.ValueMember = "id";
+
             this.cboMetodoPago.DataSource = dbh.obtenerMetodosPago();
             this.cboMetodoPago.DisplayMember = "nombre"; // what user sees
             this.cboMetodoPago.ValueMember = "id";
-            
+
 
             cargarGridPacientes(this.txtBuscarPacienteIngreso.Text);
 
@@ -96,12 +96,12 @@ namespace FisioKH
             this.txtIdPaciente.Text = fce.NombreFisioterapeuta.ToString();
         }
 
-  
+
 
         private void cargarGridPacientes(string paciente = null)
         {
 
-            
+
             DataSet dsmp = new DataSet();
             string dsname = "Pacientes";
 
@@ -119,7 +119,8 @@ namespace FisioKH
 
             DataTable dtp = dsmp.Tables[dsname];
 
-            
+            dtp.Columns.Add("Apellidos", typeof(string), "apellidoPaterno + ' ' + apellidoMaterno");
+
             this.dgvBuscarPaciente.Visible = false;
             this.dgvBuscarPaciente.DataSource = dtp;
 
@@ -166,7 +167,7 @@ namespace FisioKH
             lblEdad.Text = drv["Edad"]?.ToString() ?? "";
             lblMedicoTratante.Text = drv["MedicoTratante"]?.ToString() ?? "";
             lblFisio.Text = drv["Fisio"]?.ToString() ?? "";
-            lblDob.Text = drv["FechaNacimiento"]?.ToString().Substring(0,9) ?? "";
+            lblDob.Text = drv["FechaNacimiento"]?.ToString().Substring(0, 9) ?? "";
             txtObservaciones.Text = drv["observaciones"]?.ToString() ?? "";
             lblEmail.Text = drv["email"]?.ToString() ?? "";
             lblTipoIngreso.Text = drv["Etiqueta"]?.ToString() ?? "";
@@ -232,7 +233,7 @@ namespace FisioKH
             decimal precio = Convert.ToDecimal(row["precio"]);
             Boolean pacientePaga = Convert.ToBoolean(row["pacientePaga"]);
 
-            if(pacientePaga)
+            if (pacientePaga)
             {
                 this.txtPaga.ReadOnly = false;
                 this.cboMetodoPago.Enabled = true;
@@ -243,7 +244,7 @@ namespace FisioKH
             {
                 MessageBox.Show("Con Este Precio Paciente No Paga!!");
                 this.cboMetodoPago.Enabled = false;
-                this.txtCantidadAPagar.Text= "";
+                this.txtCantidadAPagar.Text = "";
                 this.txtPaga.ReadOnly = true;
                 this.txtPaga.Enabled = false;
                 this.txtCambio.Text = "";
@@ -254,7 +255,7 @@ namespace FisioKH
             txtCantidadAPagar.Text = precio.ToString("N2");
         }
 
-    
+
 
         private void txtPaga_ValueChanged(object sender, EventArgs e)
         {
