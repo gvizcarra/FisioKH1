@@ -7,7 +7,9 @@ namespace FisioKH
 {
     public class ValidatedNumericTextBox : TextBox
     {
-        // ===== Validation properties =====
+        [Browsable(false)]
+        public bool SuppressValidation { get; set; }
+
         private bool _isRequired = true;
         private bool _numericOnly = false;
         private decimal? _minValue;
@@ -59,9 +61,14 @@ namespace FisioKH
         protected override void OnValidating(CancelEventArgs e)
         {
             base.OnValidating(e);
+
+            if (SuppressValidation)
+                return;
+
             if (!ValidateValue(true))
                 e.Cancel = true;
         }
+
 
         private bool ValidateValue(bool showError)
         {
