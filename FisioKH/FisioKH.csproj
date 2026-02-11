@@ -286,6 +286,8 @@
     <None Include="assets\GoogleCalendarCredentialsFisioKhFileGVS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="cambiosFisiokhV1.3.3.sql" />
+    <Content Include="cambiosFisiokhV1.3.4.sql" />
     <None Include="FisioKH_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
