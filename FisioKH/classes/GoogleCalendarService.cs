@@ -192,6 +192,7 @@ public class GoogleCalendarService
                 row["nombreTratamiento"] = GetString(data, "nombreTratamiento");
                 row["nombreFisioterapeuta"] = GetString(data, "nombreFisioterapeuta");
                 row["claveEtiqueta"] = GetString(data, "claveEtiqueta");
+                row["claveEtiquetax"] = GetString(data, "claveEtiqueta");
             }
 
             table.Rows.Add(row);
@@ -223,6 +224,7 @@ public class GoogleCalendarService
         table.Columns.Add("nombreTratamiento");
         table.Columns.Add("nombreFisioterapeuta");
         table.Columns.Add("claveEtiqueta");
+        table.Columns.Add("claveEtiquetax");
 
         return table;
     }

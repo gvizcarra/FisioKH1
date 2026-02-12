@@ -21,24 +21,25 @@ namespace FisioKH
 
             // DB extras
             public long CitaID { get; set; }
-            public bool Realizada { get; set; }
             public long cidPaciente { get; set; }
-            public long cfechaCita { get; set; }
+            public DateTime cfechaCita { get; set; }
             public bool cRealizada { get; set; }
-            public string cidUsuarioCita { get; set; }
-            public string cidTipoTratamiento { get; set; }
+            public long cidUsuarioCita { get; set; }
+            public string cnombreUsuario { get; set; }
+            public long cidTipoTratamiento { get; set; }
             public string cidGoogleCalendarId { get; set; }
-            public string cidFisioterapeuta { get; set; }
+            public long cidFisioterapeuta { get; set; }
 
 
             // visitarealizada
 
             public string vidVisita { get; set; }
             public string vidPaciente { get; set; }
-            public long vfechaVisita { get; set; }
-            public string vidUsuario { get; set; }
-            public string vidTipoTratamiento { get; set; }
-            public string vidPrecio { get; set; }
+            public DateTime vfechaVisita { get; set; }
+            public long vidUsuario { get; set; }
+            public string vnombreUsuario { get; set; }
+            public long vidTipoTratamiento { get; set; }
+            public int vidPrecio { get; set; }
             public bool vpagado { get; set; }
             public bool vocupaFactura { get; set; }
             public string vnotas { get; set; }
@@ -46,11 +47,11 @@ namespace FisioKH
 
             //pagos
 
-            public string pidPago { get; set; }
-            public string pidVisita { get; set; }
-            public string pidUsuario { get; set; }
-            public string pidMetodoPago { get; set; }
-            public string pcantidaPago { get; set; }
+            public long pidPago { get; set; }
+            public long pidVisita { get; set; }
+            public long pidUsuario { get; set; }
+            public long pidMetodoPago { get; set; }
+            public long pcantidaPago { get; set; }
             public string preferenciaPago { get; set; }
 
             public string NombreCompletoPaciente { get; set; } = "";

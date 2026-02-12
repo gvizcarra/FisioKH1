@@ -200,7 +200,7 @@ namespace FisioKH
                 dbIcon.MouseDown += (s, e) => p.BringToFront();
             }
 
-            if (ev.Realizada == true)
+            if (ev.cRealizada == true)
             {
                 var doneIcon = new IconPictureBox
                 {

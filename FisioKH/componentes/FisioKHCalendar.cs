@@ -236,33 +236,24 @@ namespace FisioKH
                     Start = GetDateTime(r, "Start"),
                     End = GetDateTime(r, "End"),
                     ColorId = GetString(r, "ColorId"),
-                };
+                    Color = GoogleColorToSystem(GetString(r, "ColorId")),
+                    HasDbMatch = GetBool(r, "HasDbMatch"),
+                    MatchStatus = GetString(r, "MatchStatus"),
+                    CitaID = GetLong(r, "idCita"),
+                    cfechaCita= GetDateTime(r, "cfechaCita"),
+                    cRealizada = GetBool(r, "realizada"),
+                    NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente"),
+                    NombreTratamiento = GetString(r, "nombreTratamiento"),
+                    NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta"),
+                    ClaveEtiqueta = GetString(r, "claveEtiqueta"),
+                    vpagado = GetBool(r, "vpagado"),
+                    cidTipoTratamiento = GetLong(r, "cidTipoTratamiento"),
+                    cidUsuarioCita = GetLong(r, "cidUsuarioCita"),
+                    cnombreUsuario = GetString(r, "cidUsuarioCita"),
+            };
 
-                ev.Color = GoogleColorToSystem(ev.ColorId);
 
-                // flags
-                ev.HasDbMatch = GetBool(r, "HasDbMatch");
-                ev.MatchStatus = GetString(r, "MatchStatus");
-
-                // DB extras
-                ev.CitaID = GetLong(r, "idCita");
-                ev.Realizada = GetBool(r, "realizada");
-                ev.NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente");
-                ev.NombreTratamiento = GetString(r, "nombreTratamiento");
-                ev.NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta");
-                ev.ClaveEtiqueta = GetString(r, "claveEtiqueta");
-
-
-                ev.cRealizada = GetBool(r, "cRealizada");
-                ev.vpagado = GetBool(r, "vpagado");
-                ev.NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente");
-                ev.NombreTratamiento = GetString(r, "nombreTratamiento");
-                ev.NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta");
-                ev.cidTipoTratamiento = GetString(r, "cidTipoTratamiento");
-                ev.ClaveEtiqueta = GetString(r, "claveEtiqueta");
-                ev.cidUsuarioCita = GetString(r, "cidUsuarioCita");
-
-                Events.Add(ev);
+            Events.Add(ev);
             }
 
             _eventsVersion++;
