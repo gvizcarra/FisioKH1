@@ -511,3 +511,67 @@ END
 GO
 
 
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenCitasPorGoogleEventIds]    Script Date: 2/12/2026 7:20:08 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER   PROCEDURE [dbo].[usp_obtenCitasPorGoogleEventIds]
+    @eventIds dbo.GoogleEventIdList READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        
+        c.id AS cIdCita,
+        c.idPaciente AS cIdPaciente,
+        c.fechaCita AS cFechaCita,
+        c.fechaRegistro AS cFechaRegistro,
+        c.realizada AS cRealizada,
+        COALESCE(c.idUsuario,0) AS cidUsuarioCita,
+        COALESCE(c.idTipoTratamiento,0) AS cIdTipoTratamiento,
+        c.idGoogleCalendar AS idGoogleCalendar,     
+        COALESCE(c.idFisioTerapeuta,0) AS cIdFisioterapeuta,
+        ft.nombre AS cNombreFisioterapeuta,
+        p.claveEtiqueta AS cClaveEtiqueta,
+        ft.nombre AS cNombreFisioterapeuta,
+        CONCAT(
+            p.nombreCompleto, ' ',
+            COALESCE(p.apellidoPaterno, ''), ' ',
+            COALESCE(p.apellidoMaterno, '')
+        ) AS cNombreCompletoPaciente,
+
+        COALESCE(tt.nombre,'') AS cNombreTratamiento,
+		COALESCE(vr.id,0) AS vIdVisita,
+		COALESCE(vr.idPaciente,0) AS vIdPaciente,
+		COALESCE(vr.fechaVisita,'') AS vFechaVisita,
+		COALESCE(vr.idUsuario,0) AS vIdUsuario,
+		COALESCE(vr.idTipoTratamiento,0) AS vIdTipoTratamiento,
+		COALESCE(vr.idPrecio,0) AS vIdPrecio,
+		COALESCE(vr.pagado,0) AS vPagado,
+		COALESCE(vr.ocupaFactura,0) AS vOcupaFactura,
+		COALESCE(vr.notas,'') AS vNotas,
+		COALESCE(pvr.id,0) AS vrIdPago,
+		COALESCE(pvr.idUsuario,0) AS vrIdUsuario,
+		COALESCE(pvr.idMetodoPago,0) AS vrIdMetodoPago,
+		COALESCE(pvr.cantidadPago,0) vrCantidadPago,
+		COALESCE(pvr.referenciaPago,0) AS vrReferenciaPago
+
+    FROM Citas c
+    INNER JOIN fisioTerapeutas ft ON c.idFisioTerapeuta = ft.id
+    INNER JOIN Pacientes p ON c.idPaciente = p.id
+    INNER JOIN tipoTratamiento tt ON c.idTipoTratamiento = tt.id
+	LEFT JOIN visitasRealizadas AS vr ON c.id = vr.idCita
+	LEFT JOIN  pagosVisitasRealizadas AS pvr ON vr.id = pvr.idVisita
+    WHERE c.idGoogleCalendar IN (SELECT EventId FROM @eventIds);
+END
+GO
+
+

@@ -186,13 +186,38 @@ public class GoogleCalendarService
             // extras only if dict exists
             if (hasMatch && dbMap.TryGetValue(key, out var data) && data != null)
             {
-                row["idCita"] = GetLong(data, "idCita", 0);
-                row["realizada"] = GetBool(data, "realizada", false);
-                row["nombreCompletoPaciente"] = GetString(data, "nombreCompletoPaciente");
-                row["nombreTratamiento"] = GetString(data, "nombreTratamiento");
-                row["nombreFisioterapeuta"] = GetString(data, "nombreFisioterapeuta");
-                row["claveEtiqueta"] = GetString(data, "claveEtiqueta");
-                row["claveEtiquetax"] = GetString(data, "claveEtiqueta");
+                // ================= CITA =================
+                row["cIdCita"] = GetLong(data, "cIdCita", 0);
+                row["cIdPaciente"] = GetLong(data, "cIdPaciente", 0);
+                row["cFechaCita"] = GetNullableDateTime(data, "cFechaCita");
+                row["cFechaRegistro"] = GetNullableDateTime(data, "cFechaRegistro");
+                row["cRealizada"] = GetBool(data, "cRealizada", false);
+                row["cIdUsuarioCita"] = GetLong(data, "cIdUsuarioCita", 0);
+                row["cIdTipoTratamiento"] = GetLong(data, "cIdTipoTratamiento", 0);
+                row["idGoogleCalendar"] = GetString(data, "idGoogleCalendar");
+                row["cIdFisioterapeuta"] = GetLong(data, "cIdFisioterapeuta", 0);
+                row["cNombreFisioterapeuta"] = GetString(data, "cNombreFisioterapeuta");
+                row["cClaveEtiqueta"] = GetString(data, "cClaveEtiqueta");
+                row["cNombreCompletoPaciente"] = GetString(data, "cNombreCompletoPaciente");
+                row["cNombreTratamiento"] = GetString(data, "cNombreTratamiento");
+
+                // ================= VISITA =================
+                row["vIdVisita"] = GetLong(data, "vIdVisita", 0);
+                row["vIdPaciente"] = GetLong(data, "vIdPaciente", 0);
+                row["vFechaVisita"] = GetNullableDateTime(data, "vFechaVisita");
+                row["vIdUsuario"] = GetLong(data, "vIdUsuario", 0);
+                row["vIdTipoTratamiento"] = GetLong(data, "vIdTipoTratamiento", 0);
+                row["vIdPrecio"] = GetLong(data, "vIdPrecio", 0);
+                row["vPagado"] = GetBool(data, "vPagado", false);
+                row["vOcupaFactura"] = GetBool(data, "vOcupaFactura", false);
+                row["vNotas"] = GetString(data, "vNotas");
+
+                // ================= PAGO =================
+                row["vrIdPago"] = GetLong(data, "vrIdPago", 0);
+                row["vrIdUsuario"] = GetLong(data, "vrIdUsuario", 0);
+                row["vrIdMetodoPago"] = GetLong(data, "vrIdMetodoPago", 0);
+                row["vrCantidadPago"] = GetDecimal(data, "vrCantidadPago", 0);
+                row["vrReferenciaPago"] = GetString(data, "vrReferenciaPago");
             }
 
             table.Rows.Add(row);
@@ -207,24 +232,50 @@ public class GoogleCalendarService
     {
         var table = new DataTable();
 
-        table.Columns.Add("Id"); // Google EventId
+        // ================= GOOGLE BASE =================
+        table.Columns.Add("Id");
         table.Columns.Add("Title");
-        table.Columns.Add("Start", typeof(DateTime));
-        table.Columns.Add("End", typeof(DateTime));
+        table.Columns.Add("Start", typeof(DateTime)).AllowDBNull = true;
+        table.Columns.Add("End", typeof(DateTime)).AllowDBNull = true;
         table.Columns.Add("ColorId");
 
-        // Flags
+        // ================= FLAGS =================
         table.Columns.Add("HasDbMatch", typeof(bool));
-        table.Columns.Add("MatchStatus"); // OK / NO_DB
+        table.Columns.Add("MatchStatus");
 
-        // DB extras
-        table.Columns.Add("idCita", typeof(long));
-        table.Columns.Add("realizada", typeof(bool));
-        table.Columns.Add("nombreCompletoPaciente");
-        table.Columns.Add("nombreTratamiento");
-        table.Columns.Add("nombreFisioterapeuta");
-        table.Columns.Add("claveEtiqueta");
-        table.Columns.Add("claveEtiquetax");
+        // ================= CITA =================
+        table.Columns.Add("cIdCita", typeof(long));
+        table.Columns.Add("cIdPaciente", typeof(long));
+        table.Columns.Add("cFechaCita", typeof(DateTime)).AllowDBNull = true; ;
+        table.Columns.Add("cFechaRegistro", typeof(DateTime)).AllowDBNull = true; 
+        table.Columns.Add("cRealizada", typeof(bool));
+        table.Columns.Add("cIdUsuarioCita", typeof(long));
+        table.Columns.Add("cIdTipoTratamiento", typeof(long));
+        table.Columns.Add("idGoogleCalendar");
+        table.Columns.Add("cIdFisioterapeuta", typeof(long));
+        table.Columns.Add("cNombreFisioterapeuta");
+        table.Columns.Add("cClaveEtiqueta");
+        table.Columns.Add("cNombreCompletoPaciente");
+        table.Columns.Add("cNombreTratamiento");
+
+        // ================= VISITA =================
+        table.Columns.Add("vIdVisita", typeof(long));
+        table.Columns.Add("vIdPaciente", typeof(long));
+        table.Columns.Add("vFechaVisita", typeof(DateTime)).AllowDBNull = true; 
+        table.Columns.Add("vIdUsuario", typeof(long));
+        table.Columns.Add("vIdTipoTratamiento", typeof(long));
+        table.Columns.Add("vIdPrecio", typeof(long));
+        table.Columns.Add("vPagado", typeof(bool));
+        table.Columns.Add("vOcupaFactura", typeof(bool));
+        table.Columns.Add("vNotas");
+
+        // ================= PAGO =================
+        table.Columns.Add("vrIdPago", typeof(long));
+        table.Columns.Add("vrIdUsuario", typeof(long));
+        table.Columns.Add("vrIdMetodoPago", typeof(long));
+        table.Columns.Add("vrCantidadPago", typeof(decimal));
+        table.Columns.Add("vrReferenciaPago");
+
 
         return table;
     }
@@ -253,6 +304,28 @@ public class GoogleCalendarService
         if (!data.TryGetValue(key, out var v) || v == null || v == DBNull.Value) return fallback;
         try { return Convert.ToBoolean(v); } catch { return fallback; }
     }
+
+    private static decimal GetDecimal(Dictionary<string, object> data, string key, decimal fallback)
+    {
+        if (data == null) return fallback;
+        if (!data.TryGetValue(key, out var v) || v == null || v == DBNull.Value)
+            return fallback;
+
+        try { return Convert.ToDecimal(v); }
+        catch { return fallback; }
+    }
+
+
+    private static DateTime? GetNullableDateTime(Dictionary<string, object> data, string key)
+    {
+        if (data == null) return null;
+        if (!data.TryGetValue(key, out var v) || v == null || v == DBNull.Value)
+            return null;
+
+        try { return Convert.ToDateTime(v); }
+        catch { return null; }
+    }
+
 
     #endregion
 }

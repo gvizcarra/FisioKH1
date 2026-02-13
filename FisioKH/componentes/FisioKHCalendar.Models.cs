@@ -19,45 +19,34 @@ namespace FisioKH
             public bool HasDbMatch { get; set; }
             public string MatchStatus { get; set; } = "";
 
-            // DB extras
-            public long CitaID { get; set; }
-            public long cidPaciente { get; set; }
-            public DateTime cfechaCita { get; set; }
+            public long cIdCita { get; set; }
+            public long cIdPaciente { get; set; }
+            public DateTime? cFechaCita { get; set; }
+            public DateTime? cFechaRegistro { get; set; }
             public bool cRealizada { get; set; }
-            public long cidUsuarioCita { get; set; }
-            public string cnombreUsuario { get; set; }
-            public long cidTipoTratamiento { get; set; }
-            public string cidGoogleCalendarId { get; set; }
-            public long cidFisioterapeuta { get; set; }
-
-
-            // visitarealizada
-
-            public string vidVisita { get; set; }
-            public string vidPaciente { get; set; }
-            public DateTime vfechaVisita { get; set; }
-            public long vidUsuario { get; set; }
-            public string vnombreUsuario { get; set; }
-            public long vidTipoTratamiento { get; set; }
-            public int vidPrecio { get; set; }
-            public bool vpagado { get; set; }
-            public bool vocupaFactura { get; set; }
-            public string vnotas { get; set; }
-
-
-            //pagos
-
-            public long pidPago { get; set; }
-            public long pidVisita { get; set; }
-            public long pidUsuario { get; set; }
-            public long pidMetodoPago { get; set; }
-            public long pcantidaPago { get; set; }
-            public string preferenciaPago { get; set; }
-
-            public string NombreCompletoPaciente { get; set; } = "";
-            public string NombreTratamiento { get; set; } = "";
-            public string NombreFisioterapeuta { get; set; } = "";
-            public string ClaveEtiqueta { get; set; } = "";
+            public long cIdUsuarioCita { get; set; }
+            public long cIdTipoTratamiento { get; set; }
+            public string idGoogleCalendar { get; set; } = "";
+            public long cIdFisioterapeuta { get; set; }
+            public string cNombreFisioterapeuta { get; set; } = "";
+            public string cClaveEtiqueta { get; set; } = "";
+            public string cNombreCompletoPaciente { get; set; } = "";
+            public string cNombreTratamiento { get; set; } = "";
+            public long vIdVisita { get; set; }
+            public long vIdPaciente { get; set; }
+            public DateTime? vFechaVisita { get; set; }
+            public long vIdUsuario { get; set; }
+            public long vIdTipoTratamiento { get; set; }
+            public long vIdPrecio { get; set; }
+            public bool vPagado { get; set; }
+            public bool vOcupaFactura { get; set; }
+            public string vNotas { get; set; } = "";
+            public long vrIdPago { get; set; }
+            public long vrIdUsuario { get; set; }
+            public long vrIdMetodoPago { get; set; }
+            public decimal vrCantidadPago { get; set; }
+            public string vrReferenciaPago { get; set; } = "";
+ 
         }
 
 

@@ -239,18 +239,40 @@ namespace FisioKH
                     Color = GoogleColorToSystem(GetString(r, "ColorId")),
                     HasDbMatch = GetBool(r, "HasDbMatch"),
                     MatchStatus = GetString(r, "MatchStatus"),
-                    CitaID = GetLong(r, "idCita"),
-                    cfechaCita= GetDateTime(r, "cfechaCita"),
-                    cRealizada = GetBool(r, "realizada"),
-                    NombreCompletoPaciente = GetString(r, "nombreCompletoPaciente"),
-                    NombreTratamiento = GetString(r, "nombreTratamiento"),
-                    NombreFisioterapeuta = GetString(r, "nombreFisioterapeuta"),
-                    ClaveEtiqueta = GetString(r, "claveEtiqueta"),
-                    vpagado = GetBool(r, "vpagado"),
-                    cidTipoTratamiento = GetLong(r, "cidTipoTratamiento"),
-                    cidUsuarioCita = GetLong(r, "cidUsuarioCita"),
-                    cnombreUsuario = GetString(r, "cidUsuarioCita"),
-            };
+
+                    // ================= CITA =================
+                    cIdCita = GetLong(r, "cIdCita"),
+                    cIdPaciente = GetLong(r, "cIdPaciente"),
+                    cFechaCita = GetDateTime(r, "cFechaCita"),
+                    cFechaRegistro = GetDateTime(r, "cFechaRegistro"),
+                    cRealizada = GetBool(r, "cRealizada"),
+                    cIdUsuarioCita = GetLong(r, "cIdUsuarioCita"),
+                    cIdTipoTratamiento = GetLong(r, "cIdTipoTratamiento"),
+                    idGoogleCalendar = GetString(r, "idGoogleCalendar"),
+                    cIdFisioterapeuta = GetLong(r, "cIdFisioterapeuta"),
+                    cNombreFisioterapeuta = GetString(r, "cNombreFisioterapeuta"),
+                    cClaveEtiqueta = GetString(r, "cClaveEtiqueta"),
+                    cNombreCompletoPaciente = GetString(r, "cNombreCompletoPaciente"),
+                    cNombreTratamiento = GetString(r, "cNombreTratamiento"),
+
+                    // ================= VISITA =================
+                    vIdVisita = GetLong(r, "vIdVisita"),
+                    vIdPaciente = GetLong(r, "vIdPaciente"),
+                    vFechaVisita = GetDateTime(r, "vFechaVisita"),
+                    vIdUsuario = GetLong(r, "vIdUsuario"),
+                    vIdTipoTratamiento = GetLong(r, "vIdTipoTratamiento"),
+                    vIdPrecio = GetLong(r, "vIdPrecio"),
+                    vPagado = GetBool(r, "vPagado"),
+                    vOcupaFactura = GetBool(r, "vOcupaFactura"),
+                    vNotas = GetString(r, "vNotas"),
+
+                    // ================= PAGO =================
+                    vrIdPago = GetLong(r, "vrIdPago"),
+                    vrIdUsuario = GetLong(r, "vrIdUsuario"),
+                    vrIdMetodoPago = GetLong(r, "vrIdMetodoPago"),
+                    vrCantidadPago = GetDecimal(r, "vrCantidadPago"),
+                    vrReferenciaPago = GetString(r, "vrReferenciaPago") 
+                };
 
 
             Events.Add(ev);
@@ -609,5 +631,14 @@ namespace FisioKH
             if (v == null || v == DBNull.Value) return false;
             try { return Convert.ToBoolean(v); } catch { return false; }
         }
+
+        private decimal GetDecimal(DataRow r, string col)
+        {
+            if (!HasCol(r, col)) return 0;
+            var v = r[col];
+            if (v == null || v == DBNull.Value) return 0;
+            try { return Convert.ToDecimal(v); } catch { return 0; }
+        }
+
     }
 }

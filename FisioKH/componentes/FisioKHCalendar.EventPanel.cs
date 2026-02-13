@@ -124,7 +124,7 @@ namespace FisioKH
 
             var title = new Label
             {
-                Text = ev.Title + " - " + (ev.NombreFisioterapeuta ?? ""),
+                Text = ev.Title + " - " + (ev.cNombreFisioterapeuta?? ""),
                 Dock = DockStyle.Top,
                 Height = 16,
                 Font = new Font("Segoe UI", 8.5f, FontStyle.Bold),
@@ -180,7 +180,7 @@ namespace FisioKH
             };
 
             // Add icons in a stable order: DB then Done
-            if (ev.HasDbMatch && ev.CitaID != 0)
+            if (ev.HasDbMatch && ev.cIdCita!= 0)
             {
                 var dbIcon = new IconPictureBox
                 {
@@ -190,7 +190,7 @@ namespace FisioKH
                     Size = new Size(iconSize, iconSize),
                     TabStop = false
                 };
-                _eventTip.SetToolTip(dbIcon, $"Cita Capturada: {ev.CitaID}");
+                _eventTip.SetToolTip(dbIcon, $"Cita Capturada: {ev.cIdCita}");
                 place(dbIcon, x);
                 x -= (iconSize + 4);
 
