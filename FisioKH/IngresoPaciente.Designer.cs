@@ -54,16 +54,14 @@
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.tabDocs = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chkRealizada = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
             this.txtNombrePaciente = new System.Windows.Forms.TextBox();
             this.btnGuardarCitaVisita = new FisioKH.Boton();
-            this.txtIdCita = new System.Windows.Forms.TextBox();
-            this.txtIdPaciente = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtNotasVisita = new System.Windows.Forms.TextBox();
             this.chkFactura = new System.Windows.Forms.CheckBox();
             this.chkPagada = new System.Windows.Forms.CheckBox();
-            this.chkRealizada = new System.Windows.Forms.CheckBox();
             this.label16 = new System.Windows.Forms.Label();
             this.cboPrecio = new System.Windows.Forms.ComboBox();
             this.cboTratamiento = new System.Windows.Forms.ComboBox();
@@ -75,6 +73,7 @@
             this.txtIdGoogleCalendar = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnGuardarPago = new FisioKH.Boton();
             this.txtPaga = new System.Windows.Forms.NumericUpDown();
             this.label22 = new System.Windows.Forms.Label();
             this.txtCambio = new System.Windows.Forms.TextBox();
@@ -160,6 +159,7 @@
             this.dgvBuscarPaciente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvBuscarPaciente.Size = new System.Drawing.Size(282, 245);
             this.dgvBuscarPaciente.TabIndex = 2;
+            this.dgvBuscarPaciente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBuscarPaciente_CellClick);
             this.dgvBuscarPaciente.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBuscarPaciente_RowEnter);
             // 
             // btnBuscarPaciente
@@ -564,8 +564,6 @@
             this.groupBox1.Controls.Add(this.label20);
             this.groupBox1.Controls.Add(this.txtNombrePaciente);
             this.groupBox1.Controls.Add(this.btnGuardarCitaVisita);
-            this.groupBox1.Controls.Add(this.txtIdCita);
-            this.groupBox1.Controls.Add(this.txtIdPaciente);
             this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.chkFactura);
             this.groupBox1.Controls.Add(this.chkPagada);
@@ -586,15 +584,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cita";
             // 
+            // chkRealizada
+            // 
+            this.chkRealizada.AutoSize = true;
+            this.chkRealizada.Enabled = false;
+            this.chkRealizada.Location = new System.Drawing.Point(7, 93);
+            this.chkRealizada.Name = "chkRealizada";
+            this.chkRealizada.Size = new System.Drawing.Size(84, 23);
+            this.chkRealizada.TabIndex = 61;
+            this.chkRealizada.Text = "Realizada";
+            this.chkRealizada.UseVisualStyleBackColor = true;
+            // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label20.Location = new System.Drawing.Point(43, 55);
+            this.label20.Location = new System.Drawing.Point(2, 57);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(23, 19);
+            this.label20.Size = new System.Drawing.Size(60, 19);
             this.label20.TabIndex = 67;
-            this.label20.Text = "Px";
+            this.label20.Text = "Paciente";
             // 
             // txtNombrePaciente
             // 
@@ -619,22 +628,6 @@
             this.btnGuardarCitaVisita.TabIndex = 24;
             this.btnGuardarCitaVisita.Text = "&Guardar Visita";
             this.btnGuardarCitaVisita.UseVisualStyleBackColor = false;
-            // 
-            // txtIdCita
-            // 
-            this.txtIdCita.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIdCita.Location = new System.Drawing.Point(2, 70);
-            this.txtIdCita.Name = "txtIdCita";
-            this.txtIdCita.Size = new System.Drawing.Size(38, 25);
-            this.txtIdCita.TabIndex = 65;
-            // 
-            // txtIdPaciente
-            // 
-            this.txtIdPaciente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIdPaciente.Location = new System.Drawing.Point(2, 42);
-            this.txtIdPaciente.Name = "txtIdPaciente";
-            this.txtIdPaciente.Size = new System.Drawing.Size(38, 25);
-            this.txtIdPaciente.TabIndex = 24;
             // 
             // groupBox5
             // 
@@ -677,17 +670,6 @@
             this.chkPagada.TabIndex = 62;
             this.chkPagada.Text = "Pagada";
             this.chkPagada.UseVisualStyleBackColor = true;
-            // 
-            // chkRealizada
-            // 
-            this.chkRealizada.AutoSize = true;
-            this.chkRealizada.Enabled = false;
-            this.chkRealizada.Location = new System.Drawing.Point(7, 93);
-            this.chkRealizada.Name = "chkRealizada";
-            this.chkRealizada.Size = new System.Drawing.Size(84, 23);
-            this.chkRealizada.TabIndex = 61;
-            this.chkRealizada.Text = "Realizada";
-            this.chkRealizada.UseVisualStyleBackColor = true;
             // 
             // label16
             // 
@@ -790,6 +772,7 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.btnGuardarPago);
             this.groupBox6.Controls.Add(this.txtPaga);
             this.groupBox6.Controls.Add(this.label22);
             this.groupBox6.Controls.Add(this.txtCambio);
@@ -801,10 +784,25 @@
             this.groupBox6.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.groupBox6.Location = new System.Drawing.Point(300, 155);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(845, 139);
+            this.groupBox6.Size = new System.Drawing.Size(854, 139);
             this.groupBox6.TabIndex = 16;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Informacion de Pago";
+            // 
+            // btnGuardarPago
+            // 
+            this.btnGuardarPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnGuardarPago.FlatAppearance.BorderSize = 2;
+            this.btnGuardarPago.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGuardarPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnGuardarPago.ForeColor = System.Drawing.Color.Black;
+            this.btnGuardarPago.Location = new System.Drawing.Point(718, 16);
+            this.btnGuardarPago.Margin = new System.Windows.Forms.Padding(10);
+            this.btnGuardarPago.Name = "btnGuardarPago";
+            this.btnGuardarPago.Size = new System.Drawing.Size(131, 61);
+            this.btnGuardarPago.TabIndex = 68;
+            this.btnGuardarPago.Text = "Guardar &Pago";
+            this.btnGuardarPago.UseVisualStyleBackColor = false;
             // 
             // txtPaga
             // 
@@ -974,8 +972,6 @@
         private System.Windows.Forms.TextBox txtNotasVisita;
         private System.Windows.Forms.TextBox txtCantidadAPagar;
         private Boton btnGuardarCitaVisita;
-        private System.Windows.Forms.TextBox txtIdCita;
-        private System.Windows.Forms.TextBox txtIdPaciente;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cboMetodoPago;
@@ -989,5 +985,6 @@
         private System.Windows.Forms.TabPage tabNotas;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox txtObservaciones;
+        private Boton btnGuardarPago;
     }
 }

@@ -42,32 +42,7 @@ namespace FisioKH
 
         private void EventDetailsForm_Load(object sender, EventArgs e)
         {
-            DataTable dt = new DataTable("PatientHistory");
-
-            // Columns
-            dt.Columns.Add("PatientID", typeof(int));
-            dt.Columns.Add("PatientName", typeof(string));
-            dt.Columns.Add("VisitDate", typeof(DateTime));
-            dt.Columns.Add("Doctor", typeof(string));
-            dt.Columns.Add("Diagnosis", typeof(string));
-            dt.Columns.Add("Treatment", typeof(string));
-            dt.Columns.Add("Prescription", typeof(string));
-            dt.Columns.Add("FollowUpDate", typeof(DateTime));
-
-            // Rows (sample data)
-            dt.Rows.Add(1001, "John Carter", new DateTime(2026, 1, 5), "Dr. Smith", "Lower Back Pain", "Physical Therapy", "Ibuprofen 400mg", new DateTime(2026, 1, 20));
-            dt.Rows.Add(1001, "John Carter", new DateTime(2026, 2, 2), "Dr. Smith", "Improving Mobility", "Stretching Program", "None", new DateTime(2026, 2, 28));
-            dt.Rows.Add(1002, "Maria Lopez", new DateTime(2026, 1, 12), "Dr. Adams", "Neck Strain", "Manual Therapy", "Muscle Relaxant", new DateTime(2026, 1, 26));
-            dt.Rows.Add(1003, "Daniel Kim", new DateTime(2026, 1, 18), "Dr. Brown", "Knee Injury", "Strength Rehab", "Ice + Rest", new DateTime(2026, 2, 15));
-            dt.Rows.Add(1002, "Maria Lopez", new DateTime(2026, 2, 10), "Dr. Adams", "Follow-up Check", "Posture Exercises", "None", new DateTime(2026, 3, 10));
-            dt.Rows.Add(1004, "Sophia Turner", new DateTime(2026, 3, 1), "Dr. Green", "Shoulder Pain", "Ultrasound Therapy", "Topical NSAID", new DateTime(2026, 3, 22));
-
-
-
-            this.dgvExpediente.DataSource = dt;
-
             DBHelper dbh = new DBHelper();
-
 
             this.cboTratamiento.DataSource = dbh.obtenerTratamientos();
             this.cboTratamiento.DisplayMember = "nombre"; // what user sees
@@ -84,32 +59,137 @@ namespace FisioKH
             this.cboMetodoPago.DataSource = dbh.obtenerMetodosPago();
             this.cboMetodoPago.DisplayMember = "nombre"; // what user sees
             this.cboMetodoPago.ValueMember = "id";
+            cargarFormaDatosCitaVisita();
 
+        }
 
+        private void cargarFormaDatosCitaVisita()
+        {
             cargarGridPacientes(this.txtBuscarPacienteIngreso.Text);
-
 
             this.txtIdGoogleCalendar.Text = fce.Id.ToString();
             this.txtIdGoogleCalendar.BackColor = Color.FromArgb(fce.Color.A, fce.Color.R, fce.Color.G, fce.Color.B);
             this.txtBuscarPacienteIngreso.Text = fce.Title.ToString();
-            this.txtIdCita.Text = fce.cIdCita.ToString();
-            this.txtIdPaciente.Text = fce.cNombreFisioterapeuta.ToString();
+            this.btnBuscarPaciente.PerformClick();
+
             this.txtNombrePaciente.Text = fce.cNombreCompletoPaciente.ToString();
             this.cboFisioTerapeuta.SelectedValue = fce.cIdFisioterapeuta ?? (object)DBNull.Value;
             this.cboTratamiento.SelectedValue = fce.cIdTipoTratamiento ?? (object)DBNull.Value;
             this.cboPrecio.SelectedValue = fce.vIdPrecio ?? (object)DBNull.Value;
-            this.dtpIngresoFecha.Text =    (fce.cFechaCita != DateTime.MinValue) ? fce.cFechaCita.ToString()  : fce.Start.ToString();
+            this.dtpIngresoFecha.Text = (fce.cFechaCita != DateTime.MinValue) ? fce.cFechaCita.ToString() : fce.Start.ToString();
 
             this.txtNotasVisita.Text = fce.vNotas;
             this.chkRealizada.Checked = fce.cRealizada;
             this.chkFactura.Checked = fce.vOcupaFactura;
             this.chkPagada.Checked = fce.vPagado;
+
+            if (fce.cIdPaciente > 0)
+            { cargarGridExpedientePaciente((long)fce.cIdPaciente); }
+
+
+            //if ((Program.UsuarioLogeado.Nivel == 2) && (fce.cIdCita > 0))
+            if ((fce.cIdCita > 0))
+            {
+                controlesCitaSoloLectura(true);
+            }
             
+            if ( (fce.vPagado) || (fce.cIdCita <= 0) )
+            {
+                controlesPagoSoloLectura(true);
+            }
+
+
+            if (Program.UsuarioLogeado.Nivel == 1)
+            {
+                controlesCitaSoloLectura(false);
+                if (fce.cIdCita > 0)
+                { controlesPagoSoloLectura(false); }
+            }
+
+
+
+        }
+
+
+        private void controlesPagoSoloLectura(bool readOnly)
+        {
+            const string lockIcon = "🔒 ";
+
+            txtPaga.Enabled = !readOnly;
+            cboMetodoPago.Enabled = !readOnly;
+            cboTratamiento.Enabled = !readOnly;
+            btnGuardarPago.Enabled = !readOnly;
+            btnGuardarPago.Text = (readOnly) ? btnGuardarPago.Text = lockIcon + btnGuardarPago.Text : btnGuardarPago.Text = btnGuardarPago.Text.Replace(lockIcon, "");
+        } 
+        
+        private void controlesCitaSoloLectura(bool readOnly)
+        {
+            const string lockIcon = "🔒 ";
+
+            txtIdGoogleCalendar.ReadOnly = readOnly;
+            txtBuscarPacienteIngreso.ReadOnly = readOnly;
+            txtNombrePaciente.ReadOnly = readOnly;
+            txtNotasVisita.ReadOnly = readOnly;
+            txtBuscarPacienteIngreso.ReadOnly = readOnly;
+
+            cboFisioTerapeuta.Enabled = !readOnly;
+            cboTratamiento.Enabled = !readOnly;
+            cboPrecio.Enabled = !readOnly;
+
+            dtpIngresoFecha.Enabled = !readOnly;
+
+            chkRealizada.Enabled = !readOnly;
+            chkFactura.Enabled = !readOnly;
+            chkPagada.Enabled = !readOnly;
+
+            dgvBuscarPaciente.Enabled = !readOnly;
+            btnBuscarPaciente.Enabled = !readOnly;
+            btnBuscarPaciente.Text = (readOnly) ? btnBuscarPaciente.Text = lockIcon + btnBuscarPaciente.Text: btnBuscarPaciente.Text = btnBuscarPaciente.Text.Replace(lockIcon, "");
+            btnAgregarPx.Enabled = !readOnly;
+            btnAgregarPx.Text = (readOnly) ? btnAgregarPx.Text = lockIcon + btnAgregarPx.Text : btnAgregarPx.Text = btnAgregarPx.Text.Replace(lockIcon, "");
+            btnGuardarCitaVisita.Enabled = !readOnly;
+            btnGuardarCitaVisita.Text = (readOnly) ? btnGuardarCitaVisita.Text = lockIcon + btnGuardarCitaVisita.Text : btnGuardarCitaVisita.Text = btnGuardarCitaVisita.Text.Replace(lockIcon, "");
+
 
         }
 
 
 
+        private void cargarGridExpedientePaciente(long idPaciente)
+        {
+
+
+            DataSet dsmp = new DataSet();
+            string dsname = "ExpedientePaciente";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@idPaciente", idPaciente },             
+                
+            };
+            DBHelper sdb = new DBHelper();
+            dsmp = sdb.ObtenerDatos("usp_obtenExpedientePaciente", dsname, parameters);
+
+
+            DataTable dtp = dsmp.Tables[dsname];
+
+
+            this.dgvExpediente.Visible = false;
+            this.dgvExpediente.DataSource = dtp;
+
+
+
+            //foreach (DataGridViewColumn col in dgvBuscarPaciente.Columns)
+            //{ col.Visible = false; }
+
+            //dgvBuscarPaciente.Columns["NombreCompleto"].Visible = true;
+            //dgvBuscarPaciente.Columns["NombreCompleto"].HeaderText = "Nombre";
+
+
+
+            this.dgvExpediente.Visible = true;
+        }
+        
         private void cargarGridPacientes(string paciente = null)
         {
 
@@ -163,33 +243,8 @@ namespace FisioKH
 
         private void dgvBuscarPaciente_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-
-            if (e.RowIndex < 0) return;
-
-            DataGridViewRow gridRow = dgvBuscarPaciente.Rows[e.RowIndex];
-            DataRowView drv = gridRow.DataBoundItem as DataRowView;
-            if (drv == null) return;
-
-
-            lblNombreCompleto.Text = (drv["Nombre"]?.ToString() ?? "") + ' ' + (drv["apellidoPaterno"]?.ToString() ?? "") + ' ' + (drv["apellidoMaterno"]?.ToString() ?? "");
-
-            lblCelular.Text = drv["Celular"]?.ToString() ?? "";
-            lblSexo.Text = drv["Sexo"]?.ToString() ?? "";
-            lblEdad.Text = drv["Edad"]?.ToString() ?? "";
-            lblMedicoTratante.Text = drv["MedicoTratante"]?.ToString() ?? "";
-            lblFisio.Text = drv["Fisio"]?.ToString() ?? "";
-            lblDob.Text = drv["FechaNacimiento"]?.ToString().Substring(0, 9) ?? "";
-            txtObservaciones.Text = drv["observaciones"]?.ToString() ?? "";
-            lblEmail.Text = drv["email"]?.ToString() ?? "";
-            lblTipoIngreso.Text = drv["Etiqueta"]?.ToString() ?? "";
-            lblCitas.Text = drv["totalCitas"]?.ToString() ?? "";
-            lblIngresos.Text = drv["totalIngresos"]?.ToString() ?? "";
-            lblIngresosPagados.Text = drv["totalIngresosPagados"]?.ToString() ?? "";
-
-            txtNombrePaciente.Text = lblNombreCompleto.Text;
-
-
-            SetPictureFromVarbinary(pbxPacienteIngreso, drv["Foto"]);
+            
+            
 
 
         }
@@ -282,6 +337,38 @@ namespace FisioKH
                 decimal cambio = precio - paga;
                 this.txtCambio.Text = cambio.ToString();
             }
+        }
+
+        private void dgvBuscarPaciente_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow gridRow = dgvBuscarPaciente.Rows[e.RowIndex];
+            DataRowView drv = gridRow.DataBoundItem as DataRowView;
+            if (drv == null) return;
+
+            cargarGridExpedientePaciente((long)drv["Id"]);
+            lblNombreCompleto.Text = (drv["Nombre"]?.ToString() ?? "") + ' ' + (drv["apellidoPaterno"]?.ToString() ?? "") + ' ' + (drv["apellidoMaterno"]?.ToString() ?? "");
+
+            lblCelular.Text = drv["Celular"]?.ToString() ?? "";
+            lblSexo.Text = drv["Sexo"]?.ToString() ?? "";
+            lblEdad.Text = drv["Edad"]?.ToString() ?? "";
+            lblMedicoTratante.Text = drv["MedicoTratante"]?.ToString() ?? "";
+            lblFisio.Text = drv["Fisio"]?.ToString() ?? "";
+            lblDob.Text = drv["FechaNacimiento"]?.ToString().Substring(0, 9) ?? "";
+            txtObservaciones.Text = drv["observaciones"]?.ToString() ?? "";
+            lblEmail.Text = drv["email"]?.ToString() ?? "";
+            lblTipoIngreso.Text = drv["Etiqueta"]?.ToString() ?? "";
+            lblCitas.Text = drv["totalCitas"]?.ToString() ?? "";
+            lblIngresos.Text = drv["totalIngresos"]?.ToString() ?? "";
+            lblIngresosPagados.Text = drv["totalIngresosPagados"]?.ToString() ?? "";
+
+            txtNombrePaciente.Text = lblNombreCompleto.Text;
+
+
+            SetPictureFromVarbinary(pbxPacienteIngreso, drv["Foto"]);
+
         }
     }
 }
