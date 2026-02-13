@@ -19,32 +19,32 @@ namespace FisioKH
             public bool HasDbMatch { get; set; }
             public string MatchStatus { get; set; } = "";
 
-            public long cIdCita { get; set; }
-            public long cIdPaciente { get; set; }
+            public long? cIdCita { get; set; }
+            public long? cIdPaciente { get; set; }
             public DateTime? cFechaCita { get; set; }
             public DateTime? cFechaRegistro { get; set; }
             public bool cRealizada { get; set; }
-            public long cIdUsuarioCita { get; set; }
-            public long cIdTipoTratamiento { get; set; }
+            public long? cIdUsuarioCita { get; set; }
+            public long? cIdTipoTratamiento { get; set; }
             public string idGoogleCalendar { get; set; } = "";
-            public long cIdFisioterapeuta { get; set; }
+            public long? cIdFisioterapeuta { get; set; }
             public string cNombreFisioterapeuta { get; set; } = "";
             public string cClaveEtiqueta { get; set; } = "";
             public string cNombreCompletoPaciente { get; set; } = "";
             public string cNombreTratamiento { get; set; } = "";
-            public long vIdVisita { get; set; }
-            public long vIdPaciente { get; set; }
+            public long? vIdVisita { get; set; }
+            public long? vIdPaciente { get; set; }
             public DateTime? vFechaVisita { get; set; }
-            public long vIdUsuario { get; set; }
-            public long vIdTipoTratamiento { get; set; }
-            public long vIdPrecio { get; set; }
+            public long? vIdUsuario { get; set; }
+            public long? vIdTipoTratamiento { get; set; }
+            public long? vIdPrecio { get; set; }
             public bool vPagado { get; set; }
             public bool vOcupaFactura { get; set; }
             public string vNotas { get; set; } = "";
-            public long vrIdPago { get; set; }
-            public long vrIdUsuario { get; set; }
-            public long vrIdMetodoPago { get; set; }
-            public decimal vrCantidadPago { get; set; }
+            public long? vrIdPago { get; set; }
+            public long? vrIdUsuario { get; set; }
+            public long? vrIdMetodoPago { get; set; }
+            public decimal? vrCantidadPago { get; set; }
             public string vrReferenciaPago { get; set; } = "";
  
         }

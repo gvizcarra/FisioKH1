@@ -94,6 +94,18 @@ namespace FisioKH
             this.txtBuscarPacienteIngreso.Text = fce.Title.ToString();
             this.txtIdCita.Text = fce.cIdCita.ToString();
             this.txtIdPaciente.Text = fce.cNombreFisioterapeuta.ToString();
+            this.txtNombrePaciente.Text = fce.cNombreCompletoPaciente.ToString();
+            this.cboFisioTerapeuta.SelectedValue = fce.cIdFisioterapeuta ?? (object)DBNull.Value;
+            this.cboTratamiento.SelectedValue = fce.cIdTipoTratamiento ?? (object)DBNull.Value;
+            this.cboPrecio.SelectedValue = fce.vIdPrecio ?? (object)DBNull.Value;
+            this.dtpIngresoFecha.Text =    (fce.cFechaCita != DateTime.MinValue) ? fce.cFechaCita.ToString()  : fce.Start.ToString();
+
+            this.txtNotasVisita.Text = fce.vNotas;
+            this.chkRealizada.Checked = fce.cRealizada;
+            this.chkFactura.Checked = fce.vOcupaFactura;
+            this.chkPagada.Checked = fce.vPagado;
+            
+
         }
 
 
