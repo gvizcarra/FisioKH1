@@ -180,6 +180,12 @@
     <Compile Include="componentes\FisioKHCalendar.RenderCache.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pasarinfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pasarinfo.Designer.cs">
+      <DependentUpon>pasarinfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -248,6 +254,9 @@
       <DependentUpon>Tratamientos.cs</DependentUpon>
     </Compile>
     <Compile Include="classes\usuario.cs" />
+    <EmbeddedResource Include="pasarinfo.resx">
+      <DependentUpon>pasarinfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Usuarios.resx">
       <DependentUpon>Usuarios.cs</DependentUpon>
     </EmbeddedResource>

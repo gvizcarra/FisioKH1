@@ -44,9 +44,6 @@ namespace FisioKH
         {
             DBHelper dbh = new DBHelper();
 
-            this.cboTratamiento.DataSource = dbh.obtenerTratamientos();
-            this.cboTratamiento.DisplayMember = "nombre"; // what user sees
-            this.cboTratamiento.ValueMember = "id";
 
             this.cboPrecio.DataSource = dbh.obtenerPrecios();
             this.cboPrecio.DisplayMember = "nombre"; // what user sees
@@ -74,7 +71,6 @@ namespace FisioKH
 
             this.txtNombrePaciente.Text = fce.cNombreCompletoPaciente.ToString();
             this.cboFisioTerapeuta.SelectedValue = fce.cIdFisioterapeuta ?? (object)DBNull.Value;
-            this.cboTratamiento.SelectedValue = fce.cIdTipoTratamiento ?? (object)DBNull.Value;
             this.cboPrecio.SelectedValue = fce.vIdPrecio ?? (object)DBNull.Value;
             this.dtpIngresoFecha.Text = (fce.cFechaCita != DateTime.MinValue) ? fce.cFechaCita.ToString() : fce.Start.ToString();
 
@@ -117,7 +113,7 @@ namespace FisioKH
 
             txtPaga.Enabled = !readOnly;
             cboMetodoPago.Enabled = !readOnly;
-            cboTratamiento.Enabled = !readOnly;
+
             btnGuardarPago.Enabled = !readOnly;
             btnGuardarPago.Text = (readOnly) ? btnGuardarPago.Text = lockIcon + btnGuardarPago.Text : btnGuardarPago.Text = btnGuardarPago.Text.Replace(lockIcon, "");
         } 
@@ -133,7 +129,7 @@ namespace FisioKH
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
 
             cboFisioTerapeuta.Enabled = !readOnly;
-            cboTratamiento.Enabled = !readOnly;
+
             cboPrecio.Enabled = !readOnly;
 
             dtpIngresoFecha.Enabled = !readOnly;
@@ -370,5 +366,12 @@ namespace FisioKH
             SetPictureFromVarbinary(pbxPacienteIngreso, drv["Foto"]);
 
         }
+
+        private void txtNotasVisita_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
