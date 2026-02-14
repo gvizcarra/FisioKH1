@@ -23,6 +23,14 @@ namespace FisioKH
 
 
             DBHelper db = new DBHelper();
+
+            DataSet dsprecio = db.ObtenerDatos("SELECT [id],CONCAT([nombre],' - ',[precio]) AS nombre,[pacientePaga],[precio] FROM [dbo].[precios] WHERE activo = 1 ORDER BY nombre", "Precios");
+
+            this.cboPrecios.DataSource = dsprecio.Tables["Precios"];
+            this.cboPrecios.DisplayMember = "nombre"; // what user sees
+            this.cboPrecios.ValueMember = "id";
+
+
             DataSet ds = db.ObtenerDatos("SELECT id,nombreCorto  FROM fisioTerapeutas","Fisios");
             this.cboEtiqueta.DataSource = EtiquetasPacienteHelper.GetBindableList();
 
@@ -171,12 +179,12 @@ namespace FisioKH
             {
                 DataRow row = dt.Rows[e.RowIndex];
 
-                this.txtId.Text = row["Id"].ToString();
+ 
                 this.txtNombreCompleto.Text = row["Nombre"].ToString();
                 this.txtApellidoPaterno.Text = row["ApellidoPaterno"].ToString();
                 this.txtApellidoMaterno.Text = row["ApellidoMaterno"].ToString();
                 this.txtCelularAlta.Text = row["Celular"].ToString();
-                this.txtCiudad.Text = row["Ciudad"].ToString();
+
                 this.txtRfcFiscal.Text = row["Rfc"].ToString();                
                 this.txtEdad.Text = row["Edad"].ToString();
                 this.txtMedicoTratante.Text = row["MedicoTratante"].ToString();
@@ -186,6 +194,7 @@ namespace FisioKH
                 this.txtNombreFiscal.Text = row["NFiscal"].ToString();
                 this.dtpFechaNacimiento.Text = row["FechaNacimiento"].ToString();
                 this.txtObservaciones.Text = row["observaciones"].ToString();
+                this.cboFisioTerapeuta.SelectedValue = row["idFisioTerapeuta"].ToString();
 
                 foreach (RadioButton rb in gbSexo.Controls.OfType<RadioButton>())
                 {
@@ -248,7 +257,7 @@ namespace FisioKH
 
             int id = 0, qtyi = 0;
 
-            int.TryParse(this.txtId.Text, out id);
+            //int.TryParse(this.txtId.Text, out id);
 
             DBHelper sdb = new DBHelper();
 
@@ -282,7 +291,7 @@ namespace FisioKH
             parameters["@apellidoPaterno"] = this.txtApellidoPaterno.Text;
             parameters["@apellidoMaterno"] = this.txtApellidoMaterno.Text;
             parameters["@celular"] = this.txtCelularAlta.Text;
-            parameters["@ciudad"] = this.txtCiudad.Text;
+            parameters["@ciudad"] = DBNull.Value;
             parameters["@sexo"] = this.gbSexo.Controls.OfType<RadioButton>().First(r => r.Checked).Text.ToString();
             parameters["@fechaNacimiento"] = this.dtpFechaNacimiento.Text.ToString();
             parameters["@email"] = this.txtEmailAlta.Text;
@@ -316,10 +325,9 @@ namespace FisioKH
 
         private void limpiarFormulario()
         {
-            this.txtId.Text = "";
+ 
             this.txtNombreCompleto.Text = "";
             this.txtCelularAlta.Text = "";
-            this.txtCiudad.Text = "";
             this.txtRfcFiscal.Text = "";
             this.txtEdad.Text = "";
             this.txtMedicoTratante.Text = "";
@@ -457,6 +465,11 @@ namespace FisioKH
         {
             wch?.StopCamera();
             btnAbrirCamara.Enabled = true;
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

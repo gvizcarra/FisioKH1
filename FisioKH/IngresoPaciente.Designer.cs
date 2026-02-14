@@ -158,7 +158,7 @@
             this.dgvBuscarPaciente.Size = new System.Drawing.Size(282, 311);
             this.dgvBuscarPaciente.TabIndex = 2;
             this.dgvBuscarPaciente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBuscarPaciente_CellClick);
-            this.dgvBuscarPaciente.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBuscarPaciente_RowEnter);
+
             // 
             // btnBuscarPaciente
             // 

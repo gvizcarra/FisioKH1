@@ -651,3 +651,263 @@ GO
 
 
 
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_ObtenerPacientes]    Script Date: 2/13/2026 6:12:10 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+
+
+
+
+
+
+ALTER PROCEDURE [dbo].[usp_ObtenerPacientes]
+    @nombreCompleto NVARCHAR(100) = NULL,
+	@celular AS VARCHAR(50) = NULL,
+	@email AS VARCHAR(150) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+ 
+
+    DECLARE @sql NVARCHAR(4000);
+    DECLARE @params NVARCHAR(4000);
+
+    -- Base query
+    SET @sql = N'
+	SELECT p.[id] AS Id
+	  , p.nombreCompleto AS Nombre
+	  , CONCAT(p.nombreCompleto, '' '', p.apellidoPaterno, '' '', p.apellidoMaterno) AS NombreCompleto
+	  ,p.[apellidoPaterno] AS apellidoPaterno
+	  ,p.[apellidoMaterno] AS apellidoMaterno
+	  ,p.[celular] AS Celular
+      ,p.[ciudad] AS Ciudad
+      ,p.[sexo] AS Sexo
+      ,p.[edad] AS Edad
+	  ,p.[medicoTratante] AS MedicoTratante
+	  ,p.idFisioTerapeuta AS  idFisioTerapeuta
+	  ,f.nombreCorto AS Fisio
+	  ,p.[claveEtiqueta] AS Etiqueta
+      ,p.[email] AS Email
+      ,u.nombre AS Usuario
+      ,p.[fechaRegistro] AS [FechaRegistro]
+      ,p.[rfc] AS Rfc
+      ,p.[domicilioFiscal] AS [DFiscal]
+      ,p.[nombreFiscal] AS [NFiscal]
+	  ,p.[fechaNacimiento] AS FechaNacimiento
+	  ,p.observaciones
+	  ,p.foto AS Foto
+	  ,dbo.ufn_cantidadCitasPaciente(p.id) AS totalCitas
+	  ,dbo.ufn_cantidadIngresosPaciente(p.id) AS totalIngresos
+	  ,dbo.ufn_cantidadIngresosPagadosPaciente(p.id) AS totalIngresosPagados
+       
+	 FROM dbo.Pacientes AS p
+			INNER JOIN dbo.usuarios AS u
+				ON p.idUsuario = u.id
+			INNER JOIN dbo.fisioTerapeutas AS f
+				ON p.idUsuario = f.id
+        WHERE 1 = 1 
+    ';
+  
+  IF @nombreCompleto IS NOT NULL
+BEGIN
+    SET @sql += N' AND CONCAT(p.nombreCompleto, '' '', p.apellidoPaterno, '' '', p.apellidoMaterno) LIKE ''%'' + @nombreCompleto + ''%'' '
+END
+
+
+	IF @celular IS NOT NULL
+	BEGIN
+		SET @sql += N' AND p.celular LIKE ''%'' + @celular + ''%'''
+	END
+
+	IF @email IS NOT NULL
+	BEGIN
+	 	SET @sql += N' AND p.email LIKE ''%'' + @email + ''%'''
+	END
+
+    SET @params = N'@nombreCompleto NVARCHAR(100),
+					@celular AS VARCHAR(50) ,
+					@email AS VARCHAR(150)';
+					 
+ 
+    EXEC sp_executesql
+        @sql,
+        @params,
+        @nombreCompleto = @nombreCompleto,
+		@celular = @celular,
+		@email = @email;
+
+		 print @sql
+END
+GO
+
+
+/* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.precios SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.Pacientes
+	DROP CONSTRAINT FK_Pacientes_usuarios
+GO
+ALTER TABLE dbo.usuarios SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.Pacientes
+	DROP CONSTRAINT FK_Pacientes_fisioTerapeutas
+GO
+ALTER TABLE dbo.fisioTerapeutas SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.Pacientes
+	DROP CONSTRAINT DF_Pacientes_fechaRegistro
+GO
+CREATE TABLE dbo.Tmp_Pacientes
+	(
+	id bigint NOT NULL IDENTITY (1, 1),
+	nombreCompleto nvarchar(100) NOT NULL,
+	celular nvarchar(15) NOT NULL,
+	ciudad nvarchar(100) NULL,
+	sexo nvarchar(10) NULL,
+	edad nvarchar(50) NOT NULL,
+	email nvarchar(100) NULL,
+	idUsuario bigint NOT NULL,
+	fechaRegistro datetime NOT NULL,
+	rfc nvarchar(100) NULL,
+	domicilioFiscal nvarchar(150) NULL,
+	nombreFiscal nvarchar(150) NULL,
+	fechaNacimiento date NULL,
+	medicoTratante nvarchar(250) NULL,
+	idFisioTerapeuta bigint NOT NULL,
+	claveEtiqueta nvarchar(10) NULL,
+	observaciones nvarchar(4000) NULL,
+	foto varbinary(MAX) NULL,
+	apellidoPaterno varchar(100) NULL,
+	apellidoMaterno varchar(100) NULL,
+	idPrecio bigint NOT NULL
+	)  ON [PRIMARY]
+	 TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE dbo.Tmp_Pacientes SET (LOCK_ESCALATION = TABLE)
+GO
+ALTER TABLE dbo.Tmp_Pacientes ADD CONSTRAINT
+	DF_Pacientes_fechaRegistro DEFAULT (getdate()) FOR fechaRegistro
+GO
+SET IDENTITY_INSERT dbo.Tmp_Pacientes ON
+GO
+IF EXISTS(SELECT * FROM dbo.Pacientes)
+	 EXEC('INSERT INTO dbo.Tmp_Pacientes (id, nombreCompleto, celular, ciudad, sexo, edad, email, idUsuario, fechaRegistro, rfc, domicilioFiscal, nombreFiscal, fechaNacimiento, medicoTratante, idFisioTerapeuta, claveEtiqueta, observaciones, foto, apellidoPaterno, apellidoMaterno)
+		SELECT id, nombreCompleto, celular, ciudad, sexo, edad, email, idUsuario, fechaRegistro, rfc, domicilioFiscal, nombreFiscal, fechaNacimiento, medicoTratante, idFisioTerapeuta, claveEtiqueta, observaciones, foto, apellidoPaterno, apellidoMaterno FROM dbo.Pacientes WITH (HOLDLOCK TABLOCKX)')
+GO
+SET IDENTITY_INSERT dbo.Tmp_Pacientes OFF
+GO
+ALTER TABLE dbo.polizaPaciente
+	DROP CONSTRAINT FK_polizaPaciente_Pacientes
+GO
+ALTER TABLE dbo.visitasRealizadas
+	DROP CONSTRAINT FK_visitasRealizadas_Pacientes
+GO
+DROP TABLE dbo.Pacientes
+GO
+EXECUTE sp_rename N'dbo.Tmp_Pacientes', N'Pacientes', 'OBJECT' 
+GO
+ALTER TABLE dbo.Pacientes ADD CONSTRAINT
+	PK_Pacientes PRIMARY KEY CLUSTERED 
+	(
+	id
+	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.Pacientes ADD CONSTRAINT
+	FK_Pacientes_fisioTerapeutas FOREIGN KEY
+	(
+	idFisioTerapeuta
+	) REFERENCES dbo.fisioTerapeutas
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+ALTER TABLE dbo.Pacientes ADD CONSTRAINT
+	FK_Pacientes_usuarios FOREIGN KEY
+	(
+	idUsuario
+	) REFERENCES dbo.usuarios
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+ALTER TABLE dbo.Pacientes ADD CONSTRAINT
+	FK_Pacientes_precios FOREIGN KEY
+	(
+	idPrecio
+	) REFERENCES dbo.precios
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.visitasRealizadas WITH NOCHECK ADD CONSTRAINT
+	FK_visitasRealizadas_Pacientes FOREIGN KEY
+	(
+	idPaciente
+	) REFERENCES dbo.Pacientes
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	 NOT FOR REPLICATION
+
+GO
+ALTER TABLE dbo.visitasRealizadas SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.polizaPaciente ADD CONSTRAINT
+	FK_polizaPaciente_Pacientes FOREIGN KEY
+	(
+	idPaciente
+	) REFERENCES dbo.Pacientes
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+ALTER TABLE dbo.polizaPaciente SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT

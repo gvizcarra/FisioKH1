@@ -237,13 +237,7 @@ namespace FisioKH
 
         }
 
-        private void dgvBuscarPaciente_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            
-            
-
-
-        }
+    
 
         private void SetPictureFromVarbinary(PictureBox pb, object fotoValue)
         {
@@ -352,6 +346,7 @@ namespace FisioKH
             lblEdad.Text = drv["Edad"]?.ToString() ?? "";
             lblMedicoTratante.Text = drv["MedicoTratante"]?.ToString() ?? "";
             lblFisio.Text = drv["Fisio"]?.ToString() ?? "";
+            this.cboFisioTerapeuta.SelectedValue = drv["idFisioTerapeuta"].ToString();
             lblDob.Text = drv["FechaNacimiento"]?.ToString().Substring(0, 9) ?? "";
             txtObservaciones.Text = drv["observaciones"]?.ToString() ?? "";
             lblEmail.Text = drv["email"]?.ToString() ?? "";
