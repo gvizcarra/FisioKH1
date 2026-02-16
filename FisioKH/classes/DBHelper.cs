@@ -48,7 +48,7 @@ namespace FisioKH
         public DataTable obtenerFisios()
         {
             DataTable dt = new DataTable();
-            string sql = "SELECT [id],[nombreCorto] AS nombre FROM [dbo].[fisioTerapeutas] WHERE activo = 1  ORDER BY nombre";
+            string sql = "SELECT [id],[nombreCorto] AS nombre,nombreCorto FROM [dbo].[fisioTerapeutas] WHERE activo = 1  ORDER BY nombre";
             dt = ObtenerDatosDT(sql);
 
 
@@ -231,9 +231,78 @@ namespace FisioKH
             return rowsAffected;
         }
 
-       
 
-   public DataTable GetCitasByGoogleEventIdsTVP(List<string> eventIds)
+        public int EjecutarNonQuery(string spName,
+                            Dictionary<string, object> spPars,
+                            Dictionary<string, SqlDbType> outParams,
+                            out Dictionary<string, object> outValues)
+        {
+            int rowsAffected = 0;
+            outValues = new Dictionary<string, object>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(spName, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // INPUT parameters
+                    if (spPars != null)
+                    {
+                        foreach (var p in spPars)
+                        {
+                            cmd.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
+                        }
+                    }
+
+                    // Your existing rowsAffected OUTPUT
+                    SqlParameter outRows = new SqlParameter("@rowsAffected", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(outRows);
+
+                    // ADD dynamic OUTPUT parameters
+                    if (outParams != null)
+                    {
+                        foreach (var op in outParams)
+                        {
+                            SqlParameter outParam = new SqlParameter(op.Key, op.Value)
+                            {
+                                Direction = ParameterDirection.Output
+                            };
+
+                            cmd.Parameters.Add(outParam);
+                        }
+                    }
+
+                    cmd.ExecuteNonQuery();
+
+                    // Read rowsAffected
+                    if (outRows.Value != DBNull.Value)
+                        rowsAffected = Convert.ToInt32(outRows.Value);
+
+                    // Read other OUTPUT values
+                    if (outParams != null)
+                    {
+                        foreach (var op in outParams.Keys)
+                        {
+                            var val = cmd.Parameters[op].Value;
+                            outValues[op] = (val == DBNull.Value) ? null : val;
+                        }
+                    }
+                }
+            }
+
+            return rowsAffected;
+        }
+
+
+
+
+
+        public DataTable GetCitasByGoogleEventIdsTVP(List<string> eventIds)
     {
         var dt = new DataTable();
         if (eventIds == null || eventIds.Count == 0) return dt;

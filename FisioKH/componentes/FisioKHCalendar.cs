@@ -247,24 +247,22 @@ namespace FisioKH
                     cFechaRegistro = GetDateTime(r, "cFechaRegistro"),
                     cRealizada = GetBool(r, "cRealizada"),
                     cIdUsuarioCita = GetLong(r, "cIdUsuarioCita"),
-                    cIdTipoTratamiento = GetLong(r, "cIdTipoTratamiento"),
                     idGoogleCalendar = GetString(r, "idGoogleCalendar"),
                     cIdFisioterapeuta = GetLong(r, "cIdFisioterapeuta"),
                     cNombreFisioterapeuta = GetString(r, "cNombreFisioterapeuta"),
                     cClaveEtiqueta = GetString(r, "cClaveEtiqueta"),
                     cNombreCompletoPaciente = GetString(r, "cNombreCompletoPaciente"),
-                    cNombreTratamiento = GetString(r, "cNombreTratamiento"),
 
                     // ================= VISITA =================
                     vIdVisita = GetLong(r, "vIdVisita"),
                     vIdPaciente = GetLong(r, "vIdPaciente"),
                     vFechaVisita = GetDateTime(r, "vFechaVisita"),
                     vIdUsuario = GetLong(r, "vIdUsuario"),
-                    vIdTipoTratamiento = GetLong(r, "vIdTipoTratamiento"),
                     vIdPrecio = GetLong(r, "vIdPrecio"),
                     vPagado = GetBool(r, "vPagado"),
                     vOcupaFactura = GetBool(r, "vOcupaFactura"),
-                    vNotas = GetString(r, "vNotas"),
+                    pNotas = GetString(r, "pNotas"),
+                    pObservaciones = GetString(r, "pObservaciones"),
 
                     // ================= PAGO =================
                     vrIdPago = GetLong(r, "vrIdPago"),

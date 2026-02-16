@@ -10,7 +10,7 @@ namespace FisioKH
         {
             // Set default button styles
           
-            this.ForeColor = Color.FromArgb(46, 134, 193);
+            this.ForeColor = Color.FromArgb(0, 192, 192);
             this.FlatStyle = FlatStyle.Standard;
             this.Size = new System.Drawing.Size(50, 25);
             this.FlatAppearance.BorderSize = 2;   

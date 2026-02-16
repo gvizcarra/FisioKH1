@@ -11,6 +11,8 @@ namespace FisioKH
     public partial class IngresoPaciente : BaseForm
     {
         private FisioKH.FisioKHCalendar.CalendarEventKH fce;
+        private readonly DateTime _nullDate = new DateTime(1900, 1, 1);
+
 
 
         // REQUIRED for Designer
@@ -74,10 +76,16 @@ namespace FisioKH
             this.cboPrecio.SelectedValue = fce.vIdPrecio ?? (object)DBNull.Value;
             this.dtpIngresoFecha.Text = (fce.cFechaCita != DateTime.MinValue) ? fce.cFechaCita.ToString() : fce.Start.ToString();
 
-            this.txtNotasVisita.Text = fce.vNotas;
+            this.txtNotasMedicas.Text = fce.pNotas;
+            this.txtObservaciones.Text = fce.pObservaciones;
             this.chkRealizada.Checked = fce.cRealizada;
             this.chkFactura.Checked = fce.vOcupaFactura;
             this.chkPagada.Checked = fce.vPagado;
+
+            this.txtIdPaciente.Text = fce.cIdPaciente.ToString();
+            this.txtIdCita.Text = fce.cIdCita.ToString();
+            this.txtIdVisita.Text = fce.vIdVisita.ToString();
+            this.txtIdPago.Text = fce.vrIdPago.ToString();
 
             if (fce.cIdPaciente > 0)
             { cargarGridExpedientePaciente((long)fce.cIdPaciente); }
@@ -125,7 +133,7 @@ namespace FisioKH
             txtIdGoogleCalendar.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
             txtNombrePaciente.ReadOnly = readOnly;
-            txtNotasVisita.ReadOnly = readOnly;
+            txtNotasMedicas.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
 
             cboFisioTerapeuta.Enabled = !readOnly;
@@ -347,13 +355,16 @@ namespace FisioKH
             lblMedicoTratante.Text = drv["MedicoTratante"]?.ToString() ?? "";
             lblFisio.Text = drv["Fisio"]?.ToString() ?? "";
             this.cboFisioTerapeuta.SelectedValue = drv["idFisioTerapeuta"].ToString();
+            this.cboPrecio.SelectedValue = drv["idPrecio"]?.ToString();
             lblDob.Text = drv["FechaNacimiento"]?.ToString().Substring(0, 9) ?? "";
             txtObservaciones.Text = drv["observaciones"]?.ToString() ?? "";
+            txtNotasMedicas.Text = drv["notasMedicas"]?.ToString() ?? "";
             lblEmail.Text = drv["email"]?.ToString() ?? "";
             lblTipoIngreso.Text = drv["Etiqueta"]?.ToString() ?? "";
             lblCitas.Text = drv["totalCitas"]?.ToString() ?? "";
             lblIngresos.Text = drv["totalIngresos"]?.ToString() ?? "";
             lblIngresosPagados.Text = drv["totalIngresosPagados"]?.ToString() ?? "";
+            txtIdPaciente.Text = drv["Id"]?.ToString() ?? "";
 
             txtNombrePaciente.Text = lblNombreCompleto.Text;
 
@@ -367,6 +378,75 @@ namespace FisioKH
 
         }
 
-        
+        private void btnGuardarCitaVisita_Click(object sender, EventArgs e)
+        {
+            int idCita = 0, qtyi = 0,idVisita=0,idPago = 0;
+
+            int.TryParse(this.txtIdCita.Text, out idCita);
+            int.TryParse(this.txtIdVisita.Text, out idVisita);
+            int.TryParse(this.txtIdPago.Text, out idPago);
+
+            DBHelper sdb = new DBHelper();
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@idUsuario",           Program.UsuarioLogeado.Id },                 
+            };
+
+            Dictionary<string, SqlDbType> outs = new Dictionary<string, SqlDbType>
+            {
+                { "@idCita", SqlDbType.BigInt },
+                { "@idVisita", SqlDbType.BigInt }
+            };
+
+            Dictionary<string, object> outValues;
+
+            parameters["@idPaciente"] = GetBigIntOrNull(txtIdPaciente.Text);
+            parameters["@fechaCita"] = GetDateOrNull(dtpIngresoFecha);
+            parameters["@fechaVisita"] = GetDateOrNull(dtpIngresoFecha);
+            parameters["@idGoogleCalendar"] = txtIdGoogleCalendar.Text;
+
+            parameters["@idFisioTerapeuta"] = cboFisioTerapeuta.SelectedValue;
+            parameters["@idPrecio"] = cboPrecio.SelectedValue;
+            parameters["@ocupaFactura"] = this.chkFactura.Checked;
+            parameters["@notas"] = this.txtNotasMedicas.Text;
+
+            idCita = 0;
+            if (idCita > 0)
+            {
+                parameters.Add("@id", idCita);
+                qtyi = sdb.EjecutarNonQuery("usp_crearCitaVisita", parameters, outs, out outValues);
+            }
+            else
+            { qtyi = sdb.EjecutarNonQuery("usp_crearCitaVisita", parameters, outs, out outValues); }
+
+
+            if (qtyi > 0)
+            { MessageBox.Show("Registro Guardado"); }
+
+
+
+        }
+
+        private object GetBigIntOrNull(string text)
+        {
+            long value;
+            return (long.TryParse(text, out value) && value != 0)
+                ? (object)value
+                : DBNull.Value;
+        }
+
+
+        private object GetDateOrNull(DateTimePicker dtp)
+        {
+            return (dtp.Value.Date != _nullDate)
+                ? (object)dtp.Value
+                : DBNull.Value;
+        }
+
+        private void IngresoPaciente_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
     }
 }

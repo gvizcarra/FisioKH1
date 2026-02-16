@@ -193,24 +193,22 @@ public class GoogleCalendarService
                 row["cFechaRegistro"] = GetNullableDateTime(data, "cFechaRegistro");
                 row["cRealizada"] = GetBool(data, "cRealizada", false);
                 row["cIdUsuarioCita"] = GetLong(data, "cIdUsuarioCita", 0);
-                row["cIdTipoTratamiento"] = GetLong(data, "cIdTipoTratamiento", 0);
                 row["idGoogleCalendar"] = GetString(data, "idGoogleCalendar");
                 row["cIdFisioterapeuta"] = GetLong(data, "cIdFisioterapeuta", 0);
                 row["cNombreFisioterapeuta"] = GetString(data, "cNombreFisioterapeuta");
                 row["cClaveEtiqueta"] = GetString(data, "cClaveEtiqueta");
                 row["cNombreCompletoPaciente"] = GetString(data, "cNombreCompletoPaciente");
-                row["cNombreTratamiento"] = GetString(data, "cNombreTratamiento");
-
+                
                 // ================= VISITA =================
                 row["vIdVisita"] = GetLong(data, "vIdVisita", 0);
                 row["vIdPaciente"] = GetLong(data, "vIdPaciente", 0);
                 row["vFechaVisita"] = GetNullableDateTime(data, "vFechaVisita");
                 row["vIdUsuario"] = GetLong(data, "vIdUsuario", 0);
-                row["vIdTipoTratamiento"] = GetLong(data, "vIdTipoTratamiento", 0);
                 row["vIdPrecio"] = GetLong(data, "vIdPrecio", 0);
                 row["vPagado"] = GetBool(data, "vPagado", false);
                 row["vOcupaFactura"] = GetBool(data, "vOcupaFactura", false);
-                row["vNotas"] = GetString(data, "vNotas");
+                row["pNotas"] = GetString(data, "pNotas");
+                row["pObservaciones"] = GetString(data, "pObservaciones");
 
                 // ================= PAGO =================
                 row["vrIdPago"] = GetLong(data, "vrIdPago", 0);
@@ -250,24 +248,22 @@ public class GoogleCalendarService
         table.Columns.Add("cFechaRegistro", typeof(DateTime)).AllowDBNull = true; 
         table.Columns.Add("cRealizada", typeof(bool));
         table.Columns.Add("cIdUsuarioCita", typeof(long));
-        table.Columns.Add("cIdTipoTratamiento", typeof(long));
         table.Columns.Add("idGoogleCalendar");
         table.Columns.Add("cIdFisioterapeuta", typeof(long));
         table.Columns.Add("cNombreFisioterapeuta");
         table.Columns.Add("cClaveEtiqueta");
         table.Columns.Add("cNombreCompletoPaciente");
-        table.Columns.Add("cNombreTratamiento");
 
         // ================= VISITA =================
         table.Columns.Add("vIdVisita", typeof(long));
         table.Columns.Add("vIdPaciente", typeof(long));
         table.Columns.Add("vFechaVisita", typeof(DateTime)).AllowDBNull = true; 
         table.Columns.Add("vIdUsuario", typeof(long));
-        table.Columns.Add("vIdTipoTratamiento", typeof(long));
         table.Columns.Add("vIdPrecio", typeof(long));
         table.Columns.Add("vPagado", typeof(bool));
         table.Columns.Add("vOcupaFactura", typeof(bool));
-        table.Columns.Add("vNotas");
+        table.Columns.Add("pNotas");
+        table.Columns.Add("pObservaciones");
 
         // ================= PAGO =================
         table.Columns.Add("vrIdPago", typeof(long));

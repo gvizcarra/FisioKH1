@@ -146,7 +146,7 @@ namespace FisioKH
         {
             foreach (int n in tbs)
             {
-                tabControl1.TabPages[n].Enabled = false;
+                tabPrincipal.TabPages[n].Enabled = false;
             }
         }
 
@@ -154,7 +154,7 @@ namespace FisioKH
         {
             foreach (int n in tbs)
             {
-                tabControl1.TabPages[n].Enabled = true;
+                tabPrincipal.TabPages[n].Enabled = true;
             }
         }
 
@@ -237,6 +237,7 @@ namespace FisioKH
                     }
 
                     HabilitaTabs(ObtentabsSeguras());
+                    this.tabPrincipal.SelectedIndex = 1;
                 }
                 else
                 {

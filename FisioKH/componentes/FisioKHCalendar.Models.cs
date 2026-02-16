@@ -25,22 +25,20 @@ namespace FisioKH
             public DateTime? cFechaRegistro { get; set; }
             public bool cRealizada { get; set; }
             public long? cIdUsuarioCita { get; set; }
-            public long? cIdTipoTratamiento { get; set; }
             public string idGoogleCalendar { get; set; } = "";
             public long? cIdFisioterapeuta { get; set; }
             public string cNombreFisioterapeuta { get; set; } = "";
             public string cClaveEtiqueta { get; set; } = "";
             public string cNombreCompletoPaciente { get; set; } = "";
-            public string cNombreTratamiento { get; set; } = "";
             public long? vIdVisita { get; set; }
             public long? vIdPaciente { get; set; }
             public DateTime? vFechaVisita { get; set; }
             public long? vIdUsuario { get; set; }
-            public long? vIdTipoTratamiento { get; set; }
             public long? vIdPrecio { get; set; }
             public bool vPagado { get; set; }
             public bool vOcupaFactura { get; set; }
-            public string vNotas { get; set; } = "";
+            public string pObservaciones { get; set; } = "";
+            public string pNotas { get; set; } = "";
             public long? vrIdPago { get; set; }
             public long? vrIdUsuario { get; set; }
             public long? vrIdMetodoPago { get; set; }

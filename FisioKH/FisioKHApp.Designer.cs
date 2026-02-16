@@ -34,7 +34,7 @@ namespace FisioKH
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FisioKHApp));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPrincipal = new System.Windows.Forms.TabControl();
             this.tbInicio = new System.Windows.Forms.TabPage();
             this.boton1 = new FisioKH.Boton();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
@@ -60,7 +60,7 @@ namespace FisioKH
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
-            this.tabControl1.SuspendLayout();
+            this.tabPrincipal.SuspendLayout();
             this.tbInicio.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tbIngresos.SuspendLayout();
@@ -70,20 +70,20 @@ namespace FisioKH
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabPrincipal
             // 
-            this.tabControl1.Controls.Add(this.tbInicio);
-            this.tabControl1.Controls.Add(this.tbIngresos);
-            this.tabControl1.Controls.Add(this.tbAdmin);
-            this.tabControl1.Controls.Add(this.tbReportes);
-            this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.tabControl1.Location = new System.Drawing.Point(4, 4);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.RightToLeftLayout = true;
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1162, 664);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
+            this.tabPrincipal.Controls.Add(this.tbInicio);
+            this.tabPrincipal.Controls.Add(this.tbIngresos);
+            this.tabPrincipal.Controls.Add(this.tbAdmin);
+            this.tabPrincipal.Controls.Add(this.tbReportes);
+            this.tabPrincipal.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.tabPrincipal.Location = new System.Drawing.Point(4, 4);
+            this.tabPrincipal.Name = "tabPrincipal";
+            this.tabPrincipal.RightToLeftLayout = true;
+            this.tabPrincipal.SelectedIndex = 0;
+            this.tabPrincipal.Size = new System.Drawing.Size(1162, 664);
+            this.tabPrincipal.TabIndex = 0;
+            this.tabPrincipal.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
             // 
             // tbInicio
             // 
@@ -268,7 +268,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 9, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 15, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -433,7 +433,7 @@ namespace FisioKH
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
             this.ClientSize = new System.Drawing.Size(1164, 681);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabPrincipal);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = true;
@@ -441,7 +441,7 @@ namespace FisioKH
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FisioKHApp_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).EndInit();
-            this.tabControl1.ResumeLayout(false);
+            this.tabPrincipal.ResumeLayout(false);
             this.tbInicio.ResumeLayout(false);
             this.tbInicio.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -457,7 +457,7 @@ namespace FisioKH
 
         #endregion
 
-        private TabControl tabControl1;
+        private TabControl tabPrincipal;
         private TabPage tbAdmin;
         private TabPage tbReportes;
         private TabPage tbInicio;

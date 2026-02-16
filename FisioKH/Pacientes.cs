@@ -24,14 +24,6 @@ namespace FisioKH
 
             DBHelper db = new DBHelper();
 
-            DataSet dsprecio = db.ObtenerDatos("SELECT [id],CONCAT([nombre],' - ',[precio]) AS nombre,[pacientePaga],[precio] FROM [dbo].[precios] WHERE activo = 1 ORDER BY nombre", "Precios");
-
-            this.cboPrecios.DataSource = dsprecio.Tables["Precios"];
-            this.cboPrecios.DisplayMember = "nombre"; // what user sees
-            this.cboPrecios.ValueMember = "id";
-
-
-            DataSet ds = db.ObtenerDatos("SELECT id,nombreCorto  FROM fisioTerapeutas","Fisios");
             this.cboEtiqueta.DataSource = EtiquetasPacienteHelper.GetBindableList();
 
             this.cboEtiqueta.DisplayMember = "Text"; // what user sees
@@ -42,7 +34,11 @@ namespace FisioKH
             ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
 
 
-            this.cboFisioTerapeuta.DataSource = ds.Tables["Fisios"];
+            this.cboPxPrecio.DataSource = db.obtenerPrecios();
+            this.cboPxPrecio.ValueMember = "id";
+            this.cboPxPrecio.DisplayMember = "nombre";
+
+            this.cboFisioTerapeuta.DataSource = db.obtenerFisios();
             this.cboFisioTerapeuta.ValueMember = "id";
             this.cboFisioTerapeuta.DisplayMember = "nombreCorto";
             
@@ -184,6 +180,7 @@ namespace FisioKH
                 this.txtApellidoPaterno.Text = row["ApellidoPaterno"].ToString();
                 this.txtApellidoMaterno.Text = row["ApellidoMaterno"].ToString();
                 this.txtCelularAlta.Text = row["Celular"].ToString();
+                this.txtId.Text = row["id"].ToString();
 
                 this.txtRfcFiscal.Text = row["Rfc"].ToString();                
                 this.txtEdad.Text = row["Edad"].ToString();
@@ -194,7 +191,9 @@ namespace FisioKH
                 this.txtNombreFiscal.Text = row["NFiscal"].ToString();
                 this.dtpFechaNacimiento.Text = row["FechaNacimiento"].ToString();
                 this.txtObservaciones.Text = row["observaciones"].ToString();
+                this.txtNotasMedicas.Text = row["notasMedicas"].ToString();
                 this.cboFisioTerapeuta.SelectedValue = row["idFisioTerapeuta"].ToString();
+                this.cboPxPrecio.SelectedValue = row["idPrecio"].ToString();
 
                 foreach (RadioButton rb in gbSexo.Controls.OfType<RadioButton>())
                 {
@@ -257,7 +256,7 @@ namespace FisioKH
 
             int id = 0, qtyi = 0;
 
-            //int.TryParse(this.txtId.Text, out id);
+            int.TryParse(this.txtId.Text, out id);
 
             DBHelper sdb = new DBHelper();
 
@@ -270,6 +269,8 @@ namespace FisioKH
                 { "@ciudad", null },
                 { "@sexo", null },
                 { "@fechaNacimiento", null },
+                { "@edad", null },
+                { "@idPrecio", null },
                 { "@email", null },
                 { "@idUsuario", Program.UsuarioLogeado.Id },
                 { "@rfc", null },
@@ -279,6 +280,7 @@ namespace FisioKH
                 { "@idFisioTerapeuta", null },
                 { "@claveEtiqueta", null },
                 { "@observaciones", null },
+                { "@notasMedicas", null },
                 { "@foto", null }
             };
 
@@ -294,6 +296,8 @@ namespace FisioKH
             parameters["@ciudad"] = DBNull.Value;
             parameters["@sexo"] = this.gbSexo.Controls.OfType<RadioButton>().First(r => r.Checked).Text.ToString();
             parameters["@fechaNacimiento"] = this.dtpFechaNacimiento.Text.ToString();
+            parameters["@edad"] = this.txtEdad.Text.ToString();
+            parameters["@idPrecio"] = this.cboPxPrecio.SelectedValue;
             parameters["@email"] = this.txtEmailAlta.Text;
             parameters["@rfc"] = this.txtRfcFiscal.Text;
             parameters["@domicilioFiscal"] = this.txtDomicilioFiscal.Text;
@@ -302,6 +306,7 @@ namespace FisioKH
             parameters["@idFisioTerapeuta"] = Convert.ToInt64(cboFisioTerapeuta.SelectedValue);
             parameters["@claveEtiqueta"] = this.cboEtiqueta.SelectedValue;
             parameters["@observaciones"] = this.txtObservaciones.Text;
+            parameters["@notasMedicas"] = this.txtNotasMedicas.Text;
           
             parameters["@foto"] = (object)wch.ImageToByteArray(this.pbxFotoPaciente) ?? DBNull.Value;
 
@@ -332,11 +337,14 @@ namespace FisioKH
             this.txtEdad.Text = "";
             this.txtMedicoTratante.Text = "";
             this.cboEtiqueta.ResetText();
+            this.cboFisioTerapeuta.ResetText();
+            this.cboPxPrecio.ResetText();
             this.txtEmailAlta.Text = "";
             this.txtDomicilioFiscal.Text = "";
             this.txtNombreFiscal.Text = "";
             this.dtpFechaNacimiento.Text = "";
             this.txtObservaciones.Text = "";
+            this.txtNotasMedicas.Text = "";
             this.txtApellidoPaterno.Text = "";
             this.txtApellidoMaterno.Text = "";
 
