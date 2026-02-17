@@ -12,6 +12,12 @@ namespace FisioKH
     {
         private readonly GoogleCalendarService calendar = new GoogleCalendarService();
 
+        // NEW: prevent wiring multiple times when tab is re-selected
+        private bool _calendarWired = false;
+
+        // NEW: prevent overlapping reloads
+        private bool _isReloadingCalendar = false;
+
         public FisioKHApp()
         {
             InitializeComponent();
@@ -27,8 +33,6 @@ namespace FisioKH
         {
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
-
-
 
             DesHabilitaTabs(ObtentabsSeguras());
         }
@@ -48,43 +52,91 @@ namespace FisioKH
             }
             catch (Exception ex)
             {
-                // optional logging
                 this.lstBoxLogs.Items.Add(DateTime.Now + " - Error cargando calendario: " + ex.Message);
                 return null;
             }
         }
 
-        private void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
+        // NEW: refresh helper that forces the calendar control to re-request data
+        private async Task RefreshCalendarFromDbAsync()
         {
-            IngresoPaciente edt = new IngresoPaciente(e);
-            edt.ShowDialog();
-            // Fixed: show correct properties (GoogleId vs IdCita)
-            //MessageBox.Show(
-            //$"GoogleId: {e.Id}\n" +
-            //$"Cita: {e.Title}\n" +
-            //$"Inicio: {e.Start}\n" +
-            //$"Fin: {e.End}\n" +
-            //$"IdCita: {e.CitaID}");
+            if (_isReloadingCalendar) return;
+            _isReloadingCalendar = true;
+
+            if (!EnsureCalendar())
+            {
+                _isReloadingCalendar = false;
+                return;
+            }
+
+            this.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
+
+            try
+            {
+                await fisioKHCalendar1.ReloadDataFromFormAsync();
+            }
+            catch (Exception ex)
+            {
+                lstBoxLogs.Items.Add(DateTime.Now + " - Error refrescando calendario: " + ex.Message);
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+                this.Enabled = true;
+                _isReloadingCalendar = false;
+            }
+        }
+
+        // IMPORTANT: must match event signature => async void is correct here
+        private async void MyCalendar_EventClick(object sender, FisioKHCalendar.CalendarEventKH e)
+        {
+            try
+            {
+                using (var edt = new IngresoPaciente(e))
+                {
+                    // Modal: blocks until closed
+                    edt.ShowDialog(this);
+                }
+
+                // KEY: your DBHelper caches DB extras for 5 minutes (including "null"/negative cache)
+                // so you MUST invalidate the cache for this event id.
+                if (!string.IsNullOrWhiteSpace(e?.Id))
+                    DBHelperAsync.InvalidateCacheForEventId(e.Id);
+
+                // If IngresoPaciente changes more than one event or you want brute-force:
+                // DBHelperAsync.ClearCache();
+
+                await RefreshCalendarFromDbAsync();
+            }
+            catch (Exception ex)
+            {
+                lstBoxLogs.Items.Add(DateTime.Now + " - Error al abrir IngresoPaciente/refrescar: " + ex.Message);
+            }
         }
 
         private async void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
         {
             if (e.TabPage.Name != "tbIngresos")
                 return;
-            if (Program.UsuarioLogeado.Autenticado)
+
+            if (!Program.UsuarioLogeado.Autenticado)
+                return;
+
+            // Wire ONLY ONCE (your previous code wires every time the tab is selected)
+            if (!_calendarWired)
             {
-                // Authenticate async to avoid UI freeze
-                // Calendar control
                 fisioKHCalendar1.RequestDataAsync += LoadCalendarDataAsync;
                 fisioKHCalendar1.EventClick += MyCalendar_EventClick;
-
-                bool ok = await calendar.AuthenticateAsync();
-
-                if (ok)
-                { MostrarCalendario(); }
-                else
-                { MessageBox.Show("No Se Puede Conectar a Google Calendar!"); }
+                _calendarWired = true;
             }
+
+            bool ok = await calendar.AuthenticateAsync();
+
+            if (ok)
+                MostrarCalendario();
+            else
+                MessageBox.Show("No Se Puede Conectar a Google Calendar!");
         }
 
         private async void MostrarCalendario()
@@ -108,7 +160,6 @@ namespace FisioKH
 
         private bool EnsureCalendar()
         {
-            // Avoid hitting Google every time (IsConnected does a network call)
             if (calendar?.Service == null)
             {
                 MessageBox.Show("No Está Autenticado a Google Calendar.");
@@ -170,10 +221,6 @@ namespace FisioKH
                 var failedControl = GetFirstInvalidControl(this);
                 if (failedControl != null)
                     failedControl.Focus();
-
-
-
-                //MessageBox.Show("Capturar la informacion Marcada con Icono Rojo.", "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -218,7 +265,6 @@ namespace FisioKH
 
                 if (Program.UsuarioLogeado.Autenticado && Program.UsuarioLogeado.Activo)
                 {
-
                     this.lstBoxLogs.Items.Add(DateTime.Now + " - Bienvenido : " + Program.UsuarioLogeado.Nombre);
                     this.Text = $"{configSettings.ObtenNombreApp} - Usuario: {Program.UsuarioLogeado.Nombre}";
                     this.txtUsuario.Enabled = false;
@@ -351,15 +397,14 @@ namespace FisioKH
         private void btnSalir_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show(
-        "Desea Salir del Sistema?",
-        "Confirmar salir!",
-        MessageBoxButtons.YesNo,
-        MessageBoxIcon.Warning,
-        MessageBoxDefaultButton.Button2);
+                "Desea Salir del Sistema?",
+                "Confirmar salir!",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2);
 
             if (result != DialogResult.Yes)
                 return;
-
 
             this.AutoValidate = AutoValidate.Disable;
             DisableValidationRecursive(this);
@@ -381,11 +426,9 @@ namespace FisioKH
 
         private void FisioKHApp_FormClosing(object sender, FormClosingEventArgs e)
         {
-
             this.AutoValidate = AutoValidate.Disable;
             DisableValidatedTextboxes(this);
             DisableValidationRecursive(this);
-
         }
 
         private void DisableValidationRecursive(Control parent)
@@ -399,7 +442,5 @@ namespace FisioKH
                     DisableValidationRecursive(c);
             }
         }
-
-
     }
 }

@@ -46,7 +46,7 @@
             this.lblMedicoTratante = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvExpediente = new System.Windows.Forms.DataGridView();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPxGeneralesPago = new System.Windows.Forms.TabControl();
             this.tabGeneralesPx = new System.Windows.Forms.TabPage();
             this.tabPago = new System.Windows.Forms.TabPage();
             this.txtPaga = new System.Windows.Forms.NumericUpDown();
@@ -64,7 +64,15 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtObservaciones = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtIdPaciente = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtIdPago = new System.Windows.Forms.TextBox();
+            this.txtIdVisita = new System.Windows.Forms.TextBox();
             this.chkRealizada = new System.Windows.Forms.CheckBox();
+            this.txtIdCita = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.txtNombrePaciente = new System.Windows.Forms.TextBox();
             this.btnGuardarCitaVisita = new FisioKH.Boton();
@@ -80,21 +88,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.btnGuardarPago = new FisioKH.Boton();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.txtIdCita = new System.Windows.Forms.TextBox();
-            this.txtIdVisita = new System.Windows.Forms.TextBox();
-            this.txtIdPago = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.txtIdPaciente = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.gbIngresoPaciente.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPacienteIngreso)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBuscarPaciente)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpediente)).BeginInit();
-            this.tabControl1.SuspendLayout();
+            this.tabPxGeneralesPago.SuspendLayout();
             this.tabGeneralesPx.SuspendLayout();
             this.tabPago.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtPaga)).BeginInit();
@@ -467,16 +467,16 @@
             this.dgvExpediente.Size = new System.Drawing.Size(840, 231);
             this.dgvExpediente.TabIndex = 0;
             // 
-            // tabControl1
+            // tabPxGeneralesPago
             // 
-            this.tabControl1.Controls.Add(this.tabGeneralesPx);
-            this.tabControl1.Controls.Add(this.tabPago);
-            this.tabControl1.Controls.Add(this.tabDocs);
-            this.tabControl1.Location = new System.Drawing.Point(6, 16);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(746, 180);
-            this.tabControl1.TabIndex = 45;
+            this.tabPxGeneralesPago.Controls.Add(this.tabGeneralesPx);
+            this.tabPxGeneralesPago.Controls.Add(this.tabPago);
+            this.tabPxGeneralesPago.Controls.Add(this.tabDocs);
+            this.tabPxGeneralesPago.Location = new System.Drawing.Point(6, 16);
+            this.tabPxGeneralesPago.Name = "tabPxGeneralesPago";
+            this.tabPxGeneralesPago.SelectedIndex = 0;
+            this.tabPxGeneralesPago.Size = new System.Drawing.Size(746, 180);
+            this.tabPxGeneralesPago.TabIndex = 45;
             // 
             // tabGeneralesPx
             // 
@@ -703,16 +703,84 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Cita";
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(565, 53);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(23, 19);
+            this.label24.TabIndex = 72;
+            this.label24.Text = "px";
+            // 
+            // txtIdPaciente
+            // 
+            this.txtIdPaciente.Location = new System.Drawing.Point(589, 49);
+            this.txtIdPaciente.Name = "txtIdPaciente";
+            this.txtIdPaciente.ReadOnly = true;
+            this.txtIdPaciente.Size = new System.Drawing.Size(50, 25);
+            this.txtIdPaciente.TabIndex = 71;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(776, 54);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(17, 19);
+            this.label23.TabIndex = 70;
+            this.label23.Text = "p";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(710, 56);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(16, 19);
+            this.label17.TabIndex = 69;
+            this.label17.Text = "v";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(642, 56);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(15, 19);
+            this.label15.TabIndex = 68;
+            this.label15.Text = "c";
+            // 
+            // txtIdPago
+            // 
+            this.txtIdPago.Location = new System.Drawing.Point(793, 51);
+            this.txtIdPago.Name = "txtIdPago";
+            this.txtIdPago.ReadOnly = true;
+            this.txtIdPago.Size = new System.Drawing.Size(50, 25);
+            this.txtIdPago.TabIndex = 52;
+            // 
+            // txtIdVisita
+            // 
+            this.txtIdVisita.Location = new System.Drawing.Point(726, 49);
+            this.txtIdVisita.Name = "txtIdVisita";
+            this.txtIdVisita.ReadOnly = true;
+            this.txtIdVisita.Size = new System.Drawing.Size(50, 25);
+            this.txtIdVisita.TabIndex = 51;
+            // 
             // chkRealizada
             // 
             this.chkRealizada.AutoSize = true;
             this.chkRealizada.Enabled = false;
-            this.chkRealizada.Location = new System.Drawing.Point(846, 12);
+            this.chkRealizada.Location = new System.Drawing.Point(869, 12);
             this.chkRealizada.Name = "chkRealizada";
             this.chkRealizada.Size = new System.Drawing.Size(84, 23);
             this.chkRealizada.TabIndex = 61;
             this.chkRealizada.Text = "Realizada";
             this.chkRealizada.UseVisualStyleBackColor = true;
+            // 
+            // txtIdCita
+            // 
+            this.txtIdCita.Location = new System.Drawing.Point(659, 50);
+            this.txtIdCita.Name = "txtIdCita";
+            this.txtIdCita.ReadOnly = true;
+            this.txtIdCita.Size = new System.Drawing.Size(50, 25);
+            this.txtIdCita.TabIndex = 50;
             // 
             // label20
             // 
@@ -752,7 +820,7 @@
             // chkFactura
             // 
             this.chkFactura.AutoSize = true;
-            this.chkFactura.Location = new System.Drawing.Point(846, 58);
+            this.chkFactura.Location = new System.Drawing.Point(869, 58);
             this.chkFactura.Name = "chkFactura";
             this.chkFactura.Size = new System.Drawing.Size(73, 23);
             this.chkFactura.TabIndex = 63;
@@ -763,7 +831,7 @@
             // 
             this.chkPagada.AutoSize = true;
             this.chkPagada.Enabled = false;
-            this.chkPagada.Location = new System.Drawing.Point(846, 35);
+            this.chkPagada.Location = new System.Drawing.Point(869, 35);
             this.chkPagada.Name = "chkPagada";
             this.chkPagada.Size = new System.Drawing.Size(73, 23);
             this.chkPagada.TabIndex = 62;
@@ -868,81 +936,13 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.btnGuardarPago);
-            this.groupBox5.Controls.Add(this.tabControl1);
+            this.groupBox5.Controls.Add(this.tabPxGeneralesPago);
             this.groupBox5.Location = new System.Drawing.Point(297, 212);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(852, 202);
             this.groupBox5.TabIndex = 25;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Visita";
-            // 
-            // txtIdCita
-            // 
-            this.txtIdCita.Location = new System.Drawing.Point(659, 50);
-            this.txtIdCita.Name = "txtIdCita";
-            this.txtIdCita.ReadOnly = true;
-            this.txtIdCita.Size = new System.Drawing.Size(50, 25);
-            this.txtIdCita.TabIndex = 50;
-            // 
-            // txtIdVisita
-            // 
-            this.txtIdVisita.Location = new System.Drawing.Point(726, 49);
-            this.txtIdVisita.Name = "txtIdVisita";
-            this.txtIdVisita.ReadOnly = true;
-            this.txtIdVisita.Size = new System.Drawing.Size(50, 25);
-            this.txtIdVisita.TabIndex = 51;
-            // 
-            // txtIdPago
-            // 
-            this.txtIdPago.Location = new System.Drawing.Point(793, 51);
-            this.txtIdPago.Name = "txtIdPago";
-            this.txtIdPago.ReadOnly = true;
-            this.txtIdPago.Size = new System.Drawing.Size(50, 25);
-            this.txtIdPago.TabIndex = 52;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(642, 56);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(15, 19);
-            this.label15.TabIndex = 68;
-            this.label15.Text = "c";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(710, 56);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(16, 19);
-            this.label17.TabIndex = 69;
-            this.label17.Text = "v";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(776, 54);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(17, 19);
-            this.label23.TabIndex = 70;
-            this.label23.Text = "p";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(565, 53);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(23, 19);
-            this.label24.TabIndex = 72;
-            this.label24.Text = "px";
-            // 
-            // txtIdPaciente
-            // 
-            this.txtIdPaciente.Location = new System.Drawing.Point(589, 49);
-            this.txtIdPaciente.Name = "txtIdPaciente";
-            this.txtIdPaciente.ReadOnly = true;
-            this.txtIdPaciente.Size = new System.Drawing.Size(50, 25);
-            this.txtIdPaciente.TabIndex = 71;
             // 
             // IngresoPaciente
             // 
@@ -964,7 +964,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvBuscarPaciente)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvExpediente)).EndInit();
-            this.tabControl1.ResumeLayout(false);
+            this.tabPxGeneralesPago.ResumeLayout(false);
             this.tabGeneralesPx.ResumeLayout(false);
             this.tabGeneralesPx.PerformLayout();
             this.tabPago.ResumeLayout(false);
@@ -1013,7 +1013,7 @@
         private System.Windows.Forms.Label lblIngresosPagados;
         private System.Windows.Forms.Label lblCitas;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabPxGeneralesPago;
         private System.Windows.Forms.TabPage tabPago;
         private System.Windows.Forms.TabPage tabDocs;
         private Boton btnAgregarPx;

@@ -134,6 +134,7 @@ namespace FisioKH
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
             txtNombrePaciente.ReadOnly = readOnly;
             txtNotasMedicas.ReadOnly = readOnly;
+            txtObservaciones.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
 
             cboFisioTerapeuta.Enabled = !readOnly;
@@ -142,9 +143,9 @@ namespace FisioKH
 
             dtpIngresoFecha.Enabled = !readOnly;
 
-            chkRealizada.Enabled = !readOnly;
+            //chkRealizada.Enabled = !readOnly;
             chkFactura.Enabled = !readOnly;
-            chkPagada.Enabled = !readOnly;
+            //chkPagada.Enabled = !readOnly;
 
             dgvBuscarPaciente.Enabled = !readOnly;
             btnBuscarPaciente.Enabled = !readOnly;
@@ -381,7 +382,10 @@ namespace FisioKH
         private void btnGuardarCitaVisita_Click(object sender, EventArgs e)
         {
             int idCita = 0, qtyi = 0,idVisita=0,idPago = 0;
+            long idPaciente = 0;
 
+
+            long.TryParse(this.txtIdPaciente.Text, out idPaciente);
             int.TryParse(this.txtIdCita.Text, out idCita);
             int.TryParse(this.txtIdVisita.Text, out idVisita);
             int.TryParse(this.txtIdPago.Text, out idPago);
@@ -411,18 +415,32 @@ namespace FisioKH
             parameters["@ocupaFactura"] = this.chkFactura.Checked;
             parameters["@notas"] = this.txtNotasMedicas.Text;
 
-            idCita = 0;
+          
             if (idCita > 0)
             {
-                parameters.Add("@id", idCita);
-                qtyi = sdb.EjecutarNonQuery("usp_crearCitaVisita", parameters, outs, out outValues);
+                parameters.Add("@idCita", idCita);
+                parameters.Add("@idVisita", idVisita);
+                qtyi = sdb.EjecutarNonQuery("usp_updateCitaVisita", parameters);
             }
             else
-            { qtyi = sdb.EjecutarNonQuery("usp_crearCitaVisita", parameters, outs, out outValues); }
+            { 
+                qtyi = sdb.EjecutarNonQuery("usp_insertCitaVisita", parameters, outs, out outValues);
+                this.txtIdCita.Text = outValues["@idCita"].ToString();
+                this.txtIdVisita.Text = outValues["@idVisita"].ToString();
+                if((long)outValues["@idVisita"] >0)
+                {
+                    this.chkRealizada.Checked = true;
+                }
+            }
 
 
             if (qtyi > 0)
-            { MessageBox.Show("Registro Guardado"); }
+            {
+                MessageBox.Show("Registro Guardado");
+                cargarGridExpedientePaciente(idPaciente);
+                tabPxGeneralesPago.SelectedIndex = 1;
+
+            }
 
 
 
