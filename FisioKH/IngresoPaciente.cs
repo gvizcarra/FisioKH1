@@ -5,6 +5,8 @@ using System.Data;
 using System.Collections.Generic;
 using static FisioKH.FisioKHCalendar;
 using System.IO;
+using FisioKH.classes;
+using System.Linq;
 
 namespace FisioKH
 {
@@ -41,10 +43,36 @@ namespace FisioKH
             DialogResult = DialogResult.OK;
         }
 
+        private List<Precio> ConvertToPrecioList(DataTable dt)
+        {
+            return dt.AsEnumerable()
+                     .Select(r => new Precio
+                     {
+                         Id = r.Field<long>("id"),
+                         Nombre = r.Field<string>("nombre"),
+                         PacientePaga = r.Field<bool>("pacientePaga")
+                     })
+                     .ToList();
+        }  
+        
+        private List<MetodoPago> ConvertToMetodoPagoList(DataTable dt)
+        {
+            return dt.AsEnumerable()
+                     .Select(r => new MetodoPago
+                     {
+                         Id = r.Field<long>("id"),
+                         Nombre = r.Field<string>("nombre"),
+                         OcupaReferenciaPago = r.Field<bool>("ocupaReferenciaPago")
+                     })
+                     .ToList();
+        }
 
         private void EventDetailsForm_Load(object sender, EventArgs e)
         {
             DBHelper dbh = new DBHelper();
+
+            var listaMetodoPago = ConvertToMetodoPagoList(dbh.obtenerMetodosPago());
+
 
 
             this.cboPrecio.DataSource = dbh.obtenerPrecios();
@@ -55,7 +83,7 @@ namespace FisioKH
             this.cboFisioTerapeuta.DisplayMember = "nombre"; // what user sees
             this.cboFisioTerapeuta.ValueMember = "id";
 
-            this.cboMetodoPago.DataSource = dbh.obtenerMetodosPago();
+            this.cboMetodoPago.DataSource = listaMetodoPago;
             this.cboMetodoPago.DisplayMember = "nombre"; // what user sees
             this.cboMetodoPago.ValueMember = "id";
             cargarFormaDatosCitaVisita();
@@ -303,6 +331,8 @@ namespace FisioKH
                 this.txtPaga.ReadOnly = false;
                 this.cboMetodoPago.Enabled = true;
                 this.txtPaga.Enabled = true;
+                this.txtCantidadAPagar.Text = precio.ToString();
+                this.txtCantidadAPagar.Enabled = true;
                 this.txtCambio.Text = "";
             }
             else
@@ -310,6 +340,7 @@ namespace FisioKH
                 MessageBox.Show("Con Este Precio Paciente No Paga!!");
                 this.cboMetodoPago.Enabled = false;
                 this.txtCantidadAPagar.Text = "";
+                this.txtCantidadAPagar.Enabled = false;
                 this.txtPaga.ReadOnly = true;
                 this.txtPaga.Enabled = false;
                 this.txtCambio.Text = "";
@@ -333,7 +364,7 @@ namespace FisioKH
             {
                 decimal precio = Convert.ToDecimal(row["precio"]);
                 decimal paga = this.txtPaga.Value;
-                decimal cambio = precio - paga;
+                decimal cambio = paga - precio;
                 this.txtCambio.Text = cambio.ToString();
             }
         }
@@ -464,6 +495,52 @@ namespace FisioKH
 
         private void IngresoPaciente_FormClosed(object sender, FormClosedEventArgs e)
         {
+            
+        }
+
+        private void cboMetodoPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void cboMetodoPago_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (cboMetodoPago.SelectedItem is MetodoPago metodoPago)
+            {
+
+                // If you want conditional behavior:
+                if (metodoPago.OcupaReferenciaPago)
+                {
+                    this.txtPaga.Enabled = false;
+                }
+                else
+                {
+                    this.txtPaga.Enabled = true;
+
+                }
+            }
+
+        }
+
+        private void btnGuardarPago_Click(object sender, EventArgs e)
+        {
+            decimal pacientePaga = 0; decimal cantidadAPagar = 0;
+            decimal.TryParse(this.txtPaga.Text, out pacientePaga);
+            decimal.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
+
+            if ( pacientePaga  < cantidadAPagar)
+            {
+                MessageBox.Show(" Le Falta pagar al paciente: $"+ (cantidadAPagar - pacientePaga) +" !!");
+                return;
+            }
+
+            if (pacientePaga > cantidadAPagar)
+            {
+                MessageBox.Show(" Regresar al paciente: $" + (pacientePaga - cantidadAPagar) + " !!");
+                return;
+            }
+
+
             
         }
     }

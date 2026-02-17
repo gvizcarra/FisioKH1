@@ -146,12 +146,12 @@ namespace FisioKH
                 Height = 35
             };
 
-            btnMonth = new Button { Text = "Mes", Width = 60, Height = 30 };
-            btnWeek = new Button { Text = "Semana", Width = 80, Height = 30 };
-            btnDay = new Button { Text = "Día", Width = 60, Height = 30 };
+            btnMonth = new Button { Text = "Mes", Width = 60, Height = 30, BackColor = Color.FromArgb(0, 192, 192), ForeColor = Color.Black,FlatStyle = FlatStyle.Flat };
+            btnWeek = new Button { Text = "Semana", Width = 80, Height = 30, BackColor = Color.FromArgb(0, 192, 192), ForeColor = Color.Black, FlatStyle = FlatStyle.Flat };
+            btnDay = new Button { Text = "Día", Width = 60, Height = 30, BackColor = Color.FromArgb(0, 192, 192), ForeColor = Color.Black, FlatStyle = FlatStyle.Flat };
 
-            btnPrev = new Button { Text = "<", Width = 30, Height = 30 };
-            btnNext = new Button { Text = ">", Width = 30, Height = 30 };
+            btnPrev = new Button { Text = "<", Width = 30, Height = 30, BackColor = Color.FromArgb(0, 192, 192), ForeColor = Color.Black, FlatStyle = FlatStyle.Flat };
+            btnNext = new Button { Text = ">", Width = 30, Height = 30, BackColor = Color.FromArgb(0, 192, 192), ForeColor = Color.Black, FlatStyle = FlatStyle.Flat };
 
             lblCurrentDay = new Label
             {

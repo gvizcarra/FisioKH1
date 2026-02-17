@@ -551,6 +551,8 @@
             this.cboMetodoPago.Name = "cboMetodoPago";
             this.cboMetodoPago.Size = new System.Drawing.Size(117, 25);
             this.cboMetodoPago.TabIndex = 67;
+            this.cboMetodoPago.SelectedIndexChanged += new System.EventHandler(this.cboMetodoPago_SelectedIndexChanged);
+            this.cboMetodoPago.SelectedValueChanged += new System.EventHandler(this.cboMetodoPago_SelectedValueChanged);
             // 
             // label22
             // 
@@ -932,6 +934,7 @@
             this.btnGuardarPago.TabIndex = 68;
             this.btnGuardarPago.Text = "Registrar &Pago";
             this.btnGuardarPago.UseVisualStyleBackColor = false;
+            this.btnGuardarPago.Click += new System.EventHandler(this.btnGuardarPago_Click);
             // 
             // groupBox5
             // 
