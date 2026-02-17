@@ -522,11 +522,73 @@ namespace FisioKH
 
         }
 
+        private int relizarPago()
+        {
+
+            int idCita = 0, qtyi = 0, idVisita = 0, idPago = 0;
+            long idPaciente = 0;
+
+
+            long.TryParse(this.txtIdPaciente.Text, out idPaciente);
+            int.TryParse(this.txtIdCita.Text, out idCita);
+            int.TryParse(this.txtIdVisita.Text, out idVisita);
+            int.TryParse(this.txtIdPago.Text, out idPago);
+
+            DBHelper sdb = new DBHelper();
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@idUsuario", Program.UsuarioLogeado.Id },
+                { "@idVisita", idVisita }
+            };
+
+            Dictionary<string, SqlDbType> outs = new Dictionary<string, SqlDbType>
+            {
+               { "@idPago", SqlDbType.BigInt }
+            };
+
+            Dictionary<string, object> outValues;
+
+            parameters["@idMetodoPago"] = cboMetodoPago.SelectedValue;
+            parameters["@idPrecio"] = cboPrecio.SelectedValue;
+            parameters["@cantidadPago"] = GetBigIntOrNull(txtPaga.Text);         
+
+
+            if (idPago > 0)
+            {
+                parameters.Add("@idPago", idPago);
+                qtyi = sdb.EjecutarNonQuery("usp_updateCitaVisita", parameters);
+            }
+            else
+            {
+                qtyi = sdb.EjecutarNonQuery("usp_insertPagoVisita", parameters, outs, out outValues);
+                //this.txtIdCita.Text = outValues["@idCita"].ToString();
+                //this.txtIdVisita.Text = outValues["@idVisita"].ToString();
+                if ((long)outValues["@idPago"] > 0)
+                {
+                    this.chkPagada.Checked = true;
+                }
+            }
+
+
+            if (qtyi > 0)
+            {
+                MessageBox.Show("Registro Guardado");
+                cargarGridExpedientePaciente(idPaciente);
+            }
+
+            return idPago;
+        }
+
         private void btnGuardarPago_Click(object sender, EventArgs e)
         {
             decimal pacientePaga = 0; decimal cantidadAPagar = 0;
             decimal.TryParse(this.txtPaga.Text, out pacientePaga);
             decimal.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
+
+           
+
+            
 
             if ( pacientePaga  < cantidadAPagar)
             {
@@ -540,8 +602,22 @@ namespace FisioKH
                 return;
             }
 
+            if (pacientePaga == cantidadAPagar)
+            {
+                
+
+                int x = relizarPago();
+
+
+            }
+
+
+            }
+
 
             
         }
-    }
+
+
+
 }

@@ -1738,3 +1738,274 @@ GO
 ALTER TABLE dbo.visitasRealizadas SET (LOCK_ESCALATION = TABLE)
 GO
 COMMIT
+
+
+
+/* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas ADD
+	cantidadPrecio numeric(18, 0) NULL,
+	idPrecio bigint NULL
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_insertCitaVisita]    Script Date: 2/16/2026 10:37:43 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+CREATE OR ALTER   PROCEDURE [dbo].[usp_insertPagoVisita]
+(
+
+	@idVisita  BIGINT,
+	@idUsuario BIGINT,
+    @idMetodoPago BIGINT,
+	@idPrecio BIGINT,
+    @cantidadPago NUMERIC(18,0),	 
+    @rowsAffected INT OUTPUT,
+    @idPago BIGINT OUTPUT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SET XACT_ABORT ON;
+
+    BEGIN TRY
+        BEGIN TRAN;
+
+		DECLARE @cantidadPrecio AS BIGINT = 0;
+
+		SELECT @cantidadPrecio = [precio] FROM dbo.precios WHERE id = @idPrecio;
+
+        -- Insert into Citas
+        INSERT INTO dbo.pagosVisitasRealizadas
+		  (
+				[idVisita]
+			   ,[idUsuario]
+			   ,[idMetodoPago]
+			   ,[idPrecio]
+			   ,[cantidadPrecio]
+			   ,[cantidadPago]
+		  )
+        VALUES
+        (
+			 @idVisita
+			,@idUsuario
+			,@idMetodoPago
+			,@idPrecio
+			,@cantidadPrecio
+			,@cantidadPago
+        );
+
+        SET @idPago = SCOPE_IDENTITY();
+
+        -- Insert into visitasRealizadas
+        UPDATE dbo.visitasRealizadas
+        SET pagado = 1
+            WHERE id = @idVisita;
+
+		SET @rowsAffected= @@ROWCOUNT;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_insertCitaVisita]    Script Date: 2/16/2026 10:37:43 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+CREATE OR ALTER   PROCEDURE [dbo].[usp_upatePagoVisita]
+(
+	@idPago BIGINT,
+	@idVisita  BIGINT,
+	@idUsuario BIGINT,
+    @idMetodoPago BIGINT,
+	@idPrecio BIGINT,
+    @cantidadPago NUMERIC(18,0),	 
+    @rowsAffected INT OUTPUT
+
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SET XACT_ABORT ON;
+
+    BEGIN TRY
+        BEGIN TRAN;
+
+		DECLARE @cantidadPrecio AS BIGINT = 0;
+
+		SELECT @cantidadPrecio = [precio] FROM dbo.precios WHERE id = @idPrecio;
+
+        -- Insert into Citas
+       UPDATE dbo.pagosVisitasRealizadas
+		SET [idUsuario] = @idUsuario
+			   ,[idMetodoPago] = @idMetodoPago
+			   ,[idPrecio] = @idPrecio
+			   ,[cantidadPrecio] = @cantidadPrecio
+			   ,[cantidadPago] = @cantidadPago
+		  WHERE id = @idPago;
+
+        SET @idPago = SCOPE_IDENTITY();
+
+        -- Insert into visitasRealizadas
+        UPDATE dbo.visitasRealizadas
+        SET pagado = 1
+            WHERE id = @idVisita;
+
+		SET @rowsAffected= @@ROWCOUNT;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+
+/* To prevent any potential data loss issues, you should review this script in detail before running it outside the context of the database designer.*/
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas
+	DROP CONSTRAINT FK_pagosVisitasRealizadas_usuarios
+GO
+ALTER TABLE dbo.usuarios SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas
+	DROP CONSTRAINT FK_pagosVisitasRealizadas_visitasRealizadas
+GO
+ALTER TABLE dbo.visitasRealizadas SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas
+	DROP CONSTRAINT FK_pagosVisitasRealizadas_metodoPago
+GO
+ALTER TABLE dbo.metodoPago SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+BEGIN TRANSACTION
+GO
+CREATE TABLE dbo.Tmp_pagosVisitasRealizadas
+	(
+	id bigint NOT NULL IDENTITY (1, 1),
+	idVisita bigint NOT NULL,
+	idUsuario bigint NOT NULL,
+	fechaRegistro datetime NOT NULL,
+	idMetodoPago bigint NOT NULL,
+	cantidadPago numeric(18, 0) NOT NULL,
+	referenciaPago nvarchar(100) NULL,
+	cantidadPrecio numeric(18, 0) NULL,
+	idPrecio bigint NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.Tmp_pagosVisitasRealizadas SET (LOCK_ESCALATION = TABLE)
+GO
+ALTER TABLE dbo.Tmp_pagosVisitasRealizadas ADD CONSTRAINT
+	DF_pagosVisitasRealizadas_fechaRegistro DEFAULT getdate() FOR fechaRegistro
+GO
+SET IDENTITY_INSERT dbo.Tmp_pagosVisitasRealizadas ON
+GO
+IF EXISTS(SELECT * FROM dbo.pagosVisitasRealizadas)
+	 EXEC('INSERT INTO dbo.Tmp_pagosVisitasRealizadas (id, idVisita, idUsuario, fechaRegistro, idMetodoPago, cantidadPago, referenciaPago, cantidadPrecio, idPrecio)
+		SELECT id, idVisita, idUsuario, CONVERT(datetime, fechaRegistro), idMetodoPago, cantidadPago, referenciaPago, cantidadPrecio, idPrecio FROM dbo.pagosVisitasRealizadas WITH (HOLDLOCK TABLOCKX)')
+GO
+SET IDENTITY_INSERT dbo.Tmp_pagosVisitasRealizadas OFF
+GO
+DROP TABLE dbo.pagosVisitasRealizadas
+GO
+EXECUTE sp_rename N'dbo.Tmp_pagosVisitasRealizadas', N'pagosVisitasRealizadas', 'OBJECT' 
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas ADD CONSTRAINT
+	PK_pagosVisitasRealizadas PRIMARY KEY CLUSTERED 
+	(
+	id
+	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas ADD CONSTRAINT
+	FK_pagosVisitasRealizadas_metodoPago FOREIGN KEY
+	(
+	idMetodoPago
+	) REFERENCES dbo.metodoPago
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas ADD CONSTRAINT
+	FK_pagosVisitasRealizadas_visitasRealizadas FOREIGN KEY
+	(
+	idVisita
+	) REFERENCES dbo.visitasRealizadas
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+ALTER TABLE dbo.pagosVisitasRealizadas ADD CONSTRAINT
+	FK_pagosVisitasRealizadas_usuarios FOREIGN KEY
+	(
+	idUsuario
+	) REFERENCES dbo.usuarios
+	(
+	id
+	) ON UPDATE  NO ACTION 
+	 ON DELETE  NO ACTION 
+	
+GO
+COMMIT
