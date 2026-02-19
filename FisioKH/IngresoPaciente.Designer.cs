@@ -49,7 +49,8 @@
             this.tabPxGeneralesPago = new System.Windows.Forms.TabControl();
             this.tabGeneralesPx = new System.Windows.Forms.TabPage();
             this.tabPago = new System.Windows.Forms.TabPage();
-            this.txtPaga = new System.Windows.Forms.NumericUpDown();
+            this.btnIgualarPagoAprecio = new FisioKH.Boton();
+            this.txtCantidadPagada = new System.Windows.Forms.NumericUpDown();
             this.cboMetodoPago = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -97,7 +98,7 @@
             this.tabPxGeneralesPago.SuspendLayout();
             this.tabGeneralesPx.SuspendLayout();
             this.tabPago.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPaga)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCantidadPagada)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -513,7 +514,8 @@
             // 
             // tabPago
             // 
-            this.tabPago.Controls.Add(this.txtPaga);
+            this.tabPago.Controls.Add(this.btnIgualarPagoAprecio);
+            this.tabPago.Controls.Add(this.txtCantidadPagada);
             this.tabPago.Controls.Add(this.cboMetodoPago);
             this.tabPago.Controls.Add(this.label22);
             this.tabPago.Controls.Add(this.label18);
@@ -529,18 +531,32 @@
             this.tabPago.Text = "Pago $$";
             this.tabPago.UseVisualStyleBackColor = true;
             // 
-            // txtPaga
+            // btnIgualarPagoAprecio
             // 
-            this.txtPaga.Location = new System.Drawing.Point(339, 17);
-            this.txtPaga.Maximum = new decimal(new int[] {
+            this.btnIgualarPagoAprecio.FlatAppearance.BorderSize = 2;
+            this.btnIgualarPagoAprecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnIgualarPagoAprecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnIgualarPagoAprecio.Location = new System.Drawing.Point(309, 16);
+            this.btnIgualarPagoAprecio.Margin = new System.Windows.Forms.Padding(10);
+            this.btnIgualarPagoAprecio.Name = "btnIgualarPagoAprecio";
+            this.btnIgualarPagoAprecio.Size = new System.Drawing.Size(41, 30);
+            this.btnIgualarPagoAprecio.TabIndex = 77;
+            this.btnIgualarPagoAprecio.Text = "-->";
+            this.btnIgualarPagoAprecio.UseVisualStyleBackColor = true;
+            this.btnIgualarPagoAprecio.Click += new System.EventHandler(this.boton1_Click);
+            // 
+            // txtCantidadPagada
+            // 
+            this.txtCantidadPagada.Location = new System.Drawing.Point(404, 18);
+            this.txtCantidadPagada.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.txtPaga.Name = "txtPaga";
-            this.txtPaga.Size = new System.Drawing.Size(60, 25);
-            this.txtPaga.TabIndex = 76;
-            this.txtPaga.ValueChanged += new System.EventHandler(this.txtPaga_ValueChanged);
+            this.txtCantidadPagada.Name = "txtCantidadPagada";
+            this.txtCantidadPagada.Size = new System.Drawing.Size(60, 25);
+            this.txtCantidadPagada.TabIndex = 76;
+            this.txtCantidadPagada.ValueChanged += new System.EventHandler(this.txtPaga_ValueChanged);
             // 
             // cboMetodoPago
             // 
@@ -551,13 +567,12 @@
             this.cboMetodoPago.Name = "cboMetodoPago";
             this.cboMetodoPago.Size = new System.Drawing.Size(117, 25);
             this.cboMetodoPago.TabIndex = 67;
-            this.cboMetodoPago.SelectedIndexChanged += new System.EventHandler(this.cboMetodoPago_SelectedIndexChanged);
             this.cboMetodoPago.SelectedValueChanged += new System.EventHandler(this.cboMetodoPago_SelectedValueChanged);
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(409, 22);
+            this.label22.Location = new System.Drawing.Point(470, 23);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(56, 19);
             this.label22.TabIndex = 75;
@@ -575,7 +590,7 @@
             // txtCambio
             // 
             this.txtCambio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCambio.Location = new System.Drawing.Point(471, 14);
+            this.txtCambio.Location = new System.Drawing.Point(532, 17);
             this.txtCambio.Name = "txtCambio";
             this.txtCambio.ReadOnly = true;
             this.txtCambio.Size = new System.Drawing.Size(62, 25);
@@ -593,7 +608,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(294, 21);
+            this.label21.Location = new System.Drawing.Point(354, 24);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(39, 19);
             this.label21.TabIndex = 73;
@@ -972,7 +987,7 @@
             this.tabGeneralesPx.PerformLayout();
             this.tabPago.ResumeLayout(false);
             this.tabPago.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPaga)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCantidadPagada)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -1041,7 +1056,7 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox txtCambio;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.NumericUpDown txtPaga;
+        private System.Windows.Forms.NumericUpDown txtCantidadPagada;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtNombrePaciente;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -1059,5 +1074,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtIdPaciente;
+        private Boton btnIgualarPagoAprecio;
     }
 }

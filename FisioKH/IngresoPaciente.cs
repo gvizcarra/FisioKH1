@@ -15,6 +15,8 @@ namespace FisioKH
         private FisioKH.FisioKHCalendar.CalendarEventKH fce;
         private readonly DateTime _nullDate = new DateTime(1900, 1, 1);
 
+        Boolean pacientePaga = true;
+
 
 
         // REQUIRED for Designer
@@ -102,6 +104,7 @@ namespace FisioKH
             this.txtNombrePaciente.Text = fce.cNombreCompletoPaciente.ToString();
             this.cboFisioTerapeuta.SelectedValue = fce.cIdFisioterapeuta ?? (object)DBNull.Value;
             this.cboPrecio.SelectedValue = fce.vIdPrecio ?? (object)DBNull.Value;
+            this.cboMetodoPago.SelectedValue = fce.vrIdMetodoPago ?? (object)DBNull.Value;
             this.dtpIngresoFecha.Text = (fce.cFechaCita != DateTime.MinValue) ? fce.cFechaCita.ToString() : fce.Start.ToString();
 
             this.txtNotasMedicas.Text = fce.pNotas;
@@ -114,6 +117,7 @@ namespace FisioKH
             this.txtIdCita.Text = fce.cIdCita.ToString();
             this.txtIdVisita.Text = fce.vIdVisita.ToString();
             this.txtIdPago.Text = fce.vrIdPago.ToString();
+            this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString();
 
             if (fce.cIdPaciente > 0)
             { cargarGridExpedientePaciente((long)fce.cIdPaciente); }
@@ -147,7 +151,7 @@ namespace FisioKH
         {
             const string lockIcon = "🔒 ";
 
-            txtPaga.Enabled = !readOnly;
+            txtCantidadPagada.Enabled = !readOnly;
             cboMetodoPago.Enabled = !readOnly;
 
             btnGuardarPago.Enabled = !readOnly;
@@ -324,13 +328,13 @@ namespace FisioKH
             if (row == null) return;
 
             decimal precio = Convert.ToDecimal(row["precio"]);
-            Boolean pacientePaga = Convert.ToBoolean(row["pacientePaga"]);
+            pacientePaga = Convert.ToBoolean(row["pacientePaga"]);
 
             if (pacientePaga)
             {
-                this.txtPaga.ReadOnly = false;
+                this.txtCantidadPagada.ReadOnly = false;
                 this.cboMetodoPago.Enabled = true;
-                this.txtPaga.Enabled = true;
+                this.txtCantidadPagada.Enabled = true;
                 this.txtCantidadAPagar.Text = precio.ToString();
                 this.txtCantidadAPagar.Enabled = true;
                 this.txtCambio.Text = "";
@@ -341,10 +345,10 @@ namespace FisioKH
                 this.cboMetodoPago.Enabled = false;
                 this.txtCantidadAPagar.Text = "";
                 this.txtCantidadAPagar.Enabled = false;
-                this.txtPaga.ReadOnly = true;
-                this.txtPaga.Enabled = false;
+                this.txtCantidadPagada.ReadOnly = true;
+                this.txtCantidadPagada.Enabled = false;
                 this.txtCambio.Text = "";
-                this.txtPaga.Value = 0;
+                this.txtCantidadPagada.Value = 0;
 
             }
 
@@ -363,7 +367,7 @@ namespace FisioKH
             if (pacientePaga)
             {
                 decimal precio = Convert.ToDecimal(row["precio"]);
-                decimal paga = this.txtPaga.Value;
+                decimal paga = this.txtCantidadPagada.Value;
                 decimal cambio = paga - precio;
                 this.txtCambio.Text = cambio.ToString();
             }
@@ -482,7 +486,7 @@ namespace FisioKH
             long value;
             return (long.TryParse(text, out value) && value != 0)
                 ? (object)value
-                : DBNull.Value;
+                : 0;
         }
 
 
@@ -498,10 +502,7 @@ namespace FisioKH
             
         }
 
-        private void cboMetodoPago_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
+   
 
         private void cboMetodoPago_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -511,12 +512,15 @@ namespace FisioKH
                 // If you want conditional behavior:
                 if (metodoPago.OcupaReferenciaPago)
                 {
-                    this.txtPaga.Enabled = false;
+                    this.txtCantidadPagada.Enabled = false;
+                    this.btnIgualarPagoAprecio.Enabled = false;
+                    IgualarPagoAprecio();
+
                 }
                 else
                 {
-                    this.txtPaga.Enabled = true;
-
+                    this.txtCantidadPagada.Enabled = true;
+                    this.btnIgualarPagoAprecio.Enabled = true;
                 }
             }
 
@@ -539,7 +543,10 @@ namespace FisioKH
             var parameters = new Dictionary<string, object>
             {
                 { "@idUsuario", Program.UsuarioLogeado.Id },
-                { "@idVisita", idVisita }
+                { "@idVisita", idVisita },
+                { "@idMetodoPago" , cboMetodoPago.SelectedValue },
+                { "@idPrecio" , cboPrecio.SelectedValue },
+                { "@cantidadPago" , GetBigIntOrNull(txtCantidadPagada.Text) }
             };
 
             Dictionary<string, SqlDbType> outs = new Dictionary<string, SqlDbType>
@@ -549,24 +556,23 @@ namespace FisioKH
 
             Dictionary<string, object> outValues;
 
-            parameters["@idMetodoPago"] = cboMetodoPago.SelectedValue;
-            parameters["@idPrecio"] = cboPrecio.SelectedValue;
-            parameters["@cantidadPago"] = GetBigIntOrNull(txtPaga.Text);         
+                    
 
 
             if (idPago > 0)
             {
                 parameters.Add("@idPago", idPago);
-                qtyi = sdb.EjecutarNonQuery("usp_updateCitaVisita", parameters);
+                qtyi = sdb.EjecutarNonQuery("usp_updatePagoVisita", parameters);
             }
             else
             {
                 qtyi = sdb.EjecutarNonQuery("usp_insertPagoVisita", parameters, outs, out outValues);
                 //this.txtIdCita.Text = outValues["@idCita"].ToString();
-                //this.txtIdVisita.Text = outValues["@idVisita"].ToString();
+                
                 if ((long)outValues["@idPago"] > 0)
                 {
                     this.chkPagada.Checked = true;
+                    this.txtIdPago.Text = outValues["@idPago"].ToString();
                 }
             }
 
@@ -582,41 +588,55 @@ namespace FisioKH
 
         private void btnGuardarPago_Click(object sender, EventArgs e)
         {
-            decimal pacientePaga = 0; decimal cantidadAPagar = 0;
-            decimal.TryParse(this.txtPaga.Text, out pacientePaga);
-            decimal.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
 
-           
-
-            
-
-            if ( pacientePaga  < cantidadAPagar)
+            if (pacientePaga)
             {
-                MessageBox.Show(" Le Falta pagar al paciente: $"+ (cantidadAPagar - pacientePaga) +" !!");
-                return;
+                decimal cantidadPagoPaciente = 0; decimal cantidadAPagar = 0;
+                decimal.TryParse(this.txtCantidadPagada.Text, out cantidadPagoPaciente);
+                decimal.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
+
+
+
+
+
+                if (cantidadPagoPaciente < cantidadAPagar)
+                {
+                    MessageBox.Show(" Le Falta pagar al paciente: $" + (cantidadAPagar - cantidadPagoPaciente) + " !!");
+                    return;
+                }
+
+                if (cantidadPagoPaciente > cantidadAPagar)
+                {
+                    MessageBox.Show(" Regresar al paciente: $" + (cantidadPagoPaciente - cantidadAPagar) + " !!");
+                    return;
+                }
+
+                if (cantidadPagoPaciente == cantidadAPagar)
+                {
+
+
+                    int x = relizarPago();
+
+
+                }
             }
-
-            if (pacientePaga > cantidadAPagar)
+            else
             {
-                MessageBox.Show(" Regresar al paciente: $" + (pacientePaga - cantidadAPagar) + " !!");
-                return;
-            }
-
-            if (pacientePaga == cantidadAPagar)
-            {
-                
-
                 int x = relizarPago();
-
-
             }
 
 
             }
 
-
-            
+        private void boton1_Click(object sender, EventArgs e)
+        {
+            IgualarPagoAprecio();
         }
+        private void IgualarPagoAprecio()
+        {
+            this.txtCantidadPagada.Value = decimal.Parse(this.txtCantidadAPagar.Text);
+        }
+    }
 
 
 

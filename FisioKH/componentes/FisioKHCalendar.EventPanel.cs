@@ -200,25 +200,7 @@ namespace FisioKH
                 dbIcon.MouseDown += (s, e) => p.BringToFront();
             }
 
-            if (ev.HasDbMatch && ev.vPagado)
-            {
-                var xIcon = new IconPictureBox
-                {
-                    IconChar = IconChar.MoneyBills,
-                    IconColor = Color.Green,
-                    IconSize = iconSize,
-                    Size = new Size(iconSize, iconSize),
-                    TabStop = false
-                };
-                _eventTip.SetToolTip(xIcon, $"Visita Pagada: {ev.vrCantidadPago}");
-                place(xIcon, x);
-                x -= (iconSize + 4);
-
-                // click should behave like the card
-                xIcon.Click += (s, e) => EventClick?.Invoke(this, ev);
-                xIcon.MouseEnter += (s, e) => p.BringToFront();
-                xIcon.MouseDown += (s, e) => p.BringToFront();
-            }
+           
 
             if (ev.cRealizada == true)
             {
@@ -237,6 +219,26 @@ namespace FisioKH
                 doneIcon.Click += (s, e) => EventClick?.Invoke(this, ev);
                 doneIcon.MouseEnter += (s, e) => p.BringToFront();
                 doneIcon.MouseDown += (s, e) => p.BringToFront();
+            }
+
+            if (ev.HasDbMatch && ev.vPagado)
+            {
+                var xIcon = new IconPictureBox
+                {
+                    IconChar = IconChar.MoneyBills,
+                    IconColor = Color.Green,
+                    IconSize = iconSize,
+                    Size = new Size(iconSize, iconSize),
+                    TabStop = false
+                };
+                _eventTip.SetToolTip(xIcon, $"Visita Pagada: {ev.vrCantidadPago}");
+                place(xIcon, x);
+                x -= (iconSize + 4);
+
+                // click should behave like the card
+                xIcon.Click += (s, e) => EventClick?.Invoke(this, ev);
+                xIcon.MouseEnter += (s, e) => p.BringToFront();
+                xIcon.MouseDown += (s, e) => p.BringToFront();
             }
 
             // overlap friendliness: interacting with labels brings card forward too
