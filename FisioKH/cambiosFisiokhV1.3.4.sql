@@ -2009,3 +2009,151 @@ ALTER TABLE dbo.pagosVisitasRealizadas ADD CONSTRAINT
 	
 GO
 COMMIT
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_insertPagoVisita]    Script Date: 2/18/2026 10:23:03 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+ALTER     PROCEDURE [dbo].[usp_insertPagoVisita]
+(
+
+	@idVisita  BIGINT,
+	@idUsuario BIGINT,
+    @idMetodoPago BIGINT,
+	@idPrecio BIGINT,
+    @cantidadPago NUMERIC(18,0),	 
+    @rowsAffected INT OUTPUT,
+    @idPago BIGINT OUTPUT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SET XACT_ABORT ON;
+
+    BEGIN TRY
+        BEGIN TRAN;
+
+		DECLARE @cantidadPrecio AS BIGINT = 0;
+
+		SELECT @cantidadPrecio = [precio] FROM dbo.precios WHERE id = @idPrecio;
+
+        -- Insert into Citas
+        INSERT INTO dbo.pagosVisitasRealizadas
+		  (
+				[idVisita]
+			   ,[idUsuario]
+			   ,[idMetodoPago]
+			   ,[idPrecio]
+			   ,[cantidadPrecio]
+			   ,[cantidadPago]
+		  )
+        VALUES
+        (
+			 @idVisita
+			,@idUsuario
+			,@idMetodoPago
+			,@idPrecio
+			,@cantidadPrecio
+			,@cantidadPago
+        );
+
+        SET @idPago = SCOPE_IDENTITY();
+
+        -- Insert into visitasRealizadas
+        UPDATE dbo.visitasRealizadas
+        SET pagado = 1
+            WHERE id = @idVisita;
+
+		SET @rowsAffected= @@ROWCOUNT;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_upatePagoVisita]    Script Date: 2/18/2026 10:23:41 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+
+
+CREATE OR ALTER     PROCEDURE [dbo].[usp_updatePagoVisita]
+(
+	@idPago BIGINT,
+	@idVisita  BIGINT,
+	@idUsuario BIGINT,
+    @idMetodoPago BIGINT,
+	@idPrecio BIGINT,
+    @cantidadPago NUMERIC(18,0),	 
+    @rowsAffected INT OUTPUT
+
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SET XACT_ABORT ON;
+
+    BEGIN TRY
+        BEGIN TRAN;
+
+		DECLARE @cantidadPrecio AS BIGINT = 0;
+
+		SELECT @cantidadPrecio = [precio] FROM dbo.precios WHERE id = @idPrecio;
+
+        -- Insert into Citas
+       UPDATE dbo.pagosVisitasRealizadas
+		SET [idUsuario] = @idUsuario
+			   ,[idMetodoPago] = @idMetodoPago
+			   ,[idPrecio] = @idPrecio
+			   ,[cantidadPrecio] = @cantidadPrecio
+			   ,[cantidadPago] = @cantidadPago
+		  WHERE id = @idPago;
+
+        SET @idPago = SCOPE_IDENTITY();
+
+        -- Insert into visitasRealizadas
+        UPDATE dbo.visitasRealizadas
+        SET pagado = 1
+            WHERE id = @idVisita;
+
+		SET @rowsAffected= @@ROWCOUNT;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+
+
