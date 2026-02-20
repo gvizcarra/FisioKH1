@@ -442,5 +442,67 @@ namespace FisioKH
                     DisableValidationRecursive(c);
             }
         }
+
+        private void btnObtenerVisitasRealizadas_Click(object sender, EventArgs e)
+        {
+            DataSet dsmp = new DataSet();
+            string dsname = "Pacientes";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@fechaInicio",this.dtpFechaInicio.Text},
+                { "@fechaFin",this.dtpFechaFin.Text},
+                
+            };
+            DBHelper sdb = new DBHelper();
+            dsmp = sdb.ObtenerDatos("usp_obtenerVisitasRealizadas", dsname, parameters);
+
+
+            DataTable dtp = dsmp.Tables[dsname];
+
+
+            this.dgvVisitasRealizadas.Visible = false;
+            this.dgvVisitasRealizadas.DataSource = dtp;
+
+
+
+            foreach (DataGridViewColumn col in dgvVisitasRealizadas.Columns)
+            { col.Visible = false; }
+
+            dgvVisitasRealizadas.Columns["fechaCita"].Visible = true;
+            dgvVisitasRealizadas.Columns["fechaCita"].HeaderText = "Cita";
+            
+            dgvVisitasRealizadas.Columns["Fecha Pago"].Visible = true;
+            dgvVisitasRealizadas.Columns["Fecha Pago"].HeaderText = "Fecha Pago";
+
+            dgvVisitasRealizadas.Columns["Paciente"].Visible = true;
+            dgvVisitasRealizadas.Columns["Paciente"].HeaderText = "Paciente";
+            
+            dgvVisitasRealizadas.Columns["Fisio Terapeuta"].Visible = true;
+            dgvVisitasRealizadas.Columns["Fisio Terapeuta"].HeaderText = "Fisio";          
+
+            dgvVisitasRealizadas.Columns["Metodo Pago"].Visible = true;
+            dgvVisitasRealizadas.Columns["Metodo Pago"].HeaderText = "Metodo Pago";
+           
+            dgvVisitasRealizadas.Columns["NombrePrecio"].Visible = true;
+            dgvVisitasRealizadas.Columns["NombrePrecio"].HeaderText = "Tipo Precio";
+            
+            dgvVisitasRealizadas.Columns["Pagado"].Visible = true;
+            dgvVisitasRealizadas.Columns["Pagado"].HeaderText = "Se Pago";
+            
+            dgvVisitasRealizadas.Columns["Cantidad Precio"].Visible = true;
+            dgvVisitasRealizadas.Columns["Cantidad Precio"].HeaderText = "Precio";
+
+            dgvVisitasRealizadas.Columns["Paciente Paga"].Visible = true;
+            dgvVisitasRealizadas.Columns["Paciente Paga"].HeaderText = "Px Paga";
+
+            dgvVisitasRealizadas.Columns["Cantidad Pagada"].Visible = true;
+            dgvVisitasRealizadas.Columns["Cantidad Pagada"].HeaderText = "Pago";
+
+
+
+            this.dgvVisitasRealizadas.Visible = true;
+
+        }
     }
 }

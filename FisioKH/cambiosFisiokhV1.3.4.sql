@@ -2157,3 +2157,192 @@ GO
 
 
 
+USE [FisioKH]
+GO
+
+/****** Object:  View [dbo].[vw_citasVisitasPagos]    Script Date: 2/19/2026 8:08:19 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER view [dbo].[vw_citasVisitasPagos]
+AS
+
+    SELECT
+        
+        c.id AS cIdCita,
+        c.idPaciente AS cIdPaciente,
+        c.fechaCita AS cFechaCita,
+        c.fechaRegistro AS cFechaRegistro,
+        c.realizada AS cRealizada,
+        c.idUsuario AS cidUsuarioCita,
+        c.idGoogleCalendar AS idGoogleCalendar,     
+        c.idFisioTerapeuta AS cIdFisioterapeuta,
+        p.claveEtiqueta AS cClaveEtiqueta,
+		p.notasMedicas AS pNotas,
+		p.observaciones AS pObservaciones,
+        ft.nombre AS cNombreFisioterapeuta,
+        CONCAT(
+            p.nombreCompleto, ' ',
+            COALESCE(p.apellidoPaterno, ''), ' ',
+            COALESCE(p.apellidoMaterno, '')
+        ) AS cNombreCompletoPaciente,
+
+		COALESCE(vr.id,0) AS vIdVisita,
+		COALESCE(vr.idPaciente,0) AS vIdPaciente,
+		COALESCE(vr.fechaVisita,'') AS vFechaVisita,
+		COALESCE(vr.idUsuario,0) AS vIdUsuario,
+		COALESCE(vr.idPrecio,0) AS vIdPrecio,
+		COALESCE(vr.pagado,0) AS vPagado,
+		COALESCE(vr.ocupaFactura,0) AS vOcupaFactura,
+		COALESCE(pvr.id,0) AS vrIdPago,
+		COALESCE(pvr.idUsuario,0) AS vrIdUsuario,
+		COALESCE(pvr.idMetodoPago,0) AS vrIdMetodoPago,
+		COALESCE(pvr.cantidadPago,0) vrCantidadPago,
+		COALESCE(pvr.referenciaPago,0) AS vrReferenciaPago,
+		pr.precio AS pCantidadPrecio
+
+    FROM Citas c
+    INNER JOIN fisioTerapeutas ft ON c.idFisioTerapeuta = ft.id
+    INNER JOIN Pacientes p ON c.idPaciente = p.id
+	LEFT JOIN visitasRealizadas AS vr ON c.id = vr.idCita
+	LEFT JOIN  pagosVisitasRealizadas AS pvr ON vr.id = pvr.idVisita
+	LEFT JOIN  precios AS pr ON pr.id = pvr.idPrecio
+
+GO
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  View [dbo].[vw_citasVisitasPagos]    Script Date: 2/19/2026 8:08:19 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER view [dbo].[vw_citasVisitasPagos]
+AS
+
+    SELECT
+        
+        c.id AS cIdCita,
+        c.idPaciente AS cIdPaciente,
+        c.fechaCita AS cFechaCita,
+        c.fechaRegistro AS cFechaRegistro,
+        c.realizada AS cRealizada,
+        c.idUsuario AS cidUsuarioCita,
+        c.idGoogleCalendar AS idGoogleCalendar,     
+        c.idFisioTerapeuta AS cIdFisioterapeuta,
+        p.claveEtiqueta AS cClaveEtiqueta,
+		p.notasMedicas AS pNotas,
+		p.observaciones AS pObservaciones,
+        ft.nombre AS cNombreFisioterapeuta,
+        CONCAT(
+            p.nombreCompleto, ' ',
+            COALESCE(p.apellidoPaterno, ''), ' ',
+            COALESCE(p.apellidoMaterno, '')
+        ) AS cNombreCompletoPaciente,
+
+		COALESCE(vr.id,0) AS vIdVisita,
+		COALESCE(vr.idPaciente,0) AS vIdPaciente,
+		COALESCE(vr.fechaVisita,'') AS vFechaVisita,
+		COALESCE(vr.idUsuario,0) AS vIdUsuario,
+		COALESCE(vr.idPrecio,0) AS vIdPrecio,
+		COALESCE(vr.pagado,0) AS vPagado,
+		COALESCE(vr.ocupaFactura,0) AS vOcupaFactura,
+		COALESCE(pvr.id,0) AS vrIdPago,
+		COALESCE(pvr.idUsuario,0) AS vrIdUsuario,
+		COALESCE(pvr.idMetodoPago,0) AS vrIdMetodoPago,
+		COALESCE(pvr.cantidadPago,0) vrCantidadPago,
+		COALESCE(pvr.referenciaPago,0) AS vrReferenciaPago,
+		pr.precio AS pCantidadPrecio,
+		pr.nombre AS pPrecio,
+        pr.pacientePaga AS prPacientePaga,
+		mp.nombre AS mpMetodoPago,
+		pvr.fechaRegistro AS pvrFechaPago
+
+    FROM Citas c
+    INNER JOIN fisioTerapeutas ft ON c.idFisioTerapeuta = ft.id
+    INNER JOIN Pacientes p ON c.idPaciente = p.id
+	LEFT JOIN visitasRealizadas AS vr ON c.id = vr.idCita
+	LEFT JOIN  pagosVisitasRealizadas AS pvr ON vr.id = pvr.idVisita
+	LEFT JOIN  precios AS pr ON pr.id = pvr.idPrecio
+	LEFT JOIN  metodoPago AS mp ON mp.id = pvr.idMetodoPago
+
+GO
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenExpedientePaciente]    Script Date: 2/19/2026 8:05:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenExpedientePaciente]    Script Date: 2/19/2026 8:05:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE OR ALTER PROCEDURE [dbo].[usp_obtenerVisitasRealizadas]
+    @fechaInicio AS DATE,
+	@fechaFin AS DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT        
+		cFechaCita AS fechaCita
+        ,cNombreCompletoPaciente AS Paciente
+		,cNombreFisioterapeuta AS [Fisio Terapeuta]
+		,
+			CASE vPagado 
+			WHEN 1 THEN 'Si'
+				ELSE 'No'
+			END 
+			
+			AS Pagado
+		,pPrecio AS NombrePrecio
+		,pCantidadPrecio AS [Cantidad Precio]
+		,
+			CASE 
+				prPacientePaga 
+				WHEN 1 THEN 'SI'
+				ELSE 'NO'
+		END		
+		AS [Paciente Paga]
+		,vrCantidadPago AS  [Cantidad Pagada]
+		,mpMetodoPago AS [Metodo Pago]
+		,pvrFechaPago AS [Fecha Pago]
+		
+		-- select * 
+    FROM vw_citasVisitasPagos
+    WHERE convert(date,vFechaVisita) BETWEEN @fechaInicio AND @fechaFin
+	ORDER BY vFechaVisita DESC
+END
+GO
+
+
+
+
+

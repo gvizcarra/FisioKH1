@@ -33,6 +33,7 @@ namespace FisioKH
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FisioKHApp));
             this.tabPrincipal = new System.Windows.Forms.TabControl();
             this.tbInicio = new System.Windows.Forms.TabPage();
@@ -57,7 +58,13 @@ namespace FisioKH
             this.btnPrecios = new FisioKH.Boton();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tbReportes = new System.Windows.Forms.TabPage();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnObtenerVisitasRealizadas = new FisioKH.Boton();
+            this.dgvVisitasRealizadas = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
+            this.dtpFechaFin = new System.Windows.Forms.DateTimePicker();
+            this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
+            this.label12 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabPrincipal.SuspendLayout();
@@ -67,7 +74,8 @@ namespace FisioKH
             this.tbAdmin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tbReportes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVisitasRealizadas)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPrincipal
@@ -81,7 +89,7 @@ namespace FisioKH
             this.tabPrincipal.Name = "tabPrincipal";
             this.tabPrincipal.RightToLeftLayout = true;
             this.tabPrincipal.SelectedIndex = 0;
-            this.tabPrincipal.Size = new System.Drawing.Size(1162, 664);
+            this.tabPrincipal.Size = new System.Drawing.Size(1225, 664);
             this.tabPrincipal.TabIndex = 0;
             this.tabPrincipal.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControl1_Selecting);
             // 
@@ -93,7 +101,7 @@ namespace FisioKH
             this.tbInicio.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbInicio.Location = new System.Drawing.Point(4, 30);
             this.tbInicio.Name = "tbInicio";
-            this.tbInicio.Size = new System.Drawing.Size(1154, 630);
+            this.tbInicio.Size = new System.Drawing.Size(1217, 630);
             this.tbInicio.TabIndex = 3;
             this.tbInicio.Text = "Inicio - Login";
             this.tbInicio.UseVisualStyleBackColor = true;
@@ -261,20 +269,20 @@ namespace FisioKH
             this.tbIngresos.Location = new System.Drawing.Point(4, 30);
             this.tbIngresos.Name = "tbIngresos";
             this.tbIngresos.Padding = new System.Windows.Forms.Padding(3);
-            this.tbIngresos.Size = new System.Drawing.Size(1154, 630);
+            this.tbIngresos.Size = new System.Drawing.Size(1217, 630);
             this.tbIngresos.TabIndex = 0;
             this.tbIngresos.Text = "Ingresos";
             this.tbIngresos.UseVisualStyleBackColor = true;
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 15, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 19, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
             this.fisioKHCalendar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.fisioKHCalendar1.Name = "fisioKHCalendar1";
-            this.fisioKHCalendar1.Size = new System.Drawing.Size(1148, 624);
+            this.fisioKHCalendar1.Size = new System.Drawing.Size(1211, 624);
             this.fisioKHCalendar1.TabIndex = 0;
             // 
             // tbAdmin
@@ -290,7 +298,7 @@ namespace FisioKH
             this.tbAdmin.Location = new System.Drawing.Point(4, 30);
             this.tbAdmin.Name = "tbAdmin";
             this.tbAdmin.Padding = new System.Windows.Forms.Padding(3);
-            this.tbAdmin.Size = new System.Drawing.Size(1154, 630);
+            this.tbAdmin.Size = new System.Drawing.Size(1217, 630);
             this.tbAdmin.TabIndex = 1;
             this.tbAdmin.Text = "Administración";
             this.tbAdmin.UseVisualStyleBackColor = true;
@@ -402,25 +410,118 @@ namespace FisioKH
             // 
             // tbReportes
             // 
-            this.tbReportes.Controls.Add(this.pictureBox3);
+            this.tbReportes.Controls.Add(this.groupBox2);
             this.tbReportes.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbReportes.Location = new System.Drawing.Point(4, 30);
             this.tbReportes.Name = "tbReportes";
             this.tbReportes.Padding = new System.Windows.Forms.Padding(3);
-            this.tbReportes.Size = new System.Drawing.Size(1154, 630);
+            this.tbReportes.Size = new System.Drawing.Size(1217, 630);
             this.tbReportes.TabIndex = 2;
             this.tbReportes.Text = "Reportes";
             this.tbReportes.UseVisualStyleBackColor = true;
             // 
-            // pictureBox3
+            // groupBox2
             // 
-            this.pictureBox3.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox3.Location = new System.Drawing.Point(226, 80);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(682, 491);
-            this.pictureBox3.TabIndex = 3;
-            this.pictureBox3.TabStop = false;
+            this.groupBox2.AutoSize = true;
+            this.groupBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.groupBox2.Controls.Add(this.btnObtenerVisitasRealizadas);
+            this.groupBox2.Controls.Add(this.dgvVisitasRealizadas);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.dtpFechaFin);
+            this.groupBox2.Controls.Add(this.dtpFechaInicio);
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(1205, 646);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Visitas Realizadas";
+            // 
+            // btnObtenerVisitasRealizadas
+            // 
+            this.btnObtenerVisitasRealizadas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnObtenerVisitasRealizadas.FlatAppearance.BorderSize = 2;
+            this.btnObtenerVisitasRealizadas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnObtenerVisitasRealizadas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.btnObtenerVisitasRealizadas.ForeColor = System.Drawing.Color.Black;
+            this.btnObtenerVisitasRealizadas.Location = new System.Drawing.Point(347, 29);
+            this.btnObtenerVisitasRealizadas.Margin = new System.Windows.Forms.Padding(10);
+            this.btnObtenerVisitasRealizadas.Name = "btnObtenerVisitasRealizadas";
+            this.btnObtenerVisitasRealizadas.Size = new System.Drawing.Size(97, 29);
+            this.btnObtenerVisitasRealizadas.TabIndex = 58;
+            this.btnObtenerVisitasRealizadas.Text = "&Procesar";
+            this.btnObtenerVisitasRealizadas.UseVisualStyleBackColor = false;
+            this.btnObtenerVisitasRealizadas.Click += new System.EventHandler(this.btnObtenerVisitasRealizadas_Click);
+            // 
+            // dgvVisitasRealizadas
+            // 
+            this.dgvVisitasRealizadas.AllowUserToAddRows = false;
+            this.dgvVisitasRealizadas.AllowUserToDeleteRows = false;
+            this.dgvVisitasRealizadas.AllowUserToOrderColumns = true;
+            this.dgvVisitasRealizadas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvVisitasRealizadas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvVisitasRealizadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvVisitasRealizadas.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvVisitasRealizadas.Location = new System.Drawing.Point(6, 65);
+            this.dgvVisitasRealizadas.Name = "dgvVisitasRealizadas";
+            this.dgvVisitasRealizadas.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.dgvVisitasRealizadas.RowTemplate.DefaultCellStyle.NullValue = " ";
+            this.dgvVisitasRealizadas.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvVisitasRealizadas.Size = new System.Drawing.Size(1188, 553);
+            this.dgvVisitasRealizadas.TabIndex = 57;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label3.Location = new System.Drawing.Point(178, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(44, 19);
+            this.label3.TabIndex = 56;
+            this.label3.Text = "Hasta";
+            // 
+            // dtpFechaFin
+            // 
+            this.dtpFechaFin.CustomFormat = "dd/MM/yyyy";
+            this.dtpFechaFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaFin.Location = new System.Drawing.Point(225, 29);
+            this.dtpFechaFin.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpFechaFin.Name = "dtpFechaFin";
+            this.dtpFechaFin.RightToLeftLayout = true;
+            this.dtpFechaFin.ShowUpDown = true;
+            this.dtpFechaFin.Size = new System.Drawing.Size(109, 29);
+            this.dtpFechaFin.TabIndex = 55;
+            // 
+            // dtpFechaInicio
+            // 
+            this.dtpFechaInicio.CustomFormat = "dd/MM/yyyy";
+            this.dtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaInicio.Location = new System.Drawing.Point(63, 29);
+            this.dtpFechaInicio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dtpFechaInicio.Name = "dtpFechaInicio";
+            this.dtpFechaInicio.RightToLeftLayout = true;
+            this.dtpFechaInicio.ShowUpDown = true;
+            this.dtpFechaInicio.Size = new System.Drawing.Size(109, 29);
+            this.dtpFechaInicio.TabIndex = 54;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.label12.Location = new System.Drawing.Point(18, 35);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(44, 19);
+            this.label12.TabIndex = 53;
+            this.label12.Text = "Fecha";
             // 
             // contextMenuStrip1
             // 
@@ -432,7 +533,7 @@ namespace FisioKH
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(1164, 681);
+            this.ClientSize = new System.Drawing.Size(1235, 681);
             this.Controls.Add(this.tabPrincipal);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -450,7 +551,10 @@ namespace FisioKH
             this.tbAdmin.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tbReportes.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.tbReportes.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvVisitasRealizadas)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -473,7 +577,6 @@ namespace FisioKH
         private Boton btnPacientes;
         private Boton btnPrecios;
         private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
         private Boton btnMetodosPago;
         private FisioKHCalendar fisioKHCalendar1;
         private Boton btnFisios;
@@ -482,6 +585,13 @@ namespace FisioKH
         private Boton btnCerrarSesion;
         private Boton btnUsuarios;
         private Boton btnSalir;
+        private GroupBox groupBox2;
+        private Label label3;
+        private DateTimePicker dtpFechaFin;
+        private DateTimePicker dtpFechaInicio;
+        private Label label12;
+        private DataGridView dgvVisitasRealizadas;
+        private Boton btnObtenerVisitasRealizadas;
     }
 }
 

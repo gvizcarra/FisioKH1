@@ -153,6 +153,7 @@ namespace FisioKH
 
             txtCantidadPagada.Enabled = !readOnly;
             cboMetodoPago.Enabled = !readOnly;
+            this.btnIgualarPagoAprecio.Enabled = !readOnly;
 
             btnGuardarPago.Enabled = !readOnly;
             btnGuardarPago.Text = (readOnly) ? btnGuardarPago.Text = lockIcon + btnGuardarPago.Text : btnGuardarPago.Text = btnGuardarPago.Text.Replace(lockIcon, "");
@@ -471,9 +472,10 @@ namespace FisioKH
 
             if (qtyi > 0)
             {
-                MessageBox.Show("Registro Guardado");
+                MessageBox.Show("Visita Guardada!");
                 cargarGridExpedientePaciente(idPaciente);
                 tabPxGeneralesPago.SelectedIndex = 1;
+                controlesPagoSoloLectura(false);
 
             }
 
@@ -588,6 +590,12 @@ namespace FisioKH
 
         private void btnGuardarPago_Click(object sender, EventArgs e)
         {
+
+            if(this.cboMetodoPago.SelectedValue == null)
+            {
+                MessageBox.Show("Seleccione Metodo de Pago!!");
+                return;
+            }
 
             if (pacientePaga)
             {
