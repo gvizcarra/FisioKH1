@@ -457,6 +457,7 @@
             // 
             this.dgvExpediente.AllowUserToAddRows = false;
             this.dgvExpediente.AllowUserToDeleteRows = false;
+            this.dgvExpediente.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvExpediente.BackgroundColor = System.Drawing.Color.AliceBlue;
             this.dgvExpediente.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvExpediente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;

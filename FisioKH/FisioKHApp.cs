@@ -34,6 +34,15 @@ namespace FisioKH
             this.lstBoxLogs.ContextMenuStrip = contextMenuStrip1;
             this.Text = configSettings.ObtenNombreApp;
 
+
+            DBHelper dbh = new DBHelper();
+
+            DataTable dtmp = dbh.obtenerMetodosPago();
+
+            this.cboMetodoPago.DataSource = dtmp;
+            this.cboMetodoPago.DisplayMember = "nombre"; // what user sees
+            this.cboMetodoPago.ValueMember = "id";
+
             DesHabilitaTabs(ObtentabsSeguras());
         }
 
@@ -123,7 +132,7 @@ namespace FisioKH
             if (!Program.UsuarioLogeado.Autenticado)
                 return;
 
-            // Wire ONLY ONCE (your previous code wires every time the tab is selected)
+            
             if (!_calendarWired)
             {
                 fisioKHCalendar1.RequestDataAsync += LoadCalendarDataAsync;
@@ -445,64 +454,169 @@ namespace FisioKH
 
         private void btnObtenerVisitasRealizadas_Click(object sender, EventArgs e)
         {
+            decimal totalPrecio = 0m;
+            decimal totalPagado = 0m;
+
             DataSet dsmp = new DataSet();
             string dsname = "Pacientes";
 
             var parameters = new Dictionary<string, object>
-            {
-                { "@fechaInicio",this.dtpFechaInicio.Text},
-                { "@fechaFin",this.dtpFechaFin.Text},
-                
-            };
+    {
+        { "@fechaInicio", this.dtpFechaInicio.Text },
+        { "@fechaFin", this.dtpFechaFin.Text },
+        { "@idMetodopago", this.cboMetodoPago.SelectedValue },
+    };
+
             DBHelper sdb = new DBHelper();
             dsmp = sdb.ObtenerDatos("usp_obtenerVisitasRealizadas", dsname, parameters);
 
-
             DataTable dtp = dsmp.Tables[dsname];
 
-
+            // Bind first
             this.dgvVisitasRealizadas.Visible = false;
             this.dgvVisitasRealizadas.DataSource = dtp;
 
+            // Ensure the computed column exists (NULL when not SI so it displays blank)
+            if (!dtp.Columns.Contains("Diferencia"))
+            {
+                dtp.Columns.Add(
+                    "Diferencia",
+                    typeof(decimal),
+                    "IIF([Paciente Paga]='SI', [Cantidad Precio] - [Cantidad Pagada], 0)"
+                );
+            }
 
+            // Calculate totals ONLY where Paciente Paga = SI
+            foreach (DataRow row in dtp.Rows)
+            {
+                if (row.RowState == DataRowState.Deleted) continue;
 
+                var pxPaga = (row["Paciente Paga"]?.ToString() ?? "").Trim().ToUpperInvariant();
+                if (pxPaga == "SI")
+                {
+                    totalPrecio += row["Cantidad Precio"] != DBNull.Value
+                        ? Convert.ToDecimal(row["Cantidad Precio"])
+                        : 0m;
+
+                    totalPagado += row["Cantidad Pagada"] != DBNull.Value
+                        ? Convert.ToDecimal(row["Cantidad Pagada"])
+                        : 0m;
+                }
+            }
+
+            decimal totalDiferencia = totalPrecio - totalPagado;
+
+            // Remove previous TOTAL row (if button clicked multiple times)
+            if (dtp.Rows.Count > 0 && (dtp.Rows[dtp.Rows.Count - 1]["Pagado"]?.ToString() ?? "") == "TOTAL")
+            {
+                dtp.Rows.RemoveAt(dtp.Rows.Count - 1);
+            }
+
+            // Add TOTAL row (NO blank row)
+            DataRow totalRow = dtp.NewRow();
+
+            totalRow["Pagado"] = "TOTAL";
+
+            // 👇 IMPORTANT: so Diferencia expression works on TOTAL row
+            totalRow["Paciente Paga"] = "SI";
+
+            totalRow["Cantidad Precio"] = totalPrecio;
+            totalRow["Cantidad Pagada"] = totalPagado;
+
+            // DON'T set Diferencia manually (it will be calculated by expression)
+            dtp.Rows.Add(totalRow);
+
+            // Hide all, then show desired columns
             foreach (DataGridViewColumn col in dgvVisitasRealizadas.Columns)
-            { col.Visible = false; }
+                col.Visible = false;
 
             dgvVisitasRealizadas.Columns["fechaCita"].Visible = true;
             dgvVisitasRealizadas.Columns["fechaCita"].HeaderText = "Cita";
-            
-            dgvVisitasRealizadas.Columns["Fecha Pago"].Visible = true;
-            dgvVisitasRealizadas.Columns["Fecha Pago"].HeaderText = "Fecha Pago";
+            dgvVisitasRealizadas.Columns["fechaCita"].DisplayIndex = 0;
 
             dgvVisitasRealizadas.Columns["Paciente"].Visible = true;
             dgvVisitasRealizadas.Columns["Paciente"].HeaderText = "Paciente";
-            
+            dgvVisitasRealizadas.Columns["Paciente"].DisplayIndex = 1;
+
             dgvVisitasRealizadas.Columns["Fisio Terapeuta"].Visible = true;
-            dgvVisitasRealizadas.Columns["Fisio Terapeuta"].HeaderText = "Fisio";          
+            dgvVisitasRealizadas.Columns["Fisio Terapeuta"].HeaderText = "Fisio";
+            dgvVisitasRealizadas.Columns["Fisio Terapeuta"].DisplayIndex = 2;
 
             dgvVisitasRealizadas.Columns["Metodo Pago"].Visible = true;
             dgvVisitasRealizadas.Columns["Metodo Pago"].HeaderText = "Metodo Pago";
-           
-            dgvVisitasRealizadas.Columns["NombrePrecio"].Visible = true;
-            dgvVisitasRealizadas.Columns["NombrePrecio"].HeaderText = "Tipo Precio";
-            
-            dgvVisitasRealizadas.Columns["Pagado"].Visible = true;
-            dgvVisitasRealizadas.Columns["Pagado"].HeaderText = "Se Pago";
-            
-            dgvVisitasRealizadas.Columns["Cantidad Precio"].Visible = true;
-            dgvVisitasRealizadas.Columns["Cantidad Precio"].HeaderText = "Precio";
+            dgvVisitasRealizadas.Columns["Metodo Pago"].DisplayIndex = 3;
 
             dgvVisitasRealizadas.Columns["Paciente Paga"].Visible = true;
             dgvVisitasRealizadas.Columns["Paciente Paga"].HeaderText = "Px Paga";
+            dgvVisitasRealizadas.Columns["Paciente Paga"].DisplayIndex = 4;
+
+            dgvVisitasRealizadas.Columns["NombrePrecio"].Visible = true;
+            dgvVisitasRealizadas.Columns["NombrePrecio"].HeaderText = "Tipo Precio";
+            dgvVisitasRealizadas.Columns["NombrePrecio"].DisplayIndex = 5;
+
+            dgvVisitasRealizadas.Columns["Pagado"].Visible = true;
+            dgvVisitasRealizadas.Columns["Pagado"].HeaderText = "Se Pago";
+            dgvVisitasRealizadas.Columns["Pagado"].DisplayIndex = 6;
+
+            dgvVisitasRealizadas.Columns["Cantidad Precio"].Visible = true;
+            dgvVisitasRealizadas.Columns["Cantidad Precio"].HeaderText = "Precio";
+            dgvVisitasRealizadas.Columns["Cantidad Precio"].DisplayIndex = 7;
 
             dgvVisitasRealizadas.Columns["Cantidad Pagada"].Visible = true;
-            dgvVisitasRealizadas.Columns["Cantidad Pagada"].HeaderText = "Pago";
+            dgvVisitasRealizadas.Columns["Cantidad Pagada"].HeaderText = "Pagó";
+            dgvVisitasRealizadas.Columns["Cantidad Pagada"].DisplayIndex = 8;
 
+            dgvVisitasRealizadas.Columns["Diferencia"].Visible = true;
+            dgvVisitasRealizadas.Columns["Diferencia"].DisplayIndex = 9;
 
+            dgvVisitasRealizadas.Columns["Fecha Pago"].Visible = true;
+            dgvVisitasRealizadas.Columns["Fecha Pago"].HeaderText = "Fecha Pago";
+            dgvVisitasRealizadas.Columns["Fecha Pago"].DisplayIndex = 10;
+
+            // Make TOTAL row bold + readonly
+            if (dgvVisitasRealizadas.Rows.Count > 0)
+            {
+                var lastRow = dgvVisitasRealizadas.Rows[dgvVisitasRealizadas.Rows.Count - 1];
+                if (lastRow.Cells["Pagado"].Value?.ToString() == "TOTAL")
+                {
+                    lastRow.ReadOnly = true;
+                    lastRow.DefaultCellStyle.BackColor = Color.LightGray;
+                    lastRow.DefaultCellStyle.Font = new Font(dgvVisitasRealizadas.Font, FontStyle.Bold);
+                }
+            }
+
+            // Optional: show blank for NULL Diferencia
+            // (attach this ONCE in Form_Load instead of every click, but leaving here works if not repeated)
+            dgvVisitasRealizadas.CellFormatting -= DgvVisitasRealizadas_CellFormatting;
+            dgvVisitasRealizadas.CellFormatting += DgvVisitasRealizadas_CellFormatting;
 
             this.dgvVisitasRealizadas.Visible = true;
+        }
 
+        private void DgvVisitasRealizadas_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            var dgv = (DataGridView)sender;
+
+            // Identify TOTAL row by "Pagado" column
+            bool isTotalRow = dgv.Rows[e.RowIndex].Cells["Pagado"].Value?.ToString() == "TOTAL";
+
+            // Hide Px Paga on total row
+            if (isTotalRow && dgv.Columns[e.ColumnIndex].Name == "Paciente Paga")
+            {
+                e.Value = "";
+                e.FormattingApplied = true;
+                return;
+            }
+
+            // Show blank instead of NULL in Diferencia
+            if (dgv.Columns[e.ColumnIndex].Name == "Diferencia")
+            {
+                if (e.Value == null || e.Value == DBNull.Value)
+                {
+                    e.Value = "";
+                    e.FormattingApplied = true;
+                }
+            }
         }
     }
 }

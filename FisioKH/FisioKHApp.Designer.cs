@@ -33,7 +33,6 @@ namespace FisioKH
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FisioKHApp));
             this.tabPrincipal = new System.Windows.Forms.TabControl();
             this.tbInicio = new System.Windows.Forms.TabPage();
@@ -66,6 +65,8 @@ namespace FisioKH
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cboMetodoPago = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabPrincipal.SuspendLayout();
             this.tbInicio.SuspendLayout();
@@ -276,7 +277,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 19, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 20, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -425,6 +426,8 @@ namespace FisioKH
             this.groupBox2.AutoSize = true;
             this.groupBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.groupBox2.Controls.Add(this.cboMetodoPago);
+            this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.btnObtenerVisitasRealizadas);
             this.groupBox2.Controls.Add(this.dgvVisitasRealizadas);
             this.groupBox2.Controls.Add(this.label3);
@@ -446,7 +449,7 @@ namespace FisioKH
             this.btnObtenerVisitasRealizadas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnObtenerVisitasRealizadas.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnObtenerVisitasRealizadas.ForeColor = System.Drawing.Color.Black;
-            this.btnObtenerVisitasRealizadas.Location = new System.Drawing.Point(347, 29);
+            this.btnObtenerVisitasRealizadas.Location = new System.Drawing.Point(603, 26);
             this.btnObtenerVisitasRealizadas.Margin = new System.Windows.Forms.Padding(10);
             this.btnObtenerVisitasRealizadas.Name = "btnObtenerVisitasRealizadas";
             this.btnObtenerVisitasRealizadas.Size = new System.Drawing.Size(97, 29);
@@ -463,14 +466,6 @@ namespace FisioKH
             this.dgvVisitasRealizadas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvVisitasRealizadas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvVisitasRealizadas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvVisitasRealizadas.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvVisitasRealizadas.Location = new System.Drawing.Point(6, 65);
             this.dgvVisitasRealizadas.Name = "dgvVisitasRealizadas";
             this.dgvVisitasRealizadas.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
@@ -527,6 +522,25 @@ namespace FisioKH
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // cboMetodoPago
+            // 
+            this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMetodoPago.FormattingEnabled = true;
+            this.cboMetodoPago.Location = new System.Drawing.Point(455, 29);
+            this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboMetodoPago.Name = "cboMetodoPago";
+            this.cboMetodoPago.Size = new System.Drawing.Size(117, 29);
+            this.cboMetodoPago.TabIndex = 69;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(347, 34);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(102, 21);
+            this.label18.TabIndex = 70;
+            this.label18.Text = "Metodo Pago";
             // 
             // FisioKHApp
             // 
@@ -592,6 +606,8 @@ namespace FisioKH
         private Label label12;
         private DataGridView dgvVisitasRealizadas;
         private Boton btnObtenerVisitasRealizadas;
+        private ComboBox cboMetodoPago;
+        private Label label18;
     }
 }
 

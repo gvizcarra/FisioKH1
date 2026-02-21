@@ -152,7 +152,7 @@ namespace FisioKH
             // -------------------------
             // FontAwesome icons (top-right)
             // -------------------------
-            int iconSize = 16;
+            int iconSize = 18;
             int padRight = 6;
             int top = 4;
 

@@ -217,11 +217,38 @@ namespace FisioKH
 
 
 
-            //foreach (DataGridViewColumn col in dgvBuscarPaciente.Columns)
-            //{ col.Visible = false; }
+            foreach (DataGridViewColumn col in dgvExpediente.Columns)
+            { col.Visible = false; }
 
-            //dgvBuscarPaciente.Columns["NombreCompleto"].Visible = true;
-            //dgvBuscarPaciente.Columns["NombreCompleto"].HeaderText = "Nombre";
+            dgvExpediente.Columns["fechaCita"].Visible = true;
+            dgvExpediente.Columns["fechaCita"].HeaderText = "Cita";
+
+            dgvExpediente.Columns["Fecha Pago"].Visible = true;
+            dgvExpediente.Columns["Fecha Pago"].HeaderText = "Fecha Pago";
+
+            dgvExpediente.Columns["Paciente"].Visible = true;
+            dgvExpediente.Columns["Paciente"].HeaderText = "Paciente";
+
+            dgvExpediente.Columns["Fisio Terapeuta"].Visible = true;
+            dgvExpediente.Columns["Fisio Terapeuta"].HeaderText = "Fisio";
+
+            dgvExpediente.Columns["Metodo Pago"].Visible = true;
+            dgvExpediente.Columns["Metodo Pago"].HeaderText = "Metodo Pago";
+
+            dgvExpediente.Columns["NombrePrecio"].Visible = true;
+            dgvExpediente.Columns["NombrePrecio"].HeaderText = "Tipo Precio";
+
+            dgvExpediente.Columns["Pagado"].Visible = true;
+            dgvExpediente.Columns["Pagado"].HeaderText = "Se Pago";
+
+            dgvExpediente.Columns["Cantidad Precio"].Visible = true;
+            dgvExpediente.Columns["Cantidad Precio"].HeaderText = "Precio";
+
+            dgvExpediente.Columns["Paciente Paga"].Visible = true;
+            dgvExpediente.Columns["Paciente Paga"].HeaderText = "Px Paga";
+
+            dgvExpediente.Columns["Cantidad Pagada"].Visible = true;
+            dgvExpediente.Columns["Cantidad Pagada"].HeaderText = "Pago";
 
 
 
