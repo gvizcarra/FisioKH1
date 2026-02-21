@@ -58,6 +58,8 @@ namespace FisioKH
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tbReportes = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboMetodoPago = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.btnObtenerVisitasRealizadas = new FisioKH.Boton();
             this.dgvVisitasRealizadas = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
@@ -65,8 +67,6 @@ namespace FisioKH
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cboMetodoPago = new System.Windows.Forms.ComboBox();
-            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabPrincipal.SuspendLayout();
             this.tbInicio.SuspendLayout();
@@ -201,7 +201,6 @@ namespace FisioKH
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
             this.txtUsuario.SuppressValidation = false;
             this.txtUsuario.TabIndex = 6;
-            this.txtUsuario.Text = "gabriel";
             // 
             // btnLogin
             // 
@@ -248,7 +247,6 @@ namespace FisioKH
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.SuppressValidation = false;
             this.txtPassPin.TabIndex = 7;
-            this.txtPassPin.Text = "1049";
             this.txtPassPin.UseSystemPasswordChar = true;
             this.txtPassPin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassPin_KeyDown);
             // 
@@ -442,6 +440,25 @@ namespace FisioKH
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Visitas Realizadas";
             // 
+            // cboMetodoPago
+            // 
+            this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMetodoPago.FormattingEnabled = true;
+            this.cboMetodoPago.Location = new System.Drawing.Point(455, 29);
+            this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboMetodoPago.Name = "cboMetodoPago";
+            this.cboMetodoPago.Size = new System.Drawing.Size(117, 29);
+            this.cboMetodoPago.TabIndex = 69;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(347, 34);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(102, 21);
+            this.label18.TabIndex = 70;
+            this.label18.Text = "Metodo Pago";
+            // 
             // btnObtenerVisitasRealizadas
             // 
             this.btnObtenerVisitasRealizadas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -522,25 +539,6 @@ namespace FisioKH
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // cboMetodoPago
-            // 
-            this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMetodoPago.FormattingEnabled = true;
-            this.cboMetodoPago.Location = new System.Drawing.Point(455, 29);
-            this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboMetodoPago.Name = "cboMetodoPago";
-            this.cboMetodoPago.Size = new System.Drawing.Size(117, 29);
-            this.cboMetodoPago.TabIndex = 69;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(347, 34);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(102, 21);
-            this.label18.TabIndex = 70;
-            this.label18.Text = "Metodo Pago";
             // 
             // FisioKHApp
             // 
