@@ -57,7 +57,7 @@
             this.txtCambio = new System.Windows.Forms.TextBox();
             this.txtCantidadAPagar = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.lblPrecioPago = new System.Windows.Forms.Label();
             this.tabDocs = new System.Windows.Forms.TabPage();
             this.txtNotasMedicas = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -523,7 +523,7 @@
             this.tabPago.Controls.Add(this.txtCambio);
             this.tabPago.Controls.Add(this.txtCantidadAPagar);
             this.tabPago.Controls.Add(this.label21);
-            this.tabPago.Controls.Add(this.label19);
+            this.tabPago.Controls.Add(this.lblPrecioPago);
             this.tabPago.Location = new System.Drawing.Point(4, 26);
             this.tabPago.Name = "tabPago";
             this.tabPago.Padding = new System.Windows.Forms.Padding(3);
@@ -537,7 +537,7 @@
             this.btnIgualarPagoAprecio.FlatAppearance.BorderSize = 2;
             this.btnIgualarPagoAprecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnIgualarPagoAprecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnIgualarPagoAprecio.Location = new System.Drawing.Point(309, 16);
+            this.btnIgualarPagoAprecio.Location = new System.Drawing.Point(345, 16);
             this.btnIgualarPagoAprecio.Margin = new System.Windows.Forms.Padding(10);
             this.btnIgualarPagoAprecio.Name = "btnIgualarPagoAprecio";
             this.btnIgualarPagoAprecio.Size = new System.Drawing.Size(41, 30);
@@ -548,7 +548,7 @@
             // 
             // txtCantidadPagada
             // 
-            this.txtCantidadPagada.Location = new System.Drawing.Point(404, 18);
+            this.txtCantidadPagada.Location = new System.Drawing.Point(440, 18);
             this.txtCantidadPagada.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -563,7 +563,7 @@
             // 
             this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMetodoPago.FormattingEnabled = true;
-            this.cboMetodoPago.Location = new System.Drawing.Point(55, 16);
+            this.cboMetodoPago.Location = new System.Drawing.Point(60, 21);
             this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboMetodoPago.Name = "cboMetodoPago";
             this.cboMetodoPago.Size = new System.Drawing.Size(117, 25);
@@ -573,7 +573,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(470, 23);
+            this.label22.Location = new System.Drawing.Point(506, 23);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(56, 19);
             this.label22.TabIndex = 75;
@@ -582,7 +582,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 18);
+            this.label18.Location = new System.Drawing.Point(6, 24);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(48, 19);
             this.label18.TabIndex = 68;
@@ -591,7 +591,7 @@
             // txtCambio
             // 
             this.txtCambio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCambio.Location = new System.Drawing.Point(532, 17);
+            this.txtCambio.Location = new System.Drawing.Point(568, 17);
             this.txtCambio.Name = "txtCambio";
             this.txtCambio.ReadOnly = true;
             this.txtCambio.Size = new System.Drawing.Size(62, 25);
@@ -600,7 +600,7 @@
             // txtCantidadAPagar
             // 
             this.txtCantidadAPagar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCantidadAPagar.Location = new System.Drawing.Point(225, 17);
+            this.txtCantidadAPagar.Location = new System.Drawing.Point(270, 20);
             this.txtCantidadAPagar.Name = "txtCantidadAPagar";
             this.txtCantidadAPagar.ReadOnly = true;
             this.txtCantidadAPagar.Size = new System.Drawing.Size(62, 25);
@@ -609,20 +609,20 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(354, 24);
+            this.label21.Location = new System.Drawing.Point(389, 24);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(39, 19);
             this.label21.TabIndex = 73;
             this.label21.Text = "Paga";
             // 
-            // label19
+            // lblPrecioPago
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(178, 22);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(46, 19);
-            this.label19.TabIndex = 69;
-            this.label19.Text = "Precio";
+            this.lblPrecioPago.AutoSize = true;
+            this.lblPrecioPago.Location = new System.Drawing.Point(184, 26);
+            this.lblPrecioPago.Name = "lblPrecioPago";
+            this.lblPrecioPago.Size = new System.Drawing.Size(46, 19);
+            this.lblPrecioPago.TabIndex = 69;
+            this.lblPrecioPago.Text = "Precio";
             // 
             // tabDocs
             // 
@@ -640,6 +640,7 @@
             this.txtNotasMedicas.Location = new System.Drawing.Point(6, 16);
             this.txtNotasMedicas.Multiline = true;
             this.txtNotasMedicas.Name = "txtNotasMedicas";
+            this.txtNotasMedicas.ReadOnly = true;
             this.txtNotasMedicas.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtNotasMedicas.Size = new System.Drawing.Size(403, 76);
             this.txtNotasMedicas.TabIndex = 0;
@@ -686,6 +687,7 @@
             this.txtObservaciones.Location = new System.Drawing.Point(6, 18);
             this.txtObservaciones.Multiline = true;
             this.txtObservaciones.Name = "txtObservaciones";
+            this.txtObservaciones.ReadOnly = true;
             this.txtObservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtObservaciones.Size = new System.Drawing.Size(403, 76);
             this.txtObservaciones.TabIndex = 0;
@@ -868,6 +870,7 @@
             // cboPrecio
             // 
             this.cboPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPrecio.Enabled = false;
             this.cboPrecio.FormattingEnabled = true;
             this.cboPrecio.Location = new System.Drawing.Point(357, 52);
             this.cboPrecio.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -875,6 +878,7 @@
             this.cboPrecio.Size = new System.Drawing.Size(196, 25);
             this.cboPrecio.TabIndex = 58;
             this.cboPrecio.SelectedIndexChanged += new System.EventHandler(this.cboPrecio_SelectedIndexChanged);
+            this.cboPrecio.SelectionChangeCommitted += new System.EventHandler(this.cboPrecio_SelectionChangeCommitted);
             // 
             // label14
             // 
@@ -888,6 +892,7 @@
             // cboFisioTerapeuta
             // 
             this.cboFisioTerapeuta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFisioTerapeuta.Enabled = false;
             this.cboFisioTerapeuta.FormattingEnabled = true;
             this.cboFisioTerapeuta.Location = new System.Drawing.Point(616, 17);
             this.cboFisioTerapeuta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -1053,7 +1058,7 @@
         private Boton btnGuardarCitaVisita;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cboMetodoPago;
-        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lblPrecioPago;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox txtCambio;
         private System.Windows.Forms.Label label21;

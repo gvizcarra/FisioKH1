@@ -166,13 +166,14 @@ namespace FisioKH
             txtIdGoogleCalendar.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
             txtNombrePaciente.ReadOnly = readOnly;
-            txtNotasMedicas.ReadOnly = readOnly;
-            txtObservaciones.ReadOnly = readOnly;
+           // txtNotasMedicas.ReadOnly = readOnly;
+            //txtObservaciones.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
 
             cboFisioTerapeuta.Enabled = !readOnly;
 
-            cboPrecio.Enabled = !readOnly;
+            if (Program.UsuarioLogeado.Nivel == 1)
+            { cboPrecio.Enabled = !readOnly; }
 
             dtpIngresoFecha.Enabled = !readOnly;
 
@@ -360,6 +361,7 @@ namespace FisioKH
 
             if (pacientePaga)
             {
+                this.lblPrecioPago.Text = "Precio";
                 this.txtCantidadPagada.ReadOnly = false;
                 this.cboMetodoPago.Enabled = true;
                 this.txtCantidadPagada.Enabled = true;
@@ -369,7 +371,8 @@ namespace FisioKH
             }
             else
             {
-                MessageBox.Show("Con Este Precio Paciente No Paga!!");
+                //MessageBox.Show("Con Este Precio Paciente No Paga!!");
+                this.lblPrecioPago.Text = "Px no Paga!";
                 this.cboMetodoPago.Enabled = false;
                 this.txtCantidadAPagar.Text = "";
                 this.txtCantidadAPagar.Enabled = false;
@@ -670,6 +673,11 @@ namespace FisioKH
         private void IgualarPagoAprecio()
         {
             this.txtCantidadPagada.Value = decimal.Parse(this.txtCantidadAPagar.Text);
+        }
+
+        private void cboPrecio_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+
         }
     }
 

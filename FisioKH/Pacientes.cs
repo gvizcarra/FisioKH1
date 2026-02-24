@@ -330,7 +330,7 @@ namespace FisioKH
 
         private void limpiarFormulario()
         {
- 
+            this.txtId.Text = "";
             this.txtNombreCompleto.Text = "";
             this.txtCelularAlta.Text = "";
             this.txtRfcFiscal.Text = "";
