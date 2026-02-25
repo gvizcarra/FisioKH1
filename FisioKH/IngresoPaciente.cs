@@ -94,11 +94,25 @@ namespace FisioKH
 
         private void cargarFormaDatosCitaVisita()
         {
+            string nombrePacienteGC = "";
+
+            if (!string.IsNullOrWhiteSpace(fce.Title.ToString().Trim()))
+            {
+                nombrePacienteGC = fce.Title.ToString().Trim()
+                    .Split(' ', (char)StringSplitOptions.RemoveEmptyEntries)[0];
+            }
+
+
+
+
+            this.txtBuscarPacienteIngreso.Text = nombrePacienteGC;
+
+
             cargarGridPacientes(this.txtBuscarPacienteIngreso.Text);
 
             this.txtIdGoogleCalendar.Text = fce.Id.ToString();
             this.txtIdGoogleCalendar.BackColor = Color.FromArgb(fce.Color.A, fce.Color.R, fce.Color.G, fce.Color.B);
-            this.txtBuscarPacienteIngreso.Text = fce.Title.ToString();
+            
             this.btnBuscarPaciente.PerformClick();
 
             this.txtNombrePaciente.Text = fce.cNombreCompletoPaciente.ToString();
