@@ -24,11 +24,7 @@ namespace FisioKH
 
             DBHelper db = new DBHelper();
 
-            this.cboEtiqueta.DataSource = EtiquetasPacienteHelper.GetBindableList();
-
-            this.cboEtiqueta.DisplayMember = "Text"; // what user sees
-            this.cboEtiqueta.ValueMember = "Key";
-            this.cboEtiqueta.SelectedValue = "pm";
+      
 
             wch = new WebCamHelper(pbxFotoPaciente);
             ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
@@ -185,7 +181,6 @@ namespace FisioKH
                 this.txtRfcFiscal.Text = row["Rfc"].ToString();                
                 this.txtEdad.Text = row["Edad"].ToString();
                 this.txtMedicoTratante.Text = row["MedicoTratante"].ToString();
-                this.cboEtiqueta.SelectedValue = row["Etiqueta"].ToString();
                 this.txtEmailAlta.Text = row["Email"].ToString();
                 this.txtDomicilioFiscal.Text = row["DFiscal"].ToString();
                 this.txtNombreFiscal.Text = row["NFiscal"].ToString();
@@ -304,7 +299,7 @@ namespace FisioKH
             parameters["@nombreFiscal"] = this.txtNombreFiscal.Text;
             parameters["@medicoTratante"] = this.txtMedicoTratante.Text;
             parameters["@idFisioTerapeuta"] = Convert.ToInt64(cboFisioTerapeuta.SelectedValue);
-            parameters["@claveEtiqueta"] = this.cboEtiqueta.SelectedValue;
+            parameters["@claveEtiqueta"] = "pv";
             parameters["@observaciones"] = this.txtObservaciones.Text;
             parameters["@notasMedicas"] = this.txtNotasMedicas.Text;
           
@@ -336,7 +331,6 @@ namespace FisioKH
             this.txtRfcFiscal.Text = "";
             this.txtEdad.Text = "";
             this.txtMedicoTratante.Text = "";
-            this.cboEtiqueta.ResetText();
             this.cboFisioTerapeuta.ResetText();
             this.cboPxPrecio.ResetText();
             this.txtEmailAlta.Text = "";

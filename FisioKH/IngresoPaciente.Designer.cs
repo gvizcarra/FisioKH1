@@ -49,13 +49,22 @@
             this.tabPxGeneralesPago = new System.Windows.Forms.TabControl();
             this.tabGeneralesPx = new System.Windows.Forms.TabPage();
             this.tabPago = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtFechaSaldo = new System.Windows.Forms.TextBox();
+            this.txtSaldoId = new System.Windows.Forms.TextBox();
+            this.fechaSaldo = new System.Windows.Forms.Label();
+            this.numSaldoExistente = new System.Windows.Forms.NumericUpDown();
+            this.numSaldoUsar = new System.Windows.Forms.NumericUpDown();
+            this.boton1 = new FisioKH.Boton();
+            this.label19 = new System.Windows.Forms.Label();
             this.btnIgualarPagoAprecio = new FisioKH.Boton();
             this.txtCantidadPagada = new System.Windows.Forms.NumericUpDown();
             this.cboMetodoPago = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.txtCambio = new System.Windows.Forms.TextBox();
-            this.txtCantidadAPagar = new System.Windows.Forms.TextBox();
+            this.txtCantidadAPagar = new System.Windows.Forms.NumericUpDown();
             this.label21 = new System.Windows.Forms.Label();
             this.lblPrecioPago = new System.Windows.Forms.Label();
             this.tabDocs = new System.Windows.Forms.TabPage();
@@ -98,7 +107,11 @@
             this.tabPxGeneralesPago.SuspendLayout();
             this.tabGeneralesPx.SuspendLayout();
             this.tabPago.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSaldoExistente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSaldoUsar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidadPagada)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCantidadAPagar)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -139,7 +152,7 @@
             // pbxPacienteIngreso
             // 
             this.pbxPacienteIngreso.ErrorImage = null;
-            this.pbxPacienteIngreso.Image = global::FisioKH.Properties.Resources.fisioTerapeuta;
+            this.pbxPacienteIngreso.Image = global::FisioKH.Properties.Resources.patient;
             this.pbxPacienteIngreso.InitialImage = null;
             this.pbxPacienteIngreso.Location = new System.Drawing.Point(5, 16);
             this.pbxPacienteIngreso.MaximumSize = new System.Drawing.Size(282, 217);
@@ -515,6 +528,7 @@
             // 
             // tabPago
             // 
+            this.tabPago.Controls.Add(this.groupBox7);
             this.tabPago.Controls.Add(this.btnIgualarPagoAprecio);
             this.tabPago.Controls.Add(this.txtCantidadPagada);
             this.tabPago.Controls.Add(this.cboMetodoPago);
@@ -532,6 +546,106 @@
             this.tabPago.Text = "Pago $$";
             this.tabPago.UseVisualStyleBackColor = true;
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.label25);
+            this.groupBox7.Controls.Add(this.txtFechaSaldo);
+            this.groupBox7.Controls.Add(this.txtSaldoId);
+            this.groupBox7.Controls.Add(this.fechaSaldo);
+            this.groupBox7.Controls.Add(this.numSaldoExistente);
+            this.groupBox7.Controls.Add(this.numSaldoUsar);
+            this.groupBox7.Controls.Add(this.boton1);
+            this.groupBox7.Controls.Add(this.label19);
+            this.groupBox7.Location = new System.Drawing.Point(12, 54);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(620, 76);
+            this.groupBox7.TabIndex = 78;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Saldo";
+            this.groupBox7.Visible = false;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(500, 31);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(24, 19);
+            this.label25.TabIndex = 74;
+            this.label25.Text = "S$";
+            // 
+            // txtFechaSaldo
+            // 
+            this.txtFechaSaldo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtFechaSaldo.Location = new System.Drawing.Point(77, 25);
+            this.txtFechaSaldo.Name = "txtFechaSaldo";
+            this.txtFechaSaldo.ReadOnly = true;
+            this.txtFechaSaldo.Size = new System.Drawing.Size(129, 25);
+            this.txtFechaSaldo.TabIndex = 79;
+            // 
+            // txtSaldoId
+            // 
+            this.txtSaldoId.Location = new System.Drawing.Point(524, 27);
+            this.txtSaldoId.Name = "txtSaldoId";
+            this.txtSaldoId.ReadOnly = true;
+            this.txtSaldoId.Size = new System.Drawing.Size(50, 25);
+            this.txtSaldoId.TabIndex = 73;
+            // 
+            // fechaSaldo
+            // 
+            this.fechaSaldo.AutoSize = true;
+            this.fechaSaldo.Location = new System.Drawing.Point(6, 31);
+            this.fechaSaldo.Name = "fechaSaldo";
+            this.fechaSaldo.Size = new System.Drawing.Size(65, 19);
+            this.fechaSaldo.TabIndex = 83;
+            this.fechaSaldo.Text = "De Fecha";
+            // 
+            // numSaldoExistente
+            // 
+            this.numSaldoExistente.Location = new System.Drawing.Point(281, 25);
+            this.numSaldoExistente.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numSaldoExistente.Name = "numSaldoExistente";
+            this.numSaldoExistente.ReadOnly = true;
+            this.numSaldoExistente.Size = new System.Drawing.Size(67, 25);
+            this.numSaldoExistente.TabIndex = 82;
+            // 
+            // numSaldoUsar
+            // 
+            this.numSaldoUsar.Location = new System.Drawing.Point(423, 24);
+            this.numSaldoUsar.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numSaldoUsar.Name = "numSaldoUsar";
+            this.numSaldoUsar.Size = new System.Drawing.Size(71, 25);
+            this.numSaldoUsar.TabIndex = 79;
+            // 
+            // boton1
+            // 
+            this.boton1.FlatAppearance.BorderSize = 2;
+            this.boton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.boton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.boton1.Location = new System.Drawing.Point(361, 20);
+            this.boton1.Margin = new System.Windows.Forms.Padding(10);
+            this.boton1.Name = "boton1";
+            this.boton1.Size = new System.Drawing.Size(41, 30);
+            this.boton1.TabIndex = 81;
+            this.boton1.Text = "-->";
+            this.boton1.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(212, 30);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(63, 19);
+            this.label19.TabIndex = 80;
+            this.label19.Text = "Existente";
+            // 
             // btnIgualarPagoAprecio
             // 
             this.btnIgualarPagoAprecio.FlatAppearance.BorderSize = 2;
@@ -548,14 +662,14 @@
             // 
             // txtCantidadPagada
             // 
-            this.txtCantidadPagada.Location = new System.Drawing.Point(440, 18);
+            this.txtCantidadPagada.Location = new System.Drawing.Point(432, 18);
             this.txtCantidadPagada.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
             this.txtCantidadPagada.Name = "txtCantidadPagada";
-            this.txtCantidadPagada.Size = new System.Drawing.Size(60, 25);
+            this.txtCantidadPagada.Size = new System.Drawing.Size(74, 25);
             this.txtCantidadPagada.TabIndex = 76;
             this.txtCantidadPagada.ValueChanged += new System.EventHandler(this.txtPaga_ValueChanged);
             // 
@@ -601,9 +715,14 @@
             // 
             this.txtCantidadAPagar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCantidadAPagar.Location = new System.Drawing.Point(270, 20);
+            this.txtCantidadAPagar.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.txtCantidadAPagar.Name = "txtCantidadAPagar";
             this.txtCantidadAPagar.ReadOnly = true;
-            this.txtCantidadAPagar.Size = new System.Drawing.Size(62, 25);
+            this.txtCantidadAPagar.Size = new System.Drawing.Size(68, 25);
             this.txtCantidadAPagar.TabIndex = 66;
             // 
             // label21
@@ -824,6 +943,7 @@
             // btnGuardarCitaVisita
             // 
             this.btnGuardarCitaVisita.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnGuardarCitaVisita.Enabled = false;
             this.btnGuardarCitaVisita.FlatAppearance.BorderSize = 2;
             this.btnGuardarCitaVisita.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardarCitaVisita.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
@@ -993,7 +1113,12 @@
             this.tabGeneralesPx.PerformLayout();
             this.tabPago.ResumeLayout(false);
             this.tabPago.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numSaldoExistente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSaldoUsar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidadPagada)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCantidadAPagar)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -1054,7 +1179,7 @@
         private System.Windows.Forms.CheckBox chkPagada;
         private System.Windows.Forms.CheckBox chkRealizada;
         private System.Windows.Forms.TextBox txtNotasMedicas;
-        private System.Windows.Forms.TextBox txtCantidadAPagar;
+        private System.Windows.Forms.NumericUpDown txtCantidadAPagar;
         private Boton btnGuardarCitaVisita;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cboMetodoPago;
@@ -1081,5 +1206,14 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox txtIdPaciente;
         private Boton btnIgualarPagoAprecio;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox txtFechaSaldo;
+        private System.Windows.Forms.TextBox txtSaldoId;
+        private System.Windows.Forms.Label fechaSaldo;
+        private System.Windows.Forms.NumericUpDown numSaldoExistente;
+        private System.Windows.Forms.NumericUpDown numSaldoUsar;
+        private Boton boton1;
+        private System.Windows.Forms.Label label19;
     }
 }

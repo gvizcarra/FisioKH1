@@ -42,11 +42,9 @@ namespace FisioKH
             this.txtNombreCompleto = new FisioKH.ValidatedNumericTextBox();
             this.txtCelularAlta = new System.Windows.Forms.MaskedTextBox();
             this.pbxFotoPaciente = new System.Windows.Forms.PictureBox();
-            this.cboEtiqueta = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtId = new System.Windows.Forms.TextBox();
             this.cboPxPrecio = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.txtApellidoMaterno = new FisioKH.ValidatedNumericTextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.txtApellidoPaterno = new FisioKH.ValidatedNumericTextBox();
@@ -242,23 +240,10 @@ namespace FisioKH
             this.pbxFotoPaciente.TabIndex = 21;
             this.pbxFotoPaciente.TabStop = false;
             // 
-            // cboEtiqueta
-            // 
-            this.cboEtiqueta.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.cboEtiqueta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboEtiqueta.FormattingEnabled = true;
-            this.cboEtiqueta.Location = new System.Drawing.Point(277, 133);
-            this.cboEtiqueta.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboEtiqueta.Name = "cboEtiqueta";
-            this.cboEtiqueta.Size = new System.Drawing.Size(140, 26);
-            this.cboEtiqueta.TabIndex = 15;
-            this.cboEtiqueta.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.cboEtiqueta_DrawItem);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.txtId);
             this.groupBox1.Controls.Add(this.cboPxPrecio);
-            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.txtApellidoMaterno);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.txtCelularAlta);
@@ -282,7 +267,6 @@ namespace FisioKH
             this.groupBox1.Controls.Add(this.txtEmailAlta);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.gbSexo);
-            this.groupBox1.Controls.Add(this.cboEtiqueta);
             this.groupBox1.Controls.Add(this.txtNombreCompleto);
             this.groupBox1.Controls.Add(this.btnGuardarFT);
             this.groupBox1.Controls.Add(this.label2);
@@ -308,19 +292,10 @@ namespace FisioKH
             // 
             this.cboPxPrecio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPxPrecio.FormattingEnabled = true;
-            this.cboPxPrecio.Location = new System.Drawing.Point(428, 133);
+            this.cboPxPrecio.Location = new System.Drawing.Point(406, 133);
             this.cboPxPrecio.Name = "cboPxPrecio";
-            this.cboPxPrecio.Size = new System.Drawing.Size(121, 25);
+            this.cboPxPrecio.Size = new System.Drawing.Size(143, 25);
             this.cboPxPrecio.TabIndex = 16;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(272, 114);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(85, 19);
-            this.label8.TabIndex = 53;
-            this.label8.Text = "Tipo Ingreso";
             // 
             // txtApellidoMaterno
             // 
@@ -587,21 +562,21 @@ namespace FisioKH
             this.txtMedicoTratante.ErrorMessage = "Valor no Valido";
             this.txtMedicoTratante.ErrorProvider = null;
             this.txtMedicoTratante.IsRequired = true;
-            this.txtMedicoTratante.Location = new System.Drawing.Point(130, 134);
+            this.txtMedicoTratante.Location = new System.Drawing.Point(151, 134);
             this.txtMedicoTratante.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtMedicoTratante.MaxLength = 150;
             this.txtMedicoTratante.MaxValue = null;
             this.txtMedicoTratante.MinValue = null;
             this.txtMedicoTratante.Name = "txtMedicoTratante";
             this.txtMedicoTratante.NumericOnly = false;
-            this.txtMedicoTratante.Size = new System.Drawing.Size(141, 25);
+            this.txtMedicoTratante.Size = new System.Drawing.Size(188, 25);
             this.txtMedicoTratante.SuppressValidation = false;
             this.txtMedicoTratante.TabIndex = 14;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(126, 114);
+            this.label12.Location = new System.Drawing.Point(147, 114);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(108, 19);
             this.label12.TabIndex = 40;
@@ -714,7 +689,7 @@ namespace FisioKH
             this.dtpFechaNacimiento.Location = new System.Drawing.Point(4, 134);
             this.dtpFechaNacimiento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtpFechaNacimiento.Name = "dtpFechaNacimiento";
-            this.dtpFechaNacimiento.Size = new System.Drawing.Size(121, 25);
+            this.dtpFechaNacimiento.Size = new System.Drawing.Size(141, 25);
             this.dtpFechaNacimiento.TabIndex = 13;
             // 
             // txtEmailAlta
@@ -881,7 +856,6 @@ namespace FisioKH
         private System.Windows.Forms.MaskedTextBox txtCelularAlta;
         private System.Windows.Forms.PictureBox pbxFotoPaciente;
         private Boton btnGuardarFoto;
-        private System.Windows.Forms.ComboBox cboEtiqueta;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox gbSexo;
         private System.Windows.Forms.RadioButton rbOtro;
@@ -919,7 +893,6 @@ namespace FisioKH
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox groupBox5;
         private ValidatedNumericTextBox txtNotasMedicas;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cboPxPrecio;
         private System.Windows.Forms.TextBox txtId;
     }

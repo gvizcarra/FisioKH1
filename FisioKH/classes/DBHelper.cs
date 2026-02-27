@@ -53,6 +53,25 @@ namespace FisioKH
 
 
             return dt;
+        } 
+        
+        public DataTable obterSaldoPaciente(long IdPaciente)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@idPaciente", IdPaciente},
+         
+            };
+
+            ds = ObtenerDatos("usp_obtenSaldoPaciente", "saldoPaciente", parameters);
+
+            dt = ds.Tables["saldoPaciente"];
+
+            return dt;
         }
 
         /// <summary>

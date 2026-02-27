@@ -420,14 +420,47 @@ namespace FisioKH
 
         private void dgvBuscarPaciente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            string fechaSaldo = "";
+            long saldo = 0;
+            long idSaldo = 0;
 
             if (e.RowIndex < 0) return;
 
+            
+
             DataGridViewRow gridRow = dgvBuscarPaciente.Rows[e.RowIndex];
             DataRowView drv = gridRow.DataBoundItem as DataRowView;
+            DataTable dtsp = new DataTable();
+
+            
+
             if (drv == null) return;
 
-            cargarGridExpedientePaciente((long)drv["Id"]);
+            long idPaciente = (long)drv["Id"];
+            DBHelper dbh = new DBHelper();
+            dtsp = dbh.obterSaldoPaciente(idPaciente);
+
+         
+
+
+            foreach (DataRow row in dtsp.Rows)
+            {
+                  fechaSaldo = row["fechaSaldo"] != DBNull.Value
+                    ? row["fechaSaldo"].ToString()
+                    : string.Empty;
+
+                  saldo = row["saldo"] != DBNull.Value
+                    ? Convert.ToInt32(row["saldo"])
+                    : 0;
+                idSaldo = row["id"] != DBNull.Value
+                    ? Convert.ToInt32(row["id"])
+                    : 0;
+            }
+            this.txtFechaSaldo.Text = fechaSaldo;
+            this.txtSaldoId.Text = idSaldo.ToString();
+
+
+            cargarGridExpedientePaciente(idPaciente);
             lblNombreCompleto.Text = (drv["Nombre"]?.ToString() ?? "") + ' ' + (drv["apellidoPaterno"]?.ToString() ?? "") + ' ' + (drv["apellidoMaterno"]?.ToString() ?? "");
 
             lblCelular.Text = drv["Celular"]?.ToString() ?? "";
@@ -469,6 +502,12 @@ namespace FisioKH
             int.TryParse(this.txtIdCita.Text, out idCita);
             int.TryParse(this.txtIdVisita.Text, out idVisita);
             int.TryParse(this.txtIdPago.Text, out idPago);
+
+            if(idPaciente<=0)
+            {
+                MessageBox.Show("Seleccionar un Paciente para Guardar Cita/Visita!");
+                return;
+            }
 
             DBHelper sdb = new DBHelper();
 
@@ -576,13 +615,24 @@ namespace FisioKH
         {
 
             int idCita = 0, qtyi = 0, idVisita = 0, idPago = 0;
-            long idPaciente = 0;
+            long idPaciente = 0,cantidadPagada=0,cantidadAPagar=0;
 
 
             long.TryParse(this.txtIdPaciente.Text, out idPaciente);
             int.TryParse(this.txtIdCita.Text, out idCita);
             int.TryParse(this.txtIdVisita.Text, out idVisita);
             int.TryParse(this.txtIdPago.Text, out idPago);
+            long.TryParse(this.txtCantidadPagada.Text, out cantidadPagada);
+            long.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
+
+            if(cantidadPagada > cantidadAPagar)
+            {
+                long Cambio = cantidadPagada - cantidadAPagar;
+                MessageBox.Show("Regresar al Cliente $"+ Cambio.ToString());
+                cantidadPagada = cantidadPagada - Cambio;
+                this.txtCantidadPagada.Text = cantidadPagada.ToString();
+
+            }
 
             DBHelper sdb = new DBHelper();
 
@@ -647,30 +697,31 @@ namespace FisioKH
                 decimal.TryParse(this.txtCantidadPagada.Text, out cantidadPagoPaciente);
                 decimal.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
 
-
-
-
-
                 if (cantidadPagoPaciente < cantidadAPagar)
                 {
                     MessageBox.Show(" Le Falta pagar al paciente: $" + (cantidadAPagar - cantidadPagoPaciente) + " !!");
                     return;
                 }
 
-                if (cantidadPagoPaciente > cantidadAPagar)
+                if (cantidadPagoPaciente >= cantidadAPagar)
                 {
-                    MessageBox.Show(" Regresar al paciente: $" + (cantidadPagoPaciente - cantidadAPagar) + " !!");
-                    return;
-                }
-
-                if (cantidadPagoPaciente == cantidadAPagar)
-                {
-
 
                     int x = relizarPago();
 
+                    //DialogResult result = MessageBox.Show("Desea Guardar $ "+(cantidadPagoPaciente - cantidadAPagar) + " Como Saldo?", "El Pago se excede $!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+                    //if (result == DialogResult.Yes)
+                    //{
+
+                    //}
+                    //else
+                    //{
+                    //MessageBox.Show(" Regresar al paciente: $" + (cantidadPagoPaciente - cantidadAPagar) + " !!");
+                    //return;
+                    //}
                 }
+
+                
             }
             else
             {
@@ -678,7 +729,7 @@ namespace FisioKH
             }
 
 
-            }
+        }
 
         private void boton1_Click(object sender, EventArgs e)
         {

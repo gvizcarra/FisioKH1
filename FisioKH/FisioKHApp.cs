@@ -287,7 +287,6 @@ namespace FisioKH
                         this.btnUsuarios.Enabled = true;
                         this.btnPrecios.Enabled = true;
                         this.btnFisios.Enabled = true;
-                        this.btnTratamientos.Enabled = true;
                         this.btnMetodosPago.Enabled = true;
                     }
 
@@ -381,7 +380,6 @@ namespace FisioKH
                 this.btnUsuarios.Enabled = false;
                 this.btnPrecios.Enabled = false;
                 this.btnFisios.Enabled = false;
-                this.btnTratamientos.Enabled = false;
                 this.btnMetodosPago.Enabled = false;
 
                 Program.UsuarioLogeado.Autenticado = false;
