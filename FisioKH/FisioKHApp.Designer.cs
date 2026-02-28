@@ -66,6 +66,7 @@ namespace FisioKH
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabPrincipal.SuspendLayout();
             this.tbInicio.SuspendLayout();
@@ -136,6 +137,7 @@ namespace FisioKH
             this.groupBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.groupBox1.BackgroundImage = global::FisioKH.Properties.Resources.fisiokh;
             this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.btnSalir);
             this.groupBox1.Controls.Add(this.btnCerrarSesion);
             this.groupBox1.Controls.Add(this.txtUsuario);
@@ -146,7 +148,7 @@ namespace FisioKH
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(236, 15);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(615, 597);
+            this.groupBox1.Size = new System.Drawing.Size(621, 597);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
@@ -274,7 +276,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 26, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 27, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -522,6 +524,15 @@ namespace FisioKH
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(516, 542);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(99, 21);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Version 1.3.5";
+            // 
             // FisioKHApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -587,6 +598,7 @@ namespace FisioKH
         private Boton btnObtenerVisitasRealizadas;
         private ComboBox cboMetodoPago;
         private Label label18;
+        private Label label4;
     }
 }
 
