@@ -1,6 +1,58 @@
 USE [FisioKH]
 GO
 
+/****** Object:  StoredProcedure [dbo].[usp_InsertPrecios]    Script Date: 27/02/2026 05:18:59 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+ALTER PROCEDURE [dbo].[usp_InsertPrecios]
+    @nombre NVARCHAR(100),
+	@precio numeric(18,0),
+	@activo bit,
+	@pacientePaga bit,
+	@citaCancelableMismoDia bit,
+    @idUsuario BIGINT,
+    @rowsAffected INT OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO dbo.precios 
+		(
+			nombre ,
+			idUsuario,
+			precio,
+			pacientePaga,
+			citaCancelableMismoDia,
+			activo 
+		)
+   VALUES
+        (  
+			@nombre,
+			@idUsuario,
+			@precio,
+			COALESCE(@pacientePaga,0),
+			COALESCE(@citaCancelableMismoDia,0),
+			COALESCE(@activo,0)
+		);
+
+SET @rowsAffected= @@ROWCOUNT;
+END;
+GO
+
+
+
+
+
+USE [FisioKH]
+GO
+
  
 SET ANSI_NULLS ON
 GO

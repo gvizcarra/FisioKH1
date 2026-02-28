@@ -370,8 +370,25 @@ namespace FisioKH
             DataRowView row = cboPrecio.SelectedItem as DataRowView;
             if (row == null) return;
 
-            decimal precio = Convert.ToDecimal(row["precio"]);
-            pacientePaga = Convert.ToBoolean(row["pacientePaga"]);
+            pacientePaga = false;
+
+            var value = row["pacientePaga"];
+
+            if (value != DBNull.Value && value != null)
+            {
+                bool.TryParse(value.ToString(), out pacientePaga);
+            }
+
+
+            decimal precio = 0m; 
+
+            var valuePrecio = row["precio"];
+
+            if (valuePrecio != DBNull.Value && valuePrecio != null)
+            {
+                decimal.TryParse(valuePrecio.ToString(), out precio);
+            }
+
 
             if (pacientePaga)
             {
