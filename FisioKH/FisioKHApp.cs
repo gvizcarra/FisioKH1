@@ -39,6 +39,13 @@ namespace FisioKH
 
             DataTable dtmp = dbh.obtenerMetodosPago();
 
+            DataRow filaTodos = dtmp.NewRow();
+            filaTodos["id"] = 0;
+            filaTodos["nombre"] = "Todos";
+
+            // Insertar en la primera posición
+            dtmp.Rows.InsertAt(filaTodos, 0);
+
             this.cboMetodoPago.DataSource = dtmp;
             this.cboMetodoPago.DisplayMember = "nombre"; // what user sees
             this.cboMetodoPago.ValueMember = "id";
