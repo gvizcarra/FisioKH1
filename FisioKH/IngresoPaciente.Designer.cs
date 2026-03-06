@@ -56,7 +56,7 @@
             this.fechaSaldo = new System.Windows.Forms.Label();
             this.numSaldoExistente = new System.Windows.Forms.NumericUpDown();
             this.numSaldoUsar = new System.Windows.Forms.NumericUpDown();
-            this.boton1 = new FisioKH.Boton();
+            this.btnPasarSaldoAPago = new FisioKH.Boton();
             this.label19 = new System.Windows.Forms.Label();
             this.btnIgualarPagoAprecio = new FisioKH.Boton();
             this.txtCantidadPagada = new System.Windows.Forms.NumericUpDown();
@@ -554,7 +554,7 @@
             this.groupBox7.Controls.Add(this.fechaSaldo);
             this.groupBox7.Controls.Add(this.numSaldoExistente);
             this.groupBox7.Controls.Add(this.numSaldoUsar);
-            this.groupBox7.Controls.Add(this.boton1);
+            this.groupBox7.Controls.Add(this.btnPasarSaldoAPago);
             this.groupBox7.Controls.Add(this.label19);
             this.groupBox7.Location = new System.Drawing.Point(12, 54);
             this.groupBox7.Name = "groupBox7";
@@ -624,18 +624,19 @@
             this.numSaldoUsar.Size = new System.Drawing.Size(71, 25);
             this.numSaldoUsar.TabIndex = 79;
             // 
-            // boton1
+            // btnPasarSaldoAPago
             // 
-            this.boton1.FlatAppearance.BorderSize = 2;
-            this.boton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.boton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.boton1.Location = new System.Drawing.Point(361, 20);
-            this.boton1.Margin = new System.Windows.Forms.Padding(10);
-            this.boton1.Name = "boton1";
-            this.boton1.Size = new System.Drawing.Size(41, 30);
-            this.boton1.TabIndex = 81;
-            this.boton1.Text = "-->";
-            this.boton1.UseVisualStyleBackColor = true;
+            this.btnPasarSaldoAPago.FlatAppearance.BorderSize = 2;
+            this.btnPasarSaldoAPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnPasarSaldoAPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnPasarSaldoAPago.Location = new System.Drawing.Point(361, 20);
+            this.btnPasarSaldoAPago.Margin = new System.Windows.Forms.Padding(10);
+            this.btnPasarSaldoAPago.Name = "btnPasarSaldoAPago";
+            this.btnPasarSaldoAPago.Size = new System.Drawing.Size(41, 30);
+            this.btnPasarSaldoAPago.TabIndex = 81;
+            this.btnPasarSaldoAPago.Text = "-->";
+            this.btnPasarSaldoAPago.UseVisualStyleBackColor = true;
+            this.btnPasarSaldoAPago.Click += new System.EventHandler(this.btnPasarSaldoAPago_Click);
             // 
             // label19
             // 
@@ -943,7 +944,6 @@
             // btnGuardarCitaVisita
             // 
             this.btnGuardarCitaVisita.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnGuardarCitaVisita.Enabled = false;
             this.btnGuardarCitaVisita.FlatAppearance.BorderSize = 2;
             this.btnGuardarCitaVisita.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGuardarCitaVisita.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
@@ -1213,7 +1213,7 @@
         private System.Windows.Forms.Label fechaSaldo;
         private System.Windows.Forms.NumericUpDown numSaldoExistente;
         private System.Windows.Forms.NumericUpDown numSaldoUsar;
-        private Boton boton1;
+        private Boton btnPasarSaldoAPago;
         private System.Windows.Forms.Label label19;
     }
 }

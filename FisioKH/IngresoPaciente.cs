@@ -133,6 +133,8 @@ namespace FisioKH
             this.txtIdPago.Text = fce.vrIdPago.ToString();
             this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString();
 
+            obteneSaldoPaciente((long)fce.cIdPaciente);
+
             if (fce.cIdPaciente > 0)
             { cargarGridExpedientePaciente((long)fce.cIdPaciente); }
 
@@ -437,44 +439,19 @@ namespace FisioKH
 
         private void dgvBuscarPaciente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            string fechaSaldo = "";
-            long saldo = 0;
-            long idSaldo = 0;
 
             if (e.RowIndex < 0) return;
 
-            
-
             DataGridViewRow gridRow = dgvBuscarPaciente.Rows[e.RowIndex];
             DataRowView drv = gridRow.DataBoundItem as DataRowView;
-            DataTable dtsp = new DataTable();
-
             
 
             if (drv == null) return;
 
             long idPaciente = (long)drv["Id"];
-            DBHelper dbh = new DBHelper();
-            dtsp = dbh.obterSaldoPaciente(idPaciente);
 
-         
+            obteneSaldoPaciente(idPaciente);
 
-
-            foreach (DataRow row in dtsp.Rows)
-            {
-                  fechaSaldo = row["fechaSaldo"] != DBNull.Value
-                    ? row["fechaSaldo"].ToString()
-                    : string.Empty;
-
-                  saldo = row["saldo"] != DBNull.Value
-                    ? Convert.ToInt32(row["saldo"])
-                    : 0;
-                idSaldo = row["id"] != DBNull.Value
-                    ? Convert.ToInt32(row["id"])
-                    : 0;
-            }
-            this.txtFechaSaldo.Text = fechaSaldo;
-            this.txtSaldoId.Text = idSaldo.ToString();
 
 
             cargarGridExpedientePaciente(idPaciente);
@@ -498,9 +475,44 @@ namespace FisioKH
             txtIdPaciente.Text = drv["Id"]?.ToString() ?? "";
 
             txtNombrePaciente.Text = lblNombreCompleto.Text;
+            //this.btnGuardarCitaVisita.Enabled = true;
 
 
             SetPictureFromVarbinary(pbxPacienteIngreso, drv["Foto"]);
+
+        }
+
+        private void obteneSaldoPaciente(long idPaciente)
+        {
+            string fechaSaldo = "";
+            long saldo = 0;
+            long idSaldo = 0;
+
+
+            DBHelper dbh = new DBHelper();
+            DataTable dtsp = new DataTable();
+            dtsp = dbh.obterSaldoPaciente(idPaciente);
+
+
+
+
+            foreach (DataRow row in dtsp.Rows)
+            {
+                fechaSaldo = row["fechaSaldo"] != DBNull.Value
+                  ? row["fechaSaldo"].ToString()
+                  : string.Empty;
+
+                saldo = row["saldo"] != DBNull.Value
+                  ? Convert.ToInt32(row["saldo"])
+                  : 0;
+                idSaldo = row["id"] != DBNull.Value
+                    ? Convert.ToInt32(row["id"])
+                    : 0;
+            }
+            this.numSaldoExistente.Value = saldo;
+            this.txtFechaSaldo.Text = fechaSaldo;
+            this.txtSaldoId.Text = idSaldo.ToString();
+
 
         }
 
@@ -725,7 +737,7 @@ namespace FisioKH
 
                     int x = relizarPago();
 
-                    //DialogResult result = MessageBox.Show("Desea Guardar $ "+(cantidadPagoPaciente - cantidadAPagar) + " Como Saldo?", "El Pago se excede $!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    //DialogResult result = MessageBox.Show("Desea Guardar $ " + (cantidadPagoPaciente - cantidadAPagar) + " Como Saldo?", "El Pago se excede $!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     //if (result == DialogResult.Yes)
                     //{
@@ -733,8 +745,8 @@ namespace FisioKH
                     //}
                     //else
                     //{
-                    //MessageBox.Show(" Regresar al paciente: $" + (cantidadPagoPaciente - cantidadAPagar) + " !!");
-                    //return;
+                    //    MessageBox.Show(" Regresar al paciente: $" + (cantidadPagoPaciente - cantidadAPagar) + " !!");
+                    //    return;
                     //}
                 }
 
@@ -758,6 +770,11 @@ namespace FisioKH
         }
 
         private void cboPrecio_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPasarSaldoAPago_Click(object sender, EventArgs e)
         {
 
         }
