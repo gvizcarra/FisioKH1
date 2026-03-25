@@ -39,6 +39,7 @@ namespace FisioKH
             this.boton1 = new FisioKH.Boton();
             this.lstBoxLogs = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnSalir = new FisioKH.Boton();
             this.btnCerrarSesion = new FisioKH.Boton();
             this.txtUsuario = new FisioKH.ValidatedNumericTextBox();
@@ -66,7 +67,6 @@ namespace FisioKH
             this.dtpFechaInicio = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BaseErrorProvider)).BeginInit();
             this.tabPrincipal.SuspendLayout();
             this.tbInicio.SuspendLayout();
@@ -153,6 +153,15 @@ namespace FisioKH
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(516, 542);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(99, 21);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Version 1.3.5";
+            // 
             // btnSalir
             // 
             this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
@@ -202,6 +211,7 @@ namespace FisioKH
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
             this.txtUsuario.SuppressValidation = false;
             this.txtUsuario.TabIndex = 6;
+            this.txtUsuario.Text = "gabriel";
             // 
             // btnLogin
             // 
@@ -248,6 +258,7 @@ namespace FisioKH
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.SuppressValidation = false;
             this.txtPassPin.TabIndex = 7;
+            this.txtPassPin.Text = "1049";
             this.txtPassPin.UseSystemPasswordChar = true;
             this.txtPassPin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassPin_KeyDown);
             // 
@@ -276,7 +287,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 2, 27, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 3, 24, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
@@ -523,15 +534,6 @@ namespace FisioKH
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(516, 542);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(99, 21);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Version 1.3.5";
             // 
             // FisioKHApp
             // 

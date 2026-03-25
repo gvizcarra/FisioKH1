@@ -55,8 +55,8 @@ namespace FisioKH
                          PacientePaga = r.Field<bool>("pacientePaga")
                      })
                      .ToList();
-        }  
-        
+        }
+
         private List<MetodoPago> ConvertToMetodoPagoList(DataTable dt)
         {
             return dt.AsEnumerable()
@@ -112,7 +112,7 @@ namespace FisioKH
 
             this.txtIdGoogleCalendar.Text = fce.Id.ToString();
             this.txtIdGoogleCalendar.BackColor = Color.FromArgb(fce.Color.A, fce.Color.R, fce.Color.G, fce.Color.B);
-            
+
             this.btnBuscarPaciente.PerformClick();
 
             this.txtNombrePaciente.Text = fce.cNombreCompletoPaciente.ToString();
@@ -144,8 +144,8 @@ namespace FisioKH
             {
                 controlesCitaSoloLectura(true);
             }
-            
-            if ( (fce.vPagado) || (fce.cIdCita <= 0) )
+
+            if ((fce.vPagado) || (fce.cIdCita <= 0))
             {
                 controlesPagoSoloLectura(true);
             }
@@ -173,8 +173,8 @@ namespace FisioKH
 
             btnGuardarPago.Enabled = !readOnly;
             btnGuardarPago.Text = (readOnly) ? btnGuardarPago.Text = lockIcon + btnGuardarPago.Text : btnGuardarPago.Text = btnGuardarPago.Text.Replace(lockIcon, "");
-        } 
-        
+        }
+
         private void controlesCitaSoloLectura(bool readOnly)
         {
             const string lockIcon = "🔒 ";
@@ -182,7 +182,7 @@ namespace FisioKH
             txtIdGoogleCalendar.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
             txtNombrePaciente.ReadOnly = readOnly;
-           // txtNotasMedicas.ReadOnly = readOnly;
+            // txtNotasMedicas.ReadOnly = readOnly;
             //txtObservaciones.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
 
@@ -199,7 +199,7 @@ namespace FisioKH
 
             dgvBuscarPaciente.Enabled = !readOnly;
             btnBuscarPaciente.Enabled = !readOnly;
-            btnBuscarPaciente.Text = (readOnly) ? btnBuscarPaciente.Text = lockIcon + btnBuscarPaciente.Text: btnBuscarPaciente.Text = btnBuscarPaciente.Text.Replace(lockIcon, "");
+            btnBuscarPaciente.Text = (readOnly) ? btnBuscarPaciente.Text = lockIcon + btnBuscarPaciente.Text : btnBuscarPaciente.Text = btnBuscarPaciente.Text.Replace(lockIcon, "");
             btnAgregarPx.Enabled = !readOnly;
             btnAgregarPx.Text = (readOnly) ? btnAgregarPx.Text = lockIcon + btnAgregarPx.Text : btnAgregarPx.Text = btnAgregarPx.Text.Replace(lockIcon, "");
             btnGuardarCitaVisita.Enabled = !readOnly;
@@ -219,8 +219,8 @@ namespace FisioKH
 
             var parameters = new Dictionary<string, object>
             {
-                { "@idPaciente", idPaciente },             
-                
+                { "@idPaciente", idPaciente },
+
             };
             DBHelper sdb = new DBHelper();
             dsmp = sdb.ObtenerDatos("usp_obtenExpedientePaciente", dsname, parameters);
@@ -271,7 +271,7 @@ namespace FisioKH
 
             this.dgvExpediente.Visible = true;
         }
-        
+
         private void cargarGridPacientes(string paciente = null)
         {
 
@@ -323,7 +323,7 @@ namespace FisioKH
 
         }
 
-    
+
 
         private void SetPictureFromVarbinary(PictureBox pb, object fotoValue)
         {
@@ -382,7 +382,7 @@ namespace FisioKH
             }
 
 
-            decimal precio = 0m; 
+            decimal precio = 0m;
 
             var valuePrecio = row["precio"];
 
@@ -444,7 +444,7 @@ namespace FisioKH
 
             DataGridViewRow gridRow = dgvBuscarPaciente.Rows[e.RowIndex];
             DataRowView drv = gridRow.DataBoundItem as DataRowView;
-            
+
 
             if (drv == null) return;
 
@@ -523,7 +523,7 @@ namespace FisioKH
 
         private void btnGuardarCitaVisita_Click(object sender, EventArgs e)
         {
-            int idCita = 0, qtyi = 0,idVisita=0,idPago = 0;
+            int idCita = 0, qtyi = 0, idVisita = 0, idPago = 0;
             long idPaciente = 0;
 
 
@@ -532,7 +532,7 @@ namespace FisioKH
             int.TryParse(this.txtIdVisita.Text, out idVisita);
             int.TryParse(this.txtIdPago.Text, out idPago);
 
-            if(idPaciente<=0)
+            if (idPaciente <= 0)
             {
                 MessageBox.Show("Seleccionar un Paciente para Guardar Cita/Visita!");
                 return;
@@ -542,7 +542,7 @@ namespace FisioKH
 
             var parameters = new Dictionary<string, object>
             {
-                { "@idUsuario",           Program.UsuarioLogeado.Id },                 
+                { "@idUsuario",           Program.UsuarioLogeado.Id },
             };
 
             Dictionary<string, SqlDbType> outs = new Dictionary<string, SqlDbType>
@@ -563,7 +563,7 @@ namespace FisioKH
             parameters["@ocupaFactura"] = this.chkFactura.Checked;
             parameters["@notas"] = this.txtNotasMedicas.Text;
 
-          
+
             if (idCita > 0)
             {
                 parameters.Add("@idCita", idCita);
@@ -571,11 +571,11 @@ namespace FisioKH
                 qtyi = sdb.EjecutarNonQuery("usp_updateCitaVisita", parameters);
             }
             else
-            { 
+            {
                 qtyi = sdb.EjecutarNonQuery("usp_insertCitaVisita", parameters, outs, out outValues);
                 this.txtIdCita.Text = outValues["@idCita"].ToString();
                 this.txtIdVisita.Text = outValues["@idVisita"].ToString();
-                if((long)outValues["@idVisita"] >0)
+                if ((long)outValues["@idVisita"] > 0)
                 {
                     this.chkRealizada.Checked = true;
                 }
@@ -613,10 +613,10 @@ namespace FisioKH
 
         private void IngresoPaciente_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+
         }
 
-   
+
 
         private void cboMetodoPago_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -640,11 +640,62 @@ namespace FisioKH
 
         }
 
-        private int relizarPago()
+        private long agregarSaldoPaciente(decimal saldoPaciente, long idPagoVisitaRealizada)
+        {
+            int idCita = 0, idVisita = 0;
+            long idPaciente = 0;
+            long idSaldoGenerado = 0;
+
+            long.TryParse(this.txtIdPaciente.Text, out idPaciente);
+            int.TryParse(this.txtIdCita.Text, out idCita);
+            int.TryParse(this.txtIdVisita.Text, out idVisita);
+
+            DBHelper sdb = new DBHelper();
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@saldo", saldoPaciente },
+                { "@idPaciente", idPaciente },
+                { "@idCita", idCita },
+                { "@idVisita", idVisita },
+                { "@idPagoVisitaRealizada", idPagoVisitaRealizada },
+                { "@idUsuario", Program.UsuarioLogeado.Id }
+            };
+
+            Dictionary<string, SqlDbType> outs = new Dictionary<string, SqlDbType>
+            {
+                { "@idSaldoGenerado", SqlDbType.BigInt }
+            };
+
+            Dictionary<string, object> outValues;
+
+            int rows = sdb.EjecutarNonQuery(
+                "usp_GuardarSaldoPacienteVisita",  
+                parameters,
+                outs,
+                out outValues
+            );
+
+     
+            if (outValues.ContainsKey("@idSaldoGenerado") && outValues["@idSaldoGenerado"] != DBNull.Value)
+            {
+                idSaldoGenerado = Convert.ToInt64(outValues["@idSaldoGenerado"]);
+            }
+
+            if (rows > 0 && idSaldoGenerado > 0)
+            {
+                //MessageBox.Show($"Saldo guardado correctamente. ID: {idSaldoGenerado}");
+                cargarGridExpedientePaciente(idPaciente);
+            }
+
+            return idSaldoGenerado;
+        }
+
+        private int realizarPago()
         {
 
             int idCita = 0, qtyi = 0, idVisita = 0, idPago = 0;
-            long idPaciente = 0,cantidadPagada=0,cantidadAPagar=0;
+            long idPaciente = 0, cantidadPagada = 0, cantidadAPagar = 0;
 
 
             long.TryParse(this.txtIdPaciente.Text, out idPaciente);
@@ -654,10 +705,10 @@ namespace FisioKH
             long.TryParse(this.txtCantidadPagada.Text, out cantidadPagada);
             long.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
 
-            if(cantidadPagada > cantidadAPagar)
+            if (cantidadPagada > cantidadAPagar)
             {
                 long Cambio = cantidadPagada - cantidadAPagar;
-                MessageBox.Show("Regresar al Cliente $"+ Cambio.ToString());
+               // MessageBox.Show("Regresar al Cliente $" + Cambio.ToString());
                 cantidadPagada = cantidadPagada - Cambio;
                 this.txtCantidadPagada.Text = cantidadPagada.ToString();
 
@@ -681,7 +732,7 @@ namespace FisioKH
 
             Dictionary<string, object> outValues;
 
-                    
+
 
 
             if (idPago > 0)
@@ -693,7 +744,7 @@ namespace FisioKH
             {
                 qtyi = sdb.EjecutarNonQuery("usp_insertPagoVisita", parameters, outs, out outValues);
                 //this.txtIdCita.Text = outValues["@idCita"].ToString();
-                
+
                 if ((long)outValues["@idPago"] > 0)
                 {
                     this.chkPagada.Checked = true;
@@ -713,48 +764,58 @@ namespace FisioKH
 
         private void btnGuardarPago_Click(object sender, EventArgs e)
         {
-
-            if(this.cboMetodoPago.SelectedValue == null)
+            int idPago = 0;
+            if (this.cboMetodoPago.SelectedValue == null)
             {
                 MessageBox.Show("Seleccione Metodo de Pago!!");
                 return;
             }
 
-            if (pacientePaga)
+            if (!pacientePaga)
             {
-                decimal cantidadPagoPaciente = 0; decimal cantidadAPagar = 0;
-                decimal.TryParse(this.txtCantidadPagada.Text, out cantidadPagoPaciente);
-                decimal.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
+                idPago = realizarPago();
+                return;
+            }
 
-                if (cantidadPagoPaciente < cantidadAPagar)
-                {
-                    MessageBox.Show(" Le Falta pagar al paciente: $" + (cantidadAPagar - cantidadPagoPaciente) + " !!");
-                    return;
-                }
+            // Validar entrada
+            if (!decimal.TryParse(txtCantidadPagada.Text, out decimal cantidadPagada) ||
+                !decimal.TryParse(txtCantidadAPagar.Text, out decimal cantidadAPagar))
+            {
+                MessageBox.Show("Valores inválidos. Verifique los montos.");
+                return;
+            }
 
-                if (cantidadPagoPaciente >= cantidadAPagar)
-                {
+            decimal diferencia = cantidadPagada - cantidadAPagar;
 
-                    int x = relizarPago();
+            // Falta pago
+            if (diferencia < 0)
+            {
+                MessageBox.Show($"Le falta pagar al paciente: ${Math.Abs(diferencia)}");
+                return;
+            }
 
-                    //DialogResult result = MessageBox.Show("Desea Guardar $ " + (cantidadPagoPaciente - cantidadAPagar) + " Como Saldo?", "El Pago se excede $!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            // Pago exacto
+            if (diferencia == 0)
+            {
+                idPago = realizarPago();
+                return;
+            }
 
-                    //if (result == DialogResult.Yes)
-                    //{
+            // Pago excedente → preguntar
+            DialogResult result = MessageBox.Show($"El pago excede por ${diferencia}.\n¿Desea guardar como saldo?", "Pago excedente", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show(" Regresar al paciente: $" + (cantidadPagoPaciente - cantidadAPagar) + " !!");
-                    //    return;
-                    //}
-                }
+            if (result == DialogResult.Yes)
+            {
 
-                
+                idPago = realizarPago();
+                long idSaldoAbonado = agregarSaldoPaciente(diferencia, idPago);
+                MessageBox.Show($"Saldo ${diferencia} guardado correctamente. ID: {idSaldoAbonado}");
             }
             else
             {
-                int x = relizarPago();
+                idPago = realizarPago();
+                MessageBox.Show($"Regresar al paciente: ${diferencia}");
+                return;
             }
 
 

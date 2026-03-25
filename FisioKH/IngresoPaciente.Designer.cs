@@ -562,7 +562,6 @@
             this.groupBox7.TabIndex = 78;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Saldo";
-            this.groupBox7.Visible = false;
             // 
             // label25
             // 
