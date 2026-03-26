@@ -50,10 +50,9 @@
             this.tabGeneralesPx = new System.Windows.Forms.TabPage();
             this.tabPago = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cboSaldo = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.txtFechaSaldo = new System.Windows.Forms.TextBox();
             this.txtSaldoId = new System.Windows.Forms.TextBox();
-            this.fechaSaldo = new System.Windows.Forms.Label();
             this.numSaldoExistente = new System.Windows.Forms.NumericUpDown();
             this.numSaldoUsar = new System.Windows.Forms.NumericUpDown();
             this.btnPasarSaldoAPago = new FisioKH.Boton();
@@ -548,10 +547,9 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cboSaldo);
             this.groupBox7.Controls.Add(this.label25);
-            this.groupBox7.Controls.Add(this.txtFechaSaldo);
             this.groupBox7.Controls.Add(this.txtSaldoId);
-            this.groupBox7.Controls.Add(this.fechaSaldo);
             this.groupBox7.Controls.Add(this.numSaldoExistente);
             this.groupBox7.Controls.Add(this.numSaldoUsar);
             this.groupBox7.Controls.Add(this.btnPasarSaldoAPago);
@@ -563,6 +561,17 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Saldo";
             // 
+            // cboSaldo
+            // 
+            this.cboSaldo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSaldo.FormattingEnabled = true;
+            this.cboSaldo.Location = new System.Drawing.Point(6, 31);
+            this.cboSaldo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboSaldo.Name = "cboSaldo";
+            this.cboSaldo.Size = new System.Drawing.Size(200, 25);
+            this.cboSaldo.TabIndex = 79;
+            this.cboSaldo.SelectedIndexChanged += new System.EventHandler(this.cboSaldo_SelectedIndexChanged);
+            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -572,15 +581,6 @@
             this.label25.TabIndex = 74;
             this.label25.Text = "S$";
             // 
-            // txtFechaSaldo
-            // 
-            this.txtFechaSaldo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFechaSaldo.Location = new System.Drawing.Point(77, 25);
-            this.txtFechaSaldo.Name = "txtFechaSaldo";
-            this.txtFechaSaldo.ReadOnly = true;
-            this.txtFechaSaldo.Size = new System.Drawing.Size(129, 25);
-            this.txtFechaSaldo.TabIndex = 79;
-            // 
             // txtSaldoId
             // 
             this.txtSaldoId.Location = new System.Drawing.Point(524, 27);
@@ -588,15 +588,6 @@
             this.txtSaldoId.ReadOnly = true;
             this.txtSaldoId.Size = new System.Drawing.Size(50, 25);
             this.txtSaldoId.TabIndex = 73;
-            // 
-            // fechaSaldo
-            // 
-            this.fechaSaldo.AutoSize = true;
-            this.fechaSaldo.Location = new System.Drawing.Point(6, 31);
-            this.fechaSaldo.Name = "fechaSaldo";
-            this.fechaSaldo.Size = new System.Drawing.Size(65, 19);
-            this.fechaSaldo.TabIndex = 83;
-            this.fechaSaldo.Text = "De Fecha";
             // 
             // numSaldoExistente
             // 
@@ -1207,12 +1198,11 @@
         private Boton btnIgualarPagoAprecio;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox txtFechaSaldo;
         private System.Windows.Forms.TextBox txtSaldoId;
-        private System.Windows.Forms.Label fechaSaldo;
         private System.Windows.Forms.NumericUpDown numSaldoExistente;
         private System.Windows.Forms.NumericUpDown numSaldoUsar;
         private Boton btnPasarSaldoAPago;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox cboSaldo;
     }
 }

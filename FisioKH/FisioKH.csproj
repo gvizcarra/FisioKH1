@@ -163,6 +163,7 @@
   <ItemGroup>
     <Compile Include="classes\metodoPago.cs" />
     <Compile Include="classes\precios.cs" />
+    <Compile Include="classes\Saldo.cs" />
     <Compile Include="componentes\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>

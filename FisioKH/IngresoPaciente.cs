@@ -488,32 +488,51 @@ namespace FisioKH
             long saldo = 0;
             long idSaldo = 0;
 
-
             DBHelper dbh = new DBHelper();
-            DataTable dtsp = new DataTable();
-            dtsp = dbh.obterSaldoPaciente(idPaciente);
+            DataTable dtsp = dbh.obterSaldoPaciente(idPaciente);
 
-
-
+            var listaSaldo = new List<SaldoItem>();
 
             foreach (DataRow row in dtsp.Rows)
             {
                 fechaSaldo = row["fechaSaldo"] != DBNull.Value
-                  ? row["fechaSaldo"].ToString()
-                  : string.Empty;
+                    ? Convert.ToDateTime(row["fechaSaldo"]).ToString("dd/MM/yyyy")
+                    : "";
 
                 saldo = row["saldo"] != DBNull.Value
-                  ? Convert.ToInt32(row["saldo"])
-                  : 0;
+                    ? Convert.ToInt32(row["saldo"])
+                    : 0;
+
                 idSaldo = row["id"] != DBNull.Value
                     ? Convert.ToInt32(row["id"])
                     : 0;
+
+                if (saldo > 0)
+                {
+                    listaSaldo.Add(new SaldoItem
+                    {
+                        IdSaldo = idSaldo,
+                        Saldo = saldo,
+                        Fecha = fechaSaldo,
+                        Text = $"Saldo (${saldo}) - {fechaSaldo}" // ✅ display both
+                    });
+                }
             }
-            this.numSaldoExistente.Value = saldo;
-            this.txtFechaSaldo.Text = fechaSaldo;
-            this.txtSaldoId.Text = idSaldo.ToString();
 
+ 
+            if (listaSaldo.Count > 0)
+            {
+                var last = listaSaldo.Last();
+                this.numSaldoExistente.Value = last.Saldo;
+                //this.txtFechaSaldo.Text = last.Fecha;
+                this.txtSaldoId.Text = last.IdSaldo.ToString();
+            }
 
+          
+            cboSaldo.DataSource = null;
+            cboSaldo.DataSource = listaSaldo;
+            cboSaldo.DisplayMember = "Text";
+            cboSaldo.ValueMember = "IdSaldo";
         }
 
         private void txtNotasVisita_TextChanged(object sender, EventArgs e)
@@ -765,6 +784,7 @@ namespace FisioKH
         private void btnGuardarPago_Click(object sender, EventArgs e)
         {
             int idPago = 0;
+
             if (this.cboMetodoPago.SelectedValue == null)
             {
                 MessageBox.Show("Seleccione Metodo de Pago!!");
@@ -777,7 +797,7 @@ namespace FisioKH
                 return;
             }
 
-            // Validar entrada
+            // Validar montos
             if (!decimal.TryParse(txtCantidadPagada.Text, out decimal cantidadPagada) ||
                 !decimal.TryParse(txtCantidadAPagar.Text, out decimal cantidadAPagar))
             {
@@ -785,40 +805,76 @@ namespace FisioKH
                 return;
             }
 
-            decimal diferencia = cantidadPagada - cantidadAPagar;
+            decimal saldoDisponible = numSaldoExistente.Value; // saldo total
+            decimal saldoUsar = numSaldoUsar.Value;             // saldo que quiere usar
 
-            // Falta pago
-            if (diferencia < 0)
+            // ❌ Intentar usar más saldo del disponible
+            if (saldoUsar > saldoDisponible)
             {
-                MessageBox.Show($"Le falta pagar al paciente: ${Math.Abs(diferencia)}");
+                MessageBox.Show("El saldo a usar es mayor al saldo disponible.");
                 return;
             }
 
-            // Pago exacto
-            if (diferencia == 0)
+            // 💰 Total efectivo (saldo + pago)
+            decimal totalCubierto = saldoUsar + cantidadPagada;
+
+            // ❌ No alcanza (ni con saldo)
+            if (totalCubierto < cantidadAPagar)
             {
+                decimal falta = cantidadAPagar - totalCubierto;
+                MessageBox.Show($"No alcanza el pago. Falta cubrir: ${falta}");
+                return;
+            }
+
+            // ✅ Calcular diferencia
+            decimal diferencia = totalCubierto - cantidadAPagar;
+
+            // 🔄 Si el saldo cubre todo o sobra → ajustar pago en efectivo
+            if (saldoUsar >= cantidadAPagar)
+            {
+                decimal sobranteSaldo = saldoUsar - cantidadAPagar;
+
+                // Ajustar lo que paga en efectivo (puede ser 0)
+                txtCantidadPagada.Text = "0";
+
+                if (sobranteSaldo > 0)
+                {
+                    MessageBox.Show($"El saldo cubre el pago completo. Sobrante: ${sobranteSaldo}");
+                }
+
                 idPago = realizarPago();
                 return;
             }
 
-            // Pago excedente → preguntar
-            DialogResult result = MessageBox.Show($"El pago excede por ${diferencia}.\n¿Desea guardar como saldo?", "Pago excedente", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            // 🔄 Si combinado da excedente
+            if (diferencia > 0)
             {
+                txtCantidadPagada.Text = (cantidadPagada - diferencia).ToString("0.00");
 
-                idPago = realizarPago();
-                long idSaldoAbonado = agregarSaldoPaciente(diferencia, idPago);
-                MessageBox.Show($"Saldo ${diferencia} guardado correctamente. ID: {idSaldoAbonado}");
-            }
-            else
-            {
-                idPago = realizarPago();
-                MessageBox.Show($"Regresar al paciente: ${diferencia}");
+                DialogResult result = MessageBox.Show(
+                    $"El pago excede por ${diferencia}.\n¿Desea guardar como saldo?",
+                    "Pago excedente",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    idPago = realizarPago();
+                    long idSaldoAbonado = agregarSaldoPaciente((long)diferencia, idPago);
+
+                    MessageBox.Show($"Saldo ${diferencia} guardado correctamente. ID: {idSaldoAbonado}");
+                }
+                else
+                {
+                    idPago = realizarPago();
+                    MessageBox.Show($"Regresar al paciente: ${diferencia}");
+                }
+
                 return;
             }
 
-
+            // ✅ Pago exacto (usando saldo + efectivo)
+            idPago = realizarPago();
         }
 
         private void boton1_Click(object sender, EventArgs e)
@@ -837,7 +893,22 @@ namespace FisioKH
 
         private void btnPasarSaldoAPago_Click(object sender, EventArgs e)
         {
+            this.numSaldoUsar.Value = this.numSaldoExistente.Value;
+        }
 
+        private void cboSaldo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.numSaldoExistente.Value = 0;
+            this.numSaldoUsar.Value = 0;
+            this.txtSaldoId.Text = "";
+
+            if (cboSaldo.SelectedItem != null)
+            {
+                var selected = (SaldoItem)cboSaldo.SelectedItem;
+ 
+                numSaldoExistente.Value = selected.Saldo;
+                txtSaldoId.Text = selected.IdSaldo.ToString();
+            }
         }
     }
 
