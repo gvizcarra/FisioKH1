@@ -340,6 +340,7 @@
     <Content Include="cambiosFisiokhV1.3.5.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="cambiosFisiokhV1.3.6.sql" />
     <Content Include="fisiokh.ico" />
   </ItemGroup>
   <ItemGroup>
