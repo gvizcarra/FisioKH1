@@ -370,3 +370,46 @@ END
 GO
 
 
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenSaldoPaciente]    Script Date: 3/26/2026 9:22:05 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER   PROCEDURE [dbo].[usp_obtenSaldoPaciente]
+    @idPaciente BIGINT,
+	@esAdmin BIT = 0 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+      sp.[id] 
+	,sp.[saldo] 
+	,sp.[activo]
+	,sp.[idPaciente] 
+	,sp.[idCita] 
+	,sp.[idVisita]
+	,sp.[idPagoVisitaRealizada] 
+	,sp.[idUsuario] 
+	,sp.[fechaRegistro] AS fechaSaldo
+
+    FROM dbo.[saldoPacienteVisitas] AS sp    
+
+    INNER JOIN Pacientes AS p
+        ON sp.idPaciente = p.id
+
+    INNER JOIN dbo.usuarios AS u
+        ON sp.idUsuario = u .id
+
+   WHERE sp.idPaciente = @idPaciente
+    AND (@esAdmin = 1 OR sp.activo = 1)
+    AND sp.saldo > 0
+END;
+GO
+
+

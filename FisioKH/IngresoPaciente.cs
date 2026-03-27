@@ -132,6 +132,7 @@ namespace FisioKH
             this.txtIdVisita.Text = fce.vIdVisita.ToString();
             this.txtIdPago.Text = fce.vrIdPago.ToString();
             this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString();
+            //this.cboSaldo.SelectedValue = fce. ?? (object)DBNull.Value;
 
             obteneSaldoPaciente((long)fce.cIdPaciente);
 
@@ -522,10 +523,11 @@ namespace FisioKH
  
             if (listaSaldo.Count > 0)
             {
-                var last = listaSaldo.Last();
-                this.cantidadSaldoDisponible.Value = last.Saldo;
-                //this.txtFechaSaldo.Text = last.Fecha;
-                this.txtSaldoId.Text = last.IdSaldo.ToString();
+                foreach (var item in listaSaldo)
+                {
+                    this.cantidadSaldoDisponible.Value = item.Saldo;
+                    this.txtSaldoId.Text = item.IdSaldo.ToString();
+                }
             }
 
           

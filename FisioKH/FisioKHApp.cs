@@ -485,10 +485,10 @@ namespace FisioKH
             if (!dtp.Columns.Contains("Diferencia"))
             {
                 dtp.Columns.Add(
-                    "Diferencia",
-                    typeof(decimal),
-                    "IIF([Paciente Paga]='SI', [Cantidad Precio] - [Cantidad Pagada], 0)"
-                );
+                     "Diferencia",
+                     typeof(decimal),
+                     "IIF([Paciente Paga] = 'SI' AND [IdMetodoPago] <> 10, [Cantidad Precio] - [Cantidad Pagada], 0)"
+                 );
             }
 
             // Calculate totals ONLY where Paciente Paga = SI
@@ -497,7 +497,9 @@ namespace FisioKH
                 if (row.RowState == DataRowState.Deleted) continue;
 
                 var pxPaga = (row["Paciente Paga"]?.ToString() ?? "").Trim().ToUpperInvariant();
-                if (pxPaga == "SI")
+                var IdMeTodopago = (row["IdMeTodopago"]?.ToString() ?? "").Trim().ToUpperInvariant();
+
+                if ((pxPaga == "SI") && (IdMeTodopago !="10"))
                 {
                     totalPrecio += row["Cantidad Precio"] != DBNull.Value
                         ? Convert.ToDecimal(row["Cantidad Precio"])
@@ -577,6 +579,10 @@ namespace FisioKH
             dgvVisitasRealizadas.Columns["Fecha Pago"].Visible = true;
             dgvVisitasRealizadas.Columns["Fecha Pago"].HeaderText = "Fecha Pago";
             dgvVisitasRealizadas.Columns["Fecha Pago"].DisplayIndex = 10;
+            
+            dgvVisitasRealizadas.Columns["IdMeTodopago"].Visible = false;
+            dgvVisitasRealizadas.Columns["IdMeTodopago"].HeaderText = "Fecha Pago";
+            dgvVisitasRealizadas.Columns["IdMeTodopago"].DisplayIndex = 11;
 
             // Make TOTAL row bold + readonly
             if (dgvVisitasRealizadas.Rows.Count > 0)
