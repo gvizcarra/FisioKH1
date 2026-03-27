@@ -95,6 +95,8 @@ namespace FisioKH
         private void cargarFormaDatosCitaVisita()
         {
             string nombrePacienteGC = "";
+            DataTable dtVpsaldo;
+            DBHelper dbh = new DBHelper();
 
             if (!string.IsNullOrWhiteSpace(fce.Title.ToString().Trim()))
             {
@@ -132,6 +134,17 @@ namespace FisioKH
             this.txtIdVisita.Text = fce.vIdVisita.ToString();
             this.txtIdPago.Text = fce.vrIdPago.ToString();
             this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString();
+
+            dtVpsaldo = dbh.obtenVisitasPagadasConSaldo((long)fce.vIdVisita,fce.vIdPaciente);
+
+            foreach (DataRow row in dtVpsaldo.Rows)
+            {
+                // Access column values like this:
+                var value = row["ColumnName"];
+
+                // Do something with value
+            }
+
             //this.cboSaldo.SelectedValue = fce. ?? (object)DBNull.Value;
 
             obteneSaldoPaciente((long)fce.cIdPaciente);

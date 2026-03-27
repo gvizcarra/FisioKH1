@@ -74,6 +74,24 @@ namespace FisioKH
 
             return dt;
         }
+        public DataTable obtenVisitasPagadasConSaldo(long idVisita,long idPaciente)
+        {
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@idVisita", idVisita},         
+                { "@idPaciente", idPaciente},         
+            };
+
+            ds = ObtenerDatos("usp_obtenVisitasPagadasConSaldo", "visitasPagadasSaldo", parameters);
+
+            dt = ds.Tables["visitasPagadasSaldo"];
+
+            return dt;
+        }
 
         /// <summary>
         /// Authenticate user by username and password/pin

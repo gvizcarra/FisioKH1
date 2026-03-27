@@ -413,3 +413,75 @@ END;
 GO
 
 
+
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenCitasPorGoogleEventIds]    Script Date: 3/26/2026 10:01:12 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER   PROCEDURE [dbo].[usp_obtenCitasPorGoogleEventIds]
+    @eventIds dbo.GoogleEventIdList READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        
+        *
+
+    FROM vw_citasVisitasPagos
+    WHERE vrIdMetodoPago <>10
+	AND idGoogleCalendar IN (SELECT EventId FROM @eventIds);
+END
+GO
+
+
+
+USE [FisioKH]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE OR ALTER   PROCEDURE [dbo].[usp_obtenVisitasPagadasConSaldo]
+     (
+		@idVisita BIGINT,
+		@idPaciente BIGINT
+	 )
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+   SELECT
+	   spv.[id] as spvid
+      ,spv.[idPaciente]
+
+      ,spv.[idVisita]
+      
+	  ,pvr.id AS [idPagoVisitaRealizada]
+	  ,pvr.idMetodoPago
+	  ,pvr.cantidadPago
+
+  FROM [dbo].[saldoPacienteVisitas] AS spv
+		INNER JOIN dbo.[pagosVisitasRealizadas] AS pvr
+			ON spv.idVisita = pvr.idVisita
+	WHERE idMetodoPago = 10
+		AND spv.idVisita = @idVisita
+		AND spv.idPaciente = @idPaciente
+		
+END
+GO
+
+
+exec [dbo].[usp_obtenVisitasPagadasConSaldo] 41,4
