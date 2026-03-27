@@ -49,23 +49,24 @@
             this.tabPxGeneralesPago = new System.Windows.Forms.TabControl();
             this.tabGeneralesPx = new System.Windows.Forms.TabPage();
             this.tabPago = new System.Windows.Forms.TabPage();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.cboMetodoPago = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnIgualarPagoAprecio = new FisioKH.Boton();
+            this.lblPrecioPago = new System.Windows.Forms.Label();
+            this.txtCantidadPagada = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtCantidadAPagar = new System.Windows.Forms.NumericUpDown();
+            this.txtCambio = new System.Windows.Forms.TextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.cboSaldo = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.txtSaldoId = new System.Windows.Forms.TextBox();
-            this.numSaldoExistente = new System.Windows.Forms.NumericUpDown();
-            this.numSaldoUsar = new System.Windows.Forms.NumericUpDown();
+            this.cantidadSaldoDisponible = new System.Windows.Forms.NumericUpDown();
+            this.cantidadSaldoUsar = new System.Windows.Forms.NumericUpDown();
             this.btnPasarSaldoAPago = new FisioKH.Boton();
             this.label19 = new System.Windows.Forms.Label();
-            this.btnIgualarPagoAprecio = new FisioKH.Boton();
-            this.txtCantidadPagada = new System.Windows.Forms.NumericUpDown();
-            this.cboMetodoPago = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.txtCambio = new System.Windows.Forms.TextBox();
-            this.txtCantidadAPagar = new System.Windows.Forms.NumericUpDown();
-            this.label21 = new System.Windows.Forms.Label();
-            this.lblPrecioPago = new System.Windows.Forms.Label();
             this.tabDocs = new System.Windows.Forms.TabPage();
             this.txtNotasMedicas = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -106,11 +107,12 @@
             this.tabPxGeneralesPago.SuspendLayout();
             this.tabGeneralesPx.SuspendLayout();
             this.tabPago.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numSaldoExistente)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSaldoUsar)).BeginInit();
+            this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidadPagada)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidadAPagar)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadSaldoDisponible)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadSaldoUsar)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -527,16 +529,8 @@
             // 
             // tabPago
             // 
+            this.tabPago.Controls.Add(this.groupBox8);
             this.tabPago.Controls.Add(this.groupBox7);
-            this.tabPago.Controls.Add(this.btnIgualarPagoAprecio);
-            this.tabPago.Controls.Add(this.txtCantidadPagada);
-            this.tabPago.Controls.Add(this.cboMetodoPago);
-            this.tabPago.Controls.Add(this.label22);
-            this.tabPago.Controls.Add(this.label18);
-            this.tabPago.Controls.Add(this.txtCambio);
-            this.tabPago.Controls.Add(this.txtCantidadAPagar);
-            this.tabPago.Controls.Add(this.label21);
-            this.tabPago.Controls.Add(this.lblPrecioPago);
             this.tabPago.Location = new System.Drawing.Point(4, 26);
             this.tabPago.Name = "tabPago";
             this.tabPago.Padding = new System.Windows.Forms.Padding(3);
@@ -545,27 +539,143 @@
             this.tabPago.Text = "Pago $$";
             this.tabPago.UseVisualStyleBackColor = true;
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.cboMetodoPago);
+            this.groupBox8.Controls.Add(this.label22);
+            this.groupBox8.Controls.Add(this.btnIgualarPagoAprecio);
+            this.groupBox8.Controls.Add(this.lblPrecioPago);
+            this.groupBox8.Controls.Add(this.txtCantidadPagada);
+            this.groupBox8.Controls.Add(this.label21);
+            this.groupBox8.Controls.Add(this.txtCantidadAPagar);
+            this.groupBox8.Controls.Add(this.txtCambio);
+            this.groupBox8.Location = new System.Drawing.Point(12, 14);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(620, 59);
+            this.groupBox8.TabIndex = 83;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Metodo";
+            // 
+            // cboMetodoPago
+            // 
+            this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMetodoPago.FormattingEnabled = true;
+            this.cboMetodoPago.Location = new System.Drawing.Point(6, 25);
+            this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cboMetodoPago.Name = "cboMetodoPago";
+            this.cboMetodoPago.Size = new System.Drawing.Size(200, 25);
+            this.cboMetodoPago.TabIndex = 67;
+            this.cboMetodoPago.SelectedValueChanged += new System.EventHandler(this.cboMetodoPago_SelectedValueChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(496, 27);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(56, 19);
+            this.label22.TabIndex = 75;
+            this.label22.Text = "Cambio";
+            // 
+            // btnIgualarPagoAprecio
+            // 
+            this.btnIgualarPagoAprecio.FlatAppearance.BorderSize = 2;
+            this.btnIgualarPagoAprecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnIgualarPagoAprecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnIgualarPagoAprecio.Location = new System.Drawing.Point(333, 20);
+            this.btnIgualarPagoAprecio.Margin = new System.Windows.Forms.Padding(10);
+            this.btnIgualarPagoAprecio.Name = "btnIgualarPagoAprecio";
+            this.btnIgualarPagoAprecio.Size = new System.Drawing.Size(41, 30);
+            this.btnIgualarPagoAprecio.TabIndex = 77;
+            this.btnIgualarPagoAprecio.Text = "-->";
+            this.btnIgualarPagoAprecio.UseVisualStyleBackColor = true;
+            this.btnIgualarPagoAprecio.Click += new System.EventHandler(this.boton1_Click);
+            // 
+            // lblPrecioPago
+            // 
+            this.lblPrecioPago.AutoSize = true;
+            this.lblPrecioPago.Location = new System.Drawing.Point(204, 28);
+            this.lblPrecioPago.Name = "lblPrecioPago";
+            this.lblPrecioPago.Size = new System.Drawing.Size(46, 19);
+            this.lblPrecioPago.TabIndex = 69;
+            this.lblPrecioPago.Text = "Precio";
+            // 
+            // txtCantidadPagada
+            // 
+            this.txtCantidadPagada.Location = new System.Drawing.Point(420, 21);
+            this.txtCantidadPagada.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.txtCantidadPagada.Name = "txtCantidadPagada";
+            this.txtCantidadPagada.Size = new System.Drawing.Size(74, 25);
+            this.txtCantidadPagada.TabIndex = 76;
+            this.txtCantidadPagada.ValueChanged += new System.EventHandler(this.txtPaga_ValueChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(375, 26);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(39, 19);
+            this.label21.TabIndex = 73;
+            this.label21.Text = "Paga";
+            // 
+            // txtCantidadAPagar
+            // 
+            this.txtCantidadAPagar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCantidadAPagar.Enabled = false;
+            this.txtCantidadAPagar.Location = new System.Drawing.Point(252, 24);
+            this.txtCantidadAPagar.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.txtCantidadAPagar.Name = "txtCantidadAPagar";
+            this.txtCantidadAPagar.ReadOnly = true;
+            this.txtCantidadAPagar.Size = new System.Drawing.Size(68, 25);
+            this.txtCantidadAPagar.TabIndex = 66;
+            // 
+            // txtCambio
+            // 
+            this.txtCambio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCambio.Location = new System.Drawing.Point(552, 21);
+            this.txtCambio.Name = "txtCambio";
+            this.txtCambio.ReadOnly = true;
+            this.txtCambio.Size = new System.Drawing.Size(62, 25);
+            this.txtCambio.TabIndex = 74;
+            // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.label18);
             this.groupBox7.Controls.Add(this.cboSaldo);
             this.groupBox7.Controls.Add(this.label25);
             this.groupBox7.Controls.Add(this.txtSaldoId);
-            this.groupBox7.Controls.Add(this.numSaldoExistente);
-            this.groupBox7.Controls.Add(this.numSaldoUsar);
+            this.groupBox7.Controls.Add(this.cantidadSaldoDisponible);
+            this.groupBox7.Controls.Add(this.cantidadSaldoUsar);
             this.groupBox7.Controls.Add(this.btnPasarSaldoAPago);
             this.groupBox7.Controls.Add(this.label19);
-            this.groupBox7.Location = new System.Drawing.Point(12, 54);
+            this.groupBox7.Location = new System.Drawing.Point(12, 79);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(620, 76);
+            this.groupBox7.Size = new System.Drawing.Size(620, 63);
             this.groupBox7.TabIndex = 78;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Saldo";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(375, 26);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(39, 19);
+            this.label18.TabIndex = 78;
+            this.label18.Text = "Paga";
             // 
             // cboSaldo
             // 
             this.cboSaldo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSaldo.FormattingEnabled = true;
-            this.cboSaldo.Location = new System.Drawing.Point(6, 31);
+            this.cboSaldo.Location = new System.Drawing.Point(6, 25);
             this.cboSaldo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cboSaldo.Name = "cboSaldo";
             this.cboSaldo.Size = new System.Drawing.Size(200, 25);
@@ -575,7 +685,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(500, 31);
+            this.label25.Location = new System.Drawing.Point(534, 33);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(24, 19);
             this.label25.TabIndex = 74;
@@ -583,43 +693,46 @@
             // 
             // txtSaldoId
             // 
-            this.txtSaldoId.Location = new System.Drawing.Point(524, 27);
+            this.txtSaldoId.Location = new System.Drawing.Point(564, 27);
             this.txtSaldoId.Name = "txtSaldoId";
             this.txtSaldoId.ReadOnly = true;
             this.txtSaldoId.Size = new System.Drawing.Size(50, 25);
             this.txtSaldoId.TabIndex = 73;
             // 
-            // numSaldoExistente
+            // cantidadSaldoDisponible
             // 
-            this.numSaldoExistente.Location = new System.Drawing.Point(281, 25);
-            this.numSaldoExistente.Maximum = new decimal(new int[] {
+            this.cantidadSaldoDisponible.Enabled = false;
+            this.cantidadSaldoDisponible.Location = new System.Drawing.Point(252, 23);
+            this.cantidadSaldoDisponible.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numSaldoExistente.Name = "numSaldoExistente";
-            this.numSaldoExistente.ReadOnly = true;
-            this.numSaldoExistente.Size = new System.Drawing.Size(67, 25);
-            this.numSaldoExistente.TabIndex = 82;
+            this.cantidadSaldoDisponible.Name = "cantidadSaldoDisponible";
+            this.cantidadSaldoDisponible.ReadOnly = true;
+            this.cantidadSaldoDisponible.Size = new System.Drawing.Size(67, 25);
+            this.cantidadSaldoDisponible.TabIndex = 82;
+            this.cantidadSaldoDisponible.ValueChanged += new System.EventHandler(this.cantidadSaldoDisponible_ValueChanged);
             // 
-            // numSaldoUsar
+            // cantidadSaldoUsar
             // 
-            this.numSaldoUsar.Location = new System.Drawing.Point(423, 24);
-            this.numSaldoUsar.Maximum = new decimal(new int[] {
+            this.cantidadSaldoUsar.Location = new System.Drawing.Point(423, 24);
+            this.cantidadSaldoUsar.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numSaldoUsar.Name = "numSaldoUsar";
-            this.numSaldoUsar.Size = new System.Drawing.Size(71, 25);
-            this.numSaldoUsar.TabIndex = 79;
+            this.cantidadSaldoUsar.Name = "cantidadSaldoUsar";
+            this.cantidadSaldoUsar.Size = new System.Drawing.Size(71, 25);
+            this.cantidadSaldoUsar.TabIndex = 79;
+            this.cantidadSaldoUsar.ValueChanged += new System.EventHandler(this.cantidadSaldoUsar_ValueChanged);
             // 
             // btnPasarSaldoAPago
             // 
             this.btnPasarSaldoAPago.FlatAppearance.BorderSize = 2;
             this.btnPasarSaldoAPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnPasarSaldoAPago.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnPasarSaldoAPago.Location = new System.Drawing.Point(361, 20);
+            this.btnPasarSaldoAPago.Location = new System.Drawing.Point(333, 22);
             this.btnPasarSaldoAPago.Margin = new System.Windows.Forms.Padding(10);
             this.btnPasarSaldoAPago.Name = "btnPasarSaldoAPago";
             this.btnPasarSaldoAPago.Size = new System.Drawing.Size(41, 30);
@@ -633,106 +746,9 @@
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(212, 30);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(63, 19);
+            this.label19.Size = new System.Drawing.Size(36, 19);
             this.label19.TabIndex = 80;
-            this.label19.Text = "Existente";
-            // 
-            // btnIgualarPagoAprecio
-            // 
-            this.btnIgualarPagoAprecio.FlatAppearance.BorderSize = 2;
-            this.btnIgualarPagoAprecio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnIgualarPagoAprecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnIgualarPagoAprecio.Location = new System.Drawing.Point(345, 16);
-            this.btnIgualarPagoAprecio.Margin = new System.Windows.Forms.Padding(10);
-            this.btnIgualarPagoAprecio.Name = "btnIgualarPagoAprecio";
-            this.btnIgualarPagoAprecio.Size = new System.Drawing.Size(41, 30);
-            this.btnIgualarPagoAprecio.TabIndex = 77;
-            this.btnIgualarPagoAprecio.Text = "-->";
-            this.btnIgualarPagoAprecio.UseVisualStyleBackColor = true;
-            this.btnIgualarPagoAprecio.Click += new System.EventHandler(this.boton1_Click);
-            // 
-            // txtCantidadPagada
-            // 
-            this.txtCantidadPagada.Location = new System.Drawing.Point(432, 18);
-            this.txtCantidadPagada.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.txtCantidadPagada.Name = "txtCantidadPagada";
-            this.txtCantidadPagada.Size = new System.Drawing.Size(74, 25);
-            this.txtCantidadPagada.TabIndex = 76;
-            this.txtCantidadPagada.ValueChanged += new System.EventHandler(this.txtPaga_ValueChanged);
-            // 
-            // cboMetodoPago
-            // 
-            this.cboMetodoPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMetodoPago.FormattingEnabled = true;
-            this.cboMetodoPago.Location = new System.Drawing.Point(60, 21);
-            this.cboMetodoPago.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.cboMetodoPago.Name = "cboMetodoPago";
-            this.cboMetodoPago.Size = new System.Drawing.Size(117, 25);
-            this.cboMetodoPago.TabIndex = 67;
-            this.cboMetodoPago.SelectedValueChanged += new System.EventHandler(this.cboMetodoPago_SelectedValueChanged);
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(506, 23);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(56, 19);
-            this.label22.TabIndex = 75;
-            this.label22.Text = "Cambio";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 24);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(48, 19);
-            this.label18.TabIndex = 68;
-            this.label18.Text = "Forma";
-            // 
-            // txtCambio
-            // 
-            this.txtCambio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCambio.Location = new System.Drawing.Point(568, 17);
-            this.txtCambio.Name = "txtCambio";
-            this.txtCambio.ReadOnly = true;
-            this.txtCambio.Size = new System.Drawing.Size(62, 25);
-            this.txtCambio.TabIndex = 74;
-            // 
-            // txtCantidadAPagar
-            // 
-            this.txtCantidadAPagar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCantidadAPagar.Location = new System.Drawing.Point(270, 20);
-            this.txtCantidadAPagar.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.txtCantidadAPagar.Name = "txtCantidadAPagar";
-            this.txtCantidadAPagar.ReadOnly = true;
-            this.txtCantidadAPagar.Size = new System.Drawing.Size(68, 25);
-            this.txtCantidadAPagar.TabIndex = 66;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(389, 24);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(39, 19);
-            this.label21.TabIndex = 73;
-            this.label21.Text = "Paga";
-            // 
-            // lblPrecioPago
-            // 
-            this.lblPrecioPago.AutoSize = true;
-            this.lblPrecioPago.Location = new System.Drawing.Point(184, 26);
-            this.lblPrecioPago.Name = "lblPrecioPago";
-            this.lblPrecioPago.Size = new System.Drawing.Size(46, 19);
-            this.lblPrecioPago.TabIndex = 69;
-            this.lblPrecioPago.Text = "Precio";
+            this.label19.Text = "Disp";
             // 
             // tabDocs
             // 
@@ -1102,13 +1118,14 @@
             this.tabGeneralesPx.ResumeLayout(false);
             this.tabGeneralesPx.PerformLayout();
             this.tabPago.ResumeLayout(false);
-            this.tabPago.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numSaldoExistente)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numSaldoUsar)).EndInit();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidadPagada)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCantidadAPagar)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadSaldoDisponible)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cantidadSaldoUsar)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -1171,7 +1188,6 @@
         private System.Windows.Forms.TextBox txtNotasMedicas;
         private System.Windows.Forms.NumericUpDown txtCantidadAPagar;
         private Boton btnGuardarCitaVisita;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cboMetodoPago;
         private System.Windows.Forms.Label lblPrecioPago;
         private System.Windows.Forms.Label label22;
@@ -1199,10 +1215,12 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox txtSaldoId;
-        private System.Windows.Forms.NumericUpDown numSaldoExistente;
-        private System.Windows.Forms.NumericUpDown numSaldoUsar;
+        private System.Windows.Forms.NumericUpDown cantidadSaldoDisponible;
+        private System.Windows.Forms.NumericUpDown cantidadSaldoUsar;
         private Boton btnPasarSaldoAPago;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cboSaldo;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label18;
     }
 }

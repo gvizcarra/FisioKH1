@@ -399,7 +399,7 @@ namespace FisioKH
                 this.cboMetodoPago.Enabled = true;
                 this.txtCantidadPagada.Enabled = true;
                 this.txtCantidadAPagar.Text = precio.ToString();
-                this.txtCantidadAPagar.Enabled = true;
+               // this.txtCantidadAPagar.Enabled = true;
                 this.txtCambio.Text = "";
             }
             else
@@ -408,7 +408,7 @@ namespace FisioKH
                 this.lblPrecioPago.Text = "Px no Paga!";
                 this.cboMetodoPago.Enabled = false;
                 this.txtCantidadAPagar.Text = "";
-                this.txtCantidadAPagar.Enabled = false;
+               // this.txtCantidadAPagar.Enabled = false;
                 this.txtCantidadPagada.ReadOnly = true;
                 this.txtCantidadPagada.Enabled = false;
                 this.txtCambio.Text = "";
@@ -523,7 +523,7 @@ namespace FisioKH
             if (listaSaldo.Count > 0)
             {
                 var last = listaSaldo.Last();
-                this.numSaldoExistente.Value = last.Saldo;
+                this.cantidadSaldoDisponible.Value = last.Saldo;
                 //this.txtFechaSaldo.Text = last.Fecha;
                 this.txtSaldoId.Text = last.IdSaldo.ToString();
             }
@@ -713,7 +713,8 @@ namespace FisioKH
         private int realizarPago()
         {
 
-            int idCita = 0, qtyi = 0, idVisita = 0, idPago = 0;
+            int idCita = 0, qtyi = 0, idVisita = 0, idPago = 0, idSaldo = 0;
+            decimal cantidadSaldoUsar = 0;
             long idPaciente = 0, cantidadPagada = 0, cantidadAPagar = 0;
 
 
@@ -721,8 +722,17 @@ namespace FisioKH
             int.TryParse(this.txtIdCita.Text, out idCita);
             int.TryParse(this.txtIdVisita.Text, out idVisita);
             int.TryParse(this.txtIdPago.Text, out idPago);
+             
             long.TryParse(this.txtCantidadPagada.Text, out cantidadPagada);
             long.TryParse(this.txtCantidadAPagar.Text, out cantidadAPagar);
+
+            cantidadSaldoUsar = this.cantidadSaldoUsar.Value;
+
+            if (cboSaldo.SelectedValue != null)
+            {
+                int.TryParse(cboSaldo.SelectedValue.ToString(), out idSaldo);
+            }
+
 
             if (cantidadPagada > cantidadAPagar)
             {
@@ -741,6 +751,8 @@ namespace FisioKH
                 { "@idVisita", idVisita },
                 { "@idMetodoPago" , cboMetodoPago.SelectedValue },
                 { "@idPrecio" , cboPrecio.SelectedValue },
+                { "@idSaldo" , idSaldo },
+                { "@cantidadSaldoUsar" , cantidadSaldoUsar },
                 { "@cantidadPago" , GetBigIntOrNull(txtCantidadPagada.Text) }
             };
 
@@ -756,6 +768,7 @@ namespace FisioKH
 
             if (idPago > 0)
             {
+                parameters.Remove("@idPago");
                 parameters.Add("@idPago", idPago);
                 qtyi = sdb.EjecutarNonQuery("usp_updatePagoVisita", parameters);
             }
@@ -805,10 +818,10 @@ namespace FisioKH
                 return;
             }
 
-            decimal saldoDisponible = numSaldoExistente.Value; // saldo total
-            decimal saldoUsar = numSaldoUsar.Value;             // saldo que quiere usar
+            decimal saldoDisponible = cantidadSaldoDisponible.Value; // saldo total
+            decimal saldoUsar = cantidadSaldoUsar.Value;             // saldo que quiere usar
 
-            // ❌ Intentar usar más saldo del disponible
+            
             if (saldoUsar > saldoDisponible)
             {
                 MessageBox.Show("El saldo a usar es mayor al saldo disponible.");
@@ -893,21 +906,39 @@ namespace FisioKH
 
         private void btnPasarSaldoAPago_Click(object sender, EventArgs e)
         {
-            this.numSaldoUsar.Value = this.numSaldoExistente.Value;
+            this.cantidadSaldoUsar.Value = this.cantidadSaldoDisponible.Value;
         }
 
         private void cboSaldo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.numSaldoExistente.Value = 0;
-            this.numSaldoUsar.Value = 0;
+            this.cantidadSaldoDisponible.Value = 0;
+            this.cantidadSaldoUsar.Value = 0;
             this.txtSaldoId.Text = "";
 
             if (cboSaldo.SelectedItem != null)
             {
                 var selected = (SaldoItem)cboSaldo.SelectedItem;
  
-                numSaldoExistente.Value = selected.Saldo;
+                cantidadSaldoDisponible.Value = selected.Saldo;
                 txtSaldoId.Text = selected.IdSaldo.ToString();
+            }
+        }
+
+        private void cantidadSaldoDisponible_ValueChanged(object sender, EventArgs e)
+        {
+            cantidadSaldoUsar.Maximum = cantidadSaldoDisponible.Value;
+
+            if (cantidadSaldoUsar.Value > cantidadSaldoDisponible.Value)
+            {
+                cantidadSaldoUsar.Value = cantidadSaldoDisponible.Value;
+            }
+        }
+
+        private void cantidadSaldoUsar_ValueChanged(object sender, EventArgs e)
+        {
+            if (cantidadSaldoUsar.Value > cantidadSaldoDisponible.Value)
+            {
+                cantidadSaldoUsar.Value = cantidadSaldoDisponible.Value;
             }
         }
     }
