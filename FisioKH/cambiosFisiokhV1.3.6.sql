@@ -308,3 +308,65 @@ END
 GO
 
 
+
+
+USE [FisioKH]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_obtenerVisitasRealizadas]    Script Date: 3/26/2026 8:09:18 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+
+ALTER   PROCEDURE [dbo].[usp_obtenerVisitasRealizadas]
+    @fechaInicio AS DATE,
+	@fechaFin AS DATE,
+	@idMetodopago AS BIGINT 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT        
+		cFechaCita AS fechaCita
+        ,cNombreCompletoPaciente AS Paciente
+		,cNombreFisioterapeuta AS [Fisio Terapeuta]
+		,
+			CASE vPagado 
+			WHEN 1 THEN 'Si'
+				ELSE 'No'
+			END 
+			
+			AS Pagado
+		,pPrecio AS NombrePrecio
+		,pCantidadPrecio AS [Cantidad Precio]
+		,
+			CASE 
+				prPacientePaga 
+				WHEN 1 THEN 'SI'
+				ELSE 'NO'
+		END		
+		AS [Paciente Paga]
+		,vrCantidadPago AS  [Cantidad Pagada]
+		,mpMetodoPago AS [Metodo Pago]
+		,vrIdMetodoPago AS IdMeTodopago
+		,pvrFechaPago AS [Fecha Pago]
+		
+		-- select * 
+    FROM vw_citasVisitasPagos
+    WHERE convert(date,vFechaVisita) BETWEEN @fechaInicio AND @fechaFin
+		AND (
+            @idMetodopago = 0 
+            OR vrIdMetodoPago = @idMetodopago
+        )
+	ORDER BY vFechaVisita DESC
+END
+GO
+
+
