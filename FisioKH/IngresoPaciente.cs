@@ -97,6 +97,8 @@ namespace FisioKH
             string nombrePacienteGC = "";
             DataTable dtVpsaldo;
             DBHelper dbh = new DBHelper();
+            long idSaldoPago = 0;
+            long cantidadPago = 0;
 
             if (!string.IsNullOrWhiteSpace(fce.Title.ToString().Trim()))
             {
@@ -135,19 +137,21 @@ namespace FisioKH
             this.txtIdPago.Text = fce.vrIdPago.ToString();
             this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString();
 
-            dtVpsaldo = dbh.obtenVisitasPagadasConSaldo((long)fce.vIdVisita,fce.vIdPaciente);
+            obteneSaldoPaciente((long)fce.cIdPaciente);
+
+            dtVpsaldo = dbh.obtenVisitasPagadasConSaldo((long)fce.vIdVisita,(long)fce.vIdPaciente);
 
             foreach (DataRow row in dtVpsaldo.Rows)
             {
-                // Access column values like this:
-                var value = row["ColumnName"];
-
-                // Do something with value
+                idSaldoPago = (long)row["idSaldo"];
+                cantidadPago = row["cantidadPago"] != DBNull.Value ? Convert.ToInt64(row["cantidadPago"]) : 0;                
             }
 
-            //this.cboSaldo.SelectedValue = fce. ?? (object)DBNull.Value;
+            this.cboSaldo.SelectedValue = idSaldoPago;
+            this.cantidadSaldoUsar.Maximum = cantidadPago;
+            this.cantidadSaldoUsar.Value = cantidadPago;
 
-            obteneSaldoPaciente((long)fce.cIdPaciente);
+           
 
             if (fce.cIdPaciente > 0)
             { cargarGridExpedientePaciente((long)fce.cIdPaciente); }
