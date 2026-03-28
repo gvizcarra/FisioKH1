@@ -484,3 +484,90 @@ END
 GO
 
  
+
+
+ USE [FisioKH_dev]
+GO
+
+/****** Object:  StoredProcedure [dbo].[usp_GuardarSaldoPacienteVisita]    Script Date: 3/27/2026 6:42:29 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE OR ALTER   PROCEDURE [dbo].[usp_GuardarSaldoPacienteVisita]
+(
+    @saldo NUMERIC(18, 0),
+    @idPaciente BIGINT,
+    @idCita BIGINT,
+    @idVisita BIGINT,
+    @idPagoVisitaRealizada BIGINT,
+    @idUsuario BIGINT,
+    @rowsAffected INT OUTPUT,
+	@idSaldoGenerado INT OUTPUT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Validación básica
+    IF (@saldo <= 0)
+    BEGIN
+        RAISERROR('El saldo debe ser mayor a 0.', 16, 1);
+        RETURN;
+    END
+
+    DECLARE @idExistente BIGINT;
+
+    -- Buscar si ya existe
+    SELECT @idExistente = id
+    FROM dbo.saldoPacienteVisitas
+    WHERE idPaciente = @idPaciente
+      AND idCita = @idCita
+      AND idVisita = @idVisita
+      AND idPagoVisitaRealizada = @idPagoVisitaRealizada
+      AND activo = 1;
+
+    -- Si existe → UPDATE
+    IF (@idExistente IS NOT NULL)
+    BEGIN
+        UPDATE dbo.saldoPacienteVisitas
+        SET saldo =  @saldo,   -- acumula saldo
+            idUsuario = @idUsuario
+        WHERE id = @idExistente;
+
+        SET @rowsAffected = @@ROWCOUNT;
+		SET @idSaldoGenerado = @idExistente;
+        RETURN;
+    END
+
+    -- Si no existe → INSERT
+    INSERT INTO dbo.saldoPacienteVisitas
+    (
+        saldo,
+        activo,
+        idPaciente,
+        idCita,
+        idVisita,
+        idPagoVisitaRealizada,
+        idUsuario
+    )
+    VALUES
+    (
+        @saldo,
+        1,
+        @idPaciente,
+        @idCita,
+        @idVisita,
+        @idPagoVisitaRealizada,
+        @idUsuario
+    );
+
+
+
+    SET @rowsAffected = @@ROWCOUNT;
+	SET @idSaldoGenerado = SCOPE_IDENTITY();
+END
+GO
+
