@@ -99,6 +99,7 @@ namespace FisioKH
             DBHelper dbh = new DBHelper();
             long idSaldoPago = 0;
             long cantidadPago = 0;
+            long? idMetodoPago = (long?)fce.vrIdMetodoPago??(long?)0;
 
             if (!string.IsNullOrWhiteSpace(fce.Title.ToString().Trim()))
             {
@@ -135,7 +136,8 @@ namespace FisioKH
             this.txtIdCita.Text = fce.cIdCita.ToString();
             this.txtIdVisita.Text = fce.vIdVisita.ToString();
             this.txtIdPago.Text = fce.vrIdPago.ToString();
-            this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString();
+            if ( (idMetodoPago != 10) && (idMetodoPago != 0) )
+            { this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString(); }
 
             obteneSaldoPaciente((long)fce.cIdPaciente);
 
@@ -188,6 +190,11 @@ namespace FisioKH
             txtCantidadPagada.Enabled = !readOnly;
             cboMetodoPago.Enabled = !readOnly;
             this.btnIgualarPagoAprecio.Enabled = !readOnly;
+            this.cboSaldo.Enabled = !readOnly;
+            this.cantidadSaldoUsar.Enabled = !readOnly;
+            this.btnPasarSaldoAPago.Enabled = !readOnly;
+            this.btnIgualarPagoAprecio.Enabled = !readOnly;
+
 
             btnGuardarPago.Enabled = !readOnly;
             btnGuardarPago.Text = (readOnly) ? btnGuardarPago.Text = lockIcon + btnGuardarPago.Text : btnGuardarPago.Text = btnGuardarPago.Text.Replace(lockIcon, "");
@@ -199,7 +206,7 @@ namespace FisioKH
 
             txtIdGoogleCalendar.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
-            txtNombrePaciente.ReadOnly = readOnly;
+            //txtNombrePaciente.ReadOnly = readOnly;
             // txtNotasMedicas.ReadOnly = readOnly;
             //txtObservaciones.ReadOnly = readOnly;
             txtBuscarPacienteIngreso.ReadOnly = readOnly;
@@ -722,7 +729,8 @@ namespace FisioKH
 
             if (rows > 0 && idSaldoGenerado > 0)
             {
-                //MessageBox.Show($"Saldo guardado correctamente. ID: {idSaldoGenerado}");
+              //  MessageBox.Show($"Saldo guardado correctamente. ID: {idSaldoGenerado}");
+                obteneSaldoPaciente(idPaciente);
                 cargarGridExpedientePaciente(idPaciente);
             }
 
@@ -872,7 +880,8 @@ namespace FisioKH
 
                 if (sobranteSaldo > 0)
                 {
-                    MessageBox.Show($"El saldo cubre el pago completo. Sobrante: ${sobranteSaldo}");
+                    this.cantidadSaldoUsar.Value = saldoUsar - sobranteSaldo;
+                    MessageBox.Show($"El saldo cubre el pago completo,se ajusta pago con saldo. Sobrante: ${sobranteSaldo}");
                 }
 
                 idPago = realizarPago();
@@ -939,6 +948,11 @@ namespace FisioKH
             if (cboSaldo.SelectedItem != null)
             {
                 var selected = (SaldoItem)cboSaldo.SelectedItem;
+
+                if(selected.IdSaldo != 0)
+                {
+                    cboMetodoPago.SelectedValue = (long)10;
+                }
  
                 cantidadSaldoDisponible.Value = selected.Saldo;
                 txtSaldoId.Text = selected.IdSaldo.ToString();
