@@ -259,6 +259,7 @@
       <DependentUpon>Tratamientos.cs</DependentUpon>
     </Compile>
     <Compile Include="classes\usuario.cs" />
+    <Content Include="cambiosFisiokhV1.3.7.sql" />
     <EmbeddedResource Include="pasarinfo.resx">
       <DependentUpon>pasarinfo.cs</DependentUpon>
     </EmbeddedResource>
