@@ -800,6 +800,7 @@ namespace FisioKH
                 {
                     this.chkPagada.Checked = true;
                     this.txtIdPago.Text = outValues["@idPago"].ToString();
+                    int.TryParse(this.txtIdPago.Text, out idPago);
                 }
             }
 
@@ -881,10 +882,10 @@ namespace FisioKH
             // 🔄 Si combinado da excedente
             if (diferencia > 0)
             {
-                txtCantidadPagada.Text = (cantidadPagada - diferencia).ToString("0.00");
+               
 
                 DialogResult result = MessageBox.Show(
-                    $"El pago excede por ${diferencia}.\n¿Desea guardar como saldo?",
+                    $"El pago excede por ${diferencia}.\n ¿Desea guardar como saldo?",
                     "Pago excedente",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -898,6 +899,7 @@ namespace FisioKH
                 }
                 else
                 {
+                    txtCantidadPagada.Text = (cantidadPagada - diferencia).ToString("0.00");
                     idPago = realizarPago();
                     MessageBox.Show($"Regresar al paciente: ${diferencia}");
                 }
