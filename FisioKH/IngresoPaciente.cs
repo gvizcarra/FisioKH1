@@ -98,7 +98,7 @@ namespace FisioKH
             DataTable dtVpsaldo;
             DBHelper dbh = new DBHelper();
             long idSaldoPago = 0;
-            long cantidadPago = 0;
+            long cantidadPagoconSaldo = 0;
             long? idMetodoPago = (long?)fce.vrIdMetodoPago??(long?)0;
 
             if (!string.IsNullOrWhiteSpace(fce.Title.ToString().Trim()))
@@ -136,24 +136,29 @@ namespace FisioKH
             this.txtIdCita.Text = fce.cIdCita.ToString();
             this.txtIdVisita.Text = fce.vIdVisita.ToString();
             this.txtIdPago.Text = fce.vrIdPago.ToString();
-            if ( (idMetodoPago != 10) && (idMetodoPago != 0) )
-            { this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString(); }
+            //if ( (idMetodoPago != 10) && (idMetodoPago != 0) )
+            //{ 
+                this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString(); 
+            //}
 
-            obteneSaldoPaciente((long)fce.cIdPaciente);
+            obtenerSaldoPaciente((long)fce.cIdPaciente,1);
 
             dtVpsaldo = dbh.obtenVisitasPagadasConSaldo((long)fce.vIdVisita,(long)fce.vIdPaciente);
 
             foreach (DataRow row in dtVpsaldo.Rows)
             {
                 idSaldoPago = (long)row["idSaldo"];
-                cantidadPago = row["cantidadPago"] != DBNull.Value ? Convert.ToInt64(row["cantidadPago"]) : 0;                
+                cantidadPagoconSaldo = row["cantidadPago"] != DBNull.Value ? Convert.ToInt64(row["cantidadPago"]) : 0;                
             }
 
             this.cboSaldo.SelectedValue = idSaldoPago;
-            this.cantidadSaldoUsar.Maximum = cantidadPago;
-            this.cantidadSaldoUsar.Value = cantidadPago;
+            this.cantidadSaldoUsar.Maximum = cantidadPagoconSaldo;
+            this.cantidadSaldoUsar.Text = cantidadPagoconSaldo.ToString();
 
-           
+           if(fce.vIdVisita.ToString()!="0")
+            {
+                tabPxGeneralesPago.SelectedIndex = 1;
+            }
 
             if (fce.cIdPaciente > 0)
             { cargarGridExpedientePaciente((long)fce.cIdPaciente); }
@@ -168,14 +173,15 @@ namespace FisioKH
             if ((fce.vPagado) || (fce.cIdCita <= 0))
             {
                 controlesPagoSoloLectura(true);
+                this.txtCambio.Text = "0";
             }
 
 
             if (Program.UsuarioLogeado.Nivel == 1)
             {
                 controlesCitaSoloLectura(false);
-                if (fce.cIdCita > 0)
-                { controlesPagoSoloLectura(false); }
+                //if (fce.cIdCita > 0)
+                //{ controlesPagoSoloLectura(false); }
             }
 
 
@@ -475,7 +481,7 @@ namespace FisioKH
 
             long idPaciente = (long)drv["Id"];
 
-            obteneSaldoPaciente(idPaciente);
+            obtenerSaldoPaciente(idPaciente,0);
 
 
 
@@ -507,33 +513,26 @@ namespace FisioKH
 
         }
 
-        private void obteneSaldoPaciente(long idPaciente)
+        private void obtenerSaldoPaciente(long idPaciente,int todosSaldos)
         {
             string fechaSaldo = "";
             long saldo = 0;
             long idSaldo = 0;
 
             DBHelper dbh = new DBHelper();
-            DataTable dtsp = dbh.obterSaldoPaciente(idPaciente);
+            DataTable dtsp = dbh.dbObtenerSaldoPaciente(idPaciente, todosSaldos);
 
             var listaSaldo = new List<SaldoItem>();
 
             foreach (DataRow row in dtsp.Rows)
             {
-                fechaSaldo = row["fechaSaldo"] != DBNull.Value
-                    ? Convert.ToDateTime(row["fechaSaldo"]).ToString("dd/MM/yyyy")
-                    : "";
+                fechaSaldo = row["fechaSaldo"] != DBNull.Value ? Convert.ToDateTime(row["fechaSaldo"]).ToString("dd/MM/yyyy"): "";
 
-                saldo = row["saldo"] != DBNull.Value
-                    ? Convert.ToInt32(row["saldo"])
-                    : 0;
+                saldo = row["saldo"] != DBNull.Value ? Convert.ToInt32(row["saldo"]): 0;
 
-                idSaldo = row["id"] != DBNull.Value
-                    ? Convert.ToInt32(row["id"])
-                    : 0;
+                idSaldo = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0;
 
-                if (saldo > 0)
-                {
+               
                     listaSaldo.Add(new SaldoItem
                     {
                         IdSaldo = idSaldo,
@@ -541,7 +540,7 @@ namespace FisioKH
                         Fecha = fechaSaldo,
                         Text = $"Saldo (${saldo}) - {fechaSaldo}" // ✅ display both
                     });
-                }
+                
             }
 
  
@@ -730,7 +729,7 @@ namespace FisioKH
             if (rows > 0 && idSaldoGenerado > 0)
             {
               //  MessageBox.Show($"Saldo guardado correctamente. ID: {idSaldoGenerado}");
-                obteneSaldoPaciente(idPaciente);
+                obtenerSaldoPaciente(idPaciente,0);
                 cargarGridExpedientePaciente(idPaciente);
             }
 
@@ -941,22 +940,22 @@ namespace FisioKH
 
         private void cboSaldo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.cantidadSaldoDisponible.Value = 0;
-            this.cantidadSaldoUsar.Value = 0;
-            this.txtSaldoId.Text = "";
+            //this.cantidadSaldoDisponible.Value = 0;
+            //this.cantidadSaldoUsar.Value = 0;
+            //this.txtSaldoId.Text = "";
 
-            if (cboSaldo.SelectedItem != null)
-            {
-                var selected = (SaldoItem)cboSaldo.SelectedItem;
+            //if (cboSaldo.SelectedItem != null)
+            //{
+            //    var selected = (SaldoItem)cboSaldo.SelectedItem;
 
-                if(selected.IdSaldo != 0)
-                {
-                    cboMetodoPago.SelectedValue = (long)10;
-                }
+            //    if(selected.IdSaldo != 0)
+            //    {
+            //        cboMetodoPago.SelectedValue = (long)10;
+            //    }
  
-                cantidadSaldoDisponible.Value = selected.Saldo;
-                txtSaldoId.Text = selected.IdSaldo.ToString();
-            }
+            //    cantidadSaldoDisponible.Value = selected.Saldo;
+            //    txtSaldoId.Text = selected.IdSaldo.ToString();
+            //}
         }
 
         private void cantidadSaldoDisponible_ValueChanged(object sender, EventArgs e)
@@ -971,10 +970,31 @@ namespace FisioKH
 
         private void cantidadSaldoUsar_ValueChanged(object sender, EventArgs e)
         {
-            if (cantidadSaldoUsar.Value > cantidadSaldoDisponible.Value)
+            //if (cantidadSaldoUsar.Value > cantidadSaldoDisponible.Value)
+            //{
+            //    cantidadSaldoUsar.Value = cantidadSaldoDisponible.Value;
+            //}
+        }
+
+        private void cboSaldo_SelectedValueChanged(object sender, EventArgs e)
+        {
+            this.cantidadSaldoDisponible.Value = 0;
+            this.cantidadSaldoUsar.Value = 0;
+            this.txtSaldoId.Text = "";
+
+            if (cboSaldo.SelectedItem != null)
             {
-                cantidadSaldoUsar.Value = cantidadSaldoDisponible.Value;
+                var selected = (SaldoItem)cboSaldo.SelectedItem;
+
+                if (selected.IdSaldo != 0 && (cboMetodoPago.SelectedValue == null || cboMetodoPago.SelectedValue == DBNull.Value))
+                {
+                    cboMetodoPago.SelectedValue = (long)10;
+                }
+
+                cantidadSaldoDisponible.Value = selected.Saldo;
+                txtSaldoId.Text = selected.IdSaldo.ToString();
             }
+
         }
     }
 

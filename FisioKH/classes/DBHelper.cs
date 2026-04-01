@@ -55,7 +55,7 @@ namespace FisioKH
             return dt;
         } 
         
-        public DataTable obterSaldoPaciente(long IdPaciente)
+        public DataTable dbObtenerSaldoPaciente(long IdPaciente,int todosSaldos)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();

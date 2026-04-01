@@ -681,6 +681,7 @@
             this.cboSaldo.Size = new System.Drawing.Size(200, 25);
             this.cboSaldo.TabIndex = 79;
             this.cboSaldo.SelectedIndexChanged += new System.EventHandler(this.cboSaldo_SelectedIndexChanged);
+            this.cboSaldo.SelectedValueChanged += new System.EventHandler(this.cboSaldo_SelectedValueChanged);
             // 
             // label25
             // 

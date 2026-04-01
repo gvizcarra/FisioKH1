@@ -494,3 +494,71 @@ END
 GO
 
 
+
+
+ 
+
+
+
+
+
+
+CREATE OR ALTER view [dbo].[vw_citasVisitasPagos]
+AS
+
+    SELECT
+        
+        c.id AS cIdCita,
+        c.idPaciente AS cIdPaciente,
+        c.fechaCita AS cFechaCita,
+        c.fechaRegistro AS cFechaRegistro,
+        c.realizada AS cRealizada,
+        c.idUsuario AS cidUsuarioCita,
+        c.idGoogleCalendar AS idGoogleCalendar,     
+        c.idFisioTerapeuta AS cIdFisioterapeuta,
+        p.claveEtiqueta AS cClaveEtiqueta,
+		p.notasMedicas AS pNotas,
+		p.observaciones AS pObservaciones,
+        ft.nombre AS cNombreFisioterapeuta,
+        CONCAT(
+            p.nombreCompleto, ' ',
+            COALESCE(p.apellidoPaterno, ''), ' ',
+            COALESCE(p.apellidoMaterno, '')
+        ) AS cNombreCompletoPaciente,
+
+		COALESCE(vr.id,0) AS vIdVisita,
+		COALESCE(vr.idPaciente,0) AS vIdPaciente,
+		COALESCE(vr.fechaVisita,'') AS vFechaVisita,
+		COALESCE(vr.idUsuario,0) AS vIdUsuario,
+		COALESCE(vr.idPrecio,0) AS vIdPrecio,
+		COALESCE(vr.pagado,0) AS vPagado,
+		COALESCE(vr.ocupaFactura,0) AS vOcupaFactura,
+		COALESCE(pvr.id,0) AS vrIdPago,
+		COALESCE(pvr.idUsuario,0) AS vrIdUsuario,
+		COALESCE(pvr.idMetodoPago,0) AS vrIdMetodoPago,
+		COALESCE(pvr.cantidadPago,0) vrCantidadPago,
+		COALESCE(pvr.referenciaPago,0) AS vrReferenciaPago,
+		pr.precio AS pCantidadPrecio,
+		pr.nombre AS pPrecio,
+		pr.pacientePaga AS prPacientePaga,
+		mp.nombre AS mpMetodoPago,
+		pvr.fechaRegistro AS pvrFechaPago
+
+    FROM Citas c
+    INNER JOIN fisioTerapeutas ft ON c.idFisioTerapeuta = ft.id
+    INNER JOIN Pacientes p ON c.idPaciente = p.id
+	LEFT JOIN visitasRealizadas AS vr ON c.id = vr.idCita
+	LEFT JOIN  pagosVisitasRealizadas AS pvr 
+		ON (
+				vr.id = pvr.idVisita 
+				--AND pvr.idMetodoPago <>10 
+			)
+	LEFT JOIN  precios AS pr ON pr.id = pvr.idPrecio
+	LEFT JOIN  metodoPago AS mp ON mp.id = pvr.idMetodoPago
+
+
+GO
+
+
+
+
