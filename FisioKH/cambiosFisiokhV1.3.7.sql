@@ -562,3 +562,39 @@ GO
 
 
 
+
+CREATE OR ALTER       PROCEDURE [dbo].[usp_obtenSaldoPaciente]
+    @idPaciente BIGINT,
+	@esAdmin BIT = 0 
+AS
+BEGIN
+    SET NOCOUNT ON;
+	declare @sql as varchar(2000) 
+
+    SELECT
+      sp.[id] 
+	,sp.[saldo] 
+	,sp.[activo]
+	,sp.[idPaciente] 
+	,sp.[idCita] 
+	,sp.[idVisita]
+	,sp.[idPagoVisitaRealizada] 
+	,sp.[idUsuario] 
+	,sp.[fechaRegistro] AS fechaSaldo
+
+    FROM dbo.[saldoPacienteVisitas] AS sp    
+
+    INNER JOIN Pacientes AS p
+        ON sp.idPaciente = p.id
+
+    INNER JOIN dbo.usuarios AS u
+        ON sp.idUsuario = u .id
+
+   WHERE sp.idPaciente = @idPaciente
+    -- AND (@esAdmin = 1 OR ( sp.activo = 1 AND  sp.saldo > 0)	)
+    
+END;
+GO
+
+
+

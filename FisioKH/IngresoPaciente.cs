@@ -729,7 +729,7 @@ namespace FisioKH
             if (rows > 0 && idSaldoGenerado > 0)
             {
               //  MessageBox.Show($"Saldo guardado correctamente. ID: {idSaldoGenerado}");
-                obtenerSaldoPaciente(idPaciente,0);
+                obtenerSaldoPaciente(idPaciente,1);
                 cargarGridExpedientePaciente(idPaciente);
             }
 
