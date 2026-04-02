@@ -102,13 +102,20 @@ namespace FisioKH
 
             dt = dsmp.Tables[dsname];
 
+            DataGridViewButtonColumn btnBorrar = new DataGridViewButtonColumn();
+            btnBorrar.Name = "btnBorrar";
+            btnBorrar.HeaderText = "";
+            btnBorrar.Text = "Borrar";
+            btnBorrar.UseColumnTextForButtonValue = true;
+            
             DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn();
             btnEdit.Name = "btnEdit";
             btnEdit.HeaderText = "";
             btnEdit.Text = "Editar";
             btnEdit.UseColumnTextForButtonValue = true;
 
-            dgvPacientes.Columns.Insert(0, btnEdit);
+            dgvPacientes.Columns.Insert(0, btnBorrar);
+            dgvPacientes.Columns.Insert(1, btnEdit);
 
             this.dgvPacientes.DataSource = dt;
 
@@ -165,8 +172,74 @@ namespace FisioKH
 
         }
 
+
+        private void eliminarPaciente(long idPaciente)
+        {
+            DBHelper dbh = new DBHelper();
+
+            var parameters = new Dictionary<string, object>
+                {
+                    { "@idPaciente", idPaciente }
+                };
+
+
+            var outParams = new Dictionary<string, SqlDbType>
+                {
+                    { "@rowsAffected", SqlDbType.Int }
+                };
+
+            Dictionary<string, object> outValues;
+
+            dbh.EjecutarNonQuery(
+                "usp_deletePacienteSiNoTieneCitas",
+                parameters,
+                outParams,
+                out outValues
+            );
+
+            // read output value
+            int rowsAffected = Convert.ToInt32(outValues["@rowsAffected"]);
+
+            if (rowsAffected > 0)
+            {
+                MessageBox.Show("Paciente eliminado.");
+                ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
+            }
+            else
+            {
+                MessageBox.Show("No se eliminó. El paciente tiene citas o movimientos.");
+            }
+
+        }
         private void dgvPacientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+            if (dgvPacientes.Columns[e.ColumnIndex].Name == "btnBorrar")
+            {
+                long idPaciente = 0;
+                string nombrePaciente = "";
+                DataRow row = dt.Rows[e.RowIndex];
+
+                idPaciente = (long)row["id"];
+                nombrePaciente= row["Nombre"].ToString() +" "+ row["ApellidoPaterno"].ToString();
+
+
+                DialogResult result = MessageBox.Show(
+                   "Desea Eliminar a : "+nombrePaciente,
+                   "Eliminar Paciente",
+                   MessageBoxButtons.YesNo,
+                   MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    eliminarPaciente(idPaciente);                    
+                }
+
+                
+
+            }
+            
+            
             if (dgvPacientes.Columns[e.ColumnIndex].Name == "btnEdit")
             {
                 DataRow row = dt.Rows[e.RowIndex];

@@ -598,3 +598,76 @@ GO
 
 
 
+
+ALTER     PROCEDURE [dbo].[usp_obtenExpedientePaciente]
+    @idPaciente bigint
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT        
+        cFechaCita AS fechaCita
+		,cIdCita AS idCita
+		,vIdVisita AS idVisita
+		,vrIdPago AS idPago
+		,vIdPaciente AS idPaciente
+        ,cNombreCompletoPaciente AS Paciente
+		,cNombreFisioterapeuta AS [Fisio Terapeuta]
+		,
+			CASE vPagado 
+			WHEN 1 THEN 'Si'
+				ELSE 'No'
+			END 
+			
+			AS Pagado
+		,pPrecio AS NombrePrecio
+		,pCantidadPrecio AS [Cantidad Precio]
+		,
+			CASE 
+				prPacientePaga 
+				WHEN 1 THEN 'SI'
+				ELSE 'NO'
+		END		
+		AS [Paciente Paga]
+		,vrCantidadPago AS  [Cantidad Pagada]
+		,mpMetodoPago AS [Metodo Pago]
+		,pvrFechaPago AS [Fecha Pago]
+    FROM vw_citasVisitasPagos
+    WHERE cIdPaciente = @idPaciente
+	ORDER BY cFechaRegistro DESC
+END
+GO
+
+
+
+
+
+CREATE OR ALTER   PROCEDURE [dbo].[usp_deletePacienteSiNoTieneCitas]
+(
+    @idPaciente BIGINT,
+    @rowsAffected INT OUTPUT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SET @rowsAffected = 0;
+
+    IF EXISTS (SELECT 1 FROM dbo.Citas WHERE idPaciente = @idPaciente)
+        RETURN;
+
+	 IF EXISTS (SELECT 1 FROM dbo.visitasRealizadas WHERE idPaciente = @idPaciente)
+        RETURN;
+
+	IF EXISTS (SELECT 1 FROM dbo.saldoPacienteVisitas WHERE idPaciente = @idPaciente)
+        RETURN;
+
+
+    DELETE FROM pacientes
+    WHERE id = @idPaciente;
+
+    SET @rowsAffected = @@ROWCOUNT;
+END
+GO
+
+

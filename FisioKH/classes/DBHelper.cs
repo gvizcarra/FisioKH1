@@ -306,12 +306,16 @@ namespace FisioKH
                     {
                         foreach (var op in outParams)
                         {
-                            SqlParameter outParam = new SqlParameter(op.Key, op.Value)
-                            {
-                                Direction = ParameterDirection.Output
-                            };
+                           
 
-                            cmd.Parameters.Add(outParam);
+                            if (!cmd.Parameters.Contains("@rowsAffected"))
+                            {
+                                SqlParameter outParam = new SqlParameter(op.Key, op.Value)
+                                {
+                                    Direction = ParameterDirection.Output
+                                };
+                                cmd.Parameters.Add(outParam);
+                            }
                         }
                     }
 

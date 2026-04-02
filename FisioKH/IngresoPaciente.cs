@@ -268,13 +268,24 @@ namespace FisioKH
             foreach (DataGridViewColumn col in dgvExpediente.Columns)
             { col.Visible = false; }
 
+            dgvExpediente.Columns["idCita"].Visible = true;
+            dgvExpediente.Columns["idCita"].HeaderText = "idCita";
+            dgvExpediente.Columns["idCita"].DisplayIndex = 0;
+
             dgvExpediente.Columns["fechaCita"].Visible = true;
             dgvExpediente.Columns["fechaCita"].HeaderText = "Cita";
+            dgvExpediente.Columns["fechaCita"].DisplayIndex = 1;
+
+            dgvExpediente.Columns["idPago"].Visible = true;
+            dgvExpediente.Columns["idPago"].HeaderText = "idPago";
+            dgvExpediente.Columns["idPago"].DisplayIndex = 2;
+
 
             dgvExpediente.Columns["Fecha Pago"].Visible = true;
             dgvExpediente.Columns["Fecha Pago"].HeaderText = "Fecha Pago";
+            dgvExpediente.Columns["Fecha Pago"].DisplayIndex = 3;
 
-            dgvExpediente.Columns["Paciente"].Visible = true;
+            dgvExpediente.Columns["Paciente"].Visible = false;
             dgvExpediente.Columns["Paciente"].HeaderText = "Paciente";
 
             dgvExpediente.Columns["Fisio Terapeuta"].Visible = true;
@@ -286,8 +297,8 @@ namespace FisioKH
             dgvExpediente.Columns["NombrePrecio"].Visible = true;
             dgvExpediente.Columns["NombrePrecio"].HeaderText = "Tipo Precio";
 
-            dgvExpediente.Columns["Pagado"].Visible = true;
-            dgvExpediente.Columns["Pagado"].HeaderText = "Se Pago";
+            dgvExpediente.Columns["Pagado"].Visible = false;
+            dgvExpediente.Columns["Pagado"].HeaderText = "Se Pagó";
 
             dgvExpediente.Columns["Cantidad Precio"].Visible = true;
             dgvExpediente.Columns["Cantidad Precio"].HeaderText = "Precio";
@@ -296,7 +307,7 @@ namespace FisioKH
             dgvExpediente.Columns["Paciente Paga"].HeaderText = "Px Paga";
 
             dgvExpediente.Columns["Cantidad Pagada"].Visible = true;
-            dgvExpediente.Columns["Cantidad Pagada"].HeaderText = "Pago";
+            dgvExpediente.Columns["Cantidad Pagada"].HeaderText = "Pagó";
 
 
 
