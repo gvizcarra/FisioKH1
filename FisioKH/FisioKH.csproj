@@ -185,6 +185,12 @@
     <Compile Include="componentes\FisioKHCalendar.RenderCache.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="pagoVisita.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pagoVisita.Designer.cs">
+      <DependentUpon>pagoVisita.cs</DependentUpon>
+    </Compile>
     <Compile Include="pasarinfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,6 +268,9 @@
     <Content Include="cambiosFisiokhV1.3.7.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="pagoVisita.resx">
+      <DependentUpon>pagoVisita.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pasarinfo.resx">
       <DependentUpon>pasarinfo.cs</DependentUpon>
     </EmbeddedResource>

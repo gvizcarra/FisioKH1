@@ -482,6 +482,7 @@
             this.dgvExpediente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvExpediente.Size = new System.Drawing.Size(840, 231);
             this.dgvExpediente.TabIndex = 0;
+            this.dgvExpediente.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpediente_CellClick);
             // 
             // tabPxGeneralesPago
             // 

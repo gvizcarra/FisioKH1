@@ -671,3 +671,110 @@ END
 GO
 
 
+ALTER     PROCEDURE [dbo].[usp_obtenExpedientePaciente]
+    @idPaciente bigint
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT        
+        cFechaCita AS fechaCita
+		,cIdCita AS idCita
+		,vIdVisita AS idVisita
+		,vrIdPago AS idPago
+		,vIdPaciente AS idPaciente
+        ,cNombreCompletoPaciente AS Paciente
+		,cNombreFisioterapeuta AS [Fisio Terapeuta]
+		,
+			CASE vPagado 
+			WHEN 1 THEN 'Si'
+				ELSE 'No'
+			END 
+			
+			AS Pagado
+		,pPrecio AS NombrePrecio
+		,pCantidadPrecio AS [Cantidad Precio]
+		,
+			CASE 
+				prPacientePaga 
+				WHEN 1 THEN 'SI'
+				ELSE 'NO'
+		END		
+		AS [Paciente Paga]
+		,vrCantidadPago AS  [Cantidad Pagada]
+		,mpMetodoPago AS [Metodo Pago]
+		,vrIdMetodoPago AS idMetodoPago
+		,pvrFechaPago AS [Fecha Pago]
+    FROM vw_citasVisitasPagos
+    WHERE cIdPaciente = @idPaciente
+	ORDER BY cFechaRegistro DESC
+END
+GO
+
+
+create or ALTER           PROCEDURE [dbo].[usp_updatePagoVisitaAdmin]
+(
+	@idPago BIGINT,
+	@idUsuario BIGINT,
+    @idMetodoPago BIGINT,
+    @cantidadPago NUMERIC(18,0),
+    @rowsAffected INT OUTPUT
+  
+
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SET XACT_ABORT ON;
+
+    BEGIN TRY
+        BEGIN TRAN;
+ 
+       UPDATE dbo.pagosVisitasRealizadas
+		SET [idUsuario] = @idUsuario
+			   ,[idMetodoPago] = @idMetodoPago			 
+			   ,[cantidadPago] = @cantidadPago
+		  WHERE id = @idPago;
+
+        
+
+		SET @rowsAffected= @@ROWCOUNT;
+
+        COMMIT;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK;
+        THROW;
+    END CATCH
+END
+GO
+
+
+
+
+
+CREATE OR ALTER   PROCEDURE [dbo].[usp_deletePagoVisitaAdmin]
+(
+   @idPago BIGINT,	
+    @rowsAffected INT OUTPUT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SET @rowsAffected = 0;
+
+    IF EXISTS (SELECT 1 FROM dbo.saldoPacienteVisitas WHERE idPagoVisitaRealizada = @idPago)
+        RETURN;
+
+	 
+
+       DELETE FROM dbo.pagosVisitasRealizadas		
+		  WHERE id = @idPago;
+
+    SET @rowsAffected = @@ROWCOUNT;
+END
+GO
+
+
+

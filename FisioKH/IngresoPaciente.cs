@@ -14,6 +14,7 @@ namespace FisioKH
     {
         private FisioKH.FisioKHCalendar.CalendarEventKH fce;
         private readonly DateTime _nullDate = new DateTime(1900, 1, 1);
+        private DataTable dtp;
 
         Boolean pacientePaga = true;
 
@@ -257,7 +258,7 @@ namespace FisioKH
             dsmp = sdb.ObtenerDatos("usp_obtenExpedientePaciente", dsname, parameters);
 
 
-            DataTable dtp = dsmp.Tables[dsname];
+            dtp = dsmp.Tables[dsname];
 
 
             this.dgvExpediente.Visible = false;
@@ -270,20 +271,20 @@ namespace FisioKH
 
             dgvExpediente.Columns["idCita"].Visible = true;
             dgvExpediente.Columns["idCita"].HeaderText = "idCita";
-            dgvExpediente.Columns["idCita"].DisplayIndex = 0;
+            dgvExpediente.Columns["idCita"].DisplayIndex = 11;
 
             dgvExpediente.Columns["fechaCita"].Visible = true;
             dgvExpediente.Columns["fechaCita"].HeaderText = "Cita";
-            dgvExpediente.Columns["fechaCita"].DisplayIndex = 1;
+            dgvExpediente.Columns["fechaCita"].DisplayIndex = 12;
 
             dgvExpediente.Columns["idPago"].Visible = true;
             dgvExpediente.Columns["idPago"].HeaderText = "idPago";
-            dgvExpediente.Columns["idPago"].DisplayIndex = 2;
+            dgvExpediente.Columns["idPago"].DisplayIndex = 1;
 
 
             dgvExpediente.Columns["Fecha Pago"].Visible = true;
             dgvExpediente.Columns["Fecha Pago"].HeaderText = "Fecha Pago";
-            dgvExpediente.Columns["Fecha Pago"].DisplayIndex = 3;
+            dgvExpediente.Columns["Fecha Pago"].DisplayIndex = 2;
 
             dgvExpediente.Columns["Paciente"].Visible = false;
             dgvExpediente.Columns["Paciente"].HeaderText = "Paciente";
@@ -293,6 +294,7 @@ namespace FisioKH
 
             dgvExpediente.Columns["Metodo Pago"].Visible = true;
             dgvExpediente.Columns["Metodo Pago"].HeaderText = "Metodo Pago";
+            dgvExpediente.Columns["Metodo Pago"].DisplayIndex = 3; 
 
             dgvExpediente.Columns["NombrePrecio"].Visible = true;
             dgvExpediente.Columns["NombrePrecio"].HeaderText = "Tipo Precio";
@@ -302,12 +304,27 @@ namespace FisioKH
 
             dgvExpediente.Columns["Cantidad Precio"].Visible = true;
             dgvExpediente.Columns["Cantidad Precio"].HeaderText = "Precio";
+            dgvExpediente.Columns["Cantidad Precio"].DisplayIndex = 2;
 
             dgvExpediente.Columns["Paciente Paga"].Visible = true;
             dgvExpediente.Columns["Paciente Paga"].HeaderText = "Px Paga";
+            dgvExpediente.Columns["Paciente Paga"].DisplayIndex = 4;
 
             dgvExpediente.Columns["Cantidad Pagada"].Visible = true;
             dgvExpediente.Columns["Cantidad Pagada"].HeaderText = "Pagó";
+            dgvExpediente.Columns["Cantidad Pagada"].DisplayIndex = 5;
+
+            if (Program.UsuarioLogeado.Nivel == 1)// si es admin agrega boton
+            {
+                DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn();
+                btnEdit.Name = "btnEdit";
+                btnEdit.HeaderText = "";
+                btnEdit.Text = "Editar";
+                btnEdit.UseColumnTextForButtonValue = true;
+
+                dgvExpediente.Columns.Insert(0, btnEdit);
+            }
+            
 
 
 
@@ -1004,6 +1021,40 @@ namespace FisioKH
 
                 cantidadSaldoDisponible.Value = selected.Saldo;
                 txtSaldoId.Text = selected.IdSaldo.ToString();
+            }
+
+        }
+
+        private void dgvExpediente_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvExpediente.Columns[e.ColumnIndex].Name == "btnEdit")
+            {
+                DataRow row = dtp.Rows[e.RowIndex];
+
+                var parameters = new Dictionary<string, object>();
+
+                parameters["idPago"] = row["idPago"].ToString();
+                parameters["Paciente"] = row["Paciente"].ToString();
+                parameters["idMetodoPago"] = row["idMetodoPago"].ToString();
+                parameters["fechaPago"] = row["Fecha Pago"].ToString();
+                parameters["cantidadPagada"] = row["Cantidad Pagada"].ToString();
+                parameters["cantidadPrecio"] = row["Cantidad Precio"].ToString();
+                //parameters["cantidadPago"] = 10;
+                //parameters["cantidadPago"] = 10;
+
+                if(parameters["idMetodoPago"].ToString() == "10")
+                {
+                    MessageBox.Show("Edicion de Pago con Saldo no Habilitada!");
+                    return;
+                }
+
+
+
+                pagoVisita pv = new pagoVisita(parameters);
+                pv.ShowDialog();
+
+
+                //this.txtNombreCompleto.Text = row["Nombre"].ToString();
             }
 
         }
