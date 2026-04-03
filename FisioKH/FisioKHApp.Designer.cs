@@ -211,7 +211,6 @@ namespace FisioKH
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
             this.txtUsuario.SuppressValidation = false;
             this.txtUsuario.TabIndex = 6;
-            this.txtUsuario.Text = "gabriel";
             // 
             // btnLogin
             // 
@@ -258,7 +257,6 @@ namespace FisioKH
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.SuppressValidation = false;
             this.txtPassPin.TabIndex = 7;
-            this.txtPassPin.Text = "1049";
             this.txtPassPin.UseSystemPasswordChar = true;
             this.txtPassPin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassPin_KeyDown);
             // 
