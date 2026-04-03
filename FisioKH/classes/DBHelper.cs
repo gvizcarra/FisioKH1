@@ -64,7 +64,7 @@ namespace FisioKH
             var parameters = new Dictionary<string, object>
             {
                 { "@idPaciente", IdPaciente},
-                { "@esAdmin",  (Program.UsuarioLogeado.Nivel ==1)?1:0 },
+                { "@esAdmin",  todosSaldos },
          
             };
 

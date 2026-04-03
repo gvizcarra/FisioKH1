@@ -143,10 +143,14 @@ namespace FisioKH
             this.txtIdPago.Text = fce.vrIdPago.ToString();
             //if ( (idMetodoPago != 10) && (idMetodoPago != 0) )
             //{ 
-                this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString(); 
+                this.txtCantidadPagada.Text = fce.vrCantidadPago.ToString();
             //}
 
-            obtenerSaldoPaciente((long)fce.cIdPaciente,1);
+            if (fce.vrIdPago > 0) // si no se a pagado no cargar todos los saldos
+            { obtenerSaldoPaciente((long)fce.cIdPaciente, 0); }
+            else
+            { obtenerSaldoPaciente((long)fce.cIdPaciente, 0); }
+             
 
             dtVpsaldo = dbh.obtenVisitasPagadasConSaldo((long)fce.vIdVisita,(long)fce.vIdPaciente);
 
@@ -761,7 +765,7 @@ namespace FisioKH
             if (rows > 0 && idSaldoGenerado > 0)
             {
               //  MessageBox.Show($"Saldo guardado correctamente. ID: {idSaldoGenerado}");
-                obtenerSaldoPaciente(idPaciente,1);
+                obtenerSaldoPaciente(idPaciente,0);
                 cargarGridExpedientePaciente(idPaciente);
             }
 
