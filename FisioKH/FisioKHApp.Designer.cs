@@ -148,7 +148,7 @@ namespace FisioKH
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(236, 15);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(621, 597);
+            this.groupBox1.Size = new System.Drawing.Size(735, 597);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Credenciales";
@@ -158,9 +158,9 @@ namespace FisioKH
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(516, 542);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(99, 21);
+            this.label4.Size = new System.Drawing.Size(213, 21);
             this.label4.TabIndex = 11;
-            this.label4.Text = "Version 1.3.5";
+            this.label4.Text = "Version 1.3.7.1 - Abril 2-2026";
             // 
             // btnSalir
             // 
@@ -287,7 +287,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 3, 24, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 4, 2, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);
