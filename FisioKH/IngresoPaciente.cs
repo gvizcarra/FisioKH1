@@ -124,7 +124,11 @@ namespace FisioKH
             this.txtNombrePaciente.Text = fce.cNombreCompletoPaciente.ToString();
             this.cboFisioTerapeuta.SelectedValue = fce.cIdFisioterapeuta ?? (object)DBNull.Value;
             this.cboPrecio.SelectedValue = fce.vIdPrecio ?? (object)DBNull.Value;
-            this.cboMetodoPago.SelectedValue = fce.vrIdMetodoPago ?? (object)DBNull.Value;
+
+            if (idMetodoPago != 10)
+            {
+                this.cboMetodoPago.SelectedValue = fce.vrIdMetodoPago ?? (object)DBNull.Value;
+            }
             this.dtpIngresoFecha.Text = (fce.cFechaCita != DateTime.MinValue) ? fce.cFechaCita.ToString() : fce.Start.ToString();
 
             this.txtNotasMedicas.Text = fce.pNotas;
@@ -1016,7 +1020,7 @@ namespace FisioKH
 
                 if (selected.IdSaldo != 0 && (cboMetodoPago.SelectedValue == null || cboMetodoPago.SelectedValue == DBNull.Value))
                 {
-                    cboMetodoPago.SelectedValue = (long)10;
+                   // cboMetodoPago.SelectedValue = (long)10;
                 }
 
                 cantidadSaldoDisponible.Value = selected.Saldo;
