@@ -706,15 +706,15 @@ namespace FisioKH
                 // If you want conditional behavior:
                 if (metodoPago.OcupaReferenciaPago)
                 {
-                    this.txtCantidadPagada.Enabled = false;
-                    this.btnIgualarPagoAprecio.Enabled = false;
+                    //this.txtCantidadPagada.Enabled = false;
+                    //this.btnIgualarPagoAprecio.Enabled = false;
                     IgualarPagoAprecio();
 
                 }
                 else
                 {
-                    this.txtCantidadPagada.Enabled = true;
-                    this.btnIgualarPagoAprecio.Enabled = true;
+                    //this.txtCantidadPagada.Enabled = true;
+                    //this.btnIgualarPagoAprecio.Enabled = true;
                 }
             }
 
