@@ -441,7 +441,7 @@ namespace FisioKH
             this.txtNotasMedicas.IsRequired = false;
             this.txtNotasMedicas.Location = new System.Drawing.Point(288, 20);
             this.txtNotasMedicas.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtNotasMedicas.MaxLength = 100;
+            this.txtNotasMedicas.MaxLength = 4000;
             this.txtNotasMedicas.MaxValue = null;
             this.txtNotasMedicas.MinValue = null;
             this.txtNotasMedicas.Multiline = true;
@@ -458,7 +458,7 @@ namespace FisioKH
             this.txtObservaciones.IsRequired = false;
             this.txtObservaciones.Location = new System.Drawing.Point(6, 20);
             this.txtObservaciones.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtObservaciones.MaxLength = 100;
+            this.txtObservaciones.MaxLength = 4000;
             this.txtObservaciones.MaxValue = null;
             this.txtObservaciones.MinValue = null;
             this.txtObservaciones.Multiline = true;

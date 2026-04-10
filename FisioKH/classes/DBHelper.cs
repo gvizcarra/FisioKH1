@@ -311,7 +311,11 @@ namespace FisioKH
                                 {
                                     Direction = ParameterDirection.Output
                                 };
-                                cmd.Parameters.Add(outParam);                             
+
+                            if (!cmd.Parameters.Contains(outParam.ParameterName))
+                            {
+                                cmd.Parameters.Add(outParam);
+                            }
                         }
                     }
 
