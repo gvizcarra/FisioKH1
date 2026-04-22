@@ -73,24 +73,31 @@ namespace FisioKH
 
             dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "Nombre",
+                DataPropertyName = "NombreCompleto",
                 HeaderText = "Nombre",
                 Name = "nombre"
             });
-
+            
             dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "Etiqueta",
-                HeaderText = "Etiqueta",
-                Name = "Etiqueta"
+                DataPropertyName = "totalSaldo",
+                HeaderText = "Saldo",
+                Name = "Saldo"
             });
 
-            dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "FechaNacimiento",
-                HeaderText = "FechaNacimiento",
-                Name = "FechaNacimiento"
-            });
+            //dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
+            //{
+            //    DataPropertyName = "Etiqueta",
+            //    HeaderText = "Etiqueta",
+            //    Name = "Etiqueta"
+            //});
+
+            //dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
+            //{
+            //    DataPropertyName = "FechaNacimiento",
+            //    HeaderText = "FechaNacimiento",
+            //    Name = "FechaNacimiento"
+            //});
 
               dgvPacientes.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -102,6 +109,12 @@ namespace FisioKH
 
             dt = dsmp.Tables[dsname];
 
+            DataGridViewButtonColumn btnSaldo = new DataGridViewButtonColumn();
+            btnSaldo.Name = "btnSaldo";
+            btnSaldo.HeaderText = "";
+            btnSaldo.Text = "Saldo";
+            btnSaldo.UseColumnTextForButtonValue = true;
+            
             DataGridViewButtonColumn btnBorrar = new DataGridViewButtonColumn();
             btnBorrar.Name = "btnBorrar";
             btnBorrar.HeaderText = "";
@@ -116,6 +129,7 @@ namespace FisioKH
 
             dgvPacientes.Columns.Insert(0, btnBorrar);
             dgvPacientes.Columns.Insert(1, btnEdit);
+            dgvPacientes.Columns.Insert(2, btnSaldo);
 
             this.dgvPacientes.DataSource = dt;
 
@@ -275,6 +289,7 @@ namespace FisioKH
                 db.Dispose();
 
                 this.pbxFotoPaciente.Image = foto ?? FisioKH.Properties.Resources.patient;
+                this.tbPacientes.SelectedIndex = 1;
             }
         }
 
@@ -391,7 +406,7 @@ namespace FisioKH
 
 
             limpiarFormulario();
-
+            this.tbPacientes.SelectedIndex = 0;
             ObtenDatos(this.txtPaciente.Text, this.txtCelular.Text, this.txtEmail.Text);
 
         }
@@ -545,6 +560,16 @@ namespace FisioKH
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void boton1_Click(object sender, EventArgs e)
+        {
+            this.tbPacientes.SelectedIndex = 1;
         }
     }
 }

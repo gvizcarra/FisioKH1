@@ -211,6 +211,7 @@ namespace FisioKH
             this.txtUsuario.Size = new System.Drawing.Size(132, 29);
             this.txtUsuario.SuppressValidation = false;
             this.txtUsuario.TabIndex = 6;
+            this.txtUsuario.Text = "gabriel";
             // 
             // btnLogin
             // 
@@ -257,6 +258,7 @@ namespace FisioKH
             this.txtPassPin.Size = new System.Drawing.Size(132, 29);
             this.txtPassPin.SuppressValidation = false;
             this.txtPassPin.TabIndex = 7;
+            this.txtPassPin.Text = "1049";
             this.txtPassPin.UseSystemPasswordChar = true;
             this.txtPassPin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPassPin_KeyDown);
             // 
@@ -285,7 +287,7 @@ namespace FisioKH
             // 
             // fisioKHCalendar1
             // 
-            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 4, 2, 0, 0, 0, 0);
+            this.fisioKHCalendar1.CurrentDate = new System.DateTime(2026, 4, 21, 0, 0, 0, 0);
             this.fisioKHCalendar1.DataSource = null;
             this.fisioKHCalendar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fisioKHCalendar1.Location = new System.Drawing.Point(3, 3);

@@ -62,7 +62,7 @@ namespace FisioKH
 
         private static readonly object _cacheLock = new object();
         private static readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>(StringComparer.Ordinal);
-        private static readonly TimeSpan _ttl = TimeSpan.FromMinutes(5);
+        private static readonly TimeSpan _ttl = TimeSpan.FromMinutes(0);
 
         private sealed class CacheEntry
         {

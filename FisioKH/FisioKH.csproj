@@ -265,6 +265,9 @@
       <DependentUpon>Tratamientos.cs</DependentUpon>
     </Compile>
     <Compile Include="classes\usuario.cs" />
+    <Content Include="cambiosFisiokhV1.3.8.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="cambiosFisiokhV1.3.7.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
